@@ -13,7 +13,7 @@ html{
 
 body {
     margin: 0;
-    height: 380vh;
+    height: fit-content;
    
     background: radial-gradient(circle at 30% 30%, rgba(95, 0, 255, 0.25), transparent 60%),
         radial-gradient(circle at 70% 70%, rgba(0, 195, 255, 0.25), transparent 60%),
