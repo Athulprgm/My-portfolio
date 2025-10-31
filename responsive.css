@@ -1,5 +1,93 @@
 
+@media (max-width: 620px) {
 
+    
+    .container > a {
+        display: none;
+    }
+.menu-bar{
+
+font-size: 25px;
+display: block;
+ margin-left: -50px;
+}
+
+    ul {
+      list-style: none;
+      display: none;
+      flex-direction: column;
+      text-align: center;
+      gap: 40px;
+         background: rgba(4, 4, 4, 0.479); 
+      backdrop-filter: blur(12px);
+       -webkit-backdrop-filter: blur(12px); 
+      box-shadow: 0 4px 20px rgba(18, 18, 18, 0.364);
+      width: 25%;
+      height: 800px;
+      padding: 10px;
+      position: absolute;
+      left: 75%;
+      top: 70px;
+    }
+ul:hover{
+   box-shadow: 0 0 15px rgba(125, 85, 217, 0.5);
+    transform: translateY(-2px);
+}
+    
+    #menu-toggle:checked + label + ul {
+      display: flex;
+    }
+  li{
+   display: block;
+    margin-top: 30px;
+  }
+.nav-content{
+  display: none;
+}
+
+    
+    .text {
+        font-size: 19px;
+        
+        white-space: normal; 
+        overflow: visible;
+        border-right: none;
+        width: 90%;
+        animation: none;
+        text-align: center;
+    }
+
+
+    .introduce {
+        width: 90%; 
+        margin-top: -30px;
+    }
+
+
+    .section-heading {
+        font-size: 50px;
+        margin-top: 80px;
+        margin-bottom: 50px;
+    }
+
+    .project {
+        gap: 30px;
+    }
+    
+    .card {
+        max-width: 90%;
+    }
+
+    .card-education {
+        width: 90%;
+        height: auto;
+    }
+
+    
+    .contact-container {
+        margin-top: 150px;
+    }
+}
 @media (max-width: 576px) {
   .nav-bar {
     
@@ -89,24 +177,22 @@ ul:hover{
 }
 @media (max-width: 520px) {
 
-    /* --- Navigation --- */
-    /* Adjust menu bar position */
+   
     .menu-bar {
-        margin-left: 0; /* Remove hardcoded margin */
+        margin-left: 0;
         position: absolute;
         right: 20px;
         top: 50%;
         transform: translateY(-50%);
     }
 
-    /* Adjust menu dropdown width */
+   
     ul {
         width: 50%;
         left: 50%;
     }
 
-    /* --- Hero Text --- */
-    /* Disable typing animation and allow text to wrap */
+    
     .text {
         font-size: 18px;
         white-space: normal;
@@ -117,8 +203,7 @@ ul:hover{
         text-align: left;
     }
 
-    /* --- Cards --- */
-    /* Make cards fluid to prevent overflow */
+    
     .introduce {
         width: 90%;
         margin-top: -30px;
@@ -130,19 +215,19 @@ ul:hover{
     }
 
     .card-education {
-        width: 90%; /* Override the fixed 450px width */
+        width: 90%; 
         height: auto;
         padding: 15px;
         font-size: 16px;
     }
 
-    /* --- Headings --- */
+    
     .section-heading {
-        font-size: 42px; /* Reduce heading size */
+        font-size: 42px; 
         margin-bottom: 50px;
     }
     
-    /* --- Contact --- */
+    
     .contact-container{
         margin-top: 300px; /
     }
