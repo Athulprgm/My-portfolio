@@ -87,7 +87,69 @@ ul:hover{
   display: none;
 }
 }
+@media (max-width: 450px) {
 
+
+    .menu-bar {
+        margin-left: 0; 
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    ul {
+        width: 60%; 
+        left: 40%;
+    }
+
+    .text {
+        font-size: 17px;
+        white-space: normal;
+        overflow: visible;
+        border-right: none;
+        width: 90%;
+        animation: none;
+        text-align: left;
+    }
+
+   
+    .introduce {
+        width: 90%;
+        margin-top: -30px;
+    }
+
+    .card {
+        width: 90%;
+        height: auto;
+    }
+
+   
+    .section-heading {
+        font-size: 38px;
+        margin-bottom: 50px;
+    }
+
+  
+    .card-education {
+        width: 90%; 
+        height: auto;
+        padding: 15px;
+        font-size: 16px;
+    }
+
+  
+    .contact-container {
+        margin-top: 150px;
+    }
+
+    .contact-details {
+        flex-direction: column;
+        height: auto;
+        padding: 20px 0;
+        gap: 20px;
+    }
+}
 @media (max-width: 360px) {
 
    
@@ -210,16 +272,25 @@ ul:hover{
     
    
     .btn-1:hover {
-        width: 60px;
+        width: 130px;
         height: 16px;
         padding: 10px;
-        background-color: greenyellow;
-        color: #000;
-        box-shadow: none;
-        transform: none;
+      
     }
-
-   
+.btn-1{
+  margin: 20px auto;
+  text-align: center;
+}
+.project-heading{
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5px;
+  text-align: center;
+}
+.project-details{
+  margin-top: 20px;
+}
     .education-container {
         margin-top: 80px;
     }
@@ -233,19 +304,21 @@ ul:hover{
 
    
     .card-technology {
-         margin: 60px auto;
+         margin-bottom: 100px;
     }
     .tech-box {
          padding: 15px;
          gap: 15px;
+         
     }
     .tech {
         padding: 8px;
         font-size: 14px;
+        
     }
 
     .contact-container {
-        margin-top: 100px;
+        margin-top: 300px;
     }
     
     
