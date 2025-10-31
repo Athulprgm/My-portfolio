@@ -389,7 +389,7 @@ ul:hover{
     
     
     .contact-details {
-        flex-direction: column; 
+       
         height: auto;
         padding: 20px 0;
         gap: 20px;
