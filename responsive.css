@@ -87,6 +87,72 @@ ul:hover{
   display: none;
 }
 }
+@media (max-width: 520px) {
+
+    /* --- Navigation --- */
+    /* Adjust menu bar position */
+    .menu-bar {
+        margin-left: 0; /* Remove hardcoded margin */
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    /* Adjust menu dropdown width */
+    ul {
+        width: 50%;
+        left: 50%;
+    }
+
+    /* --- Hero Text --- */
+    /* Disable typing animation and allow text to wrap */
+    .text {
+        font-size: 18px;
+        white-space: normal;
+        overflow: visible;
+        border-right: none;
+        width: 90%;
+        animation: none;
+        text-align: left;
+    }
+
+    /* --- Cards --- */
+    /* Make cards fluid to prevent overflow */
+    .introduce {
+        width: 90%;
+        margin-top: -30px;
+    }
+
+    .card {
+        width: 90%;
+        height: auto;
+    }
+
+    .card-education {
+        width: 90%; /* Override the fixed 450px width */
+        height: auto;
+        padding: 15px;
+        font-size: 16px;
+    }
+
+    /* --- Headings --- */
+    .section-heading {
+        font-size: 42px; /* Reduce heading size */
+        margin-bottom: 50px;
+    }
+    
+    /* --- Contact --- */
+    .contact-container{
+        margin-top: 300px; /
+    }
+    .contact-details{
+       
+        height: auto;
+        padding: 20px 0;
+        gap: 20px;
+    }
+}
 @media (max-width: 450px) {
 
 
@@ -144,7 +210,7 @@ ul:hover{
     }
 
     .contact-details {
-        flex-direction: column;
+        
         height: auto;
         padding: 20px 0;
         gap: 20px;
