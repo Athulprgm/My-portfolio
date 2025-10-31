@@ -9,7 +9,7 @@
 
 font-size: 25px;
 display: block;
- margin-left: -50px;
+margin-left: 25rem;
 }
 
     ul {
@@ -273,6 +273,8 @@ ul:hover{
     .card {
         width: 90%;
         height: auto;
+        display: flex;
+        gap: 20px;
     }
 
    
