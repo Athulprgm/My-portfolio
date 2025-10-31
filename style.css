@@ -46,6 +46,9 @@ body {
    
       
 }
+.nav-content{
+    display: block;
+}
 
 .container {
     display: flex;
@@ -68,7 +71,7 @@ a {
     text-decoration: none;
     padding: 15px;
     color: rgb(255, 255, 255);
-
+   
     border-radius: 10px;
     margin-right: 20px;
     transition: ease-in-out 0.3s;
@@ -228,10 +231,7 @@ box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
     margin-bottom: 0;
 }
 
-.project-container{
-    margin-top: 150px;
-    margin-bottom: 0;
-}
+
 .section-heading{
     text-align: center;
     margin-bottom: 100px;
@@ -453,4 +453,17 @@ margin: 100px auto;
     align-items: center;
     flex-direction: column;
 }
+
+#menu-toggle {
+    display: none;
+}
+
+.menu-bar{
+    display: none;
+}
+
+li{
+    display: none;
+}
+
 

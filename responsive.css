@@ -1,0 +1,87 @@
+@media (max-width: 576px) {
+  .nav-bar {
+    
+    display: flex;
+    align-items: center;
+    
+  }
+  .container {
+    max-width: 100%;
+    padding: 10px;
+  }
+
+body{
+  height: fit-content;
+}
+
+.introduce{
+  text-align: center;
+  height: fit-content;
+  width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -40px;
+}
+.section-heading{
+  text-align: center;
+  margin-top: 80px;
+}
+.card-education{
+  width: 450px;
+  height: 100px;
+}
+.card-technology{
+  margin-top: 60px;
+}
+.contact-container{
+  margin-top: 300px;
+}
+.contact-details{
+  width: 100%;
+  height: 35%;
+  display: flex;
+  flex-wrap: wrap;
+}
+.menu-icon {
+      display: block;
+      
+     
+    }
+.menu-bar{
+margin-left: 19rem;
+font-size: 25px;
+display: block;
+
+}
+    ul {
+      list-style: none;
+      display: none;
+      flex-direction: column;
+      text-align: center;
+      gap: 40px;
+         background: rgba(4, 4, 4, 0.479); 
+      backdrop-filter: blur(12px);
+       -webkit-backdrop-filter: blur(12px); 
+      box-shadow: 0 4px 20px rgba(18, 18, 18, 0.364);
+      width: 25%;
+      height: 800px;
+      padding: 10px;
+      position: absolute;
+      left: 75%;
+      top: 70px;
+    }
+ul:hover{
+   box-shadow: 0 0 15px rgba(125, 85, 217, 0.5);
+    transform: translateY(-2px);
+}
+    
+    #menu-toggle:checked + label + ul {
+      display: flex;
+    }
+  li{
+    margin-top: 30px;
+  }
+.nav-content{
+  display: none;
+}
+}
