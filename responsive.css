@@ -301,6 +301,21 @@ ul:hover{
         gap: 20px;
     }
 }
+@media (max-width: 385px) {
+  .contact-container {
+        margin-top: 340px;
+    }
+
+    .contact-details {
+        
+        height: auto;
+        padding: 20px 0;
+        gap: 20px;
+    }
+  .card-technology{
+    margin-bottom: 200px;
+  }
+}
 @media (max-width: 360px) {
 
    
