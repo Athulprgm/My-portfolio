@@ -291,7 +291,7 @@ ul:hover{
 
   
     .contact-container {
-        margin-top: 150px;
+        margin-top: 320px;
     }
 
     .contact-details {
@@ -301,7 +301,7 @@ ul:hover{
         gap: 20px;
     }
 }
-@media (max-width: 385px) {
+/* @media (max-width: 415px) {
   .contact-container {
         margin-top: 340px;
     }
@@ -315,7 +315,7 @@ ul:hover{
   .card-technology{
     margin-bottom: 200px;
   }
-}
+} */
 @media (max-width: 360px) {
 
    
