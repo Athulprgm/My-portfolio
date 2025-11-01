@@ -212,6 +212,8 @@ ul:hover{
     .card {
         width: 90%;
         height: auto;
+        display: flex;
+        gap: 20px;
     }
 
     .card-education {
