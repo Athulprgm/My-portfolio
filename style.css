@@ -219,13 +219,13 @@ box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
 }
 
 .control{
-    width: 30px;
+    width: 60px;
     height: 30px;
     padding: 20px;
     overflow: visible;
     position: absolute;
-    top: -4%;
-    left: 2%;
+    top: -3%;
+    left: 1%;
     z-index: 0;
     
 }

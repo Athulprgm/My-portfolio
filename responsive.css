@@ -304,8 +304,8 @@ ul:hover{
         padding: 20px 0;
         gap: 20px;
     }
-}
 
+}
 @media (max-width: 360px) {
 
    
@@ -484,4 +484,17 @@ ul:hover{
         padding: 20px 0;
         gap: 20px;
     }
+    .image{
+    position: absolute;
+  top: 10px;
+  left: -8px;
+ width: 120px;
+  height: 120px;
+  object-fit: cover;
+ transition: ease-in-out 0.3s;
+ 
+
+   
+  
+}
 }
