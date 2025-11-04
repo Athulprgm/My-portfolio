@@ -1,0 +1,319 @@
+body {
+  height: 250vh;
+  background: radial-gradient(circle at 30% 30%, rgba(95, 0, 255, 0.25), transparent 60%),
+    radial-gradient(circle at 70% 70%, rgba(0, 195, 255, 0.25), transparent 60%),
+    radial-gradient(circle at 50% 100%, rgba(255, 0, 128, 0.2), transparent 70%),
+    #000;
+  background-blend-mode: screen;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.462);
+  border-radius: 10px;
+  padding: clamp(15px, 3vw, 20px);
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  font-style: italic;
+  transition: ease-in-out 0.3s;
+}
+
+.parent {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 8px;
+  margin: 20px;
+}
+
+.div1 {
+  grid-column: span 3 / span 3;
+}
+
+.div2 {
+  grid-column: span 2 / span 2;
+  grid-row: span 2 / span 2;
+  grid-column-start: 4;
+}
+
+.div3 {
+  grid-column: span 3 / span 3;
+  grid-row: span 4 / span 4;
+  grid-row-start: 2;
+}
+
+.div4 {
+  grid-column: span 2 / span 2;
+  grid-row: span 3 / span 3;
+  grid-column-start: 4;
+  grid-row-start: 3;
+  width: fit-content;
+  height: max-content;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.462);
+  border-radius: 10px;
+  font-style: italic;
+  display: flex;
+  flex-direction: column;
+  padding: 2px clamp(10px, 3vw, 20px);
+  margin-top: -40px;
+  margin-left: 10px;
+}
+
+.features {
+  width: fit-content;
+  height: max-content;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.462);
+  border-radius: 10px;
+  padding: clamp(20px, 4vw, 30px);
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  font-style: italic;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(15px, 3vw, 20px);
+  margin-top: -5px;
+  transition: ease-in-out 0.3s;
+}
+
+.tech {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.462);
+  border-radius: 10px;
+  padding: clamp(20px, 4vw, 30px);
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  font-style: italic;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(10px, 2vw, 15px);
+  margin: clamp(12px, 2vw, 18px) clamp(8px, 2vw, 12px);
+  transition: ease-in-out 0.3s;
+}
+
+p:hover {
+  color: rgb(187, 240, 14);
+}
+
+.tech:hover {
+  color: rgb(187, 240, 14);
+}
+
+.features:hover {
+  color: rgb(187, 240, 14);
+}
+
+h2 {
+  margin: 10px;
+  text-align: center;
+  font-style: normal;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+}
+
+.module {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(15px, 3vw, 20px);
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  transition: ease-in-out 0.3s;
+}
+
+.module:hover {
+  color: rgb(187, 240, 14);
+}
+
+.gallery {
+  display: flex;
+  gap: clamp(10px, 3vw, 20px);
+  width: max-content;
+  height: max-content;
+  margin: clamp(30px, 8vw, 50px) auto;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 95%;
+}
+
+img {
+  width: clamp(250px, 30vw, 370px);
+  height: clamp(155px, 19vw, 230px);
+  border-radius: 4px;
+  transition: ease-in-out 0.3s;
+  object-fit: cover;
+}
+
+.img-2 {
+  width: clamp(100px, 12vw, 150px);
+  height: clamp(160px, 20vw, 240px);
+  border-radius: 4px;
+  transition: ease-in-out 0.3s;
+  object-fit: cover;
+}
+
+img:hover {
+  transform: scale(1.2);
+  border: 2px solid rgb(187, 240, 14);
+  border-radius: 10px;
+  box-shadow: 0 0 2px rgb(187, 240, 14), 0 0 4px rgb(187, 240, 14), 0 0 8px rgb(187, 240, 14);
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(15px, 3vw, 20px);
+  text-decoration: none;
+  background-color: #151515;
+  color: white;
+  padding: clamp(15px, 3vw, 20px);
+  border-radius: 10px;
+  font-size: clamp(1rem, 2vw, 1.125rem);
+  font-style: italic;
+  width: max-content;
+  transition: ease-in-out 0.3s;
+}
+
+.link:hover {
+  color: rgb(187, 240, 14);
+}
+
+.github {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Tablet Breakpoint (768px and below) */
+@media (max-width: 768px) {
+  .parent {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    gap: 12px;
+    margin: 15px;
+  }
+
+  .div1,
+  .div2,
+  .div3,
+  .div4 {
+    grid-column: span 2;
+    grid-row: auto;
+    grid-column-start: auto;
+    grid-row-start: auto;
+  }
+
+  .div4 {
+    margin-top: 0;
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .gallery {
+    gap: 15px;
+    margin: 30px auto;
+  }
+
+  img {
+    width: clamp(200px, 40vw, 300px);
+    height: clamp(125px, 25vw, 185px);
+  }
+
+  .img-2 {
+    width: clamp(80px, 18vw, 120px);
+    height: clamp(130px, 28vw, 190px);
+  }
+}
+
+/* Mobile Breakpoint (480px and below) */
+@media (max-width: 480px) {
+  body {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .parent {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin: 10px;
+  }
+
+  .div1,
+  .div2,
+  .div3,
+  .div4 {
+    grid-column: 1;
+    width: 100%;
+  }
+
+  .features,
+  .tech,
+  .link {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .gallery {
+    flex-direction: column;
+    width: 100%;
+    gap: 20px;
+    margin: 20px auto;
+  }
+
+  img,
+  .img-2 {
+    width: 90vw;
+    max-width: 350px;
+    height: auto;
+    aspect-ratio: 16/10;
+  }
+
+  .img-2 {
+    aspect-ratio: 5/8;
+  }
+
+  img:hover {
+    transform: scale(1.05);
+  }
+}
+
+/* Large Desktop Breakpoint (1920px and above) */
+@media (min-width: 1920px) {
+  .parent {
+    max-width: 1800px;
+    margin: 40px auto;
+  }
+
+  .gallery {
+    max-width: 1600px;
+  }
+}
+
+/* Extra Small Mobile (320px and below) */
+@media (max-width: 320px) {
+  p,
+  .features,
+  .tech,
+  .link {
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
+  .module {
+    font-size: 1rem;
+  }
+}
