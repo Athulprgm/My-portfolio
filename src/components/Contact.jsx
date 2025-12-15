@@ -79,6 +79,54 @@ const Contact = () => {
         ))}
       </div>
 
+      <div className="contact-info-container">
+        <div className="info-column">
+          <h3 className="info-title">// Context</h3>
+          <p className="info-text">
+            Building scalable web interfaces and backend systems with the MERN
+            stack. Focused on clean architecture and performance.
+          </p>
+          <div className="status-indicator">
+            <span className="status-dot"></span>
+            <span>Available for freelance & full-time</span>
+          </div>
+          <p className="location-text">
+            <i className="fa-solid fa-location-dot"></i> Kerala, IN /
+            Remote-ready
+          </p>
+        </div>
+
+        <div className="info-column">
+          <h3 className="info-title">// Workflow</h3>
+          <ul className="workflow-list">
+            <li>
+              <span className="step-num">01.</span> Connect & Scope
+            </li>
+            <li>
+              <span className="step-num">02.</span> Build & Iterate
+            </li>
+            <li>
+              <span className="step-num">03.</span> Ship & Support
+            </li>
+          </ul>
+        </div>
+
+        <div className="info-column">
+          <h3 className="info-title">// Credibility</h3>
+          <p className="info-text">
+            Active in open-source. Consistently shipping real-world projects to
+            GitHub. Always learning modern patterns.
+          </p>
+          <p className="response-time">
+            <i className="fa-regular fa-clock"></i> Response time: &lt; 24h
+          </p>
+        </div>
+      </div>
+
+      <div className="closing-cta">
+        <span>Let's build something better.</span>
+      </div>
+
       <div className="status-bar">
         <div className="status-bar-left">
           <div className="status-item git-branch">
