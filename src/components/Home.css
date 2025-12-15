@@ -1,0 +1,355 @@
+/* ... (previous styles) ... */
+
+.profile-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 100px 20px 40px;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.profile-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
+  max-width: 1200px;
+  width: 100%;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.profile-photo {
+  flex: 0 0 auto;
+  position: relative;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 2;
+  transform-style: preserve-3d;
+}
+
+.profile-photo.animate-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.photo-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.2), transparent 70%);
+  border-radius: 50%;
+  z-index: -1;
+  filter: blur(40px);
+}
+
+.image {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 10px rgba(255, 255, 255, 0.02);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 1;
+  background: var(--dark-bg);
+}
+
+.floating-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.float-element {
+  position: absolute;
+  border-radius: 4px;
+  /* Square/Tech feel */
+  opacity: 0.6;
+  transition: transform 0.1s linear;
+}
+
+.float-1 {
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--accent-primary);
+  top: 10%;
+  left: 0%;
+}
+
+.float-2 {
+  width: 8px;
+  height: 8px;
+  background: var(--accent-secondary);
+  top: 70%;
+  right: 5%;
+}
+
+.float-3 {
+  width: 10px;
+  height: 10px;
+  border: 1px solid var(--accent-cyan);
+  bottom: 10%;
+  left: 15%;
+}
+
+.float-4 {
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  top: 20%;
+  right: 20%;
+  opacity: 0.4;
+}
+
+.introduce {
+  max-width: 600px;
+  padding: 40px;
+  /* Removed glass-bg to make it cleaner, text floating style */
+  opacity: 0;
+  transform: translateX(30px);
+  transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+  position: relative;
+  z-index: 2;
+}
+
+.introduce.animate-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Code Window Styles */
+.code-window {
+  max-width: 650px;
+  width: 100%;
+  background: #1e1e1e;
+  /* VS Code Dark */
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateX(30px);
+  transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s;
+  position: relative;
+  z-index: 2;
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+}
+
+.code-window.animate-in {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.window-header {
+  background: #252526;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #333;
+}
+
+.dots {
+  display: flex;
+  gap: 8px;
+  margin-right: 20px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.dot.red {
+  background: #ff5f56;
+}
+
+.dot.yellow {
+  background: #ffbd2e;
+}
+
+.dot.green {
+  background: #27c93f;
+}
+
+.filename {
+  color: #cccccc;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.8;
+}
+
+.filename i {
+  color: #61dafb;
+  /* React Blue */
+}
+
+.window-content {
+  padding: 20px;
+  color: #d4d4d4;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-x: auto;
+}
+
+.code-line {
+  display: flex;
+  white-space: pre;
+}
+
+.line-num {
+  color: #858585;
+  margin-right: 20px;
+  user-select: none;
+  min-width: 25px;
+  text-align: right;
+}
+
+/* Syntax Highlighting */
+.keyword {
+  color: #569cd6;
+}
+
+/* blue */
+.variable {
+  color: #4fc1ff;
+}
+
+/* light blue */
+.property {
+  color: #9cdcfe;
+}
+
+/* light blue property */
+.string {
+  color: #ce9178;
+}
+
+/* orange/brown */
+.operator {
+  color: #d4d4d4;
+}
+
+.bracket {
+  color: #ffd700;
+}
+
+/* yellow brackets */
+.comment {
+  color: #6a9955;
+  font-style: italic;
+}
+
+.indent {
+  display: inline-block;
+  width: 0;
+}
+
+.comma,
+.semicolon {
+  color: #d4d4d4;
+}
+
+.typing-text {
+  border-right: 2px solid #569cd6;
+  animation: cursor-blink 1s step-end infinite;
+}
+
+@keyframes cursor-blink {
+
+  0%,
+  100% {
+    border-color: #569cd6;
+  }
+
+  50% {
+    border-color: transparent;
+  }
+}
+
+.action-area {
+  padding: 0 20px 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cta-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 24px;
+  background: #0e639c;
+  /* VS Code button blue */
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cta-button:hover {
+  background: #1177bb;
+}
+
+.cta-button i {
+  font-size: 10px;
+}
+
+/* Responsiveness adjustments */
+@media (max-width: 1024px) {
+  .profile-wrapper {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .profile-wrapper {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .profile-photo {
+    margin-bottom: 20px;
+  }
+
+  .introduce {
+    text-align: center;
+    padding: 20px;
+  }
+
+  .name-highlight {
+    font-size: 2.5rem;
+  }
+
+  .tech-stack-mini {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .image {
+    width: 220px;
+    height: 220px;
+  }
+
+  .name-highlight {
+    font-size: 2rem;
+  }
+}
