@@ -101,19 +101,18 @@ const About = () => {
             <span className="comment-style">// Technologies & Tools</span>
           </h4>
           <div className="tech-box">
-            {technologies.map((tech, index) => (
-              <div
-                key={index}
-                className={`tech ${isTechVisible ? "visible" : ""}`}
-                style={{
-                  "--tech-color": tech.color,
-                  transitionDelay: `${index * 50}ms`,
-                }}
-              >
-                <i className={tech.icon}></i>
-                <span>{tech.name}</span>
-              </div>
-            ))}
+            <div className="tech-slider">
+              {[...technologies, ...technologies].map((tech, index) => (
+                <div
+                  key={index}
+                  className="tech"
+                  style={{ "--tech-color": tech.color }}
+                >
+                  <i className={tech.icon}></i>
+                  <span>{tech.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
