@@ -56,70 +56,72 @@ const Contact = () => {
         </p>
       </div>
 
-      <div className="contact-details">
-        {contacts.map((contact, index) => (
-          <a
-            key={index}
-            href={contact.link}
-            target={contact.link.startsWith("http") ? "_blank" : "_self"}
-            rel={contact.link.startsWith("http") ? "noopener noreferrer" : ""}
-            className={`contact-card ${
-              hoveredContact === index ? "hovered" : ""
-            }`}
-            onMouseEnter={() => setHoveredContact(index)}
-            onMouseLeave={() => setHoveredContact(null)}
-            style={{ "--contact-color": contact.color }}
-          >
-            <div className="contact-icon-wrapper">
-              <i className={contact.icon}></i>
+      <div className="contact-content-wrapper">
+        <div className="contact-info-container">
+          <div className="info-column">
+            <h3 className="info-title">// Context</h3>
+            <p className="info-text">
+              Building scalable web interfaces and backend systems with the MERN
+              stack. Focused on clean architecture and performance.
+            </p>
+            <div className="status-indicator">
+              <span className="status-dot"></span>
+              <span>Available for freelance & full-time</span>
             </div>
-            <span className="contact-text">{contact.text}</span>
-            <div className="contact-ripple"></div>
-          </a>
-        ))}
-      </div>
-
-      <div className="contact-info-container">
-        <div className="info-column">
-          <h3 className="info-title">// Context</h3>
-          <p className="info-text">
-            Building scalable web interfaces and backend systems with the MERN
-            stack. Focused on clean architecture and performance.
-          </p>
-          <div className="status-indicator">
-            <span className="status-dot"></span>
-            <span>Available for freelance & full-time</span>
+            <p className="location-text">
+              <i className="fa-solid fa-location-dot"></i> Kerala, IN /
+              Remote-ready
+            </p>
           </div>
-          <p className="location-text">
-            <i className="fa-solid fa-location-dot"></i> Kerala, IN /
-            Remote-ready
-          </p>
+
+          <div className="info-column">
+            <h3 className="info-title">// Workflow</h3>
+            <ul className="workflow-list">
+              <li>
+                <span className="step-num">01.</span> Connect & Scope
+              </li>
+              <li>
+                <span className="step-num">02.</span> Build & Iterate
+              </li>
+              <li>
+                <span className="step-num">03.</span> Ship & Support
+              </li>
+            </ul>
+          </div>
+
+          <div className="info-column">
+            <h3 className="info-title">// Credibility</h3>
+            <p className="info-text">
+              Active in open-source. Consistently shipping real-world projects
+              to GitHub. Always learning modern patterns.
+            </p>
+            <p className="response-time">
+              <i className="fa-regular fa-clock"></i> Response time: &lt; 24h
+            </p>
+          </div>
         </div>
 
-        <div className="info-column">
-          <h3 className="info-title">// Workflow</h3>
-          <ul className="workflow-list">
-            <li>
-              <span className="step-num">01.</span> Connect & Scope
-            </li>
-            <li>
-              <span className="step-num">02.</span> Build & Iterate
-            </li>
-            <li>
-              <span className="step-num">03.</span> Ship & Support
-            </li>
-          </ul>
-        </div>
-
-        <div className="info-column">
-          <h3 className="info-title">// Credibility</h3>
-          <p className="info-text">
-            Active in open-source. Consistently shipping real-world projects to
-            GitHub. Always learning modern patterns.
-          </p>
-          <p className="response-time">
-            <i className="fa-regular fa-clock"></i> Response time: &lt; 24h
-          </p>
+        <div className="contact-details">
+          {contacts.map((contact, index) => (
+            <a
+              key={index}
+              href={contact.link}
+              target={contact.link.startsWith("http") ? "_blank" : "_self"}
+              rel={contact.link.startsWith("http") ? "noopener noreferrer" : ""}
+              className={`contact-card ${
+                hoveredContact === index ? "hovered" : ""
+              }`}
+              onMouseEnter={() => setHoveredContact(index)}
+              onMouseLeave={() => setHoveredContact(null)}
+              style={{ "--contact-color": contact.color }}
+            >
+              <div className="contact-icon-wrapper">
+                <i className={contact.icon}></i>
+              </div>
+              <span className="contact-text">{contact.text}</span>
+              <div className="contact-ripple"></div>
+            </a>
+          ))}
         </div>
       </div>
 
