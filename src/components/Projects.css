@@ -197,13 +197,20 @@
   border-color: rgba(255, 255, 255, 0.1);
 }
 
+@media (max-width: 1024px) {
+  .project-container {
+    padding-top: 120px;
+  }
+}
+
 @media (max-width: 768px) {
   .section-heading {
     font-size: 32px;
   }
 
   .project-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    /* Use fluid grid instead of 1fr hard switch if possible, but 1fr is safer for cards */
     gap: 24px;
   }
 
@@ -218,10 +225,23 @@
 
 @media (max-width: 480px) {
   .project-container {
-    padding: 80px 15px 40px;
+    padding: 100px 15px 40px;
+  }
+
+  .project-grid {
+    grid-template-columns: 1fr;
+    /* Force stack on very small screens */
   }
 
   .section-heading {
     font-size: 28px;
+  }
+
+  .project-heading {
+    font-size: 18px;
+  }
+
+  .project-link {
+    width: 100%;
   }
 }

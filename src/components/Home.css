@@ -313,43 +313,116 @@
 }
 
 /* Responsiveness adjustments */
+/* Responsiveness adjustments */
+@media (max-width: 1200px) {
+  .profile-wrapper {
+    gap: 60px;
+    max-width: 1000px;
+  }
+
+  .code-window {
+    max-width: 550px;
+  }
+}
+
 @media (max-width: 1024px) {
+  .profile-container {
+    padding-top: 120px;
+  }
+
   .profile-wrapper {
     gap: 40px;
+    flex-direction: column-reverse;
+    /* Put code window/intro on top or reorganize? Actually column usually works best */
+  }
+
+  .introduce {
+    width: 100%;
+    max-width: 700px;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  .code-window {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+
+  .action-area {
+    justify-content: center;
   }
 }
 
 @media (max-width: 768px) {
+  .profile-container {
+    min-height: auto;
+    /* Allow scrolling on smaller screens if content is tall */
+    padding-bottom: 80px;
+  }
+
   .profile-wrapper {
     flex-direction: column;
     text-align: center;
+    gap: 40px;
   }
 
   .profile-photo {
     margin-bottom: 20px;
+    transform: none !important;
+    /* Reset transform for simpler mobile anims if needed, or keep it */
+    opacity: 1 !important;
+    /* Simplify animations on mobile if they cause issues, though keeping them is fine */
+  }
+
+  .profile-photo.animate-in {
+    transform: none;
+  }
+
+  .image {
+    width: 260px;
+    height: 260px;
   }
 
   .introduce {
     text-align: center;
-    padding: 20px;
+    padding: 0 20px;
   }
 
-  .name-highlight {
-    font-size: 2.5rem;
-  }
-
-  .tech-stack-mini {
-    justify-content: center;
+  .window-content {
+    font-size: 13px;
   }
 }
 
 @media (max-width: 480px) {
   .image {
-    width: 220px;
-    height: 220px;
+    width: 200px;
+    height: 200px;
+    box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.02);
   }
 
   .name-highlight {
     font-size: 2rem;
+  }
+
+  .code-window {
+    border-radius: 8px;
+  }
+
+  .window-header {
+    padding: 8px 12px;
+  }
+
+  .dots {
+    gap: 6px;
+  }
+
+  .line-num {
+    margin-right: 10px;
+    min-width: 15px;
+    font-size: 12px;
+  }
+
+  .code-line {
+    font-size: 12px;
   }
 }

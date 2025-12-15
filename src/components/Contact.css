@@ -218,13 +218,11 @@
   margin-left: 5px;
 }
 
-@media (max-width: 768px) {
-  .status-bar-center {
-    display: none;
-    /* Hide copyright on mobile if cramped */
+@media (max-width: 1024px) {
+  .contact-container {
+    padding-top: 120px;
   }
 }
-
 
 @media (max-width: 768px) {
   .section-heading {
@@ -232,17 +230,33 @@
   }
 
   .contact-details {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 16px;
   }
 
   .contact-card {
     padding: 20px;
   }
+
+  .status-bar {
+    height: 20px;
+    padding: 0 8px;
+  }
+
+  .status-bar-center {
+    display: none;
+  }
+
+  .status-item {
+    font-size: 10px;
+    padding: 0 4px;
+  }
 }
 
 @media (max-width: 480px) {
   .contact-container {
-    padding: 80px 15px 40px;
+    padding: 100px 15px 60px;
+    /* More bottom padding for status bar */
   }
 
   .section-heading {
@@ -251,5 +265,11 @@
 
   .contact-details {
     grid-template-columns: 1fr;
+  }
+
+  .section-subtitle {
+    padding: 0 20px;
+    text-align: center;
+    font-size: 13px;
   }
 }
