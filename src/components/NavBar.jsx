@@ -54,8 +54,8 @@ const NavBar = () => {
             className="logo-link"
             onClick={() => scrollToSection("home")}
           >
-            <span className="logo-text">Athulprgm</span>
-            <span className="logo-dot">.dev</span>
+            <span className="logo-text">AthulKrishna</span>
+            <span className="logo-dot">.Online</span>
           </a>
         </h1>
 

@@ -6,6 +6,8 @@ import About from "./components/About.jsx";
 import Contact from "./components/Contact.jsx";
 import "./App.css";
 
+import { motion } from "framer-motion";
+
 const App = () => {
   useEffect(() => {
     // Smooth scroll behavior for anchor links
@@ -42,10 +44,43 @@ const App = () => {
       </div>
 
       <NavBar />
-      <Home />
-      <Projects />
-      <About />
-      <Contact />
+
+      <main>
+        <motion.div
+          initial={{ opacity: 0, y: 10, filter: "blur(6px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.52, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <Home />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.52 }}
+        >
+          <Projects />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.52 }}
+        >
+          <About />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.52 }}
+        >
+          <Contact />
+        </motion.div>
+      </main>
 
       <ScrollToTop />
     </div>

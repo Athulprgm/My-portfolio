@@ -1,8 +1,35 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import "./Contact.css";
 
 const Contact = () => {
   const [hoveredContact, setHoveredContact] = useState(null);
+
+  // Animation Variants
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 120,
+        damping: 18,
+        mass: 0.9,
+      },
+    },
+  };
 
   const contacts = [
     {
@@ -15,7 +42,7 @@ const Contact = () => {
       icon: "fa-brands fa-github",
       text: "GitHub",
       link: "https://github.com/Athulprgm",
-      color: "#181717",
+      color: "#ffffffff",
     },
     {
       icon: "fa-brands fa-linkedin",
@@ -56,8 +83,14 @@ const Contact = () => {
         </p>
       </div>
 
-      <div className="contact-content-wrapper">
-        <div className="contact-info-container">
+      <motion.div
+        className="contact-content-wrapper"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <motion.div className="contact-info-container" variants={itemVariants}>
           <div className="info-column">
             <h3 className="info-title">// Context</h3>
             <p className="info-text">
@@ -99,12 +132,19 @@ const Contact = () => {
               <i className="fa-regular fa-clock"></i> Response time: &lt; 24h
             </p>
           </div>
-        </div>
+        </motion.div>
 
         <div className="contact-details">
           {contacts.map((contact, index) => (
-            <a
+            <motion.a
               key={index}
+              variants={itemVariants}
+              whileHover={{
+                y: -6,
+                scale: 1.015,
+                transition: { duration: 0.2 },
+              }}
+              whileTap={{ scale: 0.975 }}
               href={contact.link}
               target={contact.link.startsWith("http") ? "_blank" : "_self"}
               rel={contact.link.startsWith("http") ? "noopener noreferrer" : ""}
@@ -120,10 +160,10 @@ const Contact = () => {
               </div>
               <span className="contact-text">{contact.text}</span>
               <div className="contact-ripple"></div>
-            </a>
+            </motion.a>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       <div className="closing-cta">
         <span>Let's build something better.</span>
