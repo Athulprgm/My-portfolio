@@ -31,11 +31,12 @@ const technologies = [
   { name: "JavaScript", color: "#F7DF1E", icon: "fa-brands fa-js" },
   { name: "React", color: "#61DAFB", icon: "fa-brands fa-react" },
   { name: "Node.js", color: "#339933", icon: "fa-brands fa-node" },
-  { name: "Express", color: "#000000", icon: "fa-server" },
-  { name: "MongoDB", color: "#47A248", icon: "fa-database" },
+  { name: "Express", color: "#ffffff", icon: "fa-solid fa-server" },
+  { name: "MongoDB", color: "#47A248", icon: "fa-brands fa-envira" },
   { name: "Bootstrap", color: "#7952B3", icon: "fa-brands fa-bootstrap" },
+  { name: "Tailwind CSS", color: "#38B2AC", icon: "fa-solid fa-wind" },
   { name: "Python", color: "#3776AB", icon: "fa-brands fa-python" },
-  { name: "Django", color: "#092E20", icon: "fa-brands fa-django" },
+  { name: "Django", color: "#2BA977", icon: "fa-solid fa-laptop-code" },
 ];
 
 const About = () => {
