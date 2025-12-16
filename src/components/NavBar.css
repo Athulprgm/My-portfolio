@@ -1,203 +1,216 @@
 .nav-bar {
-  width: 100%;
-  height: 80px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 1000;
-  transition: all 0.4s ease;
-  background: transparent;
+    width: 100%;
+    height: 80px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: all 0.4s ease;
+    background: transparent;
 }
 
 .nav-bar.scrolled {
-  background: rgba(10, 10, 12, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-  height: 70px;
+    background: rgba(10, 10, 12, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    height: 70px;
 }
 
 .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
-  padding: 0 40px;
-  max-width: 1400px;
-  margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 40px;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .heading {
-  margin: 0;
+    margin: 0;
 }
 
 .logo-link {
-  text-decoration: none;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  font-size: 20px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  transition: transform 0.3s ease;
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: var(--fs-md);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: transform 0.3s ease;
 }
 
 .logo-link:hover {
-  transform: scale(1.02);
+    transform: scale(1.02);
 }
 
 .logo-text {
-  color: #fff;
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+    color: #fff;
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .logo-dot {
-  color: var(--accent-primary);
-  font-size: 24px;
+    color: var(--accent-primary);
+    font-size: 24px;
 }
 
 .nav-content {
-  display: flex;
-  list-style: none;
-  gap: 30px;
-  margin: 0;
-  padding: 0;
+    display: flex;
+    list-style: none;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-content a {
-  text-decoration: none;
-  color: var(--text-secondary);
-  font-size: 14px;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  position: relative;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: var(--fs-sm);
+    font-family: var(--font-mono);
+    font-weight: 500;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
 .nav-content a::before {
-  content: '// ';
-  color: var(--accent-primary);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  margin-right: 4px;
+    content: '// ';
+    color: var(--accent-primary);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    margin-right: 4px;
 }
 
 .nav-content a:hover,
 .nav-content a.active {
-  color: #fff;
+    color: #fff;
 }
 
 .nav-content a:hover::before,
 .nav-content a.active::before {
-  opacity: 1;
+    opacity: 1;
 }
 
 /* Mobile Toggle */
 .mobile-toggle {
-  display: none;
-  color: #fff;
-  font-size: 24px;
-  cursor: pointer;
+    display: none;
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
 }
 
 .mobile-menu {
-  position: fixed;
-  top: 70px;
-  right: -100%;
-  width: 250px;
-  height: calc(100vh - 70px);
-  background: rgba(10, 10, 12, 0.95);
-  backdrop-filter: blur(20px);
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  gap: 10px;
-  transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
+    position: fixed;
+    top: 70px;
+    right: -100%;
+    width: 250px;
+    height: calc(100vh - 70px);
+    background: rgba(10, 10, 12, 0.95);
+    backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+    transition: right 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .mobile-menu.open {
-  right: 0;
+    right: 0;
 }
 
 .mobile-menu a {
-  color: rgba(255, 255, 255, 0.7);
-  text-decoration: none;
-  padding: 15px;
-  border-radius: 4px;
-  font-size: 15px;
-  font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  transition: all 0.3s;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    padding: 15px;
+    border-radius: 4px;
+    font-size: var(--fs-base);
+    font-family: var(--font-mono);
+    transition: all 0.3s;
 }
 
 .mobile-menu a:hover,
 .mobile-menu a.active {
-  background: rgba(255, 255, 255, 0.05);
-  color: #fff;
-  padding-left: 20px;
-  border-left: 2px solid var(--accent-primary);
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    padding-left: 20px;
+    border-left: 2px solid var(--accent-primary);
 }
 
 @media (max-width: 1024px) {
-  .container {
-    padding: 0 30px;
-  }
+    .container {
+        padding: 0 30px;
+    }
 }
 
 @media (max-width: 768px) {
-  .nav-bar {
-    height: 70px;
-  }
+    .nav-bar {
+        height: 70px;
+    }
 
-  .nav-content {
-    display: none;
-  }
+    .nav-content {
+        display: none;
+    }
 
-  .mobile-toggle {
-    display: block;
-  }
+    .mobile-toggle {
+        display: block;
+    }
 
-  .container {
-    padding: 0 20px;
-  }
+    .container {
+        padding: 0 20px;
+    }
 
-  .mobile-menu {
-    width: 100%;
-    right: -100%;
-    top: 70px;
-    height: calc(100vh - 70px);
-    border-left: none;
-    align-items: center;
-    justify-content: center;
-    gap: 20px;
-    background: rgba(5, 5, 5, 0.98);
-  }
+    .mobile-menu {
+        width: 100%;
+        right: -100%;
+        top: 70px;
+        height: calc(100vh - 70px);
+        border-left: none;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        background: rgba(5, 5, 5, 0.98);
+    }
 
-  .mobile-menu.open {
-    right: 0;
-  }
+    .mobile-menu.open {
+        right: 0;
+    }
 
-  .mobile-menu a {
-    font-size: 20px;
-    padding: 10px;
-    width: 100%;
-    text-align: center;
-  }
+    .mobile-menu a {
+        font-size: var(--fs-md);
+        padding: 10px;
+        width: 100%;
+        text-align: center;
+    }
 
-  .mobile-menu a:hover,
-  .mobile-menu a.active {
-    border-left: none;
-    border-bottom: 2px solid var(--accent-primary);
-    padding-left: 10px;
-    background: transparent;
-  }
+    .mobile-menu a:hover,
+    .mobile-menu a.active {
+        border-left: none;
+        border-bottom: 2px solid var(--accent-primary);
+        padding-left: 10px;
+        background: transparent;
+    }
 }
 
 @media (max-width: 480px) {
-  .logo-link {
-    font-size: 18px;
-  }
+    .container {
+        padding: 0 12px;
+    }
+
+    .logo-link {
+        font-size: var(--fs-base);
+    }
+
+    .mobile-menu {
+        padding: 16px;
+    }
+
+    .mobile-menu a {
+        font-size: var(--fs-base);
+        padding: 12px;
+    }
 }

@@ -4,11 +4,18 @@ import Home from "./components/Home.jsx";
 import Projects from "./components/Projects.jsx";
 import About from "./components/About.jsx";
 import Contact from "./components/Contact.jsx";
+import LoadingScreen from "./components/LoadingScreen.jsx";
 import "./App.css";
 
 import { motion } from "framer-motion";
 
 const App = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
+
   useEffect(() => {
     // Smooth scroll behavior for anchor links
     const handleSmoothScroll = (e) => {
@@ -33,6 +40,10 @@ const App = () => {
     document.addEventListener("click", handleSmoothScroll);
     return () => document.removeEventListener("click", handleSmoothScroll);
   }, []);
+
+  if (isLoading) {
+    return <LoadingScreen onLoadingComplete={handleLoadingComplete} />;
+  }
 
   return (
     <div className="App">

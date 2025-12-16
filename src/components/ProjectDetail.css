@@ -20,8 +20,8 @@
   transition: all 0.3s ease;
   margin-bottom: 30px;
   cursor: pointer;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
 }
 
 .back-button:hover {
@@ -51,7 +51,7 @@
 
 .project-title {
   font-family: var(--font-heading);
-  font-size: 42px;
+  font-size: var(--fs-xl);
   background: linear-gradient(135deg, #fff 20%, #E0E0E0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -62,9 +62,9 @@
 }
 
 .project-subtitle {
-  font-size: 14px;
+  font-size: var(--fs-sm);
   color: var(--text-muted);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
   opacity: 0.8;
 }
 
@@ -84,7 +84,6 @@
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 4px;
-  /* Tech corners */
   padding: 32px;
   transition: all 0.4s ease;
   position: relative;
@@ -113,8 +112,8 @@
 }
 
 .section-title {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 20px;
+  font-family: var(--font-heading);
+  font-size: var(--fs-md);
   color: #fff;
   margin-bottom: 24px;
   font-weight: 600;
@@ -132,8 +131,8 @@
 }
 
 .project-abstract {
-  font-size: 15px;
-  line-height: 1.8;
+  font-size: var(--fs-base);
+  line-height: var(--lh-relaxed);
   color: rgba(255, 255, 255, 0.8);
   text-align: justify;
   font-weight: 400;
@@ -164,19 +163,19 @@
 }
 
 .tech-label {
-  font-size: 11px;
+  font-size: var(--fs-xs);
   color: var(--accent-cyan);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
 }
 
 .tech-value {
-  font-size: 14px;
+  font-size: var(--fs-sm);
   color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
 }
 
 .features-list {
@@ -195,9 +194,9 @@
   border-radius: 4px;
   position: relative;
   transition: all 0.3s ease;
-  font-size: 15px;
+  font-size: var(--fs-base);
   color: rgba(255, 255, 255, 0.8);
-  line-height: 1.6;
+  line-height: var(--lh-relaxed);
   border-left: 2px solid transparent;
 }
 
@@ -207,9 +206,9 @@
   left: 15px;
   top: 14px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: var(--fs-sm);
   color: var(--accent-primary);
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
 }
 
 .features-list li:hover {
@@ -239,11 +238,11 @@
 }
 
 .module-title {
-  font-size: 16px;
+  font-size: var(--fs-base);
   color: #fff;
   margin-bottom: 16px;
   font-weight: 600;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-heading);
   letter-spacing: 0;
   color: var(--accent-secondary);
 }
@@ -257,11 +256,11 @@
 }
 
 .module-items li {
-  font-size: 14px;
+  font-size: var(--fs-sm);
   color: rgba(255, 255, 255, 0.7);
   padding-left: 14px;
   position: relative;
-  line-height: 1.5;
+  line-height: var(--lh-normal);
 }
 
 .module-items li::before {
@@ -368,10 +367,10 @@
   border-radius: 4px;
   color: white;
   text-decoration: none;
-  font-size: 14px;
+  font-size: var(--fs-sm);
   font-weight: 500;
   transition: all 0.3s ease;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
 }
 
 .github-link:hover {
@@ -387,85 +386,7 @@
   margin-left: 4px;
 }
 
-@media (max-width: 1024px) {
-  .project-detail-container {
-    padding-top: 120px;
-  }
-
-  .tech-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  .project-detail-container {
-    padding: 100px 20px 40px;
-  }
-
-  .project-title {
-    font-size: 32px;
-  }
-
-  .project-subtitle {
-    display: block;
-    margin-top: 5px;
-  }
-
-  .section-card {
-    padding: 24px;
-  }
-
-  .tech-grid,
-  .modules-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .gallery {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    /* Keep some grid structure if possible, else 1fr */
-  }
-}
-
-@media (max-width: 480px) {
-  .project-detail-container {
-    padding: 90px 15px 40px;
-  }
-
-  .project-title {
-    font-size: 26px;
-    line-height: 1.3;
-  }
-
-  .section-title {
-    font-size: 18px;
-  }
-
-  .section-card {
-    padding: 20px;
-  }
-
-  .tech-grid,
-  .modules-grid,
-  .gallery {
-    grid-template-columns: 1fr;
-  }
-
-  .features-list li {
-    padding-left: 35px;
-    font-size: 14px;
-  }
-
-  .features-list li::before {
-    left: 10px;
-  }
-
-  .back-button {
-    padding: 6px 12px;
-    font-size: 12px;
-  }
-}
-
-/* Image Modal Styles */
+/* Image Modal */
 .image-modal-overlay {
   position: fixed;
   top: 0;
@@ -534,5 +455,104 @@
 
   to {
     opacity: 1;
+  }
+}
+
+@media (max-width: 1024px) {
+  .project-detail-container {
+    padding-top: 120px;
+  }
+
+  .tech-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .project-detail-container {
+    padding: 100px 20px 40px;
+  }
+
+  .section-card {
+    padding: 24px;
+  }
+
+  .tech-grid,
+  .modules-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .project-detail-container {
+    padding: 90px 12px 40px;
+  }
+
+  .detail-header {
+    margin-bottom: 40px;
+  }
+
+  .section-card {
+    padding: 16px;
+  }
+
+  .section-title {
+    font-size: var(--fs-base);
+    margin-bottom: 16px;
+  }
+
+  .tech-grid,
+  .modules-grid,
+  .gallery {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .tech-item {
+    padding: 12px;
+  }
+
+  .module-card {
+    padding: 16px;
+  }
+
+  .features-list li {
+    padding-left: 35px;
+    padding-right: 12px;
+    font-size: var(--fs-sm);
+  }
+
+  .features-list li::before {
+    left: 10px;
+  }
+
+  .back-button {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+
+  .github-link {
+    padding: 12px 24px;
+    font-size: 12px;
+  }
+
+  .image-modal-overlay {
+    padding: 20px;
+  }
+
+  .modal-close-btn {
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    font-size: 18px;
+  }
+
+  .gallery-item.portrait img {
+    height: 280px;
   }
 }

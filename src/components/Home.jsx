@@ -51,12 +51,7 @@ const Home = () => {
   const textRef = useRef(null);
   const containerRef = useRef(null);
 
-  const toRotate = [
-    "MERN Stack Developer",
-    "Frontend Specialist",
-    "UI/UX Enthusiast",
-    "Problem Solver",
-  ];
+  const toRotate = ["MERN Stack Developer"];
   const period = 2000;
 
   const displayText = useTypingEffect(toRotate, period);
