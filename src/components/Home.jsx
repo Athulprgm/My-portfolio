@@ -134,12 +134,6 @@ const Home = () => {
             alt="Profile"
             loading="lazy"
           />
-          <div className="floating-elements">
-            <div className="float-element float-1"></div>
-            <div className="float-element float-2"></div>
-            <div className="float-element float-3"></div>
-            <div className="float-element float-4"></div>
-          </div>
         </div>
         <div className="introduce code-window" ref={textRef}>
           <div className="window-header">
