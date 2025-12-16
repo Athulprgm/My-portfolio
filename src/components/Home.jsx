@@ -55,39 +55,7 @@ const Home = () => {
   const period = 2000;
 
   const displayText = useTypingEffect(toRotate, period);
-  const [isFlipped, setIsFlipped] = useState(false);
-
-  // Mouse parallax effect
-
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      if (!containerRef.current) return;
-      const { clientX, clientY } = e;
-      const centerX = window.innerWidth / 2;
-      const centerY = window.innerHeight / 2;
-
-      const moveX = (clientX - centerX) / 50;
-      const moveY = (clientY - centerY) / 50;
-
-      const floats = document.querySelectorAll(".float-element");
-      floats.forEach((float, index) => {
-        const speed = (index + 1) * 0.5;
-        float.style.transform = `translate(${moveX * speed}px, ${
-          moveY * speed
-        }px)`;
-      });
-
-      const photo = document.querySelector(".profile-photo");
-      if (photo) {
-        photo.style.transform = `perspective(1000px) rotateY(${
-          moveX * 0.5
-        }deg) rotateX(${moveY * -0.5}deg)`;
-      }
-    };
-
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  const [isSwinging, setIsSwinging] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -129,69 +97,41 @@ const Home = () => {
       <div className="profile-wrapper">
         {/* Interactive ID Card Section */}
         <div
-          className="id-card-container"
+          className={`id-card-container ${isSwinging ? "swinging" : ""}`}
           ref={profileRef}
-          onClick={() => setIsFlipped(!isFlipped)}
+          onClick={() => setIsSwinging(true)}
+          onAnimationEnd={() => setIsSwinging(false)}
         >
-          <div className={`id-card-inner ${isFlipped ? "flipped" : ""}`}>
-            {/* Front Side */}
-            <div className="id-card-face id-card-front">
-              <div className="id-header">
-                <span className="company-name">TRAWBIT TECHNOLOGIES</span>
-                <i className="fa-solid fa-microchip id-icon"></i>
-              </div>
-              <div className="id-photo-wrapper">
-                <img
-                  className="id-photo"
-                  src="/Gemini_Generated_Image_v750zhv750zhv750.png"
-                  alt="Profile"
-                  loading="lazy"
-                />
-              </div>
-              <div className="id-details">
-                <h2 className="id-name">Athul Krishna K</h2>
-                <div className="id-badges">
-                  <span className="badge">ENGINEER</span>
-                  <span className="badge">FULL STACK</span>
-                </div>
-                <div className="id-role-container">
-                  <span className="role-label-small">ROLE DESIGNATION</span>
-                  <span className="role-value-large typing-text">
-                    {displayText}
-                  </span>
-                </div>
-              </div>
-              <div className="id-footer">
-                <div className="id-barcode"></div>
-                <span className="id-code">ID: TB-25-001</span>
+          {/* Lanyard Visuals */}
+          <div className="lanyard-structure">
+            <div className="lanyard-strap-left"></div>
+            <div className="lanyard-strap-right"></div>
+            <div className="lanyard-clip-top"></div>
+          </div>
+
+          <div className="id-card-face id-card-front">
+            <div className="id-header">
+              <span className="company-name">TRAWBIT TECHNOLOGIES</span>
+              <i className="fa-solid fa-microchip id-icon"></i>
+            </div>
+            <div className="id-photo-wrapper">
+              <img
+                className="id-photo"
+                src="/Gemini_Generated_Image_v750zhv750zhv750.png"
+                alt="Profile"
+                loading="lazy"
+              />
+            </div>
+            <div className="id-details">
+              <h2 className="id-name">Athul Krishna K</h2>
+              <div className="id-role-container">
+                <span className="role-label-small">ROLE DESIGNATION</span>
+                <span className="role-value-large">FULL STACK DEVELOPER</span>
               </div>
             </div>
-
-            {/* Back Side */}
-            <div className="id-card-face id-card-back">
-              <div className="magnetic-strip"></div>
-              <div className="signature-area">
-                <span className="label">AUTHORIZED SIGNATURE</span>
-                <div className="signature">AthulKrishna</div>
-              </div>
-              <div className="qr-area">
-                <img
-                  src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://athulkrishna.online"
-                  alt="QR Code"
-                  className="qr-code"
-                />
-                <span className="scan-text">SCAN FOR DETAILS</span>
-              </div>
-              <div className="card-info">
-                <p>
-                  This card certifies the bearer as a verified employee of
-                  Trawbit Technologies.
-                </p>
-                <p>If found, please return to: github.com/Athulprgm</p>
-              </div>
-              <div className="id-footer">
-                <span className="company-name-small">TRAWBIT SYSTEMS</span>
-              </div>
+            <div className="id-footer">
+              <div className="id-barcode"></div>
+              <span className="id-code">ID: TRAWBIT-DEV-01</span>
             </div>
           </div>
         </div>
