@@ -6,6 +6,8 @@ const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
 
+  const resumeUrl = `${import.meta.env.BASE_URL}Athul_Krishna_Resume.pdf`;
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -74,6 +76,16 @@ const NavBar = () => {
               </a>
             </li>
           ))}
+          <li className="download-li">
+            <a
+              href={resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="resume-btn"
+            >
+              <i className="fa-solid fa-cloud-arrow-down"></i> Resume
+            </a>
+          </li>
         </ul>
 
         {/* Mobile Menu Toggle */}
@@ -95,6 +107,14 @@ const NavBar = () => {
               {item.charAt(0).toUpperCase() + item.slice(1)}
             </a>
           ))}
+          <a
+            href={resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="resume-btn-mobile"
+          >
+            <i className="fa-solid fa-cloud-arrow-down"></i> Download Resume
+          </a>
         </div>
       </div>
     </nav>
