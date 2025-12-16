@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import "./NavBar.css";
 
 const NavBar = () => {
@@ -79,8 +79,7 @@ const NavBar = () => {
           <li className="download-li">
             <a
               href={resumeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
+              download="Athul_Krishna_Resume.pdf"
               className="resume-btn"
             >
               <i className="fa-solid fa-cloud-arrow-down"></i> Resume
@@ -109,8 +108,7 @@ const NavBar = () => {
           ))}
           <a
             href={resumeUrl}
-            target="_blank"
-            rel="noopener noreferrer"
+            download="Athul_Krishna_Resume.pdf"
             className="resume-btn-mobile"
           >
             <i className="fa-solid fa-cloud-arrow-down"></i> Download Resume

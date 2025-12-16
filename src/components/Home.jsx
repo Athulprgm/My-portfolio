@@ -120,7 +120,7 @@ const Home = () => {
               <div className="id-info-grid">
                 <div className="info-item">
                   <span className="label">DESIGNATION</span>
-                  <span className="value">Full Stack Developer</span>
+                  <span className="value">MERN Stack Developer</span>
                 </div>
                 <div className="info-item">
                   <span className="label">DOMAIN</span>
@@ -164,115 +164,111 @@ const Home = () => {
             <div className="code-editor">
               <div className="code-line">
                 <span className="line-num">1</span>
-                <span className="keyword">import</span>{" "}
-                <span className="variable">React</span>,{" "}
-                <span className="bracket">{`{`}</span>{" "}
-                <span className="variable">Developer</span>{" "}
-                <span className="bracket">{`}`}</span>{" "}
-                <span className="keyword">from</span>{" "}
-                <span className="string">'@universe/creative'</span>
-                <span className="semicolon">;</span>
+                <span className="keyword">class</span>{" "}
+                <span className="class-name">Architect</span>{" "}
+                <span className="keyword">extends</span>{" "}
+                <span className="class-name">FullStackDev</span>{" "}
+                <span className="bracket">{`{`}</span>
               </div>
 
               <div className="code-line">
                 <span className="line-num">2</span>
+                <span className="indent"></span>
+                <span className="keyword">constructor</span>
+                <span className="bracket">()</span>{" "}
+                <span className="bracket">{`{`}</span>
               </div>
 
               <div className="code-line">
                 <span className="line-num">3</span>
-                <span className="keyword">const</span>{" "}
-                <span className="function">initProfile</span>{" "}
-                <span className="operator">=</span>{" "}
-                <span className="bracket">()</span>{" "}
-                <span className="operator">=&gt;</span>{" "}
-                <span className="bracket">{`{`}</span>
+                <span className="indent"></span>
+                <span className="indent"></span>
+                <span className="keyword">super</span>
+                <span className="bracket">()</span>
+                <span className="semicolon">;</span>
               </div>
 
               <div className="code-line">
                 <span className="line-num">4</span>
                 <span className="indent"></span>
-                <span className="keyword">const</span>{" "}
-                <span className="variable">skills</span>{" "}
+                <span className="indent"></span>
+                <span className="this">this</span>
+                <span className="operator">.</span>
+                <span className="prop">stack</span>{" "}
                 <span className="operator">=</span>{" "}
                 <span className="bracket">[</span>
+                <span className="string">"MERN"</span>
+                <span className="comma">,</span>{" "}
+                <span className="string">"AWS"</span>
+                <span className="bracket">]</span>
+                <span className="semicolon">;</span>
               </div>
 
               <div className="code-line">
                 <span className="line-num">5</span>
                 <span className="indent"></span>
                 <span className="indent"></span>
-                <span className="string">"MERN Stack"</span>
-                <span className="comma">,</span>{" "}
-                <span className="string">"Next.js"</span>
-                <span className="comma">,</span>{" "}
-                <span className="string">"System Design"</span>
+                <span className="this">this</span>
+                <span className="operator">.</span>
+                <span className="prop">focus</span>{" "}
+                <span className="operator">=</span>{" "}
+                <span className="string">"Scalable Architecture"</span>
+                <span className="semicolon">;</span>
               </div>
 
               <div className="code-line">
                 <span className="line-num">6</span>
                 <span className="indent"></span>
-                <span className="bracket">]</span>
-                <span className="semicolon">;</span>
+                <span className="bracket">{`}`}</span>
               </div>
 
               <div className="code-line">
                 <span className="line-num">7</span>
+                <span className="indent"></span>
+                <span className="keyword">async</span>{" "}
+                <span className="function">deploy</span>
+                <span className="bracket">()</span>{" "}
+                <span className="bracket">{`{`}</span>
               </div>
 
               <div className="code-line">
                 <span className="line-num">8</span>
                 <span className="indent"></span>
-                <span className="keyword">return</span>{" "}
-                <span className="bracket">(</span>
+                <span className="indent"></span>
+                <span className="keyword">await</span>{" "}
+                <span className="function">build</span>
+                <span className="bracket">({`{`}</span>
               </div>
 
               <div className="code-line">
                 <span className="line-num">9</span>
                 <span className="indent"></span>
                 <span className="indent"></span>
-                <span className="tag">&lt;CodeMaster</span>
+                <span className="indent"></span>
+                <span className="prop">performance</span>
+                <span className="operator">:</span>{" "}
+                <span className="string">"Optimized"</span>
+                <span className="comma">,</span>
               </div>
 
               <div className="code-line">
                 <span className="line-num">10</span>
                 <span className="indent"></span>
                 <span className="indent"></span>
-                <span className="indent"></span>
-                <span className="prop">passion</span>
-                <span className="operator">=</span>
-                <span className="bracket">{`{`}</span>
-                <span className="keyword">true</span>
                 <span className="bracket">{`}`}</span>
-              </div>
-
-              <div className="code-line">
-                <span className="line-num">11</span>
-                <span className="indent"></span>
-                <span className="indent"></span>
-                <span className="indent"></span>
-                <span className="prop">mission</span>
-                <span className="operator">=</span>
-                <span className="string">"Build The Future"</span>
-              </div>
-
-              <div className="code-line">
-                <span className="line-num">12</span>
-                <span className="indent"></span>
-                <span className="indent"></span>
-                <span className="tag">/&gt;</span>
-              </div>
-
-              <div className="code-line">
-                <span className="line-num">13</span>
-                <span className="indent"></span>
                 <span className="bracket">)</span>
                 <span className="semicolon">;</span>
               </div>
 
               <div className="code-line">
-                <span className="line-num">14</span>
+                <span className="line-num">11</span>
+                <span className="indent"></span>
                 <span className="bracket">{`}`}</span>
-                <span className="semicolon">;</span>
+              </div>
+
+              <div className="code-line">
+                <span className="line-num">12</span>
+                <span className="bracket">{`}`}</span>
               </div>
             </div>
           </div>
