@@ -96,23 +96,16 @@ const Home = () => {
     <section className="profile-container" id="home" ref={containerRef}>
       <div className="profile-wrapper">
         {/* Interactive ID Card Section */}
-        <div
-          className={`id-card-container ${isSwinging ? "swinging" : ""}`}
-          ref={profileRef}
-          onClick={() => setIsSwinging(true)}
-          onAnimationEnd={() => setIsSwinging(false)}
-        >
-          {/* Lanyard Visuals */}
-          <div className="lanyard-structure">
-            <div className="lanyard-strap-left"></div>
-            <div className="lanyard-strap-right"></div>
-            <div className="lanyard-clip-top"></div>
-          </div>
-
+        <div className="id-card-container" ref={profileRef}>
+          {/* Minimal Design */}
           <div className="id-card-face id-card-front">
+            <div className="id-bg-accent"></div>
             <div className="id-header">
               <span className="company-name">TRAWBIT TECHNOLOGIES</span>
-              <i className="fa-solid fa-microchip id-icon"></i>
+              <div className="id-status">
+                <span className="status-dot"></span>
+                <span className="status-text">ACTIVE</span>
+              </div>
             </div>
             <div className="id-photo-wrapper">
               <img

@@ -21,116 +21,44 @@
     z-index: 1;
 }
 
-/* --- ID CARD DESIGN (STATIC) --- */
+/* --- ID CARD DESIGN (MINIMAL STATIC) --- */
 .id-card-container {
-    width: 320px;
-    height: 480px;
+    width: 300px;
+    height: 460px;
     margin-bottom: 20px;
     position: relative;
-    transform-origin: top center;
-    /* Static by default */
+    cursor: default;
+    /* No pointer if no interaction */
 }
 
-.id-card-container.swinging {
-    animation: swing 2s ease-in-out;
-}
-
-/* Lanyard Styles */
-.lanyard-structure {
-    position: absolute;
-    top: -100px;
-    /* Start way above */
-    left: 0;
-    width: 100%;
-    height: 100px;
-    pointer-events: none;
-    z-index: -1;
-    display: flex;
-    justify-content: center;
-}
-
-.lanyard-strap-left,
-.lanyard-strap-right {
-    position: absolute;
-    width: 25px;
-    height: 120%;
-    /* Go slightly into the card */
-    background: #1a1a1a;
-    top: -100px;
-    /* Extend upwards off screen */
-    border: 1px solid #333;
-    z-index: 1;
-}
-
-.lanyard-strap-left {
-    transform: rotate(15deg);
-    left: 40%;
-}
-
-.lanyard-strap-right {
-    transform: rotate(-15deg);
-    right: 40%;
-}
-
-/* Connectors */
-.lanyard-clip-top {
-    width: 60px;
-    height: 25px;
-    background: #222;
-    border: 1px solid #444;
-    border-radius: 4px;
-    position: absolute;
-    bottom: -12px;
-    /* Overlap card top */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 20;
-    /* On top of card */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-}
-
-.lanyard-clip-top::after {
-    /* The ring/hook */
-    content: '';
-    position: absolute;
-    top: -15px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 30px;
-    height: 30px;
-    border: 4px solid #555;
-    border-radius: 50%;
-    z-index: -1;
-}
-
-@keyframes swing {
-    0% {
-        transform: rotate3d(0, 0, 1, 1deg);
-    }
-
-    50% {
-        transform: rotate3d(0, 0, 1, -1deg);
-    }
-
-    100% {
-        transform: rotate3d(0, 0, 1, 1deg);
-    }
-}
-
+/* CARD FACE STYLING */
 .id-card-face {
     position: relative;
     width: 100%;
     height: 100%;
-    border-radius: 16px;
-    padding: 24px;
+    border-radius: 20px;
+    /* Softer Check */
+    padding: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
     overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    background: linear-gradient(145deg, #1e1e24, #121216);
-    z-index: 5;
+    background: #0a0a0a;
+    /* Pure Dark Minimal */
+}
+
+/* Accent is now a subtle glow or line */
+.id-bg-accent {
+    width: 100%;
+    height: 6px;
+    /* Just a top strip */
+    background: var(--accent-primary);
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
 }
 
 /* FRONT FACE STYLING */
@@ -148,41 +76,67 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 10px;
+    z-index: 2;
 }
 
 .company-name {
-    font-family: var(--font-heading);
-    font-weight: 700;
-    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.75rem;
     letter-spacing: 2px;
-    color: var(--accent-primary);
+    color: #666;
+    /* Subdued */
+    text-transform: uppercase;
 }
 
-.id-icon {
-    color: rgba(255, 255, 255, 0.4);
-    font-size: 1.2rem;
+.id-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #333;
+    padding: 4px 10px;
+    border-radius: 20px;
 }
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    background: #10b981;
+    border-radius: 50%;
+}
+
+.status-text {
+    font-size: 0.6rem;
+    color: #ccc;
+    font-weight: 600;
+}
+
+/* SMART CHIP */
+/* Removed for minimal look */
 
 /* PHOTO */
 .id-photo-wrapper {
-    width: 160px;
-    height: 160px;
+    position: relative;
+    width: 120px;
+    /* Smaller, cleaner */
+    height: 120px;
     border-radius: 50%;
     padding: 4px;
-    background: linear-gradient(45deg, var(--accent-primary), transparent);
-    margin-bottom: 20px;
-    overflow: hidden;
+    /* Space between photo and ring */
+    border: 1px solid #333;
+    /* Thin subtle ring */
+    margin-bottom: 25px;
+    z-index: 2;
 }
 
 .id-photo {
     width: 100%;
     height: 100%;
-    border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #1a1a1a;
-    background: #000;
+    border-radius: 50%;
+    filter: grayscale(20%);
+    /* Artistic touch */
 }
 
 /* DETAILS */
@@ -191,17 +145,18 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
+    gap: 10px;
+    margin-bottom: auto;
+    /* Push footer down */
+    z-index: 2;
 }
 
 .id-name {
-    font-family: var(--font-heading);
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 600;
     color: #fff;
-    margin: 0;
-    letter-spacing: 1px;
+    margin-bottom: 5px;
     text-align: center;
 }
 
@@ -209,19 +164,14 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    background: rgba(255, 255, 255, 0.03);
-    padding: 15px;
-    border-radius: 8px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    gap: 15px;
+    margin-top: 10px;
 }
 
 .info-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    padding-bottom: 8px;
 }
 
 .info-item:last-child {
@@ -231,42 +181,40 @@
 
 .info-item .label {
     font-size: 0.65rem;
-    color: #888;
+    color: #555;
     letter-spacing: 1px;
-    font-weight: 600;
+    font-weight: 500;
+    text-transform: uppercase;
 }
 
 .info-item .value {
-    font-family: var(--font-mono);
+    font-family: 'Inter', sans-serif;
+    /* Clean sans */
     font-size: 0.85rem;
-    color: var(--accent-primary);
-    /* Use accent color */
-    font-weight: 600;
+    color: #ccc;
+    font-weight: 500;
     text-align: right;
 }
 
 /* FOOTER FRONT */
 .id-footer {
     width: 100%;
-    margin-top: auto;
     text-align: center;
+    border-top: 1px solid #222;
+    padding-top: 15px;
+    margin-top: 10px;
 }
 
 .id-barcode {
-    height: 25px;
-    background: repeating-linear-gradient(90deg, #fff 0, #fff 1px, transparent 1px, transparent 3px, #fff 3px, #fff 4px);
-    opacity: 0.3;
-    margin-bottom: 8px;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
+    display: none;
+    /* Removed for minimal look */
 }
 
 .id-code {
+    font-family: var(--font-mono);
     font-size: 0.7rem;
     color: #444;
-    font-family: var(--font-mono);
-    letter-spacing: 2px;
+    letter-spacing: 1px;
 }
 
 /* BACK SIDE ELEMENTS */
