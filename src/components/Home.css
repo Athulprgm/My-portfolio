@@ -192,52 +192,57 @@
     flex-direction: column;
     align-items: center;
     gap: 15px;
+    margin-bottom: 15px;
 }
 
 .id-name {
     font-family: var(--font-heading);
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #fff;
     margin: 0;
     letter-spacing: 1px;
+    text-align: center;
 }
 
-.id-badges {
-    display: flex;
-    gap: 8px;
-}
-
-.badge {
-    background: rgba(255, 255, 255, 0.1);
-    color: #fff;
-    font-size: 0.7rem;
-    padding: 4px 10px;
-    border-radius: 4px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.id-role-container {
+.id-info-grid {
+    width: 100%;
     display: flex;
     flex-direction: column;
+    gap: 12px;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    margin-top: 5px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 8px;
 }
 
-.role-label-small {
-    font-size: 0.6rem;
-    color: #666;
-    letter-spacing: 2px;
-    margin-bottom: 4px;
+.info-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
 }
 
-.role-value-large {
-    font-family: var(--font-mono);
-    font-size: 1rem;
-    color: #4fc1ff;
+.info-item .label {
+    font-size: 0.65rem;
+    color: #888;
+    letter-spacing: 1px;
     font-weight: 600;
+}
+
+.info-item .value {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent-primary);
+    /* Use accent color */
+    font-weight: 600;
+    text-align: right;
 }
 
 /* FOOTER FRONT */

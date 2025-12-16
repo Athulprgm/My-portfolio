@@ -124,9 +124,19 @@ const Home = () => {
             </div>
             <div className="id-details">
               <h2 className="id-name">Athul Krishna K</h2>
-              <div className="id-role-container">
-                <span className="role-label-small">ROLE DESIGNATION</span>
-                <span className="role-value-large">FULL STACK DEVELOPER</span>
+              <div className="id-info-grid">
+                <div className="info-item">
+                  <span className="label">DESIGNATION</span>
+                  <span className="value">Full Stack Developer</span>
+                </div>
+                <div className="info-item">
+                  <span className="label">DOMAIN</span>
+                  <span className="value">Web Development</span>
+                </div>
+                <div className="info-item">
+                  <span className="label">LOCATION</span>
+                  <span className="value">Kerala, India</span>
+                </div>
               </div>
             </div>
             <div className="id-footer">
