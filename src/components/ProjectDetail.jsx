@@ -1,73 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useParams, useNavigate } from "react-router-dom";
+import { projectsData } from "../data/projectsData";
 import "./ProjectDetail.css";
 
-const ProjectDetail = ({ onClose }) => {
+const ProjectDetail = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [project, setProject] = useState(null);
 
-  const projectImages = [
-    "/project-img/Screenshot 2025-10-31 182323.png",
-    "/project-img/Screenshot 2025-10-31 182349.png",
-    "/project-img/Screenshot 2025-10-31 182448.png",
-    "/project-img/Screenshot 2025-10-31 182506.png",
-  ];
+  useEffect(() => {
+    const foundProject = projectsData.find((p) => p.id === parseInt(id));
+    if (foundProject) {
+      setProject(foundProject);
+    } else {
+      // Handle not found if needed, or redirect
+      navigate("/");
+    }
+  }, [id, navigate]);
 
-  const technologies = [
-    {
-      name: "Frontend",
-      stack: "HTML, CSS, JavaScript",
-      icon: "fa-brands fa-js",
-    },
-    { name: "Backend", stack: "Python, Django", icon: "fa-brands fa-python" },
-    { name: "Database", stack: "PostgreSQL", icon: "fa-solid fa-database" },
-    { name: "Mobile", stack: "Flutter", icon: "fa-brands fa-android" },
-  ];
+  if (!project || !project.detailData) return null;
 
-  const features = [
-    {
-      title: "Automated Allocation",
-      desc: "Smart algorithms to assign students to halls based on capacity and branch.",
-    },
-    {
-      title: "Centralized DB",
-      desc: "Securely stores student, exam, and seating data.",
-    },
-    {
-      title: "Role-Based Access",
-      desc: "Distinct portals for Admins, Teachers, and Students.",
-    },
-    {
-      title: "Real-time Alerts",
-      desc: "Instant notifications for exam schedules and room numbers.",
-    },
-    {
-      title: "Room Navigation",
-      desc: "Visual guides to help students locate exam halls.",
-    },
-    {
-      title: "Cross-Platform",
-      desc: "Seamless experience on web and mobile devices.",
-    },
-  ];
-
-  const modules = [
-    {
-      title: "Admin",
-      items: ["Manage Schedules", "Allocate Rooms", "Teacher Assignment"],
-    },
-    {
-      title: "Teacher",
-      items: ["View Assignments", "Monitor Seating", "Report Issues"],
-    },
-    {
-      title: "Student",
-      items: ["Check Schedule", "Find Seat", "Get Notifications"],
-    },
-    {
-      title: "Navigation",
-      items: ["Room Locator", "Campus Map", "Real-time Directions"],
-    },
-  ];
+  const { detailData } = project;
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -105,19 +60,17 @@ const ProjectDetail = ({ onClose }) => {
     >
       {/* Navigation */}
       <div className="detail-nav no-print">
-        {onClose && (
-          <button onClick={onClose} className="back-button">
-            <i className="fa-solid fa-arrow-left"></i>
-            <span>cd ..</span>
-          </button>
-        )}
+        <button onClick={() => navigate("/")} className="back-button">
+          <i className="fa-solid fa-arrow-left"></i>
+          <span>cd ..</span>
+        </button>
         <div className="nav-actions">
           <button onClick={handlePrint} className="github-btn print-btn">
             <i className="fa-solid fa-file-pdf"></i>
             <span>Download PDF</span>
           </button>
           <a
-            href="https://github.com/Athulprgm/Xsitz2.git"
+            href={detailData.repoUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="github-btn"
@@ -133,27 +86,23 @@ const ProjectDetail = ({ onClose }) => {
         <motion.div className="project-hero" variants={itemVariants}>
           <div className="hero-content">
             <motion.h1 className="project-title" layoutId="project-title">
-              Exam Seating <span className="highlight">System</span>
+              {detailData.heroTitle}{" "}
+              <span className="highlight">{detailData.heroSubject}</span>
             </motion.h1>
-            <p className="project-tagline">
-              // Automated Management & Navigation Solution
-            </p>
+            <p className="project-tagline">{detailData.tagline}</p>
 
             <div className="hero-stats">
-              <div className="stat-item">
-                <span className="stat-val">Full Stack</span>
-                <span className="stat-label">Architecture</span>
-              </div>
-              <div className="stat-divider"></div>
-              <div className="stat-item">
-                <span className="stat-val">Cross-Platform</span>
-                <span className="stat-label">Web & Mobile</span>
-              </div>
-              <div className="stat-divider"></div>
-              <div className="stat-item">
-                <span className="stat-val">Real-time</span>
-                <span className="stat-label">Updates</span>
-              </div>
+              {detailData.stats.map((stat, idx) => (
+                <React.Fragment key={idx}>
+                  <div className="stat-item">
+                    <span className="stat-val">{stat.val}</span>
+                    <span className="stat-label">{stat.label}</span>
+                  </div>
+                  {idx < detailData.stats.length - 1 && (
+                    <div className="stat-divider"></div>
+                  )}
+                </React.Fragment>
+              ))}
             </div>
           </div>
         </motion.div>
@@ -169,14 +118,7 @@ const ProjectDetail = ({ onClose }) => {
               <h3>
                 <i className="fa-solid fa-align-left"></i> Abstract
               </h3>
-              <p>
-                The Exam Seating Arrangement System aims to revolutionize how
-                institutions manage examinations. By replacing manual allocation
-                with intelligent automation, it eliminates errors and saves
-                valuable administrative time. The integrated mobile app ensures
-                students can easily find their seats and navigate to exam halls
-                without confusion.
-              </p>
+              <p>{detailData.abstract}</p>
             </motion.section>
 
             <motion.section
@@ -187,7 +129,7 @@ const ProjectDetail = ({ onClose }) => {
                 <i className="fa-solid fa-images"></i> Interface Gallery
               </h3>
               <div className="gallery-grid">
-                {projectImages.map((img, index) => (
+                {detailData.gallery.map((img, index) => (
                   <motion.div
                     key={index}
                     className="gallery-card"
@@ -211,7 +153,7 @@ const ProjectDetail = ({ onClose }) => {
                 <i className="fa-solid fa-bolt"></i> Key Features
               </h3>
               <div className="features-grid">
-                {features.map((feature, idx) => (
+                {detailData.features.map((feature, idx) => (
                   <div key={idx} className="feature-card">
                     <div className="feature-icon">
                       <i className="fa-solid fa-check"></i>
@@ -236,7 +178,7 @@ const ProjectDetail = ({ onClose }) => {
                 <i className="fa-solid fa-layer-group"></i> Tech Stack
               </h3>
               <div className="tech-list">
-                {technologies.map((tech, idx) => (
+                {detailData.technologies.map((tech, idx) => (
                   <div key={idx} className="tech-row">
                     <div className="tech-icon">
                       <i className={tech.icon}></i>
@@ -258,7 +200,7 @@ const ProjectDetail = ({ onClose }) => {
                 <i className="fa-solid fa-cubes"></i> System Modules
               </h3>
               <div className="modules-list">
-                {modules.map((mod, idx) => (
+                {detailData.modules.map((mod, idx) => (
                   <div key={idx} className="module-item">
                     <h4>{mod.title}</h4>
                     <ul>
@@ -297,7 +239,7 @@ const ProjectDetail = ({ onClose }) => {
               >
                 <i className="fa-solid fa-times"></i>
               </button>
-              <img src={projectImages[selectedImage]} alt="Full view" />
+              <img src={detailData.gallery[selectedImage]} alt="Full view" />
             </motion.div>
           </motion.div>
         )}

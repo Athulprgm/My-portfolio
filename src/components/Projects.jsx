@@ -1,54 +1,17 @@
 import React, { useState } from "react";
-import ProjectDetail from "./ProjectDetail.jsx";
+import { useNavigate } from "react-router-dom";
+import { projectsData } from "../data/projectsData";
 import "./Projects.css";
 
 const Projects = () => {
   const [hoveredCard, setHoveredCard] = useState(null);
-  const [selectedProject, setSelectedProject] = useState(null);
-
-  const projects = [
-    {
-      id: 1,
-      title: "Exam Seat Arrangement System",
-      description:
-        "A comprehensive exam management system with automated seating allocation, real-time notifications, and navigation assistance. Built with Django backend and Flutter mobile app.",
-      image:
-        "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp",
-      tags: ["Django", "Flutter", "PostgreSQL", "Python"],
-      hasDetails: true,
-    },
-    {
-      id: 2,
-      title: "Static Webpages",
-      description:
-        "Beautiful and responsive static websites built with modern web technologies. Focus on clean design, optimal performance, and great user experience.",
-      image:
-        "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp",
-      tags: ["HTML", "CSS", "JavaScript"],
-      hasDetails: false,
-    },
-    {
-      id: 3,
-      title: "Calculator Web Application",
-      description:
-        "A fully functional calculator web application with modern UI/UX design. Features include basic arithmetic operations, memory functions, and responsive design.",
-      image:
-        "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp",
-      tags: ["React", "JavaScript", "CSS"],
-      hasDetails: false,
-    },
-  ];
+  const navigate = useNavigate();
+  const projects = projectsData;
 
   const handleProjectClick = (project) => {
     if (project.hasDetails) {
-      setSelectedProject(project.id);
-      // Scroll to project detail section
-      setTimeout(() => {
-        const detailSection = document.getElementById("project-detail");
-        if (detailSection) {
-          detailSection.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      }, 100);
+      navigate(`/project/${project.id}`);
+      window.scrollTo(0, 0);
     }
   };
 
@@ -118,12 +81,6 @@ const Projects = () => {
           ))}
         </div>
       </section>
-
-      {selectedProject === 1 && (
-        <div id="project-detail">
-          <ProjectDetail onClose={() => setSelectedProject(null)} />
-        </div>
-      )}
     </>
   );
 };

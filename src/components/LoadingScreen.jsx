@@ -37,11 +37,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
         <div className="profile-loader">
           <div className="profile-ring"></div>
           <div className="profile-ring-2"></div>
-          <img
-            src="/Gemini_Generated_Image_v750zhv750zhv750.png"
-            alt="Loading"
-            className="profile-image"
-          />
+          <img src="/profile.png" alt="Loading" className="profile-image" />
         </div>
 
         {/* Minimal Code Element */}

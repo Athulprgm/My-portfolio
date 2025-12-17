@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import NavBar from "./components/NavBar.jsx";
 import Home from "./components/Home.jsx";
 import Projects from "./components/Projects.jsx";
+import ProjectDetail from "./components/ProjectDetail.jsx";
 import About from "./components/About.jsx";
 import Contact from "./components/Contact.jsx";
 import LoadingScreen from "./components/LoadingScreen.jsx";
@@ -9,8 +11,52 @@ import "./App.css";
 
 import { motion } from "framer-motion";
 
+const MainContent = () => (
+  <>
+    <NavBar />
+    <main>
+      <motion.div
+        initial={{ opacity: 0, y: 10, filter: "blur(6px)" }}
+        animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+        transition={{ duration: 0.52, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <Home />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.52 }}
+      >
+        <Projects />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.52 }}
+      >
+        <About />
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.52 }}
+      >
+        <Contact />
+      </motion.div>
+    </main>
+    <ScrollToTop />
+  </>
+);
+
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation();
 
   const handleLoadingComplete = () => {
     setIsLoading(false);
@@ -54,46 +100,10 @@ const App = () => {
         <div className="gradient-orb orb-3"></div>
       </div>
 
-      <NavBar />
-
-      <main>
-        <motion.div
-          initial={{ opacity: 0, y: 10, filter: "blur(6px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.52, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <Home />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.52 }}
-        >
-          <Projects />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.52 }}
-        >
-          <About />
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.52 }}
-        >
-          <Contact />
-        </motion.div>
-      </main>
-
-      <ScrollToTop />
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<MainContent />} />
+        <Route path="/project/:id" element={<ProjectDetail />} />
+      </Routes>
     </div>
   );
 };

@@ -110,7 +110,7 @@ const Home = () => {
             <div className="id-photo-wrapper">
               <img
                 className="id-photo"
-                src="/Gemini_Generated_Image_v750zhv750zhv750.png"
+                src="/profile.png"
                 alt="Profile"
                 loading="lazy"
               />
