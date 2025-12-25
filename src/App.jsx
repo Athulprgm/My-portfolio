@@ -8,6 +8,7 @@ import About from "./components/About.jsx";
 import Contact from "./components/Contact.jsx";
 import LoadingScreen from "./components/LoadingScreen.jsx";
 import "./App.css";
+import SpecialDayPopup from "./components/SpecialDayPopup.jsx";
 
 import { motion } from "framer-motion";
 
@@ -104,6 +105,8 @@ const App = () => {
         <Route path="/" element={<MainContent />} />
         <Route path="/project/:id" element={<ProjectDetail />} />
       </Routes>
+
+      <SpecialDayPopup />
     </div>
   );
 };
