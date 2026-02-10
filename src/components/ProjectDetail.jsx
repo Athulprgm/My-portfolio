@@ -121,6 +121,31 @@ const ProjectDetail = () => {
               <p>{detailData.abstract}</p>
             </motion.section>
 
+            {detailData.highlights && (
+              <motion.section
+                className="detail-block highlights"
+                variants={itemVariants}
+              >
+                <h3>
+                  <i className="fa-solid fa-star"></i> Featured Highlights
+                </h3>
+                <div className="highlights-stack">
+                  {detailData.highlights.map((item, idx) => (
+                    <div key={idx} className="highlight-item">
+                      <div className="highlight-img-container">
+                        <img src={item.image} alt={item.title} />
+                        <span className="image-tag">{item.tag}</span>
+                      </div>
+                      <div className="highlight-text">
+                        <h4>{item.title}</h4>
+                        <p>{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </motion.section>
+            )}
+
             <motion.section
               className="detail-block gallery"
               variants={itemVariants}

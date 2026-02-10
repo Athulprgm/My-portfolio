@@ -143,4 +143,152 @@ export const projectsData = [
     hasDetails: false,
     detailData: null,
   },
+  {
+    id: 4,
+    title: "ExamPro AI",
+    description:
+      "Advanced multi-tenant MERN application leveraging AI algorithms for optimized exam seat allocation, invigilation scheduling, and digital campus navigation.",
+    image: "/New folder/Screenshot 2026-02-10 143102.png",
+    tags: ["MERN Stack", "AI Algorithm", "React", "Node.js"],
+    hasDetails: true,
+    detailData: {
+      heroTitle: "ExamPro",
+      heroSubject: "AI",
+      tagline: "// AI-Powered institutional exam logistics",
+
+      stats: [
+        { val: "AI-Driven", label: "Allocation" },
+        { val: "MERN", label: "Full Stack" },
+        { val: "Multi-Tenant", label: "System" },
+      ],
+
+      abstract:
+        "ExamPro AI is a next-generation, multi-tenant web application designed for higher education institutions. It utilizes advanced AI algorithms to automate complex seat allocation logic and invigilation scheduling. The system minimizes operational complexity, eliminates manual errors, and provides interactive navigation through a digitally modeled campus infrastructure.",
+
+      gallery: [
+        "/New folder/Screenshot 2026-02-10 143106.png",
+        "/New folder/Screenshot 2026-02-10 143112.png",
+        "/New folder/Screenshot 2026-02-10 143115.png",
+        "/New folder/Screenshot 2026-02-10 143118.png",
+        "/New folder/Screenshot 2026-02-10 143122.png",
+        "/New folder/Screenshot 2026-02-10 143135.png",
+        "/New folder/Screenshot 2026-02-10 143142.png",
+        "/New folder/Screenshot 2026-02-10 143201.png",
+        "/New folder/Screenshot 2026-02-10 143241.png",
+      ],
+
+      features: [
+        {
+          title: "AI Allocation Engine",
+          desc: "Uses advanced algorithms to optimize seat distribution based on capacity and subject constraints.",
+        },
+        {
+          title: "Eliminate Manual Errors",
+          desc: "Automates complex seating logic to remove human-induced mistakes.",
+        },
+        {
+          title: "Institutional Scalability",
+          desc: "Multi-tenant architecture supports large datasets and multi-campus environments.",
+        },
+        {
+          title: "Infrastructure Modeling",
+          desc: "Digital nodes and path connections for intuitive campus navigation.",
+        },
+        {
+          title: "Centralized Data Management",
+          desc: "Structured storage for exams, schedules, and violation records.",
+        },
+        {
+          title: "Fairness & Transparency",
+          desc: "Ensures equitable seat distribution and clear communication for students.",
+        },
+        {
+          title: "Malpractice Tracking",
+          desc: "Accountability systems with live reporting and violation logs.",
+        },
+      ],
+
+      technologies: [
+        {
+          name: "Frontend",
+          stack: "React 18, Vite",
+          icon: "fa-brands fa-react",
+        },
+        {
+          name: "Backend",
+          stack: "Express.js, Node.js",
+          icon: "fa-brands fa-node",
+        },
+        {
+          name: "Database",
+          stack: "MongoDB, Mongoose",
+          icon: "fa-solid fa-leaf",
+        },
+        {
+          name: "Security",
+          stack: "JWT, BCrypt",
+          icon: "fa-solid fa-shield-halved",
+        },
+      ],
+
+      highlights: [
+        {
+          title: "AI-Powered Seat Allocation",
+          desc: "Our proprietary algorithm analyzes room capacity and examination constraints to generate optimal, conflict-free seating maps in real-time.",
+          image: "/New folder/Screenshot 2026-02-10 143135.png",
+          tag: "AI Intelligence",
+        },
+        {
+          title: "Digital Infrastructure Map",
+          desc: "A sophisticated node-link editor allowing administrators to digitally model campus buildings, connecting rooms and paths for seamless navigation.",
+          image: "/New folder/Screenshot 2026-02-10 143142.png",
+          tag: "Infrastructure",
+        },
+      ],
+
+      modules: [
+        {
+          title: "College Admin",
+          items: [
+            "Infrastructure Modeling",
+            "Automated Seat Allocation",
+            "Subject & Exam Management",
+            "Duty Assignment",
+          ],
+        },
+        {
+          title: "Student Module",
+          items: [
+            "Interactive Navigation",
+            "Visual Seat ID",
+            "Personalized Timetable",
+          ],
+        },
+        {
+          title: "Invigilator Module",
+          items: [
+            "Student Verification",
+            "Live Malpractice Reporting",
+            "Attendance Management",
+          ],
+        },
+        {
+          title: "Super Admin",
+          items: ["Multi-Tenancy Management", "System Configuration"],
+        },
+        {
+          title: "Database Schema",
+          items: [
+            "Users Collection (Role-based)",
+            "Colleges (Tenant Information)",
+            "BuildingMaps (Infrastructure Nodes)",
+            "SeatArrangements (Live Mapping)",
+            "Malpractices (Violation Records)",
+          ],
+        },
+      ],
+
+      repoUrl: "#",
+    },
+  },
 ];

@@ -165,6 +165,97 @@
   font-size: var(--fs-base);
 }
 
+.highlights-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.highlight-item {
+  display: flex;
+  flex-direction: column;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.highlight-item:hover {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: var(--accent-primary);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.highlight-img-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  overflow: hidden;
+}
+
+.highlight-img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Apply the same crop logic as before */
+  object-position: center bottom;
+  transform: scale(1.11);
+  transform-origin: bottom;
+  transition: transform 0.6s ease;
+}
+
+.highlight-item:hover .highlight-img-container img {
+  transform: scale(1.15);
+}
+
+.image-tag {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background: var(--accent-primary);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 10px;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+  z-index: 2;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.highlight-text {
+  padding: 24px;
+}
+
+.highlight-text h4 {
+  color: #fff;
+  font-size: var(--fs-base);
+  margin-bottom: 10px;
+  font-family: var(--font-heading);
+}
+
+.highlight-text p {
+  font-size: var(--fs-sm);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+@media (min-width: 768px) {
+  .highlight-item {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .highlight-img-container {
+    width: 45%;
+    flex-shrink: 0;
+  }
+}
+
+
 /* Gallery - Masonry Style Grid */
 .gallery-grid {
   display: grid;
@@ -187,6 +278,18 @@
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s;
+}
+
+/* Crop tab bar from browser screenshots */
+.gallery-card img[src*="New folder"] {
+  object-position: center bottom;
+  transform: scale(1.11);
+  transform-origin: bottom;
+}
+
+.gallery-card:hover img {
+  transform: scale(1.15);
+  /* Slightly more zoom on hover */
 }
 
 .gallery-card .overlay {
@@ -349,13 +452,24 @@
   position: relative;
   max-width: 90%;
   max-height: 90vh;
+  overflow: hidden;
+  /* Ensure content is clipped */
+  border-radius: 4px;
 }
 
 .modal-content img {
   max-width: 100%;
   max-height: 90vh;
+  display: block;
   border-radius: 4px;
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.5);
+}
+
+/* Crop tab bar in modal full view */
+.modal-content img[src*="New folder"] {
+  transform: scale(1.11);
+  transform-origin: bottom;
+  margin-top: -5%;
 }
 
 .close-modal {

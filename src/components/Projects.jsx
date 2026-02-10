@@ -46,6 +46,12 @@ const Projects = () => {
                   alt={project.title}
                   loading="lazy"
                 />
+                {project.id === 4 && (
+                  <div className="status-badge">
+                    <span className="dot"></span>
+                    AI Engine Active
+                  </div>
+                )}
                 <div className="card-overlay"></div>
                 <div className="card-glow"></div>
               </div>
