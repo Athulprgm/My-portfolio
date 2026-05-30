@@ -242,17 +242,6 @@ export const projectsData = [
   },
 
   {
-    id: 3,
-    title: "Calculator Web Application",
-    description:
-      "A responsive calculator web app with modern UI supporting basic arithmetic operations.",
-    image:
-      "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp",
-    tags: ["React", "JavaScript", "CSS"],
-    hasDetails: false,
-    detailData: null,
-  },
-  {
     id: 4,
     title: "ExamPro AI",
     description:
@@ -644,6 +633,238 @@ export const projectsData = [
             "Bcrypt Password Encryption",
             "Helmet & CORS Security Policies",
             "Comprehensive Audit Logging",
+          ],
+        },
+      ],
+
+      repoUrl: "#",
+    },
+  },
+  {
+    id: 7,
+    title: "NextGen AI Resume Analyser",
+    description:
+      "A full-stack web application designed to bridge the gap between job seekers and employers using AI and PDF extraction technologies.",
+    image: "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp",
+    tags: ["MERN Stack", "React", "AI", "PDF Parsing"],
+    hasDetails: true,
+    detailData: {
+      heroTitle: "NextGen AI",
+      heroSubject: "Resume Analyser",
+      tagline: "// Job Portal & AI Resume Matching",
+
+      stats: [
+        { val: "AI-Powered", label: "Analysis" },
+        { val: "MERN", label: "Full Stack" },
+        { val: "PDF", label: "Extraction" },
+      ],
+
+      abstract:
+        "The NextGen AI Resume Analyser is a full-stack web application designed to bridge the gap between job seekers and employers. It provides a platform for managing job postings, authenticating users, and offering advanced resume-parsing capabilities using AI and PDF extraction technologies. The system leverages Recharts for analytics and allows users to generate and export optimized resumes.",
+
+      gallery: [
+        "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp"
+      ],
+
+      features: [
+        {
+          title: "AI Resume Analysis",
+          desc: "Secure file upload handling using multer and text extraction from PDF resumes using pdf-parse to match candidates with job descriptions.",
+        },
+        {
+          title: "Data Visualization Dashboard",
+          desc: "Leverages Recharts to display visual analytics such as resume match scores and application statistics.",
+        },
+        {
+          title: "PDF Report Export",
+          desc: "Allows users to generate and download reports or optimized resumes directly from the browser using html2pdf.js and jsPDF.",
+        },
+        {
+          title: "Job Management System",
+          desc: "Comprehensive endpoints to create, read, update, and delete job postings, and retrieval of job details for the frontend feed.",
+        },
+        {
+          title: "Secure Authentication",
+          desc: "User registration and login endpoints with password encryption using Bcrypt and session management via JWT.",
+        },
+        {
+          title: "Dynamic Routing & Layouts",
+          desc: "Seamless navigation between the dashboard, job listings, and resume upload forms using React Router DOM.",
+        },
+      ],
+
+      technologies: [
+        {
+          name: "Frontend",
+          stack: "React 19, Vite, Tailwind CSS",
+          icon: "fa-brands fa-react",
+        },
+        {
+          name: "Backend",
+          stack: "Node.js, Express.js",
+          icon: "fa-brands fa-node",
+        },
+        {
+          name: "Database",
+          stack: "MongoDB, Mongoose",
+          icon: "fa-solid fa-database",
+        },
+        {
+          name: "Visualization",
+          stack: "Recharts, html2pdf",
+          icon: "fa-solid fa-chart-line",
+        },
+      ],
+
+      highlights: [
+        {
+          title: "AI Resume Parsing",
+          desc: "The system integrates pdf-parse for text extraction and AI models to intelligently match candidate resumes with job descriptions, providing comprehensive match scores.",
+          image: "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp",
+          tag: "AI & Analytics",
+        },
+      ],
+
+      modules: [
+        {
+          title: "Job Seeker Module",
+          items: [
+            "Resume Upload & Parsing",
+            "Job Feed & Listings",
+            "Application Statistics Dashboard",
+            "PDF Resume Export",
+          ],
+        },
+        {
+          title: "Employer Module",
+          items: [
+            "Job Posting Management",
+            "Candidate Matching & Scores",
+            "Dashboard Analytics",
+          ],
+        },
+        {
+          title: "Backend API",
+          items: [
+            "Authentication & Security (JWT)",
+            "File Uploads (Multer)",
+            "PDF Processing (pdf-parse)",
+            "Database Schema Models",
+          ],
+        },
+      ],
+
+      repoUrl: "#",
+    },
+  },
+  {
+    id: 8,
+    title: "Digital Library (LibGo)",
+    description:
+      "A full-stack Digital Library management system with role-based access, real-time request handling, and automated email notifications.",
+    image: "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp",
+    tags: ["MERN Stack", "React", "Socket.io", "Library"],
+    hasDetails: true,
+    detailData: {
+      heroTitle: "Digital Library",
+      heroSubject: "LibGo",
+      tagline: "// Modern Library Management System",
+
+      stats: [
+        { val: "Full Stack", label: "MERN Application" },
+        { val: "Real-time", label: "Socket.io" },
+        { val: "Automated", label: "Email Notifications" },
+      ],
+
+      abstract:
+        "LibGo is a comprehensive, full-stack Digital Library management system designed to streamline the borrowing and management of books. The platform provides a seamless and secure user experience, featuring role-based access control, book lifecycle management, real-time request handling, and automated email notifications. It is built with a modern tech stack ensuring performance, scalability, and an intuitive user interface.",
+
+      gallery: [
+        "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp"
+      ],
+
+      features: [
+        {
+          title: "Book Lifecycle Management",
+          desc: "Authenticated users can add new books, edit details, and process returns, dynamically updating the library's catalog.",
+        },
+        {
+          title: "Real-time Request Handling",
+          desc: "Users can submit borrow requests which approvers can review, accept, or reject in real-time.",
+        },
+        {
+          title: "Automated Notifications",
+          desc: "Integrated with Nodemailer to dispatch email notifications regarding request status, ensuring clear communication.",
+        },
+        {
+          title: "Advanced Search & Filtering",
+          desc: "Efficiently search the catalog by title, author, or keyword, and filter by category or genre.",
+        },
+        {
+          title: "Role-Based Access Control",
+          desc: "Strict access control policies differentiating between guest (view-only) and authenticated (interactive) users.",
+        },
+        {
+          title: "Secure Authentication",
+          desc: "User registration and login endpoints with password encryption using bcryptjs and session management via JWT.",
+        },
+      ],
+
+      technologies: [
+        {
+          name: "Frontend",
+          stack: "React 19, Vite, Tailwind CSS",
+          icon: "fa-brands fa-react",
+        },
+        {
+          name: "Backend",
+          stack: "Node.js, Express.js",
+          icon: "fa-brands fa-node",
+        },
+        {
+          name: "Database",
+          stack: "MongoDB, Mongoose",
+          icon: "fa-solid fa-database",
+        },
+        {
+          name: "Real-time & Comm",
+          stack: "Socket.io, Nodemailer",
+          icon: "fa-solid fa-bolt",
+        },
+      ],
+
+      highlights: [
+        {
+          title: "Real-time Borrow Requests",
+          desc: "The system features an approval workflow that leverages Socket.io for live updates and Nodemailer for automated status emails, keeping all parties informed instantly.",
+          image: "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp",
+          tag: "Workflow & Notifications",
+        },
+      ],
+
+      modules: [
+        {
+          title: "Authentication & Authorization",
+          items: [
+            "Secure Registration & Login",
+            "Protected Routing",
+            "Stateless JWT Authentication",
+          ],
+        },
+        {
+          title: "Book Management",
+          items: [
+            "Add & Edit Books",
+            "Return System",
+            "My Books Dashboard",
+          ],
+        },
+        {
+          title: "Borrow Workflow",
+          items: [
+            "Submit Borrow Requests",
+            "Approval/Rejection Handling",
+            "Borrowed Books Dashboard",
           ],
         },
       ],
