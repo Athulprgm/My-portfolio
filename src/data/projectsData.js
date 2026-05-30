@@ -291,4 +291,124 @@ export const projectsData = [
       repoUrl: "#",
     },
   },
+  {
+    id: 5,
+    title: "Jana Vikasam",
+    description:
+      "A comprehensive full-stack web application designed to showcase the development, history, and impact of the Kerala Government.",
+    image: "/project-img/jana-vikasam-5.png",
+    tags: ["React", "Laravel", "Vite", "Tailwind CSS"],
+    hasDetails: true,
+    detailData: {
+      heroTitle: "Jana Vikasam",
+      heroSubject: "Citizen Portal",
+      tagline: "// Kerala Government Development Showcase",
+
+      stats: [
+        { val: "Full Stack", label: "Application" },
+        { val: "Decoupled", label: "Architecture" },
+        { val: "Interactive", label: "Map & Timeline" },
+      ],
+
+      abstract:
+        "Jana Vikasam is a comprehensive full-stack web application designed to showcase the development, history, and impact of the Kerala Government. It serves as an interactive portal for citizens to explore development projects across different districts, view the state's historical timeline, read about government achievements, and engage through citizen testimonials and blogs.",
+
+      gallery: [
+        "/project-img/jana-vikasam-5.png",
+        "/project-img/jana-vikasam-4.png",
+        "/project-img/jana-vikasam-6.png",
+        "/project-img/jana-vikasam-7.png",
+        "/project-img/jana-vikasam-3.png"
+      ],
+
+      features: [
+        {
+          title: "Interactive Kerala Map",
+          desc: "Visual map interface allowing users to explore development metrics and projects specific to different districts.",
+        },
+        {
+          title: "Development Timeline",
+          desc: "Scrolling chronological timeline highlighting key milestones and achievements over the years.",
+        },
+        {
+          title: "Featured Projects Showcase",
+          desc: "Display of prominent infrastructure, welfare, and technological projects with Before & After impact visualizations.",
+        },
+        {
+          title: "Government History",
+          desc: "Comprehensive directory detailing state history, including profiles of Chief Ministers.",
+        },
+        {
+          title: "Blogs & Interactive Hub",
+          desc: "Public feed of development stories, news updates, and articles for citizen engagement.",
+        },
+        {
+          title: "Citizen Impact & Testimonials",
+          desc: "Real stories and testimonials detailing the positive effects of government initiatives.",
+        },
+        {
+          title: "Admin & User Dashboard",
+          desc: "Content management (CRUD operations) for Projects, Districts, Timeline Milestones, and Blog Publishing.",
+        },
+      ],
+
+      technologies: [
+        {
+          name: "Frontend",
+          stack: "React 19, Vite, Tailwind CSS 4",
+          icon: "fa-brands fa-react",
+        },
+        {
+          name: "Backend",
+          stack: "Laravel 11.x, PHP 8.3+",
+          icon: "fa-brands fa-laravel",
+        },
+        {
+          name: "Animations",
+          stack: "Framer Motion, GSAP, Lenis",
+          icon: "fa-solid fa-wand-magic-sparkles",
+        },
+        {
+          name: "Authentication",
+          stack: "Laravel Sanctum",
+          icon: "fa-solid fa-lock",
+        },
+      ],
+
+      highlights: [
+        {
+          title: "Decoupled Architecture",
+          desc: "A high-performance React application built with Vite communicates with a robust RESTful API developed with the Laravel framework.",
+          image: "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp",
+          tag: "Architecture",
+        },
+      ],
+
+      modules: [
+        {
+          title: "Public Features",
+          items: [
+            "Interactive Kerala Map",
+            "Development Timeline",
+            "Featured Projects Showcase",
+            "Government History",
+            "Blogs & Interactive Hub",
+            "Citizen Impact & Testimonials",
+          ],
+        },
+        {
+          title: "Admin & User Dashboard",
+          items: [
+            "Authentication System (User & Admin)",
+            "Content Management (CRUD)",
+            "Blog Publishing",
+            "User Profile Management",
+            "Engagement Reactions",
+          ],
+        },
+      ],
+
+      repoUrl: "#",
+    },
+  },
 ];

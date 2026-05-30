@@ -1,24 +1,42 @@
-/* Premium Portfolio Theme */
+/* ===================================================
+   Portfolio Global Design System
+   =================================================== */
+
 :root {
-  /* Core Colors */
-  --bg-primary: #050505;
-  --bg-secondary: #0a0a0c;
-  --accent-color: #8F4CE1;
-  --accent-secondary: #00C3FF;
+  --bg-primary: #050507;
+  --bg-secondary: #0a0a0f;
+  --bg-tertiary: #111118;
 
-  /* Text */
+  --accent-indigo: #6366f1;
+  --accent-violet: #8b5cf6;
+  --accent-cyan: #06b6d4;
+  --accent-pink: #ec4899;
+  --accent-emerald: #10b981;
+
   --text-primary: #ffffff;
-  --text-secondary: rgba(255, 255, 255, 0.7);
+  --text-secondary: #a1a1aa;
+  --text-muted: #52525b;
 
-  /* Fonts */
-  --font-heading: 'JetBrains Mono', monospace;
-  --font-body: 'Inter', sans-serif;
-  --font-code: 'JetBrains Mono', monospace;
+  --font-heading: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 
-  /* UI Elements */
-  --glass-bg: rgba(20, 20, 23, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --glass-bg: rgba(10, 10, 15, 0.75);
+  --glass-border: rgba(255, 255, 255, 0.07);
+  --radius-card: 16px;
+}
+
+/* ─── Base ────────────────────────────────────────── */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -26,33 +44,46 @@ body {
   padding: 0;
   background-color: var(--bg-primary);
   background-image:
-    radial-gradient(at 0% 0%, hsla(253, 16%, 7%, 1) 0, transparent 50%),
-    radial-gradient(at 50% 0%, hsla(225, 39%, 30%, 1) 0, transparent 50%),
-    radial-gradient(at 100% 0%, hsla(339, 49%, 30%, 1) 0, transparent 50%);
-  background-size: 200% 200%;
+    radial-gradient(ellipse 80% 40% at 50% 0%, rgba(99, 102, 241, 0.06) 0%, transparent 60%),
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 100% 100%, 64px 64px, 64px 64px;
   background-attachment: fixed;
-  animation: gradientBG 20s ease infinite;
   color: var(--text-primary);
   font-family: var(--font-body);
   overflow-x: hidden;
-  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.65;
   width: 100%;
   max-width: 100vw;
 }
 
-@keyframes gradientBG {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
+::selection {
+  background: rgba(99, 102, 241, 0.35);
+  color: #fff;
 }
+
+/* ─── Scrollbar ───────────────────────────────────── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2a35;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-indigo);
+}
+
+/* ─── App container ───────────────────────────────── */
 
 .App {
   min-height: 100vh;
@@ -60,12 +91,11 @@ body {
   isolation: isolate;
 }
 
+/* ─── Floating background orbs ───────────────────── */
+
 .animated-background {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   z-index: -1;
   pointer-events: none;
   overflow: hidden;
@@ -74,35 +104,34 @@ body {
 .gradient-orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(100px);
-  opacity: 0.4;
-  animation: float 20s ease-in-out infinite;
+  filter: blur(120px);
+  animation: float 25s ease-in-out infinite;
 }
 
 .orb-1 {
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(143, 76, 225, 0.3), transparent 70%);
-  top: -200px;
-  left: -100px;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.055), transparent 70%);
+  top: -300px;
+  left: -200px;
 }
 
 .orb-2 {
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(0, 195, 255, 0.25), transparent 70%);
-  bottom: -100px;
-  right: -100px;
-  animation-delay: -5s;
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.04), transparent 70%);
+  bottom: -150px;
+  right: -150px;
+  animation-delay: -8s;
 }
 
 .orb-3 {
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(255, 0, 128, 0.2), transparent 70%);
-  top: 40%;
-  left: 60%;
-  animation-delay: -10s;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(6, 182, 212, 0.03), transparent 70%);
+  top: 45%;
+  left: 55%;
+  animation-delay: -15s;
 }
 
 @keyframes float {
@@ -113,65 +142,83 @@ body {
   }
 
   33% {
-    transform: translate(30px, -30px) scale(1.1);
+    transform: translate(40px, -40px) scale(1.08);
   }
 
   66% {
-    transform: translate(-20px, 20px) scale(0.9);
+    transform: translate(-25px, 25px) scale(0.95);
   }
 }
 
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-}
+/* ─── Section baseline ────────────────────────────── */
 
-::-webkit-scrollbar-track {
-  background: #0a0a0c;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 5px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-/* Global Section Styles */
 section {
-  padding: 100px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.045);
 }
 
-@media (max-width: 768px) {
-  section {
-    padding: 80px 15px;
-  }
+section:last-of-type {
+  border-bottom: none;
 }
 
-@media (max-width: 480px) {
-  section {
-    padding: 60px 12px;
-  }
+/* ─── Typography ──────────────────────────────────── */
 
-  .scroll-to-top {
-    bottom: 30px;
-    right: 20px;
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  margin: 0;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: -0.02em;
 }
 
-/* Scroll To Top Command */
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background: none;
+  font-family: var(--font-body);
+}
+
+/* ─── Scroll-triggered reveal ─────────────────────── */
+
+.id-card-container,
+.code-window,
+.introduce {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.75s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.75s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.id-card-container.animate-in,
+.code-window.animate-in,
+.introduce.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Scroll To Top ───────────────────────────────── */
+
 .scroll-to-top {
   position: fixed;
-  bottom: 40px;
-  right: 30px;
+  bottom: 36px;
+  right: 28px;
   z-index: 99;
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(16px);
   pointer-events: none;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .scroll-to-top.visible {
@@ -184,28 +231,63 @@ section {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 20px;
-  background: var(--bg-tertiary, #1c1c22);
+  padding: 10px 18px;
+  background: rgba(10, 10, 15, 0.9);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
   cursor: pointer;
   transition: all 0.2s ease;
+  backdrop-filter: blur(12px);
 }
 
 .command-box:hover {
-  border-color: var(--accent-primary, #6366f1);
+  border-color: var(--accent-indigo);
   transform: translateY(-2px);
-  box-shadow: 0 15px 40px rgba(99, 102, 241, 0.2);
+  box-shadow: 0 12px 40px rgba(99, 102, 241, 0.2);
 }
 
 .command-box i {
-  color: var(--accent-primary, #6366f1);
+  color: var(--accent-indigo);
 }
 
 .command-box span {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 12px;
   color: #fff;
-  font-weight: 500;
+  font-weight: 600;
+}
+
+/* ─── Responsive ──────────────────────────────────── */
+
+@media (max-width: 768px) {
+  section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  section {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .scroll-to-top {
+    bottom: 24px;
+    right: 16px;
+  }
+}
+
+/* ─── Print ───────────────────────────────────────── */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
 }
