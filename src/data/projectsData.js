@@ -508,6 +508,7 @@ export const projectsData = [
       ],
 
       repoUrl: "#",
+      liveUrl: "https://gov-vikasanam.vercel.app/showcase",
     },
   },
   {
@@ -870,6 +871,118 @@ export const projectsData = [
       ],
 
       repoUrl: "#",
+    },
+  },
+  {
+    id: 9,
+    title: "Gurukripa Builders",
+    description:
+      "A modern, high-performance web application designed for a construction company, featuring dynamic 3D elements and smooth animations.",
+    image: "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp",
+    tags: ["React", "Three.js", "Framer Motion", "Vite"],
+    hasDetails: true,
+    detailData: {
+      heroTitle: "Gurukripa",
+      heroSubject: "Builders",
+      tagline: "// Modern Construction Web Application",
+
+      stats: [
+        { val: "3D", label: "Rendering" },
+        { val: "SPA", label: "Architecture" },
+        { val: "Fast", label: "Performance" },
+      ],
+
+      abstract:
+        "Gurukripa Builders is a modern, high-performance web application designed for a construction and building company. The application provides an engaging user experience with dynamic 3D elements, smooth animations, and a comprehensive overview of the company's services, stats, gallery, and contact information.",
+
+      gallery: [
+        "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp"
+      ],
+
+      features: [
+        {
+          title: "Immersive 3D Hero Section",
+          desc: "Utilizes Three.js and React Three Fiber to create an interactive, visually striking landing experience that captures user attention immediately.",
+        },
+        {
+          title: "Dynamic Animations",
+          desc: "Powered by Framer Motion, ensuring smooth scroll reveals, component transitions, and interactive hover effects across the site.",
+        },
+        {
+          title: "Comprehensive Service Showcase",
+          desc: "Dedicated sections for displaying company statistics, offered services, and an auto-updating project gallery.",
+        },
+        {
+          title: "Interactive ChatHub",
+          desc: "A built-in chat interface designed to improve customer engagement and support inquiries.",
+        },
+        {
+          title: "Performance Optimized",
+          desc: "Built with Vite and React 19, ensuring lightning-fast load times, optimal bundling, and high performance even with 3D graphics rendering.",
+        },
+      ],
+
+      technologies: [
+        {
+          name: "Frontend",
+          stack: "React 19, Vite",
+          icon: "fa-brands fa-react",
+        },
+        {
+          name: "3D Rendering",
+          stack: "Three.js, React Three Fiber",
+          icon: "fa-solid fa-cube",
+        },
+        {
+          name: "Animations",
+          stack: "Framer Motion",
+          icon: "fa-solid fa-wand-magic-sparkles",
+        },
+        {
+          name: "UI/UX",
+          stack: "Lucide React, CSS",
+          icon: "fa-solid fa-paintbrush",
+        },
+      ],
+
+      highlights: [
+        {
+          title: "3D Web Experience",
+          desc: "Integrates cutting-edge 3D rendering directly into the browser to showcase construction models and engage potential clients interactively.",
+          image: "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp",
+          tag: "3D Integration",
+        },
+      ],
+
+      modules: [
+        {
+          title: "Core Pages",
+          items: [
+            "Hero (3D Landing)",
+            "About & History",
+            "Services & Capabilities",
+            "Company Stats",
+          ],
+        },
+        {
+          title: "Interactive Features",
+          items: [
+            "Project Portfolio Gallery",
+            "Customer Support ChatHub",
+            "Inquiry & Contact Form",
+          ],
+        },
+        {
+          title: "Automation",
+          items: [
+            "Automated Gallery Updates via Node.js Scripts",
+            "Optimized Build Processes",
+          ],
+        },
+      ],
+
+      repoUrl: "#",
+      liveUrl: "https://gurukripa-builders-n6b7.vercel.app/",
     },
   },
 ];
