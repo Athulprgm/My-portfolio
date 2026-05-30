@@ -122,14 +122,123 @@ export const projectsData = [
 
   {
     id: 2,
-    title: "Static Webpages",
+    title: "Velora Handmade",
     description:
-      "Responsive static websites built using HTML, CSS, and JavaScript with focus on performance and clean UI.",
+      "A premium e-commerce platform for handmade crochet creations featuring dynamic delivery pricing, GPS location detection, and direct WhatsApp checkout.",
     image:
       "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp",
-    tags: ["HTML", "CSS", "JavaScript"],
-    hasDetails: false,
-    detailData: null,
+    tags: ["React", "Zustand", "Tailwind CSS", "Geoapify"],
+    hasDetails: true,
+    detailData: {
+      heroTitle: "Velora",
+      heroSubject: "Handmade",
+      tagline: "// Premium Luxury Crochet E-Commerce",
+
+      stats: [
+        { val: "Direct", label: "WhatsApp Ordering" },
+        { val: "Dynamic", label: "Delivery Pricing" },
+        { val: "GPS", label: "Auto-Geocoding" },
+      ],
+
+      abstract:
+        "Velora Handmade is a premium, luxury-minimalist e-commerce platform for handmade crochet creations. It features a seamless, direct-to-owner WhatsApp ordering system that bypasses complex payment gateways. The platform integrates advanced features like HTML5 GPS Geolocation for precise address auto-filling and a dynamic distance-based delivery pricing calculator to provide an effortless checkout experience.",
+
+      gallery: [
+        "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp",
+      ],
+
+      features: [
+        {
+          title: "Advanced Checkout & WhatsApp Integration",
+          desc: "Bypasses traditional payment gateways by generating a comprehensive, pre-filled WhatsApp message including order details, GPS coordinates, and payment mode.",
+        },
+        {
+          title: "Dynamic Delivery Pricing",
+          desc: "Calculates dynamic distance-based pricing for local deliveries using specific town keywords, with a flat-rate fallback for nationwide shipping.",
+        },
+        {
+          title: "GPS Location Detection",
+          desc: "Integrates HTML5 Geolocation and Geoapify API for reverse geocoding to automatically auto-fill the user's address, city, and pincode.",
+        },
+        {
+          title: "Minimalist Luxury Design",
+          desc: "Premium typography, clean layout, dark/light mode switching, and grain overlays to give a tactile, editorial aesthetic.",
+        },
+        {
+          title: "Fluid Animations",
+          desc: "Sophisticated entrance animations, smooth page transitions, and in-view scroll reveal effects using Framer Motion.",
+        },
+        {
+          title: "Dynamic Product Catalog",
+          desc: "Filtering across categories like Bags, Pouches, and Baby Clips with high-quality hover zoom effects.",
+        },
+      ],
+
+      technologies: [
+        {
+          name: "Frontend Core",
+          stack: "React 19, Vite",
+          icon: "fa-brands fa-react",
+        },
+        {
+          name: "Styling & UI",
+          stack: "Tailwind CSS 4, Framer Motion",
+          icon: "fa-solid fa-paintbrush",
+        },
+        {
+          name: "State Management",
+          stack: "Zustand",
+          icon: "fa-solid fa-code-branch",
+        },
+        {
+          name: "Mapping API",
+          stack: "Geoapify, OpenStreetMap",
+          icon: "fa-solid fa-map-location-dot",
+        },
+      ],
+
+      highlights: [
+        {
+          title: "Direct-to-Owner WhatsApp Checkout",
+          desc: "The checkout payload encodes item details, pricing breakdown, precise delivery charges, and GPS coordinates into a seamless WhatsApp message.",
+          image:
+            "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp",
+          tag: "E-Commerce",
+        },
+      ],
+
+      modules: [
+        {
+          title: "Checkout System",
+          items: [
+            "GPS Coordinate Extraction",
+            "Geoapify Reverse Geocoding",
+            "Distance-based Pricing Engine",
+            "WhatsApp URI Encoding",
+          ],
+        },
+        {
+          title: "Shop & Catalog",
+          items: [
+            "Dynamic Category Filtering",
+            "Bestseller & Gift Tags",
+            "Image Hover Zoom Effects",
+          ],
+        },
+        {
+          title: "UI Elements",
+          items: [
+            "Global Theme Switching (Dark/Light)",
+            "Custom Loading Screens",
+            "Floating WhatsApp Contact",
+            "Scroll Reveal Animations",
+          ],
+        },
+      ],
+
+      repoUrl: "#",
+      liveUrl: "https://velora-zeta-nine.vercel.app/",
+    },
   },
 
   {
@@ -293,7 +402,7 @@ export const projectsData = [
   },
   {
     id: 5,
-    title: "Jana Vikasam",
+    title: "Kerala-One",
     description:
       "A comprehensive full-stack web application designed to showcase the development, history, and impact of the Kerala Government.",
     image: "/project-img/jana-vikasam-5.png",
@@ -318,7 +427,7 @@ export const projectsData = [
         "/project-img/jana-vikasam-4.png",
         "/project-img/jana-vikasam-6.png",
         "/project-img/jana-vikasam-7.png",
-        "/project-img/jana-vikasam-3.png"
+        "/project-img/jana-vikasam-3.png",
       ],
 
       features: [
@@ -379,7 +488,8 @@ export const projectsData = [
         {
           title: "Decoupled Architecture",
           desc: "A high-performance React application built with Vite communicates with a robust RESTful API developed with the Laravel framework.",
-          image: "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp",
+          image:
+            "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp",
           tag: "Architecture",
         },
       ],
@@ -404,6 +514,136 @@ export const projectsData = [
             "Blog Publishing",
             "User Profile Management",
             "Engagement Reactions",
+          ],
+        },
+      ],
+
+      repoUrl: "#",
+    },
+  },
+  {
+    id: 6,
+    title: "IntelResolve",
+    description:
+      "A comprehensive civic-technology platform designed for complaint management and criminal identity warning, bridging the gap between citizens, departments, and law enforcement.",
+    image: "/project-img/intelresolve-hero.png",
+    tags: ["MERN Stack", "React", "Node.js", "MongoDB", "Civic Tech"],
+    hasDetails: true,
+    detailData: {
+      heroTitle: "IntelResolve",
+      heroSubject: "Civic-Tech Platform",
+      tagline: "// Complaint Management & Criminal Identity Warning",
+
+      stats: [
+        { val: "MERN", label: "Full Stack" },
+        { val: "RBAC", label: "Access Control" },
+        { val: "GIS", label: "Interactive Maps" },
+      ],
+
+      abstract:
+        "IntelResolve is a comprehensive civic-technology platform designed for complaint management and criminal identity warning. It bridges the gap between citizens, administrative departments, and law enforcement by providing a unified platform for reporting incidents, tracking complaint resolutions, and managing public warnings regarding criminal activities.",
+
+      gallery: [
+        "/project-img/intelresolve-hero.png",
+        "/project-img/intelresolve-complaints.png",
+        "/project-img/intelresolve-tracking.png",
+        "/project-img/intelresolve-report.png",
+        "/project-img/intelresolve-records.png",
+      ],
+
+      features: [
+        {
+          title: "Complaint Management",
+          desc: "Citizens can file complaints targeting specific departments with detailed descriptions, priorities, and geographical locations.",
+        },
+        {
+          title: "Status Tracking & Audit Trail",
+          desc: "Comprehensive activity logs and tracking for complaint resolutions (Pending, In-Progress, Resolved, Rejected).",
+        },
+        {
+          title: "Criminal Identity Warning",
+          desc: "Specialized module for managing and warning the public about known criminal profiles and repeat offenders.",
+        },
+        {
+          title: "Interactive Mapping",
+          desc: "Integration with OpenLayers for visualizing complaint locations and criminal activity hotspots.",
+        },
+        {
+          title: "Role-Based Access Control",
+          desc: "Distinct dashboards and capabilities for Admins, Department Users, and Citizens.",
+        },
+        {
+          title: "Verification Workflow",
+          desc: "Criminal profiles go through a strict verification process before public display.",
+        },
+      ],
+
+      technologies: [
+        {
+          name: "Frontend",
+          stack: "React 19, Vite, Tailwind CSS 4",
+          icon: "fa-brands fa-react",
+        },
+        {
+          name: "Backend",
+          stack: "Node.js, Express.js",
+          icon: "fa-brands fa-node",
+        },
+        {
+          name: "Database",
+          stack: "MongoDB, Mongoose",
+          icon: "fa-solid fa-leaf",
+        },
+        {
+          name: "Mapping & Search",
+          stack: "OpenLayers, Flexsearch",
+          icon: "fa-solid fa-map-location-dot",
+        },
+      ],
+
+      highlights: [
+        {
+          title: "Criminal Risk Assessment",
+          desc: "Categorizes criminals by risk level (Low, Medium, High, Critical) with a public warning board and verification workflows.",
+          image:
+            "/web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic.webp",
+          tag: "Security & Safety",
+        },
+      ],
+
+      modules: [
+        {
+          title: "Admin Module",
+          items: [
+            "Full Department Oversight",
+            "Complaint Tracking & Audits",
+            "System Alerts Management",
+            "Criminal Record Verification",
+          ],
+        },
+        {
+          title: "Department User",
+          items: [
+            "Handle Assigned Complaints",
+            "Manage Specific Tasks",
+            "Input Criminal Records",
+          ],
+        },
+        {
+          title: "Citizen Module",
+          items: [
+            "Create & Track Complaints",
+            "Profile Management",
+            "Access Public Warning Board",
+          ],
+        },
+        {
+          title: "Security & Performance",
+          items: [
+            "Global API Rate Limiting",
+            "Bcrypt Password Encryption",
+            "Helmet & CORS Security Policies",
+            "Comprehensive Audit Logging",
           ],
         },
       ],

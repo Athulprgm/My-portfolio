@@ -12,6 +12,7 @@
           <span>Download PDF</span>
         </button>
         <a
+          v-if="detailData.repoUrl && detailData.repoUrl !== '#'"
           :href="detailData.repoUrl"
           target="_blank"
           rel="noopener noreferrer"
@@ -19,6 +20,16 @@
         >
           <i class="fa-brands fa-github"></i>
           <span>Repo</span>
+        </a>
+        <a
+          v-if="detailData.liveUrl && detailData.liveUrl !== '#'"
+          :href="detailData.liveUrl"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex items-center gap-2 px-3.5 py-1.5 border border-white/10 rounded font-mono text-xs text-neutral-300 hover:border-emerald-500/40 hover:text-white transition-all"
+        >
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          <span>Live Demo</span>
         </a>
       </div>
     </div>
