@@ -3,7 +3,7 @@
     class="fixed top-0 left-0 w-full z-50 transition-all duration-500"
     :class="scrolled ? 'h-14 bg-neutral-950/85 backdrop-blur-xl border-b border-white/6 shadow-[0_1px_30px_rgba(0,0,0,0.4)]' : 'h-18 bg-transparent'"
   >
-    <div class="max-w-6xl mx-auto px-6 h-full flex justify-between items-center">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-full flex justify-between items-center">
 
       <!-- Logo -->
       <a
@@ -66,7 +66,7 @@
     <Transition name="menu-slide">
       <div
         v-if="menuOpen"
-        class="md:hidden fixed left-0 w-full bg-neutral-950/98 backdrop-blur-xl border-b border-white/5 flex flex-col py-6 px-8 gap-2 transition-all duration-500"
+        class="md:hidden fixed left-0 w-full bg-neutral-950/98 backdrop-blur-xl border-b border-white/5 flex flex-col py-6 px-6 gap-2 transition-all duration-500"
         :class="scrolled ? 'top-14' : 'top-18'"
       >
         <a

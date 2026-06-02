@@ -1,5 +1,5 @@
 <template>
-  <section class="relative py-28 px-6 overflow-hidden min-h-screen flex flex-col justify-between" id="contact">
+  <section class="relative py-20 sm:py-28 px-4 sm:px-6 overflow-hidden min-h-screen flex flex-col justify-between" id="contact">
 
     <!-- Background radial glow -->
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_100%,rgba(99,102,241,0.07),transparent)] pointer-events-none"></div>
@@ -33,7 +33,7 @@
       </div>
 
       <!-- Contact grid -->
-      <div class="grid grid-cols-2 sm:grid-cols-3 gap-4 max-w-3xl mx-auto mb-16">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-3xl mx-auto mb-16">
         <a
           v-for="contact in contacts"
           :key="contact.text"
@@ -77,7 +77,7 @@
       </div>
 
       <!-- Email CTA box -->
-      <div class="max-w-xl mx-auto text-center bg-neutral-950/60 border border-white/6 rounded-2xl p-8 hover:border-indigo-500/20 transition-all duration-400">
+      <div class="max-w-xl mx-auto text-center bg-neutral-950/60 border border-white/6 rounded-2xl p-6 sm:p-8 hover:border-indigo-500/20 transition-all duration-400">
         <i class="fa-solid fa-envelope-open-text text-indigo-400 text-2xl mb-4 block"></i>
         <h3 class="font-mono text-lg font-black text-white mb-2 tracking-tight">Drop me an email</h3>
         <p class="font-sans text-sm text-neutral-400 mb-5 leading-relaxed max-w-sm mx-auto">

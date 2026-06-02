@@ -8,22 +8,50 @@
         <div class="gradient-orb orb-3"></div>
       </div>
 
-      <template v-if="!selectedProject">
+      <!-- ── Admin Panel ──────────────────────── -->
+      <template v-if="currentRoute === 'admin'">
+        <AdminPanel />
+      </template>
+
+      <!-- ── Project loading spinner ─────────── -->
+      <template v-else-if="projectLoading">
+        <div class="min-h-screen flex items-center justify-center bg-[#050505]">
+          <div class="flex flex-col items-center gap-4">
+            <div class="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+            <span class="font-mono text-xs text-neutral-500">// fetching project data</span>
+          </div>
+        </div>
+      </template>
+
+      <!-- ── Project error state ──────────────── -->
+      <template v-else-if="projectError">
+        <div class="min-h-screen flex items-center justify-center bg-[#050505]">
+          <div class="text-center flex flex-col items-center gap-4">
+            <i class="fa-solid fa-triangle-exclamation text-amber-400 text-3xl"></i>
+            <p class="font-mono text-sm text-neutral-400">{{ projectError }}</p>
+            <button @click="goBack" class="font-mono text-xs px-4 py-2 border border-indigo-500/40 text-indigo-400 rounded hover:bg-indigo-500/10 transition-colors">
+              $ cd ..
+            </button>
+          </div>
+        </div>
+      </template>
+
+      <!-- ── Project detail ───────────────────── -->
+      <template v-else-if="selectedProject">
+        <ProjectDetail :project="selectedProject" :backAction="goBack" />
+      </template>
+
+      <!-- ── Main portfolio ───────────────────── -->
+      <template v-else>
         <NavBar />
-        
         <main>
           <Home />
           <Projects />
           <About />
           <Contact />
         </main>
-
         <ScrollToTop />
         <SpecialDayPopup />
-      </template>
-
-      <template v-else>
-        <ProjectDetail :project="selectedProject" :backAction="goBack" />
       </template>
     </div>
   </LoadingScreenWrapper>
@@ -31,33 +59,60 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import NavBar from './components/NavBar.vue';
-import Home from './components/Home.vue';
-import Projects from './components/Projects.vue';
-import About from './components/About.vue';
-import Contact from './components/Contact.vue';
-import ScrollToTop from './components/ScrollToTop.vue';
-import SpecialDayPopup from './components/SpecialDayPopup.vue';
+import NavBar               from './components/NavBar.vue';
+import Home                 from './components/Home.vue';
+import Projects             from './components/Projects.vue';
+import About                from './components/About.vue';
+import Contact              from './components/Contact.vue';
+import ScrollToTop          from './components/ScrollToTop.vue';
+import SpecialDayPopup      from './components/SpecialDayPopup.vue';
 import LoadingScreenWrapper from './components/LoadingScreenWrapper.vue';
-import ProjectDetail from './components/ProjectDetail.vue';
-import { projectsData } from './data/projectsData';
+import ProjectDetail        from './components/ProjectDetail.vue';
+import AdminPanel           from './components/AdminPanel.vue';
+import { fetchProjectById } from './composables/useProjects';
 
+// ── Routing state ─────────────────────────────────────────────────
+const currentRoute    = ref('home');   // 'home' | 'admin' | 'project'
 const selectedProject = ref(null);
+const projectLoading  = ref(false);
+const projectError    = ref(null);
 
-const parseRoute = () => {
+const parseRoute = async () => {
   const path = window.location.pathname;
+
+  // /admin
+  if (path === '/admin' || path.startsWith('/admin')) {
+    currentRoute.value    = 'admin';
+    selectedProject.value = null;
+    return;
+  }
+
+  // /project/:id
   const match = path.match(/\/project\/(\d+)/);
   if (match) {
-    const id = parseInt(match[1]);
-    selectedProject.value = projectsData.find(p => p.id === id);
-  } else {
-    selectedProject.value = null;
+    currentRoute.value   = 'project';
+    projectLoading.value = true;
+    projectError.value   = null;
+    try {
+      selectedProject.value = await fetchProjectById(parseInt(match[1]));
+    } catch (err) {
+      projectError.value    = err.message;
+      selectedProject.value = null;
+    } finally {
+      projectLoading.value = false;
+    }
+    return;
   }
+
+  // /
+  currentRoute.value    = 'home';
+  selectedProject.value = null;
+  projectError.value    = null;
 };
 
 const goBack = () => {
   window.history.pushState({}, '', '/');
-  selectedProject.value = null;
+  parseRoute();
 };
 
 onMounted(() => {

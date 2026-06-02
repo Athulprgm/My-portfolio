@@ -1,5 +1,5 @@
 <template>
-  <section class="py-28 px-6 relative overflow-hidden" id="project">
+  <section class="py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden" id="project">
 
     <!-- Section background glow -->
     <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-indigo-600/5 blur-[100px] pointer-events-none rounded-full"></div>
@@ -20,8 +20,44 @@
         </p>
       </div>
 
+      <!-- Error state -->
+      <div v-if="error" class="text-center py-16">
+        <i class="fa-solid fa-triangle-exclamation text-amber-400 text-3xl mb-4 block"></i>
+        <p class="font-mono text-sm text-neutral-400 mb-4">Failed to load projects — <span class="text-amber-400">{{ error }}</span></p>
+        <button
+          @click="fetchProjects"
+          class="font-mono text-xs px-4 py-2 border border-indigo-500/40 text-indigo-400 rounded hover:bg-indigo-500/10 transition-colors"
+        >
+          $ retry
+        </button>
+      </div>
+
+      <!-- Skeleton loading grid -->
+      <div v-else-if="loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          v-for="i in 6"
+          :key="`skeleton-${i}`"
+          class="bg-neutral-950/60 border border-white/6 rounded-2xl overflow-hidden animate-pulse"
+        >
+          <div class="w-full h-48 bg-neutral-800/50"></div>
+          <div class="p-5 flex flex-col gap-3">
+            <div class="flex gap-1.5">
+              <div class="h-4 w-14 bg-neutral-800/50 rounded"></div>
+              <div class="h-4 w-10 bg-neutral-800/50 rounded"></div>
+            </div>
+            <div class="h-4 w-4/5 bg-neutral-800/50 rounded"></div>
+            <div class="h-3 w-full bg-neutral-800/30 rounded"></div>
+            <div class="h-3 w-3/4 bg-neutral-800/30 rounded"></div>
+            <div class="pt-2.5 border-t border-white/5 flex items-center justify-between">
+              <div class="h-3 w-32 bg-neutral-800/30 rounded"></div>
+              <div class="w-7 h-7 rounded-full bg-neutral-800/30"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Projects grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <article
           v-for="project in projects"
           :key="project.id"
@@ -31,13 +67,13 @@
           <!-- Card image -->
           <div class="relative w-full h-48 overflow-hidden">
             <img
-              :src="project.image"
+              :src="getImageUrl(project.thumbnail || project.image)"
               :alt="project.title"
               loading="lazy"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108 brightness-75 group-hover:brightness-90"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108 brightness-100 group-hover:brightness-110 opacity-100"
             />
             <!-- Gradient overlay -->
-            <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/50 to-transparent pointer-events-none"></div>
 
             <!-- AI badge -->
             <div
@@ -101,9 +137,10 @@
 </template>
 
 <script setup>
-import { projectsData } from '../data/projectsData';
+import { onMounted } from 'vue';
+import { useProjects, getImageUrl } from '../composables/useProjects';
 
-const projects = projectsData;
+const { projects, loading, error, fetchProjects } = useProjects();
 
 const tagColorMap = {
   'React': 'border-cyan-500/30 bg-cyan-950/30 text-cyan-400',
@@ -131,6 +168,10 @@ const handleProjectClick = (project) => {
     window.scrollTo(0, 0);
   }
 };
+
+onMounted(() => {
+  fetchProjects();
+});
 </script>
 
 <style scoped>

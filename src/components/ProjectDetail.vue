@@ -1,7 +1,7 @@
 <template>
-  <div class="min-h-screen bg-[#050505] text-white font-sans py-24 px-6 relative overflow-x-hidden">
+  <div class="min-h-screen bg-[#050505] text-white font-sans py-16 sm:py-24 px-4 sm:px-6 relative overflow-x-hidden">
     <!-- Navigation -->
-    <div class="fixed top-0 left-0 w-full h-16 bg-neutral-950/80 backdrop-blur-md border-b border-white/5 px-6 flex items-center justify-between z-50 no-print">
+    <div class="fixed top-0 left-0 w-full h-16 bg-neutral-950/80 backdrop-blur-md border-b border-white/5 px-4 sm:px-6 flex items-center justify-between z-50 no-print">
       <button @click="handleBack" class="flex items-center gap-2 font-mono text-xs text-neutral-400 hover:text-white transition-colors">
         <i class="fa-solid fa-arrow-left"></i>
         <span>cd ..</span>
@@ -76,7 +76,7 @@
             <div class="flex flex-col gap-6">
               <div v-for="(item, idx) in detailData.highlights" :key="idx" class="flex flex-col sm:flex-row gap-6 border-b border-white/3 last:border-b-0 pb-6 last:pb-0">
                 <div class="relative w-full sm:w-[220px] aspect-video rounded-lg overflow-hidden border border-white/5 flex-shrink-0">
-                  <img :src="item.image" :alt="item.title" class="w-full h-full object-cover" />
+                  <img :src="getImageUrl(item.image)" :alt="item.title" class="w-full h-full object-cover" />
                   <span class="absolute top-2 left-2 bg-neutral-950/80 backdrop-blur-xs border border-indigo-500/20 text-indigo-400 font-mono text-[9px] px-2 py-0.5 rounded-full">{{ item.tag }}</span>
                 </div>
                 <div class="flex flex-col justify-center">
@@ -88,18 +88,18 @@
           </section>
 
           <!-- Gallery -->
-          <section class="bg-neutral-900/20 border border-white/5 rounded-xl p-8">
+          <section v-if="galleryImages.length > 0" class="bg-neutral-900/20 border border-white/5 rounded-xl p-8">
             <h3 class="font-mono text-sm font-semibold text-white mb-6 tracking-wider flex items-center gap-2.5">
               <i class="fa-solid fa-images text-neutral-500"></i> Interface Gallery
             </h3>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <div
-                v-for="(img, index) in detailData.gallery"
+                v-for="(img, index) in galleryImages"
                 :key="index"
                 class="relative aspect-video rounded-lg overflow-hidden border border-white/5 group cursor-pointer transition-all duration-300"
                 @click="selectedImage = index"
               >
-                <img :src="img" :alt="`Screen ${index + 1}`" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img :src="getImageUrl(img)" :alt="`Screen ${index + 1}`" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div class="absolute inset-0 bg-neutral-950/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <i class="fa-solid fa-maximize text-white text-sm"></i>
                 </div>
@@ -181,7 +181,7 @@
           >
             <i class="fa-solid fa-times"></i>
           </button>
-          <img :src="detailData.gallery[selectedImage]" alt="Full view" class="w-full h-full object-contain rounded-lg border border-white/10" />
+          <img :src="getImageUrl(galleryImages[selectedImage])" alt="Full view" class="w-full h-full object-contain rounded-lg border border-white/10" />
         </div>
       </div>
     </Transition>
@@ -189,7 +189,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
+import { getImageUrl } from '../composables/useProjects';
 
 const props = defineProps({
   project: {
@@ -204,6 +205,17 @@ const props = defineProps({
 
 const selectedImage = ref(null);
 const detailData = props.project.detailData;
+
+const galleryImages = computed(() => {
+  const images = [];
+  if (Array.isArray(props.project.image)) {
+    images.push(...props.project.image);
+  }
+  if (detailData && Array.isArray(detailData.gallery)) {
+    images.push(...detailData.gallery);
+  }
+  return [...new Set(images)]; // Deduplicate
+});
 
 const handleBack = () => {
   if (props.backAction) {

@@ -1,5 +1,5 @@
 <template>
-  <section class="py-28 px-6 relative overflow-hidden" id="about">
+  <section class="py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden" id="about">
 
     <!-- Decorative background orbs -->
     <div class="absolute top-1/3 right-0 w-80 h-80 bg-violet-600/5 rounded-full blur-[120px] pointer-events-none"></div>
@@ -28,7 +28,7 @@
           :key="stat.label"
           class="flex flex-col items-center justify-center p-5 bg-neutral-950/60 border border-white/6 rounded-2xl hover:border-indigo-500/25 transition-all duration-300 group"
         >
-          <span class="font-mono text-3xl md:text-4xl font-extrabold bg-gradient-to-br from-indigo-400 to-violet-400 bg-clip-text text-transparent mb-1.5">{{ stat.value }}</span>
+          <span class="font-mono text-2xl sm:text-3xl md:text-4xl font-extrabold bg-gradient-to-br from-indigo-400 to-violet-400 bg-clip-text text-transparent mb-1.5">{{ stat.value }}</span>
           <span class="font-mono text-[10px] text-neutral-400 text-center tracking-wider font-bold uppercase">{{ stat.label }}</span>
         </div>
       </div>

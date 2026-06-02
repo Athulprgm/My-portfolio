@@ -1,6 +1,6 @@
 <template>
   <section
-    class="profile-container relative min-h-screen py-28 px-6 flex justify-center items-center overflow-hidden"
+    class="profile-container relative min-h-screen py-20 sm:py-28 px-4 sm:px-6 flex justify-center items-center overflow-hidden"
     id="home"
     ref="containerRef"
     @mousemove="handleContainerMouseMove"
@@ -16,7 +16,7 @@
 
       <!-- ========== ID CARD ========== -->
       <div
-        class="id-card-container w-full max-w-[330px] flex-shrink-0 relative [perspective:1200px] group"
+        class="id-card-container w-full max-w-[300px] sm:max-w-[330px] flex-shrink-0 relative [perspective:1200px] group"
         ref="profileRef"
         @mousemove="handleMouseMove"
         @mouseleave="handleMouseLeave"
@@ -170,17 +170,17 @@
         </div>
 
         <!-- CTA row -->
-        <div class="flex flex-wrap items-center gap-4 mt-6">
+        <div class="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-4 mt-6">
           <button
             @click="scrollToProjects"
-            class="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-mono text-xs font-bold tracking-wider uppercase rounded-lg hover:shadow-[0_0_25px_rgba(99,102,241,0.45)] hover:-translate-y-0.5 transition-all duration-300"
+            class="flex justify-center items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-mono text-xs font-bold tracking-wider uppercase rounded-lg hover:shadow-[0_0_25px_rgba(99,102,241,0.45)] hover:-translate-y-0.5 transition-all duration-300 w-full sm:w-auto"
           >
             <i class="fa-solid fa-terminal"></i> View Projects
           </button>
           <a
             href="#contact"
             @click.prevent="scrollToContact"
-            class="flex items-center gap-2 px-6 py-3 border border-white/10 hover:border-indigo-500/30 bg-white/2 hover:bg-indigo-500/5 text-neutral-300 hover:text-white font-mono text-xs font-bold tracking-wider uppercase rounded-lg hover:-translate-y-0.5 transition-all duration-300"
+            class="flex justify-center items-center gap-2 px-6 py-3 border border-white/10 hover:border-indigo-500/30 bg-white/2 hover:bg-indigo-500/5 text-neutral-300 hover:text-white font-mono text-xs font-bold tracking-wider uppercase rounded-lg hover:-translate-y-0.5 transition-all duration-300 w-full sm:w-auto"
           >
             <i class="fa-solid fa-paper-plane"></i> Contact Me
           </a>
