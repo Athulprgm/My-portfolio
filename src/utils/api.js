@@ -105,8 +105,8 @@ export function getImageUrl(path) {
   if (Array.isArray(path)) path = path[0] || '';
   if (!path) return '';
 
-  // Already absolute or data URI
-  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) {
+  // Already absolute, data URI, or blob URI
+  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:') || path.startsWith('blob:')) {
     return path;
   }
 
