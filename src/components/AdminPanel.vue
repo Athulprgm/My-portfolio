@@ -519,7 +519,7 @@ const submitForm = async () => {
     formData.append('title', form.title);
     formData.append('description', form.description);
     formData.append('sort_order', form.sort_order);
-    formData.append('has_details', true);
+    formData.append('has_details', form.has_details ? 1 : 0);
 
     if (form.imageFiles && form.imageFiles.length > 0) {
       form.imageFiles.forEach((f) => {
