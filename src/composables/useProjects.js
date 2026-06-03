@@ -3,16 +3,9 @@
  * Results are cached in-memory so the grid doesn't re-fetch on back navigation.
  */
 import { ref } from 'vue';
+import apiClient, { getImageUrl } from '../utils/api';
 
-const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:8000';
-
-export function getImageUrl(path) {
-  if (!path) return '';
-  if (Array.isArray(path)) path = path[0] || '';
-  if (!path) return '';
-  if (path.startsWith('/storage')) return API_BASE + path;
-  return path;
-}
+export { getImageUrl };
 
 // Module-level cache
 let _cachedProjects = null;
@@ -46,19 +39,16 @@ export function useProjects() {
     loading.value = true;
     error.value   = null;
 
-    _fetchPromise = fetch(`${API_BASE}/api/projects`)
+    _fetchPromise = apiClient.get('/projects')
       .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then((data) => {
+        const data = res.data;
         _cachedProjects  = data;
         projects.value   = data;
         projectsCache.value = data;
       })
       .catch((err) => {
         console.error('[useProjects] fetch error:', err);
-        error.value = err.message;
+        error.value = err.response?.data?.message || err.message;
       })
       .finally(() => {
         loading.value = false;
@@ -75,7 +65,7 @@ export function useProjects() {
  * Fetch a single project by ID (with full detailData).
  */
 export async function fetchProjectById(id) {
-  const res = await fetch(`${API_BASE}/api/projects/${id}`);
-  if (!res.ok) throw new Error(`Project ${id} not found (HTTP ${res.status})`);
-  return res.json();
+  const res = await apiClient.get(`/projects/${id}`);
+  return res.data;
 }
+

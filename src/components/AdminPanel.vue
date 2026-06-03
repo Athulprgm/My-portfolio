@@ -338,9 +338,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import { getImageUrl, clearProjectsCache } from '../composables/useProjects';
-
-const API_BASE  = import.meta.env.VITE_API_URL  ?? 'http://localhost:8000';
-const ADMIN_KEY = import.meta.env.VITE_ADMIN_KEY ?? '';
+import apiClient from '../utils/api';
 
 // ── Auth ─────────────────────────────────────────────────────────
 const authed     = ref(false);
@@ -349,17 +347,20 @@ const loginError = ref('');
 
 const login = async () => {
   loginError.value = '';
-  // Quick check via an admin API call
   try {
-    const res = await fetch(`${API_BASE}/api/admin/projects`, {
+    // Explicitly pass key in header for the login check
+    await apiClient.get('/admin/projects', {
       headers: { 'X-Admin-Key': keyInput.value },
     });
-    if (res.status === 401) { loginError.value = 'Wrong key — try again.'; return; }
     authed.value = true;
     sessionStorage.setItem('admin_key', keyInput.value);
     loadProjects();
-  } catch {
-    loginError.value = 'Cannot reach the API server.';
+  } catch (err) {
+    if (err.response?.status === 401) {
+      loginError.value = 'Wrong key — try again.';
+    } else {
+      loginError.value = 'Cannot reach the API server.';
+    }
   }
 };
 
@@ -376,23 +377,14 @@ const projects   = ref([]);
 const loadingList = ref(false);
 const apiError   = ref(null);
 
-const adminHeaders = (isFormData = false) => {
-  const headers = {
-    'X-Admin-Key': keyInput.value || sessionStorage.getItem('admin_key') || ADMIN_KEY,
-  };
-  if (!isFormData) headers['Content-Type'] = 'application/json';
-  return headers;
-};
-
 const loadProjects = async () => {
   loadingList.value = true;
   apiError.value    = null;
   try {
-    const res = await fetch(`${API_BASE}/api/admin/projects`, { headers: adminHeaders() });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    projects.value = await res.json();
+    const res = await apiClient.get('/admin/projects');
+    projects.value = res.data;
   } catch (e) {
-    apiError.value = `Failed to load projects: ${e.message}`;
+    apiError.value = `Failed to load projects: ${e.response?.data?.message || e.message}`;
   } finally {
     loadingList.value = false;
   }
@@ -435,8 +427,6 @@ const form = reactive(blankForm());
 const onImageChange = (e) => {
   const files = Array.from(e.target.files).slice(0, 7);
   form.imageFiles = files;
-  // keep existing images if appending, or replace? Let's replace previews for simplicity, 
-  // but we also clear existingImages so they don't get mixed if user uploads new ones.
   form.existingImages = []; 
   form.imagePreviews = files.map(f => URL.createObjectURL(f));
 };
@@ -469,10 +459,9 @@ const openEdit = async (p) => {
   editMode.value  = true;
   form.galleryFiles = [];
   form.galleryPreviews = [];
-  // fetch full detail
   try {
-    const res = await fetch(`${API_BASE}/api/projects/${p.id}`);
-    const full = await res.json();
+    const res = await apiClient.get(`/projects/${p.id}`);
+    const full = res.data;
     Object.assign(form, {
       id:          full.id,
       title:       full.title,
@@ -503,7 +492,7 @@ const openEdit = async (p) => {
     tagsInput.value    = (full.tags ?? []).join(', ');
     galleryInput.value = (full.detailData?.gallery ?? []).join('\n');
   } catch (e) {
-    apiError.value = `Could not load project data: ${e.message}`;
+    apiError.value = `Could not load project data: ${e.response?.data?.message || e.message}`;
     return;
   }
   showModal.value = true;
@@ -517,15 +506,14 @@ const submitForm = async () => {
   if (!form.description.trim()) { formError.value = 'Description is required.'; return; }
   if (form.existingImages.length === 0 && form.imageFiles.length === 0) { formError.value = 'At least one image is required.'; return; }
 
-  // parse tags & gallery from text inputs
   form.tags = tagsInput.value.split(',').map(t => t.trim()).filter(Boolean);
   form.detailData.gallery = galleryInput.value.split('\n').map(l => l.trim()).filter(Boolean);
 
   saving.value = true;
   try {
     const url = editMode.value
-      ? `${API_BASE}/api/admin/projects/${form.id}`
-      : `${API_BASE}/api/admin/projects`;
+      ? `/admin/projects/${form.id}`
+      : `/admin/projects`;
 
     const formData = new FormData();
     formData.append('title', form.title);
@@ -557,24 +545,16 @@ const submitForm = async () => {
       formData.append('_method', 'PUT');
     }
 
-    const res = await fetch(url, {
-      method: 'POST', // Always POST, _method handles PUT
-      headers: adminHeaders(true), // isFormData = true
-      body: formData,
-    });
-
-    if (!res.ok) {
-      const err = await res.json();
-      formError.value = err.error ?? JSON.stringify(err.errors ?? err);
-      return;
-    }
+    // Always POST because Laravel needs POST to handle multipart/form-data uploads with PUT override
+    await apiClient.post(url, formData);
 
     showToast(editMode.value ? 'Project updated ✓' : 'Project created ✓', 'success');
     closeModal();
     clearProjectsCache();
     await loadProjects();
   } catch (e) {
-    formError.value = e.message;
+    const errData = e.response?.data;
+    formError.value = errData?.error ?? JSON.stringify(errData?.errors ?? e.message);
   } finally {
     saving.value = false;
   }
@@ -588,17 +568,13 @@ const confirmDelete = (p) => { deleteTarget.value = p; };
 const deleteProject = async () => {
   saving.value = true;
   try {
-    const res = await fetch(`${API_BASE}/api/admin/projects/${deleteTarget.value.id}`, {
-      method: 'DELETE',
-      headers: adminHeaders(),
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    await apiClient.delete(`/admin/projects/${deleteTarget.value.id}`);
     showToast('Project deleted', 'success');
     deleteTarget.value = null;
     clearProjectsCache();
     await loadProjects();
   } catch (e) {
-    apiError.value = `Delete failed: ${e.message}`;
+    apiError.value = `Delete failed: ${e.response?.data?.message || e.message}`;
   } finally {
     saving.value = false;
   }
