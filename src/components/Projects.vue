@@ -7,7 +7,7 @@
     <div class="max-w-6xl mx-auto relative z-10">
 
       <!-- Section header -->
-      <div class="text-center mb-16">
+      <div class="text-center mb-10">
         <div class="inline-flex items-center gap-2 border border-indigo-500/20 bg-indigo-950/20 rounded-full px-4 py-1.5 mb-5">
           <i class="fa-solid fa-code text-indigo-400 text-[10px]"></i>
           <span class="font-mono text-[10.5px] text-indigo-300 tracking-wide font-semibold uppercase">Selected Work</span>
@@ -18,6 +18,19 @@
         <p class="font-mono text-[11px] text-emerald-400/90 max-w-md mx-auto leading-relaxed font-semibold">
           // Real solutions shipped for real users — click any card to explore
         </p>
+      </div>
+
+      <!-- Filter Bar -->
+      <div v-if="!error && !loading" class="flex justify-center flex-wrap gap-3 mb-10">
+        <button
+          v-for="lvl in levels"
+          :key="lvl"
+          @click="selectedLevel = lvl; showAll = false"
+          class="px-4 py-1.5 rounded-full font-mono text-[11px] font-semibold tracking-wider transition-all duration-300 border"
+          :class="selectedLevel === lvl ? 'bg-indigo-600/20 text-indigo-400 border-indigo-500/50' : 'bg-neutral-950/40 text-neutral-500 border-white/10 hover:text-white hover:border-white/20'"
+        >
+          {{ lvl }}
+        </button>
       </div>
 
       <!-- Error state -->
@@ -59,7 +72,7 @@
       <!-- Projects grid -->
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <article
-          v-for="project in projects"
+          v-for="project in filteredProjects"
           :key="project.id"
           class="project-card group relative bg-neutral-950/60 backdrop-blur border border-white/6 rounded-2xl overflow-hidden flex flex-col cursor-pointer transition-all duration-400 hover:-translate-y-2 hover:border-indigo-500/30 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
           @click="handleProjectClick(project)"
@@ -82,6 +95,26 @@
             >
               <span class="w-1.5 h-1.5 bg-violet-400 rounded-full animate-ping"></span>
               AI Engine Active
+            </div>
+
+            <!-- Level badge -->
+            <div
+              v-if="project.level"
+              class="absolute bottom-3 left-3 flex items-center gap-1.5 backdrop-blur font-mono text-[9px] px-2.5 py-1 rounded-full border shadow-lg"
+              :class="{
+                'bg-emerald-950/90 border-emerald-500/40 text-emerald-300': project.level === 'Beginner',
+                'bg-blue-950/90 border-blue-500/40 text-blue-300': project.level === 'Intermediate',
+                'bg-rose-950/90 border-rose-500/40 text-rose-300': project.level === 'Advanced'
+              }"
+            >
+              <span class="w-1.5 h-1.5 rounded-full"
+                :class="{
+                  'bg-emerald-400': project.level === 'Beginner',
+                  'bg-blue-400': project.level === 'Intermediate',
+                  'bg-rose-400': project.level === 'Advanced'
+                }"
+              ></span>
+              {{ project.level }}
             </div>
 
             <!-- Project number badge -->
@@ -126,6 +159,17 @@
         </article>
       </div>
 
+      <!-- View All Button -->
+      <div v-if="!error && !loading && hasMoreProjects" class="flex justify-center mt-12">
+        <button
+          @click="showAll = !showAll"
+          class="flex items-center gap-2 px-6 py-2.5 bg-neutral-900/50 hover:bg-neutral-800 border border-white/10 rounded-lg font-mono text-[11px] text-white tracking-widest transition-all duration-300"
+        >
+          {{ showAll ? 'Show Less' : 'View All Projects' }}
+          <i class="fa-solid" :class="showAll ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
+        </button>
+      </div>
+
       <!-- Bottom note -->
       <div class="text-center mt-14">
         <span class="font-mono text-[11px] text-neutral-500">
@@ -137,10 +181,33 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useProjects, getImageUrl } from '../composables/useProjects';
 
 const { projects, loading, error, fetchProjects } = useProjects();
+
+const selectedLevel = ref('All');
+const showAll = ref(false);
+const levels = ['All', 'Beginner', 'Intermediate', 'Advanced'];
+
+const filteredProjects = computed(() => {
+  let list = projects.value;
+  if (selectedLevel.value !== 'All') {
+    list = list.filter(p => p.level === selectedLevel.value);
+  }
+  if (!showAll.value) {
+    return list.slice(0, 3);
+  }
+  return list;
+});
+
+const hasMoreProjects = computed(() => {
+  let list = projects.value;
+  if (selectedLevel.value !== 'All') {
+    list = list.filter(p => p.level === selectedLevel.value);
+  }
+  return list.length > 3;
+});
 
 const tagColorMap = {
   'React': 'border-cyan-500/30 bg-cyan-950/30 text-cyan-400',
