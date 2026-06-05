@@ -80,7 +80,7 @@
           <!-- Card image -->
           <div class="relative w-full h-48 overflow-hidden">
             <img
-              :src="getImageUrl(project.thumbnail || project.image)"
+              :src="getImageUrl(project.thumbnail, project.image)"
               :alt="project.title"
               loading="lazy"
               class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108 brightness-100 group-hover:brightness-110 opacity-100"

@@ -97,30 +97,40 @@ export function getApiBase() {
   return apiBaseUrl.endsWith('/api') ? apiBaseUrl.slice(0, -4) : apiBaseUrl;
 }
 
-/**
- * Helper to normalize image pathing/URLs for display
- */
-export function getImageUrl(path) {
-  if (!path) return '';
-  if (Array.isArray(path)) path = path[0] || '';
-  if (!path) return '';
+export function getImageUrl(path, fallbackPath = '') {
+  const isValid = (p) => {
+    if (!p) return false;
+    if (Array.isArray(p)) return p.length > 0 && isValid(p[0]);
+    if (typeof p !== 'string') return false;
+    const trimmed = p.trim();
+    return trimmed !== '' && trimmed !== '[]' && trimmed !== '{}';
+  };
+
+  let resolvedPath = '';
+  if (isValid(path)) {
+    resolvedPath = Array.isArray(path) ? path[0] : path;
+  } else if (isValid(fallbackPath)) {
+    resolvedPath = Array.isArray(fallbackPath) ? fallbackPath[0] : fallbackPath;
+  }
+
+  if (!resolvedPath) return '';
 
   // Already absolute, data URI, or blob URI
-  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:') || path.startsWith('blob:')) {
-    return path;
+  if (resolvedPath.startsWith('http://') || resolvedPath.startsWith('https://') || resolvedPath.startsWith('data:') || resolvedPath.startsWith('blob:')) {
+    return resolvedPath;
   }
 
   const apiBase = getApiBase();
   
   // Format local storage path correctly
-  if (path.startsWith('/storage')) {
-    return `${apiBase}${path}`;
+  if (resolvedPath.startsWith('/storage')) {
+    return `${apiBase}${resolvedPath}`;
   }
-  if (path.startsWith('storage')) {
-    return `${apiBase}/${path}`;
+  if (resolvedPath.startsWith('storage')) {
+    return `${apiBase}/${resolvedPath}`;
   }
 
-  return path.startsWith('/') ? `${apiBase}${path}` : `${apiBase}/${path}`;
+  return resolvedPath.startsWith('/') ? `${apiBase}${resolvedPath}` : `${apiBase}/${resolvedPath}`;
 }
 
 export default apiClient;

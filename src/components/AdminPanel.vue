@@ -99,7 +99,7 @@
               <td class="px-4 py-3 font-mono text-[11px] text-neutral-600">{{ String(p.id).padStart(2,'0') }}</td>
               <td class="px-4 py-3">
                 <div class="flex items-center gap-3">
-                  <img :src="getImageUrl(p.thumbnail || p.image)" :alt="p.title" class="w-10 h-7 object-cover rounded border border-white/5 flex-shrink-0" />
+                  <img :src="getImageUrl(p.thumbnail, p.image)" :alt="p.title" class="w-10 h-7 object-cover rounded border border-white/5 flex-shrink-0" />
                   <div>
                     <p class="font-mono text-xs font-semibold text-white">{{ p.title }}</p>
                     <p class="font-sans text-[11px] text-neutral-500 line-clamp-1 max-w-xs">{{ p.description }}</p>
