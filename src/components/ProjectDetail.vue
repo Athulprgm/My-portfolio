@@ -76,7 +76,7 @@
             <div class="flex flex-col gap-6">
               <div v-for="(item, idx) in detailData.highlights" :key="idx" class="flex flex-col sm:flex-row gap-6 border-b border-white/3 last:border-b-0 pb-6 last:pb-0">
                 <div class="relative w-full sm:w-[220px] aspect-video rounded-lg overflow-hidden border border-white/5 flex-shrink-0">
-                  <img :src="getImageUrl(item.image)" :alt="item.title" class="w-full h-full object-cover" />
+                  <img :src="getImageUrl(item.image)" :alt="item.title" @error="handleImageError" class="w-full h-full object-cover" />
                   <span class="absolute top-2 left-2 bg-neutral-950/80 backdrop-blur-xs border border-indigo-500/20 text-indigo-400 font-mono text-[9px] px-2 py-0.5 rounded-full">{{ item.tag }}</span>
                 </div>
                 <div class="flex flex-col justify-center">
@@ -99,7 +99,7 @@
                 class="relative aspect-video rounded-lg overflow-hidden border border-white/5 group cursor-pointer transition-all duration-300"
                 @click="selectedImage = index"
               >
-                <img :src="getImageUrl(img)" :alt="`Screen ${index + 1}`" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img :src="getImageUrl(img)" :alt="`Screen ${index + 1}`" loading="lazy" @error="handleImageError" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                 <div class="absolute inset-0 bg-neutral-950/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <i class="fa-solid fa-maximize text-white text-sm"></i>
                 </div>
@@ -181,7 +181,7 @@
           >
             <i class="fa-solid fa-times"></i>
           </button>
-          <img :src="getImageUrl(galleryImages[selectedImage])" alt="Full view" class="w-full h-full object-contain rounded-lg border border-white/10" />
+          <img :src="getImageUrl(galleryImages[selectedImage])" alt="Full view" @error="handleImageError" class="w-full h-full object-contain rounded-lg border border-white/10" />
         </div>
       </div>
     </Transition>
@@ -195,7 +195,8 @@ import { getImageUrl } from '../composables/useProjects';
 const props = defineProps({
   project: {
     type: Object,
-    required: true
+    required: true,
+    default: () => ({})
   },
   backAction: {
     type: Function,
@@ -204,18 +205,23 @@ const props = defineProps({
 });
 
 const selectedImage = ref(null);
-const detailData = props.project.detailData;
+const detailData = computed(() => props.project?.detailData || {});
 
 const galleryImages = computed(() => {
   const images = [];
-  if (Array.isArray(props.project.image)) {
+  if (props.project && Array.isArray(props.project.image)) {
     images.push(...props.project.image);
   }
-  if (detailData && Array.isArray(detailData.gallery)) {
-    images.push(...detailData.gallery);
+  const dData = detailData.value;
+  if (dData && Array.isArray(dData.gallery)) {
+    images.push(...dData.gallery);
   }
   return [...new Set(images)]; // Deduplicate
 });
+
+const handleImageError = (e) => {
+  e.target.src = '/360_F_541698271_tqSibLbJ2iPhcN8hrDy9cFDjbe98JYbQ.webp';
+};
 
 const handleBack = () => {
   if (props.backAction) {

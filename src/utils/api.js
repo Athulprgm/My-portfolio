@@ -113,10 +113,23 @@ export function getImageUrl(path, fallbackPath = '') {
     resolvedPath = Array.isArray(fallbackPath) ? fallbackPath[0] : fallbackPath;
   }
 
-  if (!resolvedPath) return '';
+  if (!resolvedPath) {
+    return '/360_F_541698271_tqSibLbJ2iPhcN8hrDy9cFDjbe98JYbQ.webp';
+  }
 
   // Already absolute, data URI, or blob URI
   if (resolvedPath.startsWith('http://') || resolvedPath.startsWith('https://') || resolvedPath.startsWith('data:') || resolvedPath.startsWith('blob:')) {
+    return resolvedPath;
+  }
+
+  // Frontend public asset paths should be returned as-is
+  if (
+    resolvedPath.startsWith('/360_F_541698271_tqSibLbJ2iPhcN8hrDy9cFDjbe98JYbQ.webp') ||
+    resolvedPath.startsWith('/profile.png') ||
+    resolvedPath.startsWith('/unnamed-removebg-preview.png') ||
+    resolvedPath.startsWith('/christmas-celebration-with-santa-claus.jpg') ||
+    resolvedPath.startsWith('/Window-controls-Mac-icons-400x200w')
+  ) {
     return resolvedPath;
   }
 
@@ -132,5 +145,6 @@ export function getImageUrl(path, fallbackPath = '') {
 
   return resolvedPath.startsWith('/') ? `${apiBase}${resolvedPath}` : `${apiBase}/${resolvedPath}`;
 }
+
 
 export default apiClient;

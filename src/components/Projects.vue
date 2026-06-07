@@ -83,6 +83,7 @@
               :src="getImageUrl(project.thumbnail, project.image)"
               :alt="project.title"
               loading="lazy"
+              @error="handleImageError"
               class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108 brightness-100 group-hover:brightness-110 opacity-100"
             />
             <!-- Gradient overlay -->
@@ -234,6 +235,10 @@ const handleProjectClick = (project) => {
     window.dispatchEvent(new PopStateEvent('popstate'));
     window.scrollTo(0, 0);
   }
+};
+
+const handleImageError = (e) => {
+  e.target.src = '/360_F_541698271_tqSibLbJ2iPhcN8hrDy9cFDjbe98JYbQ.webp';
 };
 
 onMounted(() => {
