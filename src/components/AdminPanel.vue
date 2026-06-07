@@ -246,17 +246,6 @@
               </div>
             </div>
 
-            <!-- Row: gallery -->
-            <div class="field">
-              <label>Gallery Images (Existing URLs - one per line)</label>
-              <textarea v-model="galleryInput" rows="3" placeholder="/project-img/screen1.png&#10;/project-img/screen2.png"></textarea>
-              <label class="mt-4">Upload New Gallery Images <span class="text-neutral-600">(max 5)</span></label>
-              <input type="file" multiple @change="onGalleryChange" accept="image/*" class="file-input" />
-              <div class="flex gap-2 mt-2 flex-wrap">
-                <img v-for="(img, idx) in form.galleryPreviews" :key="idx" :src="img" class="h-16 rounded border border-white/10 object-cover" />
-              </div>
-            </div>
-
             <!-- Error -->
             <p v-if="formError" class="font-mono text-[11px] text-red-400 bg-red-950/30 border border-red-500/20 rounded-lg px-3 py-2">
               <i class="fa-solid fa-triangle-exclamation mr-1"></i>{{ formError }}
@@ -398,7 +387,6 @@ const editMode  = ref(false);
 const saving    = ref(false);
 const formError = ref('');
 const tagsInput    = ref('');
-const galleryInput = ref('');
 
 const blankForm = () => ({
   id: null,
@@ -409,8 +397,7 @@ const blankForm = () => ({
   thumbnail: '',
   imageFiles: [],
   thumbnailFile: null,
-  galleryFiles: [],
-  galleryPreviews: [],
+
   tags: [],
   sort_order: (projects.value.length + 1) * 10,
   has_details: true,
@@ -439,16 +426,11 @@ const onThumbnailChange = (e) => {
   }
 };
 
-const onGalleryChange = (e) => {
-  const files = Array.from(e.target.files).slice(0, 5);
-  form.galleryFiles = files;
-  form.galleryPreviews = files.map(f => URL.createObjectURL(f));
-};
+
 
 const openAdd = () => {
   Object.assign(form, blankForm());
   tagsInput.value    = '';
-  galleryInput.value = '';
   editMode.value     = false;
   formError.value    = '';
   showModal.value    = true;
@@ -457,8 +439,7 @@ const openAdd = () => {
 const openEdit = async (p) => {
   formError.value = '';
   editMode.value  = true;
-  form.galleryFiles = [];
-  form.galleryPreviews = [];
+
   try {
     const res = await apiClient.get(`/projects/${p.id}`);
     const full = res.data;
@@ -490,7 +471,7 @@ const openEdit = async (p) => {
       },
     });
     tagsInput.value    = (full.tags ?? []).join(', ');
-    galleryInput.value = (full.detailData?.gallery ?? []).join('\n');
+
   } catch (e) {
     apiError.value = `Could not load project data: ${e.response?.data?.message || e.message}`;
     return;
@@ -507,7 +488,6 @@ const submitForm = async () => {
   if (form.existingImages.length === 0 && form.imageFiles.length === 0) { formError.value = 'At least one image is required.'; return; }
 
   form.tags = tagsInput.value.split(',').map(t => t.trim()).filter(Boolean);
-  form.detailData.gallery = galleryInput.value.split('\n').map(l => l.trim()).filter(Boolean);
 
   saving.value = true;
   try {
@@ -534,9 +514,6 @@ const submitForm = async () => {
       formData.append('thumbnail', form.thumbnailFile);
     }
 
-    form.galleryFiles.forEach((f) => {
-      formData.append('galleryFiles[]', f);
-    });
 
     formData.append('tags', JSON.stringify(form.tags));
     formData.append('detailData', JSON.stringify(form.detailData));
