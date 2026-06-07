@@ -122,17 +122,6 @@ export function getImageUrl(path, fallbackPath = '') {
     return resolvedPath;
   }
 
-  // Frontend public asset paths should be returned as-is
-  if (
-    resolvedPath.startsWith('/360_F_541698271_tqSibLbJ2iPhcN8hrDy9cFDjbe98JYbQ.webp') ||
-    resolvedPath.startsWith('/profile.png') ||
-    resolvedPath.startsWith('/unnamed-removebg-preview.png') ||
-    resolvedPath.startsWith('/christmas-celebration-with-santa-claus.jpg') ||
-    resolvedPath.startsWith('/Window-controls-Mac-icons-400x200w')
-  ) {
-    return resolvedPath;
-  }
-
   const apiBase = getApiBase();
   
   // Format local storage path correctly
@@ -143,7 +132,8 @@ export function getImageUrl(path, fallbackPath = '') {
     return `${apiBase}/${resolvedPath}`;
   }
 
-  return resolvedPath.startsWith('/') ? `${apiBase}${resolvedPath}` : `${apiBase}/${resolvedPath}`;
+  // Any other relative path is assumed to be a frontend asset, so return as-is
+  return resolvedPath.startsWith('/') ? resolvedPath : `/${resolvedPath}`;
 }
 
 
