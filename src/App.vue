@@ -1,6 +1,9 @@
 <template>
   <LoadingScreenWrapper>
     <div class="App">
+      <!-- Global Interaction Components -->
+      <CursorFollower />
+
       <!-- Animated Background Orbs -->
       <div class="animated-background">
         <div class="gradient-orb orb-1"></div>
@@ -17,8 +20,8 @@
       <template v-else-if="projectLoading">
         <div class="min-h-screen flex items-center justify-center bg-[#050505]">
           <div class="flex flex-col items-center gap-4">
-            <div class="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-            <span class="font-mono text-xs text-neutral-500">// fetching project data</span>
+            <div class="w-8 h-8 border-2 border-[#ffffff] border-t-transparent rounded-full animate-spin"></div>
+            <span class="font-mono text-xs text-[#A1A1AA]">// fetching project data</span>
           </div>
         </div>
       </template>
@@ -28,8 +31,8 @@
         <div class="min-h-screen flex items-center justify-center bg-[#050505]">
           <div class="text-center flex flex-col items-center gap-4">
             <i class="fa-solid fa-triangle-exclamation text-amber-400 text-3xl"></i>
-            <p class="font-mono text-sm text-neutral-400">{{ projectError }}</p>
-            <button @click="goBack" class="font-mono text-xs px-4 py-2 border border-indigo-500/40 text-indigo-400 rounded hover:bg-indigo-500/10 transition-colors">
+            <p class="font-mono text-sm text-[#A1A1AA]">{{ projectError }}</p>
+            <button @click="goBack" class="font-mono text-xs px-4 py-2 border border-[#ffffff]/40 text-[#ffffff] rounded hover:bg-[#ffffff]/10 transition-colors">
               $ cd ..
             </button>
           </div>
@@ -48,6 +51,8 @@
           <Home />
           <Projects />
           <About />
+          <Journey />
+          <Capabilities />
           <Contact />
         </main>
         <ScrollToTop />
@@ -63,12 +68,16 @@ import NavBar               from './components/NavBar.vue';
 import Home                 from './components/Home.vue';
 import Projects             from './components/Projects.vue';
 import About                from './components/About.vue';
+import Journey              from './components/Journey.vue';
+import Capabilities         from './components/Capabilities.vue';
 import Contact              from './components/Contact.vue';
 import ScrollToTop          from './components/ScrollToTop.vue';
 import SpecialDayPopup      from './components/SpecialDayPopup.vue';
 import LoadingScreenWrapper from './components/LoadingScreenWrapper.vue';
 import ProjectDetail        from './components/ProjectDetail.vue';
 import AdminPanel           from './components/AdminPanel.vue';
+import CursorFollower       from './components/CursorFollower.vue';
+import ScrollProgress       from './components/ScrollProgress.vue';
 import { fetchProjectById } from './composables/useProjects';
 
 // ── Routing state ─────────────────────────────────────────────────

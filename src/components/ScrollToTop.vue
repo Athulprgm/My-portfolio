@@ -4,7 +4,7 @@
     :class="{ 'opacity-100 translate-y-0 pointer-events-auto': isVisible }"
     @click="scrollToTop"
   >
-    <div class="flex items-center gap-2.5 px-5 py-3 bg-neutral-900 border border-white/10 rounded font-mono text-xs text-white font-medium shadow-2xl cursor-pointer hover:border-indigo-500 hover:-translate-y-0.5 hover:shadow-[0_15px_40px_rgba(99,102,241,0.2)] transition-all duration-300">
+    <div class="flex items-center gap-2.5 px-5 py-3 bg-[#121212] border border-[#2A2A2A] rounded font-mono text-xs text-white font-medium shadow-2xl cursor-pointer hover:border-indigo-500 hover:-translate-y-0.5 hover:shadow-[0_15px_40px_rgba(99,102,241,0.2)] transition-all duration-300">
       <i class="fa-solid fa-arrow-up text-indigo-400"></i>
       <span>cd /top</span>
     </div>

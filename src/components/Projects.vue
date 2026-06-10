@@ -2,18 +2,18 @@
   <section class="py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden" id="project">
 
     <!-- Section background glow -->
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-indigo-600/5 blur-[100px] pointer-events-none rounded-full"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#ffffff]/5 blur-[100px] pointer-events-none rounded-none"></div>
 
     <div class="max-w-6xl mx-auto relative z-10">
 
       <!-- Section header -->
       <div class="text-center mb-10">
-        <div class="inline-flex items-center gap-2 border border-indigo-500/20 bg-indigo-950/20 rounded-full px-4 py-1.5 mb-5">
-          <i class="fa-solid fa-code text-indigo-400 text-[10px]"></i>
-          <span class="font-mono text-[10.5px] text-indigo-300 tracking-wide font-semibold uppercase">Selected Work</span>
+        <div class="inline-flex items-center gap-2 border border-[#ffffff]/20 bg-green-950/20 rounded-none px-4 py-1.5 mb-5">
+          <i class="fa-solid fa-code text-[#ffffff] text-[10px]"></i>
+          <span class="font-mono text-[10.5px] text-[#ffffff] tracking-wide font-semibold uppercase">Selected Work</span>
         </div>
-        <h1 class="font-mono text-4xl md:text-5xl font-black text-white mb-3 tracking-tight leading-none">
-          Featured <span class="bg-gradient-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">Projects</span>
+        <h1 class="font-mono text-xl md:text-2xl lg:text-3xl font-black text-white mb-4 tracking-tight leading-loose">
+          Featured <span class="bg-gradient-to-r from-white to-neutral-500 bg-clip-text text-transparent">Projects</span>
         </h1>
         <p class="font-mono text-[11px] text-emerald-400/90 max-w-md mx-auto leading-relaxed font-semibold">
           // Real solutions shipped for real users — click any card to explore
@@ -26,8 +26,8 @@
           v-for="lvl in levels"
           :key="lvl"
           @click="selectedLevel = lvl; showAll = false"
-          class="px-4 py-1.5 rounded-full font-mono text-[11px] font-semibold tracking-wider transition-all duration-300 border"
-          :class="selectedLevel === lvl ? 'bg-indigo-600/20 text-indigo-400 border-indigo-500/50' : 'bg-neutral-950/40 text-neutral-500 border-white/10 hover:text-white hover:border-white/20'"
+          class="px-4 py-1.5 rounded-none font-mono text-[11px] font-semibold tracking-wider transition-all duration-300 border"
+          :class="selectedLevel === lvl ? 'bg-[#ffffff]/20 text-[#ffffff] border-[#ffffff]/50' : 'bg-[#0A0A0A] text-[#A1A1AA] border-[#2A2A2A] hover:text-white hover:border-[#2A2A2A]'"
         >
           {{ lvl }}
         </button>
@@ -36,10 +36,10 @@
       <!-- Error state -->
       <div v-if="error" class="text-center py-16">
         <i class="fa-solid fa-triangle-exclamation text-amber-400 text-3xl mb-4 block"></i>
-        <p class="font-mono text-sm text-neutral-400 mb-4">Failed to load projects — <span class="text-amber-400">{{ error }}</span></p>
+        <p class="font-mono text-sm text-[#A1A1AA] mb-4">Failed to load projects — <span class="text-amber-400">{{ error }}</span></p>
         <button
           @click="fetchProjects"
-          class="font-mono text-xs px-4 py-2 border border-indigo-500/40 text-indigo-400 rounded hover:bg-indigo-500/10 transition-colors"
+          class="font-mono text-xs px-4 py-2 border border-[#ffffff]/40 text-[#ffffff] rounded hover:bg-[#ffffff]/10 transition-colors"
         >
           $ retry
         </button>
@@ -50,20 +50,20 @@
         <div
           v-for="i in 6"
           :key="`skeleton-${i}`"
-          class="bg-neutral-950/60 border border-white/6 rounded-2xl overflow-hidden animate-pulse"
+          class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-none overflow-hidden animate-pulse"
         >
-          <div class="w-full h-48 bg-neutral-800/50"></div>
+          <div class="w-full h-48 bg-[#121212]"></div>
           <div class="p-5 flex flex-col gap-3">
             <div class="flex gap-1.5">
-              <div class="h-4 w-14 bg-neutral-800/50 rounded"></div>
-              <div class="h-4 w-10 bg-neutral-800/50 rounded"></div>
+              <div class="h-4 w-14 bg-[#121212] rounded"></div>
+              <div class="h-4 w-10 bg-[#121212] rounded"></div>
             </div>
-            <div class="h-4 w-4/5 bg-neutral-800/50 rounded"></div>
-            <div class="h-3 w-full bg-neutral-800/30 rounded"></div>
-            <div class="h-3 w-3/4 bg-neutral-800/30 rounded"></div>
-            <div class="pt-2.5 border-t border-white/5 flex items-center justify-between">
-              <div class="h-3 w-32 bg-neutral-800/30 rounded"></div>
-              <div class="w-7 h-7 rounded-full bg-neutral-800/30"></div>
+            <div class="h-4 w-4/5 bg-[#121212] rounded"></div>
+            <div class="h-3 w-full bg-[#121212] rounded"></div>
+            <div class="h-3 w-3/4 bg-[#121212] rounded"></div>
+            <div class="pt-2.5 border-t border-[#2A2A2A] flex items-center justify-between">
+              <div class="h-3 w-32 bg-[#121212] rounded"></div>
+              <div class="w-7 h-7 rounded-none bg-[#121212]"></div>
             </div>
           </div>
         </div>
@@ -74,17 +74,17 @@
         <article
           v-for="project in filteredProjects"
           :key="project.id"
-          class="project-card group relative bg-neutral-950/60 backdrop-blur border border-white/6 rounded-2xl overflow-hidden flex flex-col cursor-pointer transition-all duration-400 hover:-translate-y-2 hover:border-indigo-500/30 hover:shadow-[0_20px_60px_rgba(0,0,0,0.5)]"
+          class="project-card group relative bg-[#0A0A0A] backdrop-blur border-2 border-[#2A2A2A] rounded-none overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:border-[#2A2A2A] hover:shadow-[0_0_20px_rgba(255,255,255,0.4)]"
           @click="handleProjectClick(project)"
         >
           <!-- Card image -->
-          <div class="relative w-full h-48 overflow-hidden">
+          <div class="relative w-full h-48 overflow-hidden border-b-2 border-[#2A2A2A] group-hover:border-[#2A2A2A] transition-colors">
             <img
               :src="getImageUrl(project.thumbnail, project.image)"
               :alt="project.title"
               loading="lazy"
               @error="handleImageError"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-108 brightness-100 group-hover:brightness-110 opacity-100"
+              class="w-full h-full object-cover transition-all duration-700 grayscale group-hover:scale-110 group-hover:grayscale-0"
             />
             <!-- Gradient overlay -->
             <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/50 to-transparent pointer-events-none"></div>
@@ -92,23 +92,23 @@
             <!-- AI badge -->
             <div
               v-if="project.id === 4"
-              class="absolute top-3 right-3 flex items-center gap-1.5 bg-violet-950/90 backdrop-blur border border-violet-500/40 text-violet-300 font-mono text-[9px] px-2.5 py-1 rounded-full"
+              class="absolute top-3 right-3 flex items-center gap-1.5 bg-cyan-950/90 backdrop-blur border border-cyan-500/40 text-[#A1A1AA] font-mono text-[9px] px-2.5 py-1 rounded-none"
             >
-              <span class="w-1.5 h-1.5 bg-violet-400 rounded-full animate-ping"></span>
+              <span class="w-1.5 h-1.5 bg-cyan-400 rounded-none animate-ping"></span>
               AI Engine Active
             </div>
 
             <!-- Level badge -->
             <div
               v-if="project.level"
-              class="absolute bottom-3 left-3 flex items-center gap-1.5 backdrop-blur font-mono text-[9px] px-2.5 py-1 rounded-full border shadow-lg"
+              class="absolute bottom-3 left-3 flex items-center gap-1.5 backdrop-blur font-mono text-[9px] px-2.5 py-1 rounded-none border shadow-lg"
               :class="{
                 'bg-emerald-950/90 border-emerald-500/40 text-emerald-300': project.level === 'Beginner',
                 'bg-blue-950/90 border-blue-500/40 text-blue-300': project.level === 'Intermediate',
                 'bg-rose-950/90 border-rose-500/40 text-rose-300': project.level === 'Advanced'
               }"
             >
-              <span class="w-1.5 h-1.5 rounded-full"
+              <span class="w-1.5 h-1.5 rounded-none"
                 :class="{
                   'bg-emerald-400': project.level === 'Beginner',
                   'bg-blue-400': project.level === 'Intermediate',
@@ -119,7 +119,7 @@
             </div>
 
             <!-- Project number badge -->
-            <div class="absolute top-3 left-3 w-7 h-7 rounded-full bg-neutral-950/80 border border-white/10 flex items-center justify-center font-mono text-[10px] text-neutral-500">
+            <div class="absolute top-3 left-3 w-7 h-7 rounded-none bg-[#0A0A0A] border border-[#2A2A2A] flex items-center justify-center font-mono text-[10px] text-[#A1A1AA]">
               {{ String(project.id).padStart(2, '0') }}
             </div>
           </div>
@@ -137,23 +137,23 @@
             </div>
 
             <!-- Title + description -->
-            <h3 class="font-mono text-[15px] font-black text-white leading-tight group-hover:text-indigo-300 transition-colors duration-200">
+            <h3 class="font-mono text-[15px] font-black text-white leading-tight group-hover:text-[#ffffff] transition-colors duration-200">
               {{ project.title }}
             </h3>
-            <p class="font-sans text-[13px] text-neutral-400 leading-relaxed line-clamp-2 flex-1">
+            <p class="font-sans text-[13px] text-[#A1A1AA] leading-relaxed line-clamp-2 flex-1">
               {{ project.description }}
             </p>
 
             <!-- CTA -->
-            <div class="pt-2.5 border-t border-white/5 flex items-center justify-between">
-              <span class="font-mono text-[10.5px] text-neutral-500">
+            <div class="pt-2.5 border-t border-[#2A2A2A] flex items-center justify-between">
+              <span class="font-mono text-[10.5px] text-[#A1A1AA]">
                 {{ project.hasDetails ? '$ git checkout details' : '$ npm install soon' }}
               </span>
               <div
                 v-if="project.hasDetails"
-                class="w-7 h-7 rounded-full bg-indigo-600/20 border border-indigo-500/40 flex items-center justify-center group-hover:bg-indigo-600 group-hover:border-indigo-500 transition-all duration-300"
+                class="w-7 h-7 rounded-none bg-[#ffffff]/10 border border-[#ffffff]/40 flex items-center justify-center group-hover:bg-[#ffffff]/20 group-hover:border-[#ffffff] transition-all duration-300"
               >
-                <i class="fa-solid fa-arrow-right text-indigo-400 group-hover:text-white text-[10px] transition-all duration-300 group-hover:translate-x-0.5"></i>
+                <i class="fa-solid fa-arrow-right text-[#ffffff] group-hover:text-white text-[10px] transition-all duration-300 group-hover:translate-x-0.5"></i>
               </div>
             </div>
           </div>
@@ -164,7 +164,7 @@
       <div v-if="!error && !loading && hasMoreProjects" class="flex justify-center mt-12">
         <button
           @click="showAll = !showAll"
-          class="flex items-center gap-2 px-6 py-2.5 bg-neutral-900/50 hover:bg-neutral-800 border border-white/10 rounded-lg font-mono text-[11px] text-white tracking-widest transition-all duration-300"
+          class="flex items-center gap-2 px-6 py-2.5 bg-[#121212] hover:bg-[#121212] border border-[#2A2A2A] rounded-none font-mono text-[11px] text-white tracking-widest transition-all duration-300"
         >
           {{ showAll ? 'Show Less' : 'View All Projects' }}
           <i class="fa-solid" :class="showAll ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
@@ -173,8 +173,8 @@
 
       <!-- Bottom note -->
       <div class="text-center mt-14">
-        <span class="font-mono text-[11px] text-neutral-500">
-          // More projects available on <a href="https://github.com/Athulprgm" target="_blank" rel="noopener" class="text-indigo-400 hover:text-indigo-300 font-bold transition-colors">github.com/Athulprgm</a>
+        <span class="font-mono text-[11px] text-[#A1A1AA]">
+          // More projects available on <a href="https://github.com/Athulprgm" target="_blank" rel="noopener" class="text-[#ffffff] hover:text-[#00FFFF] font-bold transition-colors">github.com/Athulprgm</a>
         </span>
       </div>
     </div>
@@ -211,11 +211,11 @@ const hasMoreProjects = computed(() => {
 });
 
 const tagColorMap = {
-  'React': 'border-cyan-500/30 bg-cyan-950/30 text-cyan-400',
+  'React': 'border-cyan-500/30 bg-cyan-950/30 text-[#A1A1AA]',
   'Vue': 'border-emerald-500/30 bg-emerald-950/30 text-emerald-400',
   'Node': 'border-green-500/30 bg-green-950/30 text-green-400',
   'MongoDB': 'border-green-500/30 bg-green-950/30 text-green-400',
-  'Express': 'border-neutral-500/30 bg-neutral-900/50 text-neutral-400',
+  'Express': 'border-[#2A2A2A]/30 bg-[#121212] text-[#A1A1AA]',
   'Python': 'border-blue-500/30 bg-blue-950/30 text-blue-400',
   'Django': 'border-teal-500/30 bg-teal-950/30 text-teal-400',
   'AI': 'border-violet-500/30 bg-violet-950/30 text-violet-400',
@@ -226,7 +226,7 @@ const tagStyle = (tag) => {
   for (const key of Object.keys(tagColorMap)) {
     if (tag.toLowerCase().includes(key.toLowerCase())) return tagColorMap[key];
   }
-  return 'border-white/10 bg-white/3 text-neutral-500';
+  return 'border-[#2A2A2A] bg-[#2A2A2A] text-[#A1A1AA]';
 };
 
 const handleProjectClick = (project) => {

@@ -9,7 +9,7 @@
       </div>
 
       <!-- Minimal Code Element -->
-      <div class="font-mono text-sm text-neutral-400 flex items-center gap-1.5 mb-8">
+      <div class="font-mono text-sm text-[#A1A1AA] flex items-center gap-1.5 mb-8">
         <span class="text-indigo-500 font-bold text-base animate-pulse">{</span>
         <span class="tracking-wide">initializing secure console</span>
         <span class="text-indigo-500 font-bold text-base animate-pulse">}</span>
@@ -17,7 +17,7 @@
 
       <!-- Progress Bar -->
       <div class="flex flex-col items-center gap-2.5 w-[240px]">
-        <div class="w-full h-0.5 bg-white/5 rounded-full overflow-hidden">
+        <div class="w-full h-0.5 bg-[#2A2A2A] rounded-full overflow-hidden">
           <div
             class="h-full bg-gradient-to-r from-indigo-500 to-indigo-400 rounded-full transition-all duration-100 shadow-[0_0_10px_rgba(99,102,241,0.4)]"
             :style="{ width: `${progress}%` }"
@@ -46,8 +46,8 @@ const isComplete = ref(false);
 let timer = null;
 
 onMounted(() => {
-  const duration = 1800;
-  const interval = 20;
+  const duration = 400;
+  const interval = 15;
   const increment = 100 / (duration / interval);
 
   timer = setInterval(() => {
@@ -59,8 +59,8 @@ onMounted(() => {
         isComplete.value = true;
         setTimeout(() => {
           emit('loading-complete');
-        }, 400);
-      }, 200);
+        }, 300);
+      }, 100);
     } else {
       progress.value = next;
     }

@@ -8,21 +8,21 @@
     <Transition name="bubble-fade">
       <div 
         v-if="showBubble && activeQuote" 
-        class="dialogue-bubble mb-3 w-[230px] bg-neutral-900/95 backdrop-blur-md border border-white/8 rounded-xl p-3.5 shadow-2xl relative"
+        class="dialogue-bubble mb-3 w-[230px] bg-[#121212] backdrop-blur-md border border-[#2A2A2A] rounded-xl p-3.5 shadow-2xl relative"
       >
         <!-- Dialogue Text -->
-        <p class="font-mono text-[10.5px] leading-relaxed text-neutral-300 m-0">
+        <p class="font-mono text-[10.5px] leading-relaxed text-[#A1A1AA] m-0">
           <span class="text-indigo-400 font-bold">// </span>{{ activeQuote }}
         </p>
         
         <!-- Speech Bubble Tail pointing down -->
-        <div class="absolute bottom-[-5px] left-12 w-2.5 h-2.5 bg-neutral-900 border-r border-b border-white/8 rotate-45"></div>
+        <div class="absolute bottom-[-5px] left-12 w-2.5 h-2.5 bg-[#121212] border-r border-b border-[#2A2A2A] rotate-45"></div>
       </div>
     </Transition>
 
     <!-- Mascot Video Container -->
     <div 
-      class="mascot-container relative w-28 h-28 rounded-full border border-white/5 bg-neutral-950/40 backdrop-blur-xs cursor-pointer shadow-lg hover:border-indigo-500/40 transition-all duration-300 flex items-center justify-center overflow-hidden"
+      class="mascot-container relative w-28 h-28 rounded-full border border-[#2A2A2A] bg-[#0A0A0A] backdrop-blur-xs cursor-pointer shadow-lg hover:border-indigo-500/40 transition-all duration-300 flex items-center justify-center overflow-hidden"
       :class="{ 'scale-105 shadow-[0_0_15px_rgba(99,102,241,0.25)]': isHovered, 'animate-bounce-subtle': !isHovered }"
       @click="triggerNewQuote"
     >

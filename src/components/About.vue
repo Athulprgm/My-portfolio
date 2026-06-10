@@ -2,122 +2,127 @@
   <section class="py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden" id="about">
 
     <!-- Decorative background orbs -->
-    <div class="absolute top-1/3 right-0 w-80 h-80 bg-violet-600/5 rounded-full blur-[120px] pointer-events-none"></div>
-    <div class="absolute bottom-1/4 left-0 w-64 h-64 bg-cyan-600/4 rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="absolute top-1/3 right-0 w-80 h-80 bg-[#ffffff]/5 rounded-none blur-[120px] pointer-events-none"></div>
+    <div class="absolute bottom-1/4 left-0 w-64 h-64 bg-[#00FFFF]/4 rounded-none blur-[100px] pointer-events-none"></div>
 
     <div class="max-w-6xl mx-auto relative z-10">
 
       <!-- Section header -->
-      <div class="text-center mb-16">
-        <div class="inline-flex items-center gap-2 border border-violet-500/20 bg-violet-950/20 rounded-full px-4 py-1.5 mb-5">
-          <i class="fa-solid fa-user text-violet-400 text-[10px]"></i>
-          <span class="font-mono text-[10.5px] text-violet-300 tracking-wide font-semibold uppercase">Background</span>
+      <div class="text-center mb-16 scroll-reveal" ref="headerRef">
+        <div class="inline-flex items-center gap-2 border border-[#ffffff]/20 bg-green-950/20 rounded-none px-4 py-1.5 mb-5">
+          <i class="fa-solid fa-layer-group text-[#ffffff] text-[10px]"></i>
+          <span class="font-mono text-[10.5px] text-[#ffffff] tracking-wide font-semibold uppercase">Profile</span>
         </div>
-        <h1 class="font-mono text-4xl md:text-5xl font-black text-white mb-3 tracking-tight leading-none">
-          Education & <span class="bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">Skills</span>
+        <h1 class="font-mono text-xl md:text-2xl lg:text-3xl font-black text-white mb-4 tracking-tight leading-loose">
+          Momentum +<br><span class="bg-gradient-to-r from-[#ffffff] to-neutral-500 bg-clip-text text-transparent">Engineering</span>
         </h1>
         <p class="font-mono text-[11px] text-emerald-400/90 max-w-md mx-auto leading-relaxed font-semibold">
-          // Continuous learner · Builder at heart · 3 years of shipping
+          // Co-Founder of Trawbit Technologies focused on scalable architectures
         </p>
       </div>
 
-      <!-- Stats row -->
-      <div class="grid grid-cols-2 gap-4 max-w-xl mx-auto mb-16">
-        <div
-          v-for="stat in stats"
-          :key="stat.label"
-          class="flex flex-col items-center justify-center p-5 bg-neutral-950/60 border border-white/6 rounded-2xl hover:border-indigo-500/25 transition-all duration-300 group"
-        >
-          <span class="font-mono text-2xl sm:text-3xl md:text-4xl font-extrabold bg-gradient-to-br from-indigo-400 to-violet-400 bg-clip-text text-transparent mb-1.5">{{ stat.value }}</span>
-          <span class="font-mono text-[10px] text-neutral-400 text-center tracking-wider font-bold uppercase">{{ stat.label }}</span>
-        </div>
-      </div>
-
-      <!-- Education + skills two-column layout -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-6">
-
-        <!-- Education column -->
-        <div>
-          <h2 class="font-mono text-xs tracking-[0.2em] font-extrabold text-indigo-400 uppercase mb-6 flex items-center">
-            <span class="inline-block w-4 h-px bg-indigo-500 mr-3"></span>
-            Education Timeline
-          </h2>
-          <div class="relative flex flex-col gap-0">
-            <!-- Timeline line -->
-            <div class="absolute left-[19px] top-2 bottom-2 w-px bg-gradient-to-b from-indigo-500/40 via-violet-500/20 to-transparent"></div>
-
-            <div
-              v-for="(edu, i) in education"
-              :key="i"
-              class="relative flex gap-4 pb-8 group/edu"
-            >
-              <!-- Dot -->
-              <div class="relative z-10 flex-shrink-0">
-                <div class="w-[38px] h-[38px] rounded-full bg-neutral-950 border-2 border-white/10 group-hover/edu:border-indigo-500/50 transition-colors duration-300 flex items-center justify-center">
-                  <i class="fa-solid text-neutral-500 group-hover/edu:text-indigo-400 transition-colors text-sm" :class="edu.icon"></i>
-                </div>
-              </div>
-
-              <!-- Content -->
-              <div class="flex-1 bg-neutral-950/50 border border-white/5 rounded-xl p-4 group-hover/edu:border-indigo-500/20 group-hover/edu:bg-neutral-950/70 transition-all duration-300">
-                <h4 class="font-mono text-[15px] font-black text-white mb-1.5">{{ edu.title }}</h4>
-                <p class="font-mono text-[11px] text-indigo-400 mb-3 tracking-wide font-semibold">{{ edu.school }}</p>
-                <div class="flex flex-wrap gap-2">
-                  <span class="px-2 py-0.5 rounded bg-white/4 border border-white/8 font-mono text-[9.5px] text-neutral-355">{{ edu.department }}</span>
-                  <span class="px-2 py-0.5 rounded bg-indigo-950/40 border border-indigo-500/20 font-mono text-[9.5px] text-indigo-300">{{ edu.subject }}</span>
-                </div>
-              </div>
+      <!-- Bio Card & Animation -->
+      <div class="max-w-6xl mx-auto mb-8 grid grid-cols-1 md:grid-cols-2 gap-6 scroll-reveal items-stretch" ref="bioRef">
+        
+        <!-- Bio text -->
+        <div class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-none p-6 sm:p-8 flex flex-col justify-between gap-6 text-left hover:border-white transition-colors duration-400 h-full">
+          <h3 class="font-mono text-xs font-semibold text-white tracking-wider flex items-center gap-2">
+            <span class="text-white font-bold">//</span> Profile Description
+          </h3>
+          <p class="font-sans text-[11px] leading-loose text-[#A1A1AA] flex-1">
+            Co-Founder of Trawbit Technologies focused on scalable architectures, SaaS products, automation systems, and AI-assisted development. I love building high-performance, polished web applications that solve real-world problems. Whether designing complex databases, optimizing server APIs, or styling modern animations, I focus on delivering clean, and maintainable software systems.
+          </p>
+          <div class="grid grid-cols-3 gap-3 mt-auto">
+            <div v-for="stat in stats" :key="stat.label" class="py-4 px-2 border border-[#2A2A2A] rounded-none text-center hover:border-white hover:bg-[#2A2A2A] transition-all group relative overflow-hidden flex flex-col items-center justify-center">
+              <div class="absolute inset-0 bg-[#A1A1AA]/10 -translate-x-full group-hover:animate-[shimmer_0.5s_fast-forwards]"></div>
+              <span class="block font-mono text-sm sm:text-base font-extrabold text-white mb-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-75">{{ stat.value }}</span>
+              <span class="block font-mono text-[7px] text-[#A1A1AA] tracking-widest uppercase font-semibold leading-tight">{{ stat.label }}</span>
             </div>
           </div>
         </div>
 
-        <!-- Skills column -->
-        <div>
-          <h2 class="font-mono text-xs tracking-[0.2em] font-extrabold text-violet-400 uppercase mb-6 flex items-center">
-            <span class="inline-block w-4 h-px bg-violet-500 mr-3"></span>
-            Tech Stack
-          </h2>
-          <div class="flex flex-col gap-5">
-            <div
-              v-for="cat in categories"
-              :key="cat"
-              class="bg-neutral-950/50 border border-white/6 rounded-xl p-5 hover:border-violet-500/20 transition-all duration-300"
+        <!-- Animated Image / Video -->
+        <div class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-none p-6 flex flex-col items-center justify-center hover:border-white transition-colors duration-400 group relative h-full">
+          
+          <!-- Hanging Pull Cord Switch -->
+          <div class="absolute top-0 right-6 flex flex-col items-center z-20 cursor-pointer" @click="toggleVideoColor" title="Toggle Color">
+            <!-- The Cord -->
+            <div 
+              class="w-[2px] bg-[#A1A1AA] transition-all duration-300 origin-top hover:bg-white"
+              :class="videoColorOn ? 'h-16' : 'h-8'"
+            ></div>
+            <!-- The Handle -->
+            <div 
+              class="w-4 h-6 border-2 border-[#A1A1AA] bg-[#121212] transition-all duration-300 hover:border-white flex flex-col items-center justify-end pb-0.5"
+              :class="videoColorOn ? 'translate-y-2 border-white' : ''"
             >
-              <h5 class="font-mono text-[11px] mb-10 text-violet-400 uppercase tracking-[0.2em] font-bold">
-                <i class="fa-solid mr-3 mb-10" :class="cat === 'Frontend' ? 'fa-palette' : 'fa-server'"></i>
-                {{ cat }}
-              </h5>
-              <div class="flex flex-wrap gap-2">
-                <div
-                  v-for="tech in technologies.filter(t => t.category === cat)"
-                  :key="tech.name"
-                  class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg border font-mono text-xs text-neutral-400 cursor-default transition-all duration-250 hover:text-white"
-                  :style="{
-                    'border-color': hoveredBadge === tech.name ? tech.color + '50' : 'rgba(255,255,255,0.06)',
-                    'background': hoveredBadge === tech.name ? tech.color + '10' : 'rgba(255,255,255,0.02)',
-                    'box-shadow': hoveredBadge === tech.name ? `0 0 16px ${tech.color}20` : 'none',
-                  }"
-                  @mouseenter="hoveredBadge = tech.name"
-                  @mouseleave="hoveredBadge = null"
-                >
-                  <i :class="tech.icon" class="text-sm transition-colors duration-200" :style="{ color: hoveredBadge === tech.name ? tech.color : '#666' }"></i>
-                  {{ tech.name }}
-                </div>
-              </div>
+              <div class="w-2 h-[2px] bg-[#A1A1AA] mb-[2px]" :class="videoColorOn ? 'bg-white' : ''"></div>
+              <div class="w-2 h-[2px] bg-[#A1A1AA]" :class="videoColorOn ? 'bg-white' : ''"></div>
+            </div>
+            <!-- Status Text -->
+            <span class="font-mono text-[8px] mt-2 font-bold tracking-widest transition-colors duration-300" :class="videoColorOn ? 'text-white' : 'text-[#A1A1AA]'">RGB</span>
+          </div>
+
+          <!-- Corner decorations -->
+          <div class="absolute top-0 left-0 w-3 h-3 border-l-2 border-t-2 border-[#A1A1AA] group-hover:border-white transition-colors pointer-events-none"></div>
+          <div class="absolute bottom-0 right-0 w-3 h-3 border-r-2 border-b-2 border-[#A1A1AA] group-hover:border-white transition-colors pointer-events-none"></div>
+          
+          <div class="w-full h-full relative overflow-hidden bg-black flex items-center justify-center border border-[#2A2A2A]">
+            <video 
+              src="/secondary-anim.mp4" 
+              autoplay 
+              loop 
+              muted 
+              playsinline 
+              class="w-full h-full object-cover filter transition-all duration-700 opacity-90 group-hover:opacity-100"
+              :class="videoColorOn ? 'grayscale-0' : 'grayscale'"
+            ></video>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bento Grid: Expertise -->
+      <h2 class="font-mono text-xs tracking-[0.2em] font-extrabold text-[#ffffff] uppercase mb-8 flex items-center justify-center scroll-reveal" ref="expertiseTitleRef">
+        <span class="inline-block w-4 h-px bg-[#ffffff] mr-3"></span>
+        Technical Expertise
+        <span class="inline-block w-4 h-px bg-[#ffffff] ml-3"></span>
+      </h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-16">
+        <div
+          v-for="(section, i) in expertiseSections"
+          :key="section.title"
+          class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-none p-6 hover:border-[#ffffff]/20 hover:bg-[#121212] transition-all duration-400 scroll-reveal group"
+          :ref="el => { if(el) sectionRefs[i] = el }"
+          :style="{ transitionDelay: `${i * 0.1}s` }"
+        >
+          <div class="flex items-center justify-between mb-6">
+            <h5 class="font-mono text-sm text-white font-bold">
+              {{ section.title }}
+            </h5>
+            <i :class="section.icon" class="text-[#ffffff]/50 group-hover:text-[#ffffff] transition-colors text-lg"></i>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <div
+              v-for="skill in section.skills"
+              :key="skill"
+              class="inline-flex items-center gap-2 px-3 py-1.5 rounded-none border border-[#2A2A2A] bg-[#2A2A2A] font-mono text-[11px] text-[#A1A1AA] cursor-default transition-all duration-250 hover:text-white hover:border-[#ffffff]/40 hover:bg-[#ffffff]/10 hover:shadow-[0_0_12px_rgba(255, 255, 255,0.15)]"
+            >
+              {{ skill }}
             </div>
           </div>
         </div>
       </div>
 
       <!-- Scrolling tech marquee -->
-      <div class="border border-white/5 rounded-2xl p-6 bg-neutral-950/40 mt-8">
-        <p class="font-mono text-[10px] text-neutral-500 tracking-[0.2em] uppercase mb-4 font-semibold">// All Technologies</p>
+      <div class="border border-[#2A2A2A] rounded-none p-6 bg-[#0A0A0A] mt-8 scroll-reveal" ref="marqueeRef">
+        <p class="font-mono text-[10px] text-[#A1A1AA] tracking-[0.2em] uppercase mb-4 font-semibold">// All Technologies</p>
         <div class="flex overflow-hidden relative w-full [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-          <div class="flex gap-4 animate-marquee w-max">
+          <div class="flex gap-4 animate-marquee w-max hover:[animation-play-state:paused]">
             <div
               v-for="(tech, idx) in [...technologies, ...technologies]"
               :key="idx"
-              class="flex items-center gap-2 px-3.5 py-2 bg-white/3 border border-white/5 rounded-lg text-[11px] font-mono text-neutral-400 hover:text-white hover:border-neutral-600 transition-all duration-200 cursor-default whitespace-nowrap"
+              class="flex items-center gap-2 px-3.5 py-2 bg-[#2A2A2A] border border-[#2A2A2A] rounded-none text-[11px] font-mono text-[#A1A1AA] hover:text-white hover:border-[#2A2A2A] transition-all duration-200 cursor-default whitespace-nowrap"
             >
               <i :class="tech.icon" class="text-sm" :style="{ color: tech.color }"></i>
               {{ tech.name }}
@@ -130,48 +135,87 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
-const hoveredBadge = ref(null);
+const headerRef = ref(null);
+const bioRef = ref(null);
+const expertiseTitleRef = ref(null);
+const sectionRefs = ref([]);
+const marqueeRef = ref(null);
+
+const videoColorOn = ref(false);
+const toggleVideoColor = () => {
+  videoColorOn.value = !videoColorOn.value;
+};
 
 const stats = [
   { value: '10+', label: 'Projects Shipped' },
-  { value: '12+', label: 'Technologies' },
+  { value: '3+', label: 'Years Building' },
+  { value: '24/7', label: 'Product Mindset' },
 ];
 
-const education = [
-  { title: 'Higher Secondary (VHSE)', school: 'KMVHSE Kodakkad, Kasargod', department: 'Science', subject: 'Junior Software Dev', icon: 'fa-graduation-cap' },
-  { title: 'Under Graduation (BSc CS)', school: 'IHRD Cas Cheemeni, Kasargod', department: 'Computer Science', subject: 'BSc CS Program', icon: 'fa-university' },
-  { title: 'Skill Course', school: 'Techmindz, Kochi, Kerala', department: 'Fullstack Development', subject: 'MERN Stack', icon: 'fa-laptop-code' },
+const expertiseSections = [
+  {
+    title: 'Frontend Engineering',
+    icon: 'fa-solid fa-layer-group',
+    skills: ['HTML5', 'CSS3', 'JavaScript', 'Vue.js', 'React', 'Tailwind CSS', 'Bootstrap']
+  },
+  {
+    title: 'Backend Engineering',
+    icon: 'fa-solid fa-server',
+    skills: ['Node.js', 'Express.js', 'Python', 'Django', 'PHP', 'Laravel']
+  },
+  {
+    title: 'Databases',
+    icon: 'fa-solid fa-database',
+    skills: ['MongoDB', 'PostgreSQL', 'MySQL']
+  },
+  {
+    title: 'Cloud & Systems',
+    icon: 'fa-solid fa-cloud',
+    skills: ['AWS', 'Geoapify', 'REST APIs', 'System Architecture', 'AI Integrations']
+  }
 ];
 
 const technologies = [
-  { name: 'HTML5', color: '#E34F26', icon: 'fa-brands fa-html5', category: 'Frontend' },
-  { name: 'CSS3', color: '#1572B6', icon: 'fa-brands fa-css3-alt', category: 'Frontend' },
-  { name: 'JavaScript', color: '#F7DF1E', icon: 'fa-brands fa-js', category: 'Frontend' },
-  { name: 'Vue.js', color: '#4FC08D', icon: 'fa-brands fa-vuejs', category: 'Frontend' },
-  { name: 'React', color: '#61DAFB', icon: 'fa-brands fa-react', category: 'Frontend' },
-  { name: 'Bootstrap', color: '#7952B3', icon: 'fa-brands fa-bootstrap', category: 'Frontend' },
-  { name: 'Tailwind', color: '#38B2AC', icon: 'fa-solid fa-wind', category: 'Frontend' },
-  { name: 'Node.js', color: '#339933', icon: 'fa-brands fa-node', category: 'Backend' },
-  { name: 'Express', color: '#ffffff', icon: 'fa-solid fa-server', category: 'Backend' },
-  { name: 'MongoDB', color: '#47A248', icon: 'fa-brands fa-envira', category: 'Backend' },
-  { name: 'Python', color: '#3776AB', icon: 'fa-brands fa-python', category: 'Backend' },
-  { name: 'Django', color: '#2BA977', icon: 'fa-solid fa-laptop-code', category: 'Backend' },
-  { name: 'PHP', color: '#777BB4', icon: 'fa-brands fa-php', category: 'Backend' },
-  { name: 'Laravel', color: '#FF2D20', icon: 'fa-brands fa-laravel', category: 'Backend' },
-  { name: 'PostgreSQL', color: '#336791', icon: 'fa-solid fa-database', category: 'Backend' },
+  { name: 'HTML5', color: '#E34F26', icon: 'fa-brands fa-html5' },
+  { name: 'CSS3', color: '#1572B6', icon: 'fa-brands fa-css3-alt' },
+  { name: 'JavaScript', color: '#F7DF1E', icon: 'fa-brands fa-js' },
+  { name: 'Vue.js', color: '#4FC08D', icon: 'fa-brands fa-vuejs' },
+  { name: 'React', color: '#61DAFB', icon: 'fa-brands fa-react' },
+  { name: 'Tailwind', color: '#38B2AC', icon: 'fa-solid fa-wind' },
+  { name: 'Node.js', color: '#339933', icon: 'fa-brands fa-node' },
+  { name: 'Express', color: '#ffffff', icon: 'fa-solid fa-server' },
+  { name: 'MongoDB', color: '#47A248', icon: 'fa-brands fa-envira' },
+  { name: 'Python', color: '#3776AB', icon: 'fa-brands fa-python' },
+  { name: 'Django', color: '#2BA977', icon: 'fa-solid fa-laptop-code' },
+  { name: 'AWS', color: '#FF9900', icon: 'fa-brands fa-aws' },
 ];
 
-const categories = ['Frontend', 'Backend'];
+let observer = null;
+
+onMounted(() => {
+  observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  [headerRef, bioRef, expertiseTitleRef, marqueeRef].forEach(ref => {
+    if (ref.value) observer.observe(ref.value);
+  });
+  sectionRefs.value.forEach(el => observer.observe(el));
+});
+
+onUnmounted(() => observer?.disconnect());
 </script>
 
 <style scoped>
 .animate-marquee {
   animation: marquee 30s linear infinite;
-}
-.animate-marquee:hover {
-  animation-play-state: paused;
 }
 @keyframes marquee {
   from { transform: translateX(0); }

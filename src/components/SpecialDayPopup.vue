@@ -1,8 +1,8 @@
 <template>
   <Transition name="fade">
-    <div v-if="isOpen" class="fixed inset-0 z-[200] bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div v-if="isOpen" class="fixed inset-0 z-[200] bg-[#0A0A0A] backdrop-blur-sm flex items-center justify-center p-4">
       <div
-        class="relative max-w-md w-full bg-neutral-900 border border-white/8 rounded-2xl overflow-hidden shadow-2xl flex flex-col text-left"
+        class="relative max-w-md w-full bg-[#121212] border border-[#2A2A2A] rounded-2xl overflow-hidden shadow-2xl flex flex-col text-left"
       >
         <!-- Top Decoration Accent Bar -->
         <div
@@ -14,7 +14,7 @@
           }"
         ></div>
 
-        <button class="absolute top-4 right-4 text-neutral-400 hover:text-white transition-colors cursor-pointer z-10" @click="handleClose">
+        <button class="absolute top-4 right-4 text-[#A1A1AA] hover:text-white transition-colors cursor-pointer z-10" @click="handleClose">
           <svg
             width="20"
             height="20"
@@ -28,7 +28,7 @@
         </button>
 
         <!-- Header Image -->
-        <div class="relative w-full h-[180px] overflow-hidden border-b border-white/5">
+        <div class="relative w-full h-[180px] overflow-hidden border-b border-[#2A2A2A]">
           <img
             :src="activeTheme.image"
             :alt="activeTheme.title"
@@ -39,13 +39,13 @@
         <div class="p-6 flex-1">
           <div class="font-sans">
             <h3 class="font-mono text-md font-bold text-white mb-3 tracking-wide">{{ activeTheme.title }}</h3>
-            <p class="text-xs text-neutral-300 leading-relaxed italic bg-white/2 border border-white/5 p-3 rounded-lg font-sans">{{ activeTheme.message }}</p>
-            <span class="block font-mono text-[10px] text-neutral-500 text-right mt-3">- Athul Krishna</span>
+            <p class="text-xs text-[#A1A1AA] leading-relaxed italic bg-[#2A2A2A] border border-[#2A2A2A] p-3 rounded-lg font-sans">{{ activeTheme.message }}</p>
+            <span class="block font-mono text-[10px] text-[#A1A1AA] text-right mt-3">- Athul Krishna</span>
           </div>
         </div>
 
-        <div class="p-5 border-t border-white/5 bg-neutral-950/40 flex justify-end gap-3">
-          <button class="px-4 py-2 border border-white/10 rounded font-mono text-xs text-neutral-400 hover:bg-white/2 hover:text-white transition-colors cursor-pointer" @click="handleClose">
+        <div class="p-5 border-t border-[#2A2A2A] bg-[#0A0A0A] flex justify-end gap-3">
+          <button class="px-4 py-2 border border-[#2A2A2A] rounded font-mono text-xs text-[#A1A1AA] hover:bg-[#2A2A2A] hover:text-white transition-colors cursor-pointer" @click="handleClose">
             Close
           </button>
           <button class="px-4 py-2 bg-indigo-600 rounded font-mono text-xs text-white hover:bg-indigo-500 transition-colors flex items-center gap-1.5 cursor-pointer" @click="handleClose">

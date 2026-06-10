@@ -22,7 +22,6 @@ const apiClient = axios.create({
   baseURL: apiBaseUrl,
   timeout: 30000, // 30 seconds request timeout
   headers: {
-    'Content-Type': 'application/json',
     'Accept': 'application/json',
   },
 });
@@ -34,6 +33,10 @@ apiClient.defaults.retryDelay = 1000;
 // Request Interceptor: Inject Admin Key automatically
 apiClient.interceptors.request.use(
   (config) => {
+    // If sending FormData, delete Content-Type to let browser/Axios set it with correct boundary
+    if (config.data instanceof FormData) {
+      delete config.headers['Content-Type'];
+    }
     const adminKey = sessionStorage.getItem('admin_key') || import.meta.env.VITE_ADMIN_KEY || '';
     if (adminKey) {
       config.headers['X-Admin-Key'] = adminKey;
