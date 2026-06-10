@@ -10,14 +10,14 @@
       <!-- Section header -->
       <div class="text-center mb-16 scroll-reveal" ref="headerRef">
         <div class="inline-flex items-center gap-2 border border-[#ffffff]/20 bg-green-950/20 rounded-none px-4 py-1.5 mb-5">
-          <i class="fa-solid fa-layer-group text-[#ffffff] text-[10px]"></i>
-          <span class="font-mono text-[10.5px] text-[#ffffff] tracking-wide font-semibold uppercase">Profile</span>
+          <i class="fa-solid fa-gamepad text-[#ffffff] text-[10px]"></i>
+          <span class="font-mono text-[10.5px] text-[#ffffff] tracking-wide font-semibold uppercase">Character Screen</span>
         </div>
         <h1 class="font-mono text-xl md:text-2xl lg:text-3xl font-black text-white mb-4 tracking-tight leading-loose">
-          Momentum +<br><span class="bg-gradient-to-r from-[#ffffff] to-neutral-500 bg-clip-text text-transparent">Engineering</span>
+          Player One +<br><span class="bg-gradient-to-r from-[#ffffff] to-neutral-500 bg-clip-text text-transparent">Skill Tree</span>
         </h1>
         <p class="font-mono text-[11px] text-emerald-400/90 max-w-md mx-auto leading-relaxed font-semibold">
-          // Co-Founder of Trawbit Technologies focused on scalable architectures
+          // Guild Leader at Trawbit Technologies focused on scalable architectures
         </p>
       </div>
 
@@ -27,7 +27,7 @@
         <!-- Bio text -->
         <div class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-none p-6 sm:p-8 flex flex-col justify-between gap-6 text-left hover:border-white transition-colors duration-400 h-full">
           <h3 class="font-mono text-xs font-semibold text-white tracking-wider flex items-center gap-2">
-            <span class="text-white font-bold">//</span> Profile Description
+            <span class="text-white font-bold">//</span> Character Lore
           </h3>
           <p class="font-sans text-[11px] leading-loose text-[#A1A1AA] flex-1">
             Co-Founder of Trawbit Technologies focused on scalable architectures, SaaS products, automation systems, and AI-assisted development. I love building high-performance, polished web applications that solve real-world problems. Whether designing complex databases, optimizing server APIs, or styling modern animations, I focus on delivering clean, and maintainable software systems.
@@ -84,7 +84,7 @@
       <!-- Bento Grid: Expertise -->
       <h2 class="font-mono text-xs tracking-[0.2em] font-extrabold text-[#ffffff] uppercase mb-8 flex items-center justify-center scroll-reveal" ref="expertiseTitleRef">
         <span class="inline-block w-4 h-px bg-[#ffffff] mr-3"></span>
-        Technical Expertise
+        Unlocked Abilities
         <span class="inline-block w-4 h-px bg-[#ffffff] ml-3"></span>
       </h2>
       
@@ -116,7 +116,7 @@
 
       <!-- Scrolling tech marquee -->
       <div class="border border-[#2A2A2A] rounded-none p-6 bg-[#0A0A0A] mt-8 scroll-reveal" ref="marqueeRef">
-        <p class="font-mono text-[10px] text-[#A1A1AA] tracking-[0.2em] uppercase mb-4 font-semibold">// All Technologies</p>
+        <p class="font-mono text-[10px] text-[#A1A1AA] tracking-[0.2em] uppercase mb-4 font-semibold">// Complete Skill Inventory</p>
         <div class="flex overflow-hidden relative w-full [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
           <div class="flex gap-4 animate-marquee w-max hover:[animation-play-state:paused]">
             <div
@@ -149,29 +149,29 @@ const toggleVideoColor = () => {
 };
 
 const stats = [
-  { value: '10+', label: 'Projects Shipped' },
-  { value: '3+', label: 'Years Building' },
-  { value: '24/7', label: 'Product Mindset' },
+  { value: '10+', label: 'Quests Cleared' },
+  { value: '3+', label: 'Time Played' },
+  { value: '24/7', label: 'XP Multiplier' },
 ];
 
 const expertiseSections = [
   {
-    title: 'Frontend Engineering',
-    icon: 'fa-solid fa-layer-group',
+    title: 'Frontend Magic',
+    icon: 'fa-solid fa-wand-magic-sparkles',
     skills: ['HTML5', 'CSS3', 'JavaScript', 'Vue.js', 'React', 'Tailwind CSS', 'Bootstrap']
   },
   {
-    title: 'Backend Engineering',
+    title: 'Backend Sorcery',
     icon: 'fa-solid fa-server',
     skills: ['Node.js', 'Express.js', 'Python', 'Django', 'PHP', 'Laravel']
   },
   {
-    title: 'Databases',
+    title: 'Data Vaults',
     icon: 'fa-solid fa-database',
     skills: ['MongoDB', 'PostgreSQL', 'MySQL']
   },
   {
-    title: 'Cloud & Systems',
+    title: 'Server Realms',
     icon: 'fa-solid fa-cloud',
     skills: ['AWS', 'Geoapify', 'REST APIs', 'System Architecture', 'AI Integrations']
   }

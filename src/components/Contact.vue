@@ -10,13 +10,13 @@
       <div class="text-center mb-16 scroll-reveal" ref="headerRef">
         <div class="inline-flex items-center gap-2 border border-cyan-500/20 bg-cyan-950/20 rounded-none px-4 py-1.5 mb-5">
           <i class="fa-solid fa-satellite-dish text-[#A1A1AA] text-[10px]"></i>
-          <span class="font-mono text-[10.5px] text-[#A1A1AA] tracking-wide font-semibold uppercase">Open Signal</span>
+          <span class="font-mono text-[10.5px] text-[#A1A1AA] tracking-wide font-semibold uppercase">Multiplayer Request</span>
         </div>
         <h1 class="font-mono text-xl md:text-2xl lg:text-3xl font-black text-white mb-4 tracking-tight leading-loose">
-          Let's Build Something <span class="bg-gradient-to-r from-neutral-200 to-[#ffffff] bg-clip-text text-transparent">Exceptional</span>
+          Initiate <span class="bg-gradient-to-r from-neutral-200 to-[#ffffff] bg-clip-text text-transparent">Co-Op Mode</span>
         </h1>
         <p class="font-mono text-[11px] text-emerald-400/90 max-w-sm mx-auto leading-relaxed font-semibold">
-          // Available Worldwide — Let's connect
+          // Searching for global players... Server open
         </p>
       </div>
 
@@ -25,7 +25,7 @@
         <div class="flex items-center gap-3 bg-emerald-950/30 border border-emerald-500/25 rounded-none px-6 py-3.5">
           <div class="flex items-center gap-2">
             <span class="w-2 h-2 bg-emerald-400 rounded-none animate-ping shadow-[0_0_8px_#4ade80]"></span>
-            <span class="font-mono text-xs text-emerald-400 font-bold tracking-wide">AVAILABLE WORLDWIDE</span>
+            <span class="font-mono text-xs text-emerald-400 font-bold tracking-wide">LFP: WORLDWIDE CO-OP</span>
           </div>
           <div class="w-px h-4 bg-emerald-500/30"></div>
           <span class="font-sans text-[13px] text-[#A1A1AA] font-medium">Remote · Kerala, India</span>
@@ -79,16 +79,16 @@
       <!-- Email CTA box -->
       <div class="max-w-xl mx-auto text-center bg-[#0A0A0A] border border-[#2A2A2A] rounded-none p-6 sm:p-8 hover:border-[#ffffff]/20 transition-all duration-400 scroll-reveal" ref="ctaRef">
         <i class="fa-solid fa-envelope-open-text text-[#ffffff] text-2xl mb-4 block"></i>
-        <h3 class="font-mono text-lg font-black text-white mb-2 tracking-tight">Drop me an email</h3>
+        <h3 class="font-mono text-lg font-black text-white mb-2 tracking-tight uppercase">Transmit Data</h3>
         <p class="font-sans text-sm text-[#A1A1AA] mb-5 leading-relaxed max-w-sm mx-auto">
-          Whether it's a project idea, a job opportunity, or just a hello — my inbox is always open.
+          Send a message to the guild leader. The comms channel is always open.
         </p>
         <a
           href="mailto:athul@trawbit.com"
           class="inline-flex items-center gap-3 px-8 py-4 bg-[#2A2A2A] text-black font-mono text-xs font-black tracking-widest uppercase rounded-none border-b-4 border-r-4 border-[#2A2A2A] active:border-b-0 active:border-r-0 active:translate-y-1 active:translate-x-1 hover:bg-neutral-200 transition-all"
         >
           <i class="fa-solid fa-paper-plane"></i>
-          SEND EMAIL
+          SEND TRANSMISSION
         </a>
       </div>
     </div>

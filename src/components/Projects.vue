@@ -10,13 +10,13 @@
       <div class="text-center mb-10">
         <div class="inline-flex items-center gap-2 border border-[#ffffff]/20 bg-green-950/20 rounded-none px-4 py-1.5 mb-5">
           <i class="fa-solid fa-code text-[#ffffff] text-[10px]"></i>
-          <span class="font-mono text-[10.5px] text-[#ffffff] tracking-wide font-semibold uppercase">Selected Work</span>
+          <span class="font-mono text-[10.5px] text-[#ffffff] tracking-wide font-semibold uppercase">Game Saves</span>
         </div>
         <h1 class="font-mono text-xl md:text-2xl lg:text-3xl font-black text-white mb-4 tracking-tight leading-loose">
-          Featured <span class="bg-gradient-to-r from-white to-neutral-500 bg-clip-text text-transparent">Projects</span>
+          Completed <span class="bg-gradient-to-r from-white to-neutral-500 bg-clip-text text-transparent">Quests</span>
         </h1>
         <p class="font-mono text-[11px] text-emerald-400/90 max-w-md mx-auto leading-relaxed font-semibold">
-          // Real solutions shipped for real users — click any card to explore
+          // High-score campaigns logged in the global leaderboard
         </p>
       </div>
 
@@ -36,7 +36,7 @@
       <!-- Error state -->
       <div v-if="error" class="text-center py-16">
         <i class="fa-solid fa-triangle-exclamation text-amber-400 text-3xl mb-4 block"></i>
-        <p class="font-mono text-sm text-[#A1A1AA] mb-4">Failed to load projects — <span class="text-amber-400">{{ error }}</span></p>
+        <p class="font-mono text-sm text-[#A1A1AA] mb-4">SYSTEM_ERROR: Failed to fetch save files — <span class="text-amber-400">{{ error }}</span></p>
         <button
           @click="fetchProjects"
           class="font-mono text-xs px-4 py-2 border border-[#ffffff]/40 text-[#ffffff] rounded hover:bg-[#ffffff]/10 transition-colors"
@@ -146,8 +146,8 @@
 
             <!-- CTA -->
             <div class="pt-2.5 border-t border-[#2A2A2A] flex items-center justify-between">
-              <span class="font-mono text-[10.5px] text-[#A1A1AA]">
-                {{ project.hasDetails ? '$ git checkout details' : '$ npm install soon' }}
+              <span class="font-mono text-[10.5px] text-[#A1A1AA] uppercase font-bold tracking-widest">
+                {{ project.hasDetails ? 'PRESS START TO PLAY' : 'LOCKED' }}
               </span>
               <div
                 v-if="project.hasDetails"
@@ -164,9 +164,9 @@
       <div v-if="!error && !loading && hasMoreProjects" class="flex justify-center mt-12">
         <button
           @click="showAll = !showAll"
-          class="flex items-center gap-2 px-6 py-2.5 bg-[#121212] hover:bg-[#121212] border border-[#2A2A2A] rounded-none font-mono text-[11px] text-white tracking-widest transition-all duration-300"
+          class="flex items-center gap-2 px-6 py-2.5 bg-[#121212] hover:bg-[#121212] border border-[#2A2A2A] rounded-none font-mono text-[11px] text-white tracking-widest transition-all duration-300 uppercase"
         >
-          {{ showAll ? 'Show Less' : 'View All Projects' }}
+          {{ showAll ? 'Minimize Quests' : 'Load More Quests' }}
           <i class="fa-solid" :class="showAll ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
         </button>
       </div>
@@ -174,7 +174,7 @@
       <!-- Bottom note -->
       <div class="text-center mt-14">
         <span class="font-mono text-[11px] text-[#A1A1AA]">
-          // More projects available on <a href="https://github.com/Athulprgm" target="_blank" rel="noopener" class="text-[#ffffff] hover:text-[#00FFFF] font-bold transition-colors">github.com/Athulprgm</a>
+          // More save states available in the global databank on <a href="https://github.com/Athulprgm" target="_blank" rel="noopener" class="text-[#ffffff] hover:text-[#00FFFF] font-bold transition-colors">github.com/Athulprgm</a>
         </span>
       </div>
     </div>

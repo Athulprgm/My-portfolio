@@ -79,7 +79,7 @@
          <!-- Status Pill -->
          <div class="inline-flex items-center gap-2 border border-[#2A2A2A] bg-[#121212] rounded-full px-3.5 py-1 mb-6 w-max">
            <span class="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(129,140,248,0.8)]"></span>
-           <span class="font-mono text-[9px] text-[#A1A1AA] tracking-[0.1em]">Available for new projects</span>
+           <span class="font-mono text-[9px] text-[#A1A1AA] tracking-[0.1em] uppercase">LFG: Multiplayer Co-Op</span>
          </div>
 
          <!-- Giant Typography -->
@@ -90,7 +90,7 @@
 
          <!-- Paragraph -->
          <p class="font-sans text-xs sm:text-sm text-[#A1A1AA] leading-relaxed mb-8 max-w-xl">
-           Co-Founder @ <span class="text-white font-bold">Trawbit Technologies</span> - MERN specialist crafting high-performance web architectures from Kasaragod, Kerala.
+           <span class="text-white font-bold">Class:</span> Full-Stack Mage & Guild Leader @ <span class="text-white font-bold">Trawbit Technologies</span>. Crafting high-performance web architectures from Kasaragod, Kerala.
          </p>
 
          <!-- Terminal Widget -->
@@ -128,10 +128,10 @@
          <!-- Action Links -->
          <div class="flex items-center gap-6 mt-2">
             <button @click="scrollToProjects" class="font-mono text-xs font-bold text-white hover:text-[#A1A1AA] flex items-center gap-2 transition-colors group">
-               <i class="fa-solid fa-angle-right"></i> VIEW PROJECTS
+               <i class="fa-solid fa-angle-right"></i> VIEW INVENTORY
             </button>
             <a href="#contact" @click.prevent="scrollToContact" class="font-mono text-xs font-bold text-[#A1A1AA] hover:text-white flex items-center gap-2 transition-colors group px-4 py-2 border border-[#2A2A2A] bg-[#2A2A2A] rounded-lg hover:bg-[#2A2A2A]">
-               <i class="fa-regular fa-paper-plane"></i> CONTACT ME
+               <i class="fa-regular fa-paper-plane"></i> INITIATE COMMS
             </a>
          </div>
       </div>
