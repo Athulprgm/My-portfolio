@@ -48,7 +48,7 @@
             <!-- Name and Title -->
             <div class="text-center mb-8 relative z-10 pointer-events-none">
               <h2 class="font-mono text-2xl font-bold text-white tracking-tight">ATHUL<br>KRISHNA K</h2>
-              <p class="font-mono text-[9px] text-[#A1A1AA] mt-2 uppercase tracking-widest font-semibold">Co-Founder • Full Stack Dev</p>
+              <p class="font-mono text-[9px] text-[#A1A1AA] mt-2 uppercase tracking-widest font-semibold">Co-Founder • AI-Augmented Full-Stack Engineer</p>
             </div>
 
             <!-- Info Box -->
@@ -79,18 +79,18 @@
          <!-- Status Pill -->
          <div class="inline-flex items-center gap-2 border border-[#2A2A2A] bg-[#121212] rounded-full px-3.5 py-1 mb-6 w-max">
            <span class="w-1.5 h-1.5 bg-indigo-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(129,140,248,0.8)]"></span>
-           <span class="font-mono text-[9px] text-[#A1A1AA] tracking-[0.1em] uppercase">LFG: Multiplayer Co-Op</span>
+           <span class="font-mono text-[9px] text-[#A1A1AA] tracking-[0.1em] uppercase">Professional</span>
          </div>
 
          <!-- Giant Typography -->
          <h1 class="font-mono text-3xl sm:text-4xl lg:text-5xl leading-tight font-black tracking-tight text-white mb-4">
-            Building<br>
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 mt-2 block">Scalable Systems.</span>
+            AI-Augmented<br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 mt-2 block">Full-Stack Engineer.</span>
          </h1>
 
          <!-- Paragraph -->
          <p class="font-sans text-xs sm:text-sm text-[#A1A1AA] leading-relaxed mb-8 max-w-xl">
-           <span class="text-white font-bold">Class:</span> Full-Stack Mage & Guild Leader @ <span class="text-white font-bold">Trawbit Technologies</span>. Crafting high-performance web architectures from Kasaragod, Kerala.
+           Building Scalable Products, Intelligent Systems, and Exceptional Digital Experiences.
          </p>
 
          <!-- Terminal Widget -->

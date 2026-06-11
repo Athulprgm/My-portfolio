@@ -39,7 +39,7 @@
         <li class="ml-4">
           <button
             @click="openCvModal"
-            class="flex items-center gap-2 px-4 py-2 bg-white text-black border-b-4 border-r-4 border-neutral-600 active:border-b-0 active:border-r-0 active:translate-y-1 active:translate-x-1 font-mono text-[10px] tracking-wider transition-all cursor-pointer rounded-none uppercase font-black"
+            class="flex items-center gap-2 px-4 py-2 bg-[#121212] text-white hover:bg-[#2A2A2A] border-b-4 border-r-4 border-[#2A2A2A] hover:border-white active:border-b-0 active:border-r-0 active:translate-y-1 active:translate-x-1 font-mono text-[10px] tracking-wider transition-all cursor-pointer rounded-none uppercase font-black"
           >
             <i class="fa-solid fa-cloud-arrow-down"></i>
             RESUME
@@ -77,7 +77,7 @@
         </a>
         <button
           @click="openCvModal"
-          class="mt-4 flex items-center justify-center gap-2 py-4 px-4 bg-white text-black border-b-4 border-r-4 border-neutral-600 active:border-b-0 active:border-r-0 active:translate-y-1 active:translate-x-1 font-mono text-[10px] font-black uppercase transition-all cursor-pointer rounded-none"
+          class="mt-4 flex items-center justify-center gap-2 py-4 px-4 bg-[#121212] text-white hover:bg-[#2A2A2A] border-b-4 border-r-4 border-[#2A2A2A] hover:border-white active:border-b-0 active:border-r-0 active:translate-y-1 active:translate-x-1 font-mono text-[10px] font-black uppercase transition-all cursor-pointer rounded-none"
         >
           <i class="fa-solid fa-cloud-arrow-down"></i> RESUME
         </button>
@@ -120,7 +120,7 @@
           <div v-else-if="cvsError" class="text-center py-6 border border-[#2A2A2A] bg-[#121212] p-4">
             <i class="fa-solid fa-triangle-exclamation text-white text-lg mb-2 block animate-pulse"></i>
             <p class="font-mono text-[8px] text-[#A1A1AA] uppercase">SYSTEM_ERROR: {{ cvsError }}</p>
-            <button @click="openCvModal" class="mt-4 px-6 py-2 bg-white text-black font-black uppercase text-[8px] hover:bg-[#A1A1AA] transition-colors rounded-none border-b-2 border-r-2 border-neutral-600 active:border-0 active:translate-y-0.5">
+            <button @click="openCvModal" class="mt-4 px-6 py-2 bg-[#121212] text-white font-black uppercase text-[8px] hover:bg-[#2A2A2A] hover:border-white transition-colors rounded-none border-b-2 border-r-2 border-[#2A2A2A] active:border-0 active:translate-y-0.5">
               REBOOT
             </button>
           </div>
@@ -163,7 +163,7 @@
                   :href="getImageUrl(cv.file_path)"
                   download
                   target="_blank"
-                  class="flex-1 sm:flex-none flex items-center justify-center px-3 py-2 bg-white text-black hover:bg-[#A1A1AA] rounded-none border-b-2 border-r-2 border-neutral-600 active:border-0 active:translate-y-0.5 active:translate-x-0.5 transition-all text-[8px] font-black uppercase"
+                  class="flex-1 sm:flex-none flex items-center justify-center px-3 py-2 bg-[#121212] text-white hover:bg-[#2A2A2A] hover:border-white rounded-none border-b-2 border-r-2 border-[#2A2A2A] active:border-0 active:translate-y-0.5 active:translate-x-0.5 transition-all text-[8px] font-black uppercase"
                   title="Download CV"
                 >
                   <i class="fa-solid fa-download mr-2 sm:mr-0"></i><span class="sm:hidden">DL</span>

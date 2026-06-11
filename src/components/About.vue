@@ -30,7 +30,7 @@
             <span class="text-white font-bold">//</span> Character Lore
           </h3>
           <p class="font-sans text-[11px] leading-loose text-[#A1A1AA] flex-1">
-            Co-Founder of Trawbit Technologies focused on scalable architectures, SaaS products, automation systems, and AI-assisted development. I love building high-performance, polished web applications that solve real-world problems. Whether designing complex databases, optimizing server APIs, or styling modern animations, I focus on delivering clean, and maintainable software systems.
+            Co-Founder & AI-Augmented Full-Stack Engineer building scalable SaaS platforms, intelligent automation systems, and AI-powered web and mobile applications. Passionate about creating high-performance digital products that blend exceptional user experiences with robust engineering.
           </p>
           <div class="grid grid-cols-3 gap-3 mt-auto">
             <div v-for="stat in stats" :key="stat.label" class="py-4 px-2 border border-[#2A2A2A] rounded-none text-center hover:border-white hover:bg-[#2A2A2A] transition-all group relative overflow-hidden flex flex-col items-center justify-center">
