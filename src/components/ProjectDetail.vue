@@ -99,7 +99,7 @@
                 class="relative aspect-video rounded-none overflow-hidden border border-[#2A2A2A] group cursor-pointer transition-all duration-300"
                 @click="selectedImage = index"
               >
-                <img :src="getImageUrl(img)" :alt="`Screen ${index + 1}`" loading="lazy" @error="handleImageError" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                <img :src="getImageUrl(img)" :alt="`Screen ${index + 1}`" loading="lazy" @error="handleImageError" class="w-full h-full object-cover transition-transform duration-500" />
                 <div class="absolute inset-0 bg-[#0A0A0A] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <i class="fa-solid fa-maximize text-white text-sm"></i>
                 </div>

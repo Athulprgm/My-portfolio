@@ -174,6 +174,11 @@ const expertiseSections = [
     title: 'Server Realms',
     icon: 'fa-solid fa-cloud',
     skills: ['AWS', 'Geoapify', 'REST APIs', 'System Architecture', 'AI Integrations']
+  },
+  {
+    title: 'App Development',
+    icon: 'fa-solid fa-mobile-screen-button',
+    skills: ['React Native']
   }
 ];
 
@@ -190,6 +195,7 @@ const technologies = [
   { name: 'Python', color: '#3776AB', icon: 'fa-brands fa-python' },
   { name: 'Django', color: '#2BA977', icon: 'fa-solid fa-laptop-code' },
   { name: 'AWS', color: '#FF9900', icon: 'fa-brands fa-aws' },
+  { name: 'React Native', color: '#61DAFB', icon: 'fa-brands fa-react' },
 ];
 
 let observer = null;

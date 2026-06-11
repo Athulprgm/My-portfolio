@@ -20,18 +20,7 @@
         </p>
       </div>
 
-      <!-- Filter Bar -->
-      <div v-if="!error && !loading" class="flex justify-center flex-wrap gap-3 mb-10">
-        <button
-          v-for="lvl in levels"
-          :key="lvl"
-          @click="selectedLevel = lvl; showAll = false"
-          class="px-4 py-1.5 rounded-none font-mono text-[11px] font-semibold tracking-wider transition-all duration-300 border"
-          :class="selectedLevel === lvl ? 'bg-[#ffffff]/20 text-[#ffffff] border-[#ffffff]/50' : 'bg-[#0A0A0A] text-[#A1A1AA] border-[#2A2A2A] hover:text-white hover:border-[#2A2A2A]'"
-        >
-          {{ lvl }}
-        </button>
-      </div>
+      <!-- Filter Bar Removed -->
 
       <!-- Error state -->
       <div v-if="error" class="text-center py-16">
@@ -84,7 +73,7 @@
               :alt="project.title"
               loading="lazy"
               @error="handleImageError"
-              class="w-full h-full object-cover transition-all duration-700 grayscale group-hover:scale-110 group-hover:grayscale-0"
+              class="w-full h-full object-cover transition-all duration-700 grayscale group-hover:grayscale-0"
             />
             <!-- Gradient overlay -->
             <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/50 to-transparent pointer-events-none"></div>
@@ -98,25 +87,7 @@
               AI Engine Active
             </div>
 
-            <!-- Level badge -->
-            <div
-              v-if="project.level"
-              class="absolute bottom-3 left-3 flex items-center gap-1.5 backdrop-blur font-mono text-[9px] px-2.5 py-1 rounded-none border shadow-lg"
-              :class="{
-                'bg-emerald-950/90 border-emerald-500/40 text-emerald-300': project.level === 'Beginner',
-                'bg-blue-950/90 border-blue-500/40 text-blue-300': project.level === 'Intermediate',
-                'bg-rose-950/90 border-rose-500/40 text-rose-300': project.level === 'Advanced'
-              }"
-            >
-              <span class="w-1.5 h-1.5 rounded-none"
-                :class="{
-                  'bg-emerald-400': project.level === 'Beginner',
-                  'bg-blue-400': project.level === 'Intermediate',
-                  'bg-rose-400': project.level === 'Advanced'
-                }"
-              ></span>
-              {{ project.level }}
-            </div>
+            <!-- Level badge Removed -->
 
             <!-- Project number badge -->
             <div class="absolute top-3 left-3 w-7 h-7 rounded-none bg-[#0A0A0A] border border-[#2A2A2A] flex items-center justify-center font-mono text-[10px] text-[#A1A1AA]">
@@ -187,15 +158,10 @@ import { useProjects, getImageUrl } from '../composables/useProjects';
 
 const { projects, loading, error, fetchProjects } = useProjects();
 
-const selectedLevel = ref('All');
 const showAll = ref(false);
-const levels = ['All', 'Beginner', 'Intermediate', 'Advanced'];
 
 const filteredProjects = computed(() => {
   let list = projects.value;
-  if (selectedLevel.value !== 'All') {
-    list = list.filter(p => p.level === selectedLevel.value);
-  }
   if (!showAll.value) {
     return list.slice(0, 3);
   }
@@ -204,9 +170,6 @@ const filteredProjects = computed(() => {
 
 const hasMoreProjects = computed(() => {
   let list = projects.value;
-  if (selectedLevel.value !== 'All') {
-    list = list.filter(p => p.level === selectedLevel.value);
-  }
   return list.length > 3;
 });
 

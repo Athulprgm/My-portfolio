@@ -5,7 +5,7 @@
       <div class="relative w-[130px] h-[130px] flex items-center justify-center mb-6">
         <div class="absolute w-[110px] h-[110px] border border-indigo-500/20 rounded-full border-t-indigo-500 border-r-indigo-500 animate-[spin_2s_linear_infinite]"></div>
         <div class="absolute w-[125px] h-[125px] border border-pink-500/10 rounded-full border-t-pink-500 border-r-pink-500 animate-[spin_3s_linear_infinite_reverse]"></div>
-        <img src="/profile.png" alt="Loading" class="w-[90px] h-[90px] rounded-full object-cover border-2 border-indigo-500/15 z-10 animate-pulse" />
+        <video src="/profile-video.mp4" autoplay loop muted playsinline class="w-[90px] h-[90px] rounded-full object-cover border-2 border-indigo-500/15 z-10 animate-pulse"></video>
       </div>
 
       <!-- Minimal Code Element -->
@@ -46,13 +46,25 @@ const isComplete = ref(false);
 let timer = null;
 
 onMounted(() => {
-  const duration = 400;
+  const duration = 2500;
   const interval = 15;
   const increment = 100 / (duration / interval);
 
+  let pageLoaded = false;
+  if (document.readyState === 'complete') {
+    pageLoaded = true;
+  } else {
+    window.addEventListener('load', () => {
+      pageLoaded = true;
+    });
+  }
+
   timer = setInterval(() => {
     const next = progress.value + increment;
-    if (next >= 100) {
+    
+    if (next >= 90 && !pageLoaded) {
+      progress.value = 90;
+    } else if (next >= 100) {
       progress.value = 100;
       clearInterval(timer);
       setTimeout(() => {
