@@ -42,20 +42,25 @@ const apiClient = axios.create({
 apiClient.defaults.retry = 2;
 apiClient.defaults.retryDelay = 500;
 
-// Request Interceptor: Inject Admin Key on every request.
-// The backend uses X-Admin-Key to route requests to the appropriate handler;
-// sending it on reads allows the server to return admin-level data if needed.
+// Request Interceptor: Inject auth credentials on every request.
+// The backend may use X-Admin-Key (custom header) and/or Authorization: Bearer
+// (Sanctum / Passport / static API key). We send both so either mechanism works.
 apiClient.interceptors.request.use(
   (config) => {
-    // If sending FormData, delete Content-Type to let browser/Axios set it with correct boundary
+    // FormData: remove Content-Type so browser sets the multipart boundary correctly
     if (config.data instanceof FormData) {
       delete config.headers['Content-Type'];
     }
-    // Inject admin key if available — backend ignores it if not needed.
-    if (!config.headers['X-Admin-Key']) {
-      const adminKey = sessionStorage.getItem('admin_key') || import.meta.env.VITE_ADMIN_KEY || '';
-      if (adminKey) {
+
+    const adminKey = sessionStorage.getItem('admin_key') || import.meta.env.VITE_ADMIN_KEY || '';
+    if (adminKey) {
+      // Custom header — accepted by the backend's admin middleware
+      if (!config.headers['X-Admin-Key']) {
         config.headers['X-Admin-Key'] = adminKey;
+      }
+      // Bearer token — needed if the backend uses Sanctum / Passport / static-key auth
+      if (!config.headers['Authorization']) {
+        config.headers['Authorization'] = `Bearer ${adminKey}`;
       }
     }
     return config;
