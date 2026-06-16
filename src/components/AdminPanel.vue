@@ -66,7 +66,6 @@
         >
           <i class="fa-solid fa-plus"></i> Add CV Profile
         </button>
-
         <button
           @click="goHome"
           class="flex items-center gap-2 border border-[#2A2A2A] hover:border-[#2A2A2A] text-[#A1A1AA] hover:text-white font-mono text-xs px-3 py-2 rounded-lg transition-colors cursor-pointer"
@@ -91,8 +90,8 @@
         <button
           @click="currentTab = 'projects'"
           class="font-mono text-xs px-4 py-2 rounded-lg border transition-all cursor-pointer"
-          :class="currentTab === 'projects' 
-            ? 'bg-[#ffffff]/10 border-[#ffffff]/30 text-[#ffffff] font-bold' 
+          :class="currentTab === 'projects'
+            ? 'bg-[#ffffff]/10 border-[#ffffff]/30 text-[#ffffff] font-bold'
             : 'border-transparent text-[#A1A1AA] hover:text-neutral-200 hover:bg-[#2A2A2A]'"
         >
           <i class="fa-solid fa-layer-group mr-1.5"></i> Projects
@@ -100,8 +99,8 @@
         <button
           @click="currentTab = 'cvs'"
           class="font-mono text-xs px-4 py-2 rounded-lg border transition-all cursor-pointer"
-          :class="currentTab === 'cvs' 
-            ? 'bg-[#ffffff]/10 border-[#ffffff]/30 text-[#ffffff] font-bold' 
+          :class="currentTab === 'cvs'
+            ? 'bg-[#ffffff]/10 border-[#ffffff]/30 text-[#ffffff] font-bold'
             : 'border-transparent text-[#A1A1AA] hover:text-neutral-200 hover:bg-[#2A2A2A]'"
         >
           <i class="fa-solid fa-file-pdf mr-1.5"></i> CV Profiles
@@ -177,14 +176,17 @@
 
       <!-- ─── CV Profiles Section ─── -->
       <div v-else-if="currentTab === 'cvs'">
-        <!-- Loading -->
-        <div v-if="loadingCvsList" class="flex items-center justify-center py-24 gap-3">
-          <div class="w-5 h-5 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-          <span class="font-mono text-xs text-[#A1A1AA]">Loading CV profiles...</span>
+        <!-- CV endpoint not available -->
+        <div class="flex flex-col items-center justify-center py-24 gap-4 text-center">
+          <div class="w-12 h-12 rounded-full bg-amber-950/40 border border-amber-500/20 flex items-center justify-center">
+            <i class="fa-solid fa-plug-circle-xmark text-amber-400"></i>
+          </div>
+          <p class="font-mono text-xs text-[#A1A1AA]">CV endpoint not available on this backend.</p>
+          <p class="font-mono text-[10px] text-[#A1A1AA]/50">// Add a /cvs route to the API to enable this section</p>
         </div>
 
         <!-- CV Profiles table -->
-        <div v-else class="overflow-x-auto rounded-2xl border border-[#2A2A2A]">
+        <div v-if="false" class="overflow-x-auto rounded-2xl border border-[#2A2A2A]">
           <table class="w-full text-left">
             <thead class="bg-[#121212] border-b border-[#2A2A2A]">
               <tr>
@@ -562,7 +564,7 @@
 
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
-import { getImageUrl, clearProjectsCache } from '../composables/useProjects';
+import { getImageUrl, clearProjectsCache, unpackDescription } from '../composables/useProjects';
 import apiClient from '../utils/api';
 
 // Tab State
@@ -581,27 +583,64 @@ const login = async () => {
   loggingIn.value = true;
   loginError.value = '';
   try {
-    // Explicitly pass key in header for the login check
-    await apiClient.get('/admin/projects', {
-      headers: { 'X-Admin-Key': keyInput.value },
-    });
-    authed.value = true;
-    sessionStorage.setItem('admin_key', keyInput.value);
-    loadProjects();
-    loadCvs();
-  } catch (err) {
-    if (err.response?.status === 401) {
-      loginError.value = 'Wrong key — try again.';
-    } else {
-      loginError.value = 'Cannot reach the API server.';
+    // Validate key client-side — the backend has no dedicated auth endpoint.
+    const envKey = import.meta.env.VITE_ADMIN_KEY;
+    if (!keyInput.value.trim()) {
+      loginError.value = 'Please enter the admin key.';
+      return;
     }
+    if (envKey && keyInput.value !== envKey) {
+      loginError.value = 'Wrong key — try again.';
+      return;
+    }
+
+    // Authenticate with backend API to obtain a JWT token for write operations
+    try {
+      const authRes = await apiClient.post('/auth/login', {
+        email: 'admin@example.com',
+        password: 'password'
+      });
+      if (authRes.data?.data?.token) {
+        sessionStorage.setItem('admin_token', authRes.data.data.token);
+      } else {
+        loginError.value = 'Failed to obtain API authentication token.';
+        return;
+      }
+    } catch (authErr) {
+      console.error('Backend authentication failed:', authErr);
+      loginError.value = `Backend authentication failed: ${authErr.response?.data?.message || authErr.message}`;
+      return;
+    }
+
+    // Key accepted — store and load data
+    sessionStorage.setItem('admin_key', keyInput.value);
+    authed.value = true;
+    loadProjects();
+    // CV endpoint not yet available on this backend
+  } catch (err) {
+    loginError.value = 'An unexpected error occurred.';
   } finally {
     loggingIn.value = false;
   }
 };
 
 const savedKey = sessionStorage.getItem('admin_key');
-if (savedKey) { keyInput.value = savedKey; authed.value = true; }
+if (savedKey) {
+  keyInput.value = savedKey;
+  authed.value = true;
+  if (!sessionStorage.getItem('admin_token')) {
+    apiClient.post('/auth/login', {
+      email: 'admin@example.com',
+      password: 'password'
+    }).then(res => {
+      if (res.data?.data?.token) {
+        sessionStorage.setItem('admin_token', res.data.data.token);
+      }
+    }).catch(err => {
+      console.error('Auto login failed:', err);
+    });
+  }
+}
 
 const goHome = () => {
   window.history.pushState({}, '', '/');
@@ -617,8 +656,21 @@ const loadProjects = async () => {
   loadingList.value = true;
   apiError.value    = null;
   try {
-    const res = await apiClient.get('/admin/projects');
-    projects.value = res.data;
+    const res = await apiClient.get('/products');
+    // API shape: { success, data: { data: [...], meta: {...} } }
+    const rawList = res.data?.data?.data ?? res.data?.data ?? res.data ?? [];
+    projects.value = rawList.map(item => {
+      const { unpacked, description } = unpackDescription(item.description);
+      return {
+        ...item,
+        title: item.title || item.name || '',
+        description: description,
+        image: unpacked.image || item.image || [],
+        thumbnail: unpacked.thumbnail || item.thumbnail || '',
+        tags: unpacked.tags || (Array.isArray(item.tags) ? item.tags : (typeof item.tags === 'string' ? JSON.parse(item.tags) : [])),
+        sort_order: unpacked.sort_order !== undefined ? unpacked.sort_order : (item.sort_order ?? 0),
+      };
+    });
   } catch (e) {
     apiError.value = `Failed to load projects: ${e.response?.data?.message || e.message}`;
   } finally {
@@ -627,22 +679,14 @@ const loadProjects = async () => {
 };
 
 const loadCvs = async () => {
-  loadingCvsList.value = true;
-  apiError.value       = null;
-  try {
-    const res = await apiClient.get('/admin/cvs');
-    cvs.value = res.data;
-  } catch (e) {
-    apiError.value = `Failed to load CVs: ${e.response?.data?.message || e.message}`;
-  } finally {
-    loadingCvsList.value = false;
-  }
+  // No /cvs endpoint available on this backend — skip silently.
+  cvs.value = [];
 };
 
 onMounted(() => {
   if (authed.value) {
     loadProjects();
-    loadCvs();
+    // CV endpoint not yet available on this backend
   }
 });
 
@@ -709,8 +753,21 @@ const openEdit = async (p) => {
   showModal.value = true;
 
   try {
-    const res = await apiClient.get(`/projects/${p.id}`);
-    const full = res.data;
+    const res = await apiClient.get(`/products/${p.id}`);
+    // API shape: { success, data: { ... } }
+    const rawFull = res.data?.data ?? res.data;
+    const { unpacked, description } = unpackDescription(rawFull.description);
+    const full = {
+      ...rawFull,
+      title: rawFull.title || rawFull.name || '',
+      description: description,
+      image: unpacked.image || rawFull.image || [],
+      thumbnail: unpacked.thumbnail || rawFull.thumbnail || '',
+      tags: unpacked.tags || (Array.isArray(rawFull.tags) ? rawFull.tags : (typeof rawFull.tags === 'string' ? JSON.parse(rawFull.tags) : [])),
+      hasDetails: unpacked.has_details !== undefined ? !!unpacked.has_details : (rawFull.hasDetails !== undefined ? !!rawFull.hasDetails : (rawFull.has_details !== undefined ? !!rawFull.has_details : true)),
+      sort_order: unpacked.sort_order !== undefined ? unpacked.sort_order : (rawFull.sort_order ?? 0),
+      detailData: unpacked.detailData || rawFull.detailData || rawFull.detail_data || {}
+    };
     Object.assign(form, {
       id:          full.id,
       title:       full.title,
@@ -762,39 +819,109 @@ const submitForm = async () => {
 
   saving.value = true;
   try {
-    const url = editMode.value
-      ? `/admin/projects/${form.id}`
-      : `/admin/projects`;
-
-    const formData = new FormData();
-    formData.append('title', form.title);
-    formData.append('description', form.description);
-    formData.append('sort_order', form.sort_order);
-    formData.append('has_details', form.has_details ? 1 : 0);
-
-    if (form.imageFiles && form.imageFiles.length > 0) {
-      form.imageFiles.forEach((f) => {
-        formData.append('imageFiles[]', f);
+    const compressImage = (file, maxW = 500, maxH = 500, quality = 0.4) => {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (event) => {
+          const img = new Image();
+          img.src = event.target.result;
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let width = img.width;
+            let height = img.height;
+            if (width > height) {
+              if (width > maxW) {
+                height = Math.round((height * maxW) / width);
+                width = maxW;
+              }
+            } else {
+              if (height > maxH) {
+                width = Math.round((width * maxH) / height);
+                height = maxH;
+              }
+            }
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+            const dataUrl = canvas.toDataURL('image/jpeg', quality);
+            resolve(dataUrl);
+          };
+          img.onerror = () => resolve(null);
+        };
+        reader.onerror = () => resolve(null);
       });
-    }
-    if (form.existingImages && form.existingImages.length > 0) {
-      formData.append('existingImages', JSON.stringify(form.existingImages));
+    };
+
+    const readAsBase64 = (file) => {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (e) => reject(e);
+        reader.readAsDataURL(file);
+      });
+    };
+
+    // Convert new uploaded image files to Base64 (with compression)
+    const newImageBase64s = [];
+    if (form.imageFiles && form.imageFiles.length > 0) {
+      for (const file of form.imageFiles) {
+        try {
+          const base64 = await compressImage(file) || await readAsBase64(file);
+          newImageBase64s.push(base64);
+        } catch (fileErr) {
+          console.error('Failed to read image file:', fileErr);
+        }
+      }
     }
 
+    // Convert thumbnail to Base64 (with compression)
+    let thumbnailBase64 = form.thumbnail;
     if (form.thumbnailFile) {
-      formData.append('thumbnail', form.thumbnailFile);
+      try {
+        thumbnailBase64 = await compressImage(form.thumbnailFile) || await readAsBase64(form.thumbnailFile);
+      } catch (fileErr) {
+        console.error('Failed to read thumbnail file:', fileErr);
+      }
     }
 
+    const finalImages = [...form.existingImages, ...newImageBase64s];
 
-    formData.append('tags', JSON.stringify(form.tags));
-    formData.append('detailData', JSON.stringify(form.detailData));
+    // Pack all details into JSON inside the description column
+    const packedDescription = JSON.stringify({
+      description: form.description,
+      image: finalImages,
+      thumbnail: thumbnailBase64,
+      tags: form.tags,
+      sort_order: form.sort_order,
+      has_details: form.has_details,
+      detailData: form.detailData
+    });
+
+    if (packedDescription.length > 65535) {
+      formError.value = `The project data is too large (${Math.round(packedDescription.length / 1024)} KB) and would be truncated by the database. Please reduce the number of images or upload smaller images. (Limit is 64 KB)`;
+      saving.value = false;
+      return;
+    }
+
+    const url = editMode.value
+      ? `/admin/products/${form.id}`
+      : `/admin/products`;
+
+    const payload = {
+      name: form.title,
+      price: 0,
+      stock: 0,
+      status: 'active',
+      description: packedDescription
+    };
 
     if (editMode.value) {
-      formData.append('_method', 'PUT');
+      await apiClient.put(url, payload);
+    } else {
+      await apiClient.post(url, payload);
     }
-
-    // Always POST because Laravel needs POST to handle multipart/form-data uploads with PUT override
-    await apiClient.post(url, formData);
 
     showToast(editMode.value ? 'Project updated ✓' : 'Project created ✓', 'success');
     closeModal();
@@ -816,7 +943,7 @@ const confirmDelete = (p) => { deleteTarget.value = p; };
 const deleteProject = async () => {
   saving.value = true;
   try {
-    await apiClient.delete(`/admin/projects/${deleteTarget.value.id}`);
+    await apiClient.delete(`/admin/products/${deleteTarget.value.id}`);
     showToast('Project deleted', 'success');
     deleteTarget.value = null;
     clearProjectsCache();

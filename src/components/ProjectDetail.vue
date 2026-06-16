@@ -208,11 +208,11 @@ const selectedImage = ref(null);
 const detailData = computed(() => {
   const d = props.project?.detailData || {};
   return {
-    heroTitle: d.heroTitle || '',
+    heroTitle: d.heroTitle || props.project?.title || '',
     heroSubject: d.heroSubject || '',
-    tagline: d.tagline || '',
+    tagline: d.tagline || '// System logs loaded',
     stats: Array.isArray(d.stats) ? d.stats : [],
-    abstract: d.abstract || '',
+    abstract: d.abstract || props.project?.description || '',
     highlights: Array.isArray(d.highlights) ? d.highlights : null,
     gallery: Array.isArray(d.gallery) ? d.gallery : [],
     features: Array.isArray(d.features) ? d.features : [],

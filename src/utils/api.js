@@ -4,15 +4,27 @@ import axios from 'axios';
 const isProd = import.meta.env.PROD;
 const rawEnvUrl = import.meta.env.VITE_API_URL;
 
-// Normalize API URL to ensure it ends with '/api'
-// If no VITE_API_URL is provided, fall back to Render in production and localhost in dev.
-const getNormalizedApiUrl = () => {
+// The real hosted backend root — always used for building image/storage URLs.
+// In dev we cannot use a relative path for images because they are served
+// from api.athul.online, not from localhost.
+const getRealBackendRoot = () => {
   if (rawEnvUrl) {
-    return rawEnvUrl.endsWith('/api') ? rawEnvUrl : `${rawEnvUrl.replace(/\/$/, '')}/api`;
+    const base = rawEnvUrl.replace(/\/$/, '');
+    return base.endsWith('/api') ? base.slice(0, -4) : base;
   }
-  return isProd
-    ? 'https://backend-portfolio-vk01.onrender.com/api'
-    : 'http://localhost:8000/api';
+  return 'https://api.athul.online';
+};
+
+const realBackendRoot = getRealBackendRoot();
+
+// In DEV mode use a relative '/api' path so the Vite proxy tunnels the request
+// server-side — this avoids CORS preflight blocks on the X-Admin-Key header.
+// In production the full absolute URL is used directly.
+const getNormalizedApiUrl = () => {
+  if (!isProd) {
+    return '/api'; // proxied by vite.config.js → https://api.athul.online/api
+  }
+  return `${realBackendRoot}/api`;
 };
 
 const apiBaseUrl = getNormalizedApiUrl();
@@ -37,9 +49,24 @@ apiClient.interceptors.request.use(
     if (config.data instanceof FormData) {
       delete config.headers['Content-Type'];
     }
-    const adminKey = sessionStorage.getItem('admin_key') || import.meta.env.VITE_ADMIN_KEY || '';
-    if (adminKey) {
-      config.headers['X-Admin-Key'] = adminKey;
+    // Only inject the admin key for write operations (POST, PUT, DELETE, PATCH).
+    // GET requests hit the public endpoint — sending the key routes them to a
+    // non-existent admin handler on the backend and causes a 404.
+    const method = (config.method || 'get').toUpperCase();
+    const isWriteOp = ['POST', 'PUT', 'DELETE', 'PATCH'].includes(method);
+    if (isWriteOp) {
+      if (!config.headers['X-Admin-Key']) {
+        const adminKey = sessionStorage.getItem('admin_key') || import.meta.env.VITE_ADMIN_KEY || '';
+        if (adminKey) {
+          config.headers['X-Admin-Key'] = adminKey;
+        }
+      }
+      if (!config.headers['Authorization']) {
+        const adminToken = sessionStorage.getItem('admin_token');
+        if (adminToken) {
+          config.headers['Authorization'] = `Bearer ${adminToken}`;
+        }
+      }
     }
     return config;
   },
@@ -94,10 +121,11 @@ apiClient.interceptors.response.use(
 );
 
 /**
- * Gets the backend root base URL (without '/api' suffix)
+ * Gets the real backend root base URL (without '/api' suffix).
+ * Always returns the absolute hosted URL — used to build storage image URLs.
  */
 export function getApiBase() {
-  return apiBaseUrl.endsWith('/api') ? apiBaseUrl.slice(0, -4) : apiBaseUrl;
+  return realBackendRoot;
 }
 
 export function getImageUrl(path, fallbackPath = '') {

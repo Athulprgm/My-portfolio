@@ -135,7 +135,7 @@
             </a>
          </div>
       </div>
-    </div>v>
+    </div>
   </section>
 </template>
 
