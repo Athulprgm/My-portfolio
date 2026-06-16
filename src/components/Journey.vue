@@ -102,10 +102,10 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted } from 'vue';
+import { ref, reactive, onMounted, onUnmounted } from 'vue'; // reactive kept for `timeline`
 
 const headerRef = ref(null);
-const itemRefs  = reactive([]);
+const itemRefs  = ref([]);
 const hoveredItem = ref(null);
 
 const timeline = reactive([
@@ -163,7 +163,7 @@ onMounted(() => {
             entry.target.classList.add('revealed');
           }
           // Timeline items
-          const idx = itemRefs.findIndex(r => r === entry.target);
+          const idx = itemRefs.value.findIndex(r => r === entry.target);
           if (idx !== -1) timeline[idx].revealed = true;
           observer.unobserve(entry.target);
         }
@@ -174,7 +174,7 @@ onMounted(() => {
 
   if (headerRef.value) observer.observe(headerRef.value);
   setTimeout(() => {
-    itemRefs.forEach((el) => { if (el) observer.observe(el); });
+    itemRefs.value.forEach((el) => { if (el) observer.observe(el); });
   }, 100);
 });
 

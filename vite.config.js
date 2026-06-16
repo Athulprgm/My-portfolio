@@ -19,10 +19,10 @@ export default defineConfig(({ mode }) => {
   }
 
   // TLS agent — fixes ECONNRESET when Vite proxies to the HTTPS backend.
-  // Some servers reject Node.js's default TLS settings; this forces TLS 1.2.
+  // keepAlive is disabled because the backend drops persistent connections.
   const tlsAgent = new Agent({
     rejectUnauthorized: false,
-    keepAlive: true,
+    keepAlive: false,
     lookup: (hostname, options, callback) => {
       if (typeof options === 'function') {
         callback = options;
@@ -56,6 +56,18 @@ export default defineConfig(({ mode }) => {
           changeOrigin: true,
           secure: false,
           agent: tlsAgent,
+          proxyTimeout: 10000, // 10 s — give up if backend doesn't respond
+          timeout: 10000,
+          configure: (proxy) => {
+            proxy.on('error', (err, _req, res) => {
+              // Log cleanly instead of crashing; return 502 to the browser
+              console.warn('[vite proxy] backend error:', err.message);
+              if (res && !res.headersSent) {
+                res.writeHead(502, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify({ error: 'Backend unavailable', detail: err.message }));
+              }
+            });
+          },
         },
       },
     },

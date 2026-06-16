@@ -179,7 +179,8 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
-import apiClient, { getImageUrl } from '../utils/api';
+import { getImageUrl } from '../utils/api';
+import { getCvs } from '../composables/useCvs';
 
 const menuOpen = ref(false);
 const scrolled = ref(false);
@@ -197,21 +198,16 @@ const navItems = [
   { id: 'contact', label: 'Contact' },
 ];
 
-const openCvModal = async () => {
+const openCvModal = () => {
   showCvModal.value = true;
-  menuOpen.value = false;
-  if (cvsList.value.length === 0) {
-    loadingCvs.value = true;
-    cvsError.value = null;
-    try {
-      const res = await apiClient.get('/cvs');
-      cvsList.value = res.data;
-    } catch (e) {
-      console.error('Failed to fetch CVs:', e);
-      cvsError.value = 'Failed to load CVs. Please try again.';
-    } finally {
-      loadingCvs.value = false;
-    }
+  menuOpen.value    = false;
+  loadingCvs.value  = false;
+  cvsError.value    = null;
+  try {
+    cvsList.value = getCvs(); // localStorage-backed, synchronous
+  } catch (e) {
+    console.error('Failed to load CVs:', e);
+    cvsError.value = 'Failed to load CVs. Please try again.';
   }
 };
 
@@ -223,18 +219,28 @@ const scrollToSection = (id) => {
   }
 };
 
+// Throttle scroll handler to one update per animation frame to avoid
+// layout thrashing (offsetTop forces reflow on every call).
+let _scrollRafId = null;
 const handleScroll = () => {
-  scrolled.value = window.scrollY > 40;
-  const sections = ['home', 'project', 'about', 'contact'];
-  const scrollPos = window.scrollY + 200;
-  for (let i = sections.length - 1; i >= 0; i--) {
-    const sec = document.getElementById(sections[i]);
-    if (sec && sec.offsetTop <= scrollPos) { activeSection.value = sections[i]; break; }
-  }
+  if (_scrollRafId) return;
+  _scrollRafId = requestAnimationFrame(() => {
+    _scrollRafId = null;
+    scrolled.value = window.scrollY > 40;
+    const sections = ['home', 'project', 'about', 'contact'];
+    const scrollPos = window.scrollY + 200;
+    for (let i = sections.length - 1; i >= 0; i--) {
+      const sec = document.getElementById(sections[i]);
+      if (sec && sec.offsetTop <= scrollPos) { activeSection.value = sections[i]; break; }
+    }
+  });
 };
 
-onMounted(() => window.addEventListener('scroll', handleScroll));
-onUnmounted(() => window.removeEventListener('scroll', handleScroll));
+onMounted(() => window.addEventListener('scroll', handleScroll, { passive: true }));
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+  if (_scrollRafId) cancelAnimationFrame(_scrollRafId);
+});
 </script>
 
 <style scoped>

@@ -32,47 +32,35 @@ const apiBaseUrl = getNormalizedApiUrl();
 // Create the production-grade Axios client
 const apiClient = axios.create({
   baseURL: apiBaseUrl,
-  timeout: 30000, // 30 seconds request timeout
+  timeout: 15000, // 15 seconds — generous for a shared/hosted backend
   headers: {
     'Accept': 'application/json',
   },
 });
 
-// Configure default retry parameters on the client
-apiClient.defaults.retry = 3; // Retry up to 3 times
-apiClient.defaults.retryDelay = 1000;
+// Retry only genuine 5xx server errors (not timeouts / connection drops)
+apiClient.defaults.retry = 2;
+apiClient.defaults.retryDelay = 500;
 
-// Request Interceptor: Inject Admin Key automatically
+// Request Interceptor: Inject Admin Key on every request.
+// The backend uses X-Admin-Key to route requests to the appropriate handler;
+// sending it on reads allows the server to return admin-level data if needed.
 apiClient.interceptors.request.use(
   (config) => {
     // If sending FormData, delete Content-Type to let browser/Axios set it with correct boundary
     if (config.data instanceof FormData) {
       delete config.headers['Content-Type'];
     }
-    // Only inject the admin key for write operations (POST, PUT, DELETE, PATCH).
-    // GET requests hit the public endpoint — sending the key routes them to a
-    // non-existent admin handler on the backend and causes a 404.
-    const method = (config.method || 'get').toUpperCase();
-    const isWriteOp = ['POST', 'PUT', 'DELETE', 'PATCH'].includes(method);
-    if (isWriteOp) {
-      if (!config.headers['X-Admin-Key']) {
-        const adminKey = sessionStorage.getItem('admin_key') || import.meta.env.VITE_ADMIN_KEY || '';
-        if (adminKey) {
-          config.headers['X-Admin-Key'] = adminKey;
-        }
-      }
-      if (!config.headers['Authorization']) {
-        const adminToken = sessionStorage.getItem('admin_token');
-        if (adminToken) {
-          config.headers['Authorization'] = `Bearer ${adminToken}`;
-        }
+    // Inject admin key if available — backend ignores it if not needed.
+    if (!config.headers['X-Admin-Key']) {
+      const adminKey = sessionStorage.getItem('admin_key') || import.meta.env.VITE_ADMIN_KEY || '';
+      if (adminKey) {
+        config.headers['X-Admin-Key'] = adminKey;
       }
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (error) => Promise.reject(error)
 );
 
 // Response Interceptor: Retries & Error Logging
@@ -86,37 +74,43 @@ apiClient.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    // Set or increment retry count
-    config.__retryCount = config.__retryCount || 0;
+    // ── Never retry these — they are permanent / connection-level failures ──
+    const noRetryCode = ['ECONNABORTED', 'ECONNRESET', 'ECONNREFUSED', 'EPIPE'].includes(error.code);
+    const isSocketHangUp = error.message?.toLowerCase().includes('socket hang up');
+    const isTimeout = error.message?.toLowerCase().includes('timeout');
+    if (noRetryCode || isSocketHangUp || isTimeout) {
+      const url = config?.url ?? 'unknown';
+      console.error(`[API Error] Connection failed (not retrying): ${error.message} — ${url}`);
+      return Promise.reject(error);
+    }
 
-    // Check if we have exceeded max retries
+    // ── Log 401 clearly for debugging ──
+    if (response?.status === 401) {
+      console.error(`[API Error] 401 Unauthorized — ${config?.baseURL ?? ''}${config?.url ?? ''}. Check X-Admin-Key.`);
+      return Promise.reject(error);
+    }
+
+    // ── Only retry genuine 5xx server errors ──
+    const is5xxError = response && response.status >= 500;
+    if (!is5xxError) {
+      return Promise.reject(error);
+    }
+
+    config.__retryCount = config.__retryCount || 0;
     if (config.__retryCount >= config.retry) {
       console.error(`[API Error] Request failed after ${config.retry} retries:`, error.message);
       return Promise.reject(error);
     }
 
-    // Determine if we should retry (Network error or 5xx status codes)
-    const isNetworkError = !response;
-    const is5xxError = response && response.status >= 500;
+    config.__retryCount += 1;
+    const backoffDelay = config.__retryCount * (config.retryDelay || 500);
+    console.warn(
+      `[API Warning] Server error ${response.status}. ` +
+      `Retrying (${config.__retryCount}/${config.retry}) in ${backoffDelay}ms...`
+    );
 
-    if (isNetworkError || is5xxError) {
-      config.__retryCount += 1;
-      
-      // Calculate delay with exponential backoff: 1s, 2s, 4s...
-      const backoffDelay = Math.pow(2, config.__retryCount - 1) * (config.retryDelay || 1000);
-      
-      console.warn(
-        `[API Warning] Request failed: ${error.message}. ` +
-        `Retrying (${config.__retryCount}/${config.retry}) in ${backoffDelay}ms...`
-      );
-
-      await new Promise((resolve) => setTimeout(resolve, backoffDelay));
-
-      // Re-run the request with Axios instance
-      return apiClient(config);
-    }
-
-    return Promise.reject(error);
+    await new Promise((resolve) => setTimeout(resolve, backoffDelay));
+    return apiClient(config);
   }
 );
 
@@ -148,9 +142,22 @@ export function getImageUrl(path, fallbackPath = '') {
     return '/360_F_541698271_tqSibLbJ2iPhcN8hrDy9cFDjbe98JYbQ.webp';
   }
 
+  // Security: block javascript: URIs unconditionally
+  if (resolvedPath.toLowerCase().startsWith('javascript:')) {
+    return '/360_F_541698271_tqSibLbJ2iPhcN8hrDy9cFDjbe98JYbQ.webp';
+  }
+
   // Already absolute, data URI, or blob URI
-  if (resolvedPath.startsWith('http://') || resolvedPath.startsWith('https://') || resolvedPath.startsWith('data:') || resolvedPath.startsWith('blob:')) {
+  // Only allow data: URIs that are images (block data:text/html etc.)
+  if (resolvedPath.startsWith('http://') || resolvedPath.startsWith('https://') || resolvedPath.startsWith('blob:')) {
     return resolvedPath;
+  }
+  if (resolvedPath.startsWith('data:image/')) {
+    return resolvedPath; // safe image data URI
+  }
+  if (resolvedPath.startsWith('data:')) {
+    // Non-image data URI — block it
+    return '/360_F_541698271_tqSibLbJ2iPhcN8hrDy9cFDjbe98JYbQ.webp';
   }
 
   const apiBase = getApiBase();

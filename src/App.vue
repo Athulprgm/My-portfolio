@@ -63,7 +63,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 import NavBar               from './components/NavBar.vue';
 import Home                 from './components/Home.vue';
 import Projects             from './components/Projects.vue';
@@ -127,6 +127,10 @@ const goBack = () => {
 onMounted(() => {
   parseRoute();
   window.addEventListener('popstate', parseRoute);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('popstate', parseRoute);
 });
 </script>
 

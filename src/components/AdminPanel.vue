@@ -176,17 +176,14 @@
 
       <!-- ─── CV Profiles Section ─── -->
       <div v-else-if="currentTab === 'cvs'">
-        <!-- CV endpoint not available -->
-        <div class="flex flex-col items-center justify-center py-24 gap-4 text-center">
-          <div class="w-12 h-12 rounded-full bg-amber-950/40 border border-amber-500/20 flex items-center justify-center">
-            <i class="fa-solid fa-plug-circle-xmark text-amber-400"></i>
-          </div>
-          <p class="font-mono text-xs text-[#A1A1AA]">CV endpoint not available on this backend.</p>
-          <p class="font-mono text-[10px] text-[#A1A1AA]/50">// Add a /cvs route to the API to enable this section</p>
+        <!-- Loading -->
+        <div v-if="loadingCvsList" class="flex items-center justify-center py-24 gap-3">
+          <div class="w-5 h-5 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+          <span class="font-mono text-xs text-[#A1A1AA]">Loading CVs...</span>
         </div>
 
         <!-- CV Profiles table -->
-        <div v-if="false" class="overflow-x-auto rounded-2xl border border-[#2A2A2A]">
+        <div v-else class="overflow-x-auto rounded-2xl border border-[#2A2A2A]">
           <table class="w-full text-left">
             <thead class="bg-[#121212] border-b border-[#2A2A2A]">
               <tr>
@@ -421,11 +418,11 @@
               </button>
               <button
                 @click="deleteProject"
-                :disabled="saving"
+                :disabled="deleting"
                 class="flex-1 font-mono text-xs py-2 bg-red-600 hover:bg-red-500 disabled:opacity-50 text-white rounded-lg transition-colors flex items-center justify-center gap-2"
               >
-                <div v-if="saving" class="w-3 h-3 border-2 border-[#2A2A2A] border-t-transparent rounded-full animate-spin"></div>
-                <span>{{ saving ? 'Deleting…' : 'Delete' }}</span>
+                <div v-if="deleting" class="w-3 h-3 border-2 border-[#2A2A2A] border-t-transparent rounded-full animate-spin"></div>
+                <span>{{ deleting ? 'Deleting…' : 'Delete' }}</span>
               </button>
             </div>
           </div>
@@ -466,7 +463,7 @@
               <input v-model="cvForm.title" placeholder="Frontend Developer CV" />
             </div>
 
-            <!-- Row: file upload -->
+            <!-- Row: file upload OR direct URL -->
             <div class="field">
               <label>CV File (PDF / Word / Image) <span v-if="!cvEditMode" class="text-red-400">*</span></label>
               <input type="file" @change="onCvFileChange" accept=".pdf,.doc,.docx,image/*" class="file-input w-full bg-[#121212] border border-[#2A2A2A] rounded-lg px-3 py-2 text-xs font-mono" />
@@ -476,6 +473,12 @@
               <p v-else-if="cvEditMode" class="mt-2 font-mono text-[10px] text-[#A1A1AA] italic">
                 Leave empty to keep existing file.
               </p>
+            </div>
+
+            <!-- Row: OR direct URL -->
+            <div class="field">
+              <label>— or — Direct File URL <span class="text-[#A1A1AA]">(https://...)</span></label>
+              <input v-model="cvForm.file_url" placeholder="https://drive.google.com/file/..." class="w-full bg-[#121212] border border-[#2A2A2A] rounded-lg px-3 py-2 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-indigo-500/50 transition-colors" />
             </div>
 
             <!-- Row: sort_order -->
@@ -565,6 +568,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import { getImageUrl, clearProjectsCache, unpackDescription } from '../composables/useProjects';
+import { getCvs, createCv, updateCv, deleteCvById } from '../composables/useCvs';
 import apiClient from '../utils/api';
 
 // Tab State
@@ -584,6 +588,7 @@ const login = async () => {
   loginError.value = '';
   try {
     // Validate key client-side — the backend has no dedicated auth endpoint.
+    // The X-Admin-Key header is injected automatically for all write operations.
     const envKey = import.meta.env.VITE_ADMIN_KEY;
     if (!keyInput.value.trim()) {
       loginError.value = 'Please enter the admin key.';
@@ -591,24 +596,6 @@ const login = async () => {
     }
     if (envKey && keyInput.value !== envKey) {
       loginError.value = 'Wrong key — try again.';
-      return;
-    }
-
-    // Authenticate with backend API to obtain a JWT token for write operations
-    try {
-      const authRes = await apiClient.post('/auth/login', {
-        email: 'admin@example.com',
-        password: 'password'
-      });
-      if (authRes.data?.data?.token) {
-        sessionStorage.setItem('admin_token', authRes.data.data.token);
-      } else {
-        loginError.value = 'Failed to obtain API authentication token.';
-        return;
-      }
-    } catch (authErr) {
-      console.error('Backend authentication failed:', authErr);
-      loginError.value = `Backend authentication failed: ${authErr.response?.data?.message || authErr.message}`;
       return;
     }
 
@@ -628,18 +615,6 @@ const savedKey = sessionStorage.getItem('admin_key');
 if (savedKey) {
   keyInput.value = savedKey;
   authed.value = true;
-  if (!sessionStorage.getItem('admin_token')) {
-    apiClient.post('/auth/login', {
-      email: 'admin@example.com',
-      password: 'password'
-    }).then(res => {
-      if (res.data?.data?.token) {
-        sessionStorage.setItem('admin_token', res.data.data.token);
-      }
-    }).catch(err => {
-      console.error('Auto login failed:', err);
-    });
-  }
 }
 
 const goHome = () => {
@@ -678,15 +653,15 @@ const loadProjects = async () => {
   }
 };
 
-const loadCvs = async () => {
-  // No /cvs endpoint available on this backend — skip silently.
-  cvs.value = [];
+const loadCvs = () => {
+  // localStorage-backed — synchronous, no backend needed.
+  cvs.value = getCvs();
 };
 
 onMounted(() => {
   if (authed.value) {
     loadProjects();
-    // CV endpoint not yet available on this backend
+    loadCvs();
   }
 });
 
@@ -819,36 +794,40 @@ const submitForm = async () => {
 
   saving.value = true;
   try {
-    const compressImage = (file, maxW = 500, maxH = 500, quality = 0.4) => {
+    // Compress an image file to a JPEG data URL.
+    // maxW/maxH cap the longest side; quality is 0-1 JPEG quality.
+    // If the result still exceeds targetBytes, quality is halved and retried once.
+    const compressImage = (file, maxW = 1200, maxH = 900, quality = 0.72, targetBytes = 300_000) => {
+      const doCompress = (src, w, h, q) => new Promise((resolve) => {
+        const img = new Image();
+        img.src = src;
+        img.onload = () => {
+          let width = img.width;
+          let height = img.height;
+          const ratio = Math.min(w / width, h / height, 1);
+          width  = Math.round(width  * ratio);
+          height = Math.round(height * ratio);
+          const canvas = document.createElement('canvas');
+          canvas.width  = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', q));
+        };
+        img.onerror = () => resolve(null);
+      });
+
       return new Promise((resolve) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        reader.onload = (event) => {
-          const img = new Image();
-          img.src = event.target.result;
-          img.onload = () => {
-            const canvas = document.createElement('canvas');
-            let width = img.width;
-            let height = img.height;
-            if (width > height) {
-              if (width > maxW) {
-                height = Math.round((height * maxW) / width);
-                width = maxW;
-              }
-            } else {
-              if (height > maxH) {
-                width = Math.round((width * maxH) / height);
-                height = maxH;
-              }
-            }
-            canvas.width = width;
-            canvas.height = height;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, width, height);
-            const dataUrl = canvas.toDataURL('image/jpeg', quality);
-            resolve(dataUrl);
-          };
-          img.onerror = () => resolve(null);
+        reader.onload = async (event) => {
+          const src = event.target.result;
+          let result = await doCompress(src, maxW, maxH, quality);
+          // If still too large, retry at half quality
+          if (result && result.length > targetBytes) {
+            result = await doCompress(src, maxW, maxH, quality * 0.5);
+          }
+          resolve(result);
         };
         reader.onerror = () => resolve(null);
       });
@@ -864,11 +843,12 @@ const submitForm = async () => {
     };
 
     // Convert new uploaded image files to Base64 (with compression)
+    // Gallery images: 1200×900 @ 0.72 quality, max 300 KB each
     const newImageBase64s = [];
     if (form.imageFiles && form.imageFiles.length > 0) {
       for (const file of form.imageFiles) {
         try {
-          const base64 = await compressImage(file) || await readAsBase64(file);
+          const base64 = await compressImage(file, 1200, 900, 0.72, 300_000) || await readAsBase64(file);
           newImageBase64s.push(base64);
         } catch (fileErr) {
           console.error('Failed to read image file:', fileErr);
@@ -877,10 +857,11 @@ const submitForm = async () => {
     }
 
     // Convert thumbnail to Base64 (with compression)
+    // Thumbnails: 640×480 @ 0.65 quality, max 120 KB
     let thumbnailBase64 = form.thumbnail;
     if (form.thumbnailFile) {
       try {
-        thumbnailBase64 = await compressImage(form.thumbnailFile) || await readAsBase64(form.thumbnailFile);
+        thumbnailBase64 = await compressImage(form.thumbnailFile, 640, 480, 0.65, 120_000) || await readAsBase64(form.thumbnailFile);
       } catch (fileErr) {
         console.error('Failed to read thumbnail file:', fileErr);
       }
@@ -899,10 +880,17 @@ const submitForm = async () => {
       detailData: form.detailData
     });
 
-    if (packedDescription.length > 65535) {
-      formError.value = `The project data is too large (${Math.round(packedDescription.length / 1024)} KB) and would be truncated by the database. Please reduce the number of images or upload smaller images. (Limit is 64 KB)`;
+    // Hard limit: 15 MB (MySQL MEDIUMTEXT). Soft warning at 5 MB.
+    const MAX_BYTES = 15 * 1024 * 1024; // 15 MB
+    const WARN_BYTES = 5 * 1024 * 1024; // 5 MB
+    const sizeKB = Math.round(packedDescription.length / 1024);
+    if (packedDescription.length > MAX_BYTES) {
+      formError.value = `Project data is too large (${sizeKB} KB). Limit is 15 MB — please reduce the number or size of images.`;
       saving.value = false;
       return;
+    }
+    if (packedDescription.length > WARN_BYTES) {
+      console.warn(`[AdminPanel] Large payload: ${sizeKB} KB. Consider using fewer images.`);
     }
 
     const url = editMode.value
@@ -937,11 +925,12 @@ const submitForm = async () => {
 
 // ── Delete ────────────────────────────────────────────────────────
 const deleteTarget = ref(null);
+const deleting     = ref(false); // separate from `saving` to avoid spinner conflicts
 
 const confirmDelete = (p) => { deleteTarget.value = p; };
 
 const deleteProject = async () => {
-  saving.value = true;
+  deleting.value = true;
   try {
     await apiClient.delete(`/admin/products/${deleteTarget.value.id}`);
     showToast('Project deleted', 'success');
@@ -951,7 +940,7 @@ const deleteProject = async () => {
   } catch (e) {
     apiError.value = `Delete failed: ${e.response?.data?.message || e.message}`;
   } finally {
-    saving.value = false;
+    deleting.value = false;
   }
 };
 
@@ -965,6 +954,7 @@ const blankCvForm = () => ({
   id: null,
   title: '',
   cv_file: null,
+  file_url: '',
   filePreview: '',
   sort_order: 0,
 });
@@ -1009,37 +999,43 @@ const submitCvForm = async () => {
     cvFormError.value = 'Title is required.';
     return;
   }
-  if (!cvEditMode.value && !cvForm.cv_file) {
-    cvFormError.value = 'CV file is required.';
+  if (!cvEditMode.value && !cvForm.cv_file && !cvForm.file_url?.trim()) {
+    cvFormError.value = 'Upload a CV file or enter a direct URL.';
     return;
   }
 
   cvSaving.value = true;
   try {
-    const url = cvEditMode.value
-      ? `/admin/cvs/${cvForm.id}`
-      : `/admin/cvs`;
-
-    const formData = new FormData();
-    formData.append('title', cvForm.title);
-    formData.append('sort_order', cvForm.sort_order);
-
+    // Resolve file: prefer uploaded file (convert to base64), fall back to URL
+    let filePath = cvForm.file_url?.trim() || '';
     if (cvForm.cv_file) {
-      formData.append('cv_file', cvForm.cv_file);
+      filePath = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload  = () => resolve(reader.result);
+        reader.onerror = reject;
+        reader.readAsDataURL(cvForm.cv_file);
+      });
     }
 
     if (cvEditMode.value) {
-      formData.append('_method', 'PUT');
+      updateCv(cvForm.id, {
+        title:      cvForm.title,
+        sort_order: cvForm.sort_order,
+        ...(filePath ? { file_path: filePath } : {}),
+      });
+    } else {
+      createCv({
+        title:      cvForm.title,
+        file_path:  filePath,
+        sort_order: cvForm.sort_order,
+      });
     }
-
-    await apiClient.post(url, formData);
 
     showToast(cvEditMode.value ? 'CV updated ✓' : 'CV created ✓', 'success');
     closeCvModal();
-    await loadCvs();
+    loadCvs();
   } catch (e) {
-    const errData = e.response?.data;
-    cvFormError.value = errData?.error ?? JSON.stringify(errData?.errors ?? e.message);
+    cvFormError.value = e.message || 'Failed to save CV.';
   } finally {
     cvSaving.value = false;
   }
@@ -1052,15 +1048,15 @@ const confirmDeleteCv = (cv) => {
   cvDeleteTarget.value = cv;
 };
 
-const deleteCv = async () => {
+const deleteCv = () => {
   cvSaving.value = true;
   try {
-    await apiClient.delete(`/admin/cvs/${cvDeleteTarget.value.id}`);
+    deleteCvById(cvDeleteTarget.value.id);
     showToast('CV profile deleted', 'success');
     cvDeleteTarget.value = null;
-    await loadCvs();
+    loadCvs();
   } catch (e) {
-    apiError.value = `Delete failed: ${e.response?.data?.message || e.message}`;
+    apiError.value = `Delete failed: ${e.message}`;
   } finally {
     cvSaving.value = false;
   }
