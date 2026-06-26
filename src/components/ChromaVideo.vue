@@ -77,6 +77,10 @@ const startRendering = () => {
   
   const maxResolution = 256; // High performance target resolution cap
 
+  let lastFrameTime = 0;
+  const fpsLimit = 24; // Throttling to 24fps for cinematic feel and MASSIVE performance gains
+  const frameInterval = 1000 / fpsLimit;
+
   const renderFrame = () => {
     if (!isVisible.value) return;
 
@@ -84,6 +88,16 @@ const startRendering = () => {
       animationFrameId = requestAnimationFrame(renderFrame);
       return;
     }
+
+    const now = performance.now();
+    const elapsed = now - lastFrameTime;
+
+    if (elapsed < frameInterval) {
+      animationFrameId = requestAnimationFrame(renderFrame);
+      return;
+    }
+    
+    lastFrameTime = now - (elapsed % frameInterval);
 
     // Set canvas sizes with resolution constraint
     if (canvas.width === 0 || canvas.height === 0 || canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {

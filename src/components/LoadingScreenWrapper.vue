@@ -1,5 +1,7 @@
 <template>
-  <slot />
+  <div v-show="!isLoading">
+    <slot />
+  </div>
   <LoadingScreen v-if="isLoading" @loading-complete="handleLoadingComplete" />
 </template>
 
