@@ -5,7 +5,7 @@
       <div class="relative w-[130px] h-[130px] flex items-center justify-center mb-6">
         <div class="absolute w-[110px] h-[110px] border border-[#2A2A2A] rounded-full border-t-[#ffffff] border-r-[#ffffff] animate-[spin_2s_linear_infinite]"></div>
         <div class="absolute w-[125px] h-[125px] border border-[#121212] rounded-full border-t-[#A1A1AA] border-r-[#A1A1AA] animate-[spin_3s_linear_infinite_reverse]"></div>
-        <video src="/profile-video.mp4" autoplay loop muted playsinline class="w-[90px] h-[90px] rounded-full object-cover border-2 border-[#2A2A2A] z-10 animate-pulse"></video>
+        <video src="/New folder/create_animation_vedio __scene.mp4" autoplay loop muted playsinline class="w-[90px] h-[90px] rounded-full object-cover border-2 border-[#2A2A2A] z-10 animate-pulse"></video>
       </div>
 
       <!-- Minimal Code Element -->

@@ -11,25 +11,24 @@
         <p class="font-mono text-[11px] text-[#A1A1AA] mt-1">// restricted area — enter your key</p>
       </div>
 
-      <div class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-2xl p-6 backdrop-blur">
+      <form @submit.prevent="login" class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-2xl p-6 backdrop-blur">
         <label class="font-mono text-[10px] text-[#A1A1AA] uppercase tracking-widest block mb-2">Admin Key</label>
         <input
           v-model="keyInput"
           type="password"
           placeholder="portfolio-admin-****"
-          @keydown.enter="login"
           class="w-full bg-[#121212] border border-[#2A2A2A] rounded-lg px-4 py-2.5 font-mono text-sm text-white placeholder-neutral-600 focus:outline-none focus:border-[#ffffff]/50 transition-colors"
         />
         <p v-if="loginError" class="font-mono text-[10px] text-red-400 mt-2">{{ loginError }}</p>
         <button
-          @click="login"
+          type="submit"
           :disabled="loggingIn"
           class="mt-4 w-full bg-green-600 hover:bg-green-500 text-white font-mono text-sm py-2.5 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
         >
           <div v-if="loggingIn" class="w-3.5 h-3.5 border-2 border-[#2A2A2A] border-t-transparent rounded-full animate-spin"></div>
           <i v-else class="fa-solid fa-right-to-bracket"></i> {{ loggingIn ? 'Entering…' : 'Enter' }}
         </button>
-      </div>
+      </form>
     </div>
   </div>
 
@@ -587,32 +586,45 @@ const login = async () => {
   loggingIn.value = true;
   loginError.value = '';
   try {
-    // Validate key client-side — the backend has no dedicated auth endpoint.
-    // The X-Admin-Key header is injected automatically for all write operations.
-    const envKey = import.meta.env.VITE_ADMIN_KEY;
     if (!keyInput.value.trim()) {
       loginError.value = 'Please enter the admin key.';
       return;
     }
+
+    const envKey = import.meta.env.VITE_ADMIN_KEY;
     if (envKey && keyInput.value !== envKey) {
       loginError.value = 'Wrong key — try again.';
       return;
     }
 
-    // Key accepted — store and load data
+    // Authenticate with backend /api/auth/login using static email + backend seed password
+    const res = await apiClient.post('/auth/login', {
+      email: 'admin@example.com',
+      password: 'password',
+    });
+
+    const token = res.data?.data?.token ?? res.data?.token;
+    if (!token) {
+      throw new Error('No authentication token returned from server.');
+    }
+
+    // Key and token accepted — store and load data
     sessionStorage.setItem('admin_key', keyInput.value);
+    sessionStorage.setItem('admin_token', token);
     authed.value = true;
     loadProjects();
-    // CV endpoint not yet available on this backend
+    await loadCvs();
   } catch (err) {
-    loginError.value = 'An unexpected error occurred.';
+    console.error('Login failed:', err);
+    loginError.value = err.response?.data?.message || err.message || 'Invalid key.';
   } finally {
     loggingIn.value = false;
   }
 };
 
-const savedKey = sessionStorage.getItem('admin_key');
-if (savedKey) {
+const savedKey   = sessionStorage.getItem('admin_key');
+const savedToken = sessionStorage.getItem('admin_token');
+if (savedKey && savedToken) {
   keyInput.value = savedKey;
   authed.value = true;
 }
@@ -653,9 +665,16 @@ const loadProjects = async () => {
   }
 };
 
-const loadCvs = () => {
-  // localStorage-backed — synchronous, no backend needed.
-  cvs.value = getCvs();
+const loadCvs = async () => {
+  // localStorage + IndexedDB backed — asynchronous, no backend needed.
+  try {
+    loadingCvsList.value = true;
+    cvs.value = await getCvs();
+  } catch (err) {
+    console.error('Failed to load CVs:', err);
+  } finally {
+    loadingCvsList.value = false;
+  }
 };
 
 onMounted(() => {
@@ -833,6 +852,36 @@ const submitForm = async () => {
       });
     };
 
+    // Compress an existing base64 string directly
+    const compressBase64Image = (src, maxW = 1200, maxH = 900, quality = 0.72, targetBytes = 300_000) => {
+      const doCompress = (imgSrc, w, h, q) => new Promise((resolve) => {
+        const img = new Image();
+        img.src = imgSrc;
+        img.onload = () => {
+          let width = img.width;
+          let height = img.height;
+          const ratio = Math.min(w / width, h / height, 1);
+          width  = Math.round(width  * ratio);
+          height = Math.round(height * ratio);
+          const canvas = document.createElement('canvas');
+          canvas.width  = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          resolve(canvas.toDataURL('image/jpeg', q));
+        };
+        img.onerror = () => resolve(null);
+      });
+
+      return new Promise(async (resolve) => {
+        let result = await doCompress(src, maxW, maxH, quality);
+        if (result && result.length > targetBytes) {
+          result = await doCompress(src, maxW, maxH, quality * 0.5);
+        }
+        resolve(result);
+      });
+    };
+
     const readAsBase64 = (file) => {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -841,6 +890,24 @@ const submitForm = async () => {
         reader.readAsDataURL(file);
       });
     };
+
+    // Compress existing base64 images if they exceed size limit to prevent server crash
+    const processedExistingImages = [];
+    if (form.existingImages && form.existingImages.length > 0) {
+      for (const img of form.existingImages) {
+        if (img && img.startsWith('data:image/') && img.length > 200_000) {
+          try {
+            const compressed = await compressBase64Image(img, 1200, 900, 0.72, 300_000);
+            processedExistingImages.push(compressed || img);
+          } catch (fileErr) {
+            console.error('Failed to compress existing image:', fileErr);
+            processedExistingImages.push(img);
+          }
+        } else {
+          processedExistingImages.push(img);
+        }
+      }
+    }
 
     // Convert new uploaded image files to Base64 (with compression)
     // Gallery images: 1200×900 @ 0.72 quality, max 300 KB each
@@ -865,9 +932,15 @@ const submitForm = async () => {
       } catch (fileErr) {
         console.error('Failed to read thumbnail file:', fileErr);
       }
+    } else if (thumbnailBase64 && thumbnailBase64.startsWith('data:image/') && thumbnailBase64.length > 100_000) {
+      try {
+        thumbnailBase64 = await compressBase64Image(thumbnailBase64, 640, 480, 0.65, 120_000) || thumbnailBase64;
+      } catch (fileErr) {
+        console.error('Failed to compress existing thumbnail:', fileErr);
+      }
     }
 
-    const finalImages = [...form.existingImages, ...newImageBase64s];
+    const finalImages = [...processedExistingImages, ...newImageBase64s];
 
     // Pack all details into JSON inside the description column
     const packedDescription = JSON.stringify({
@@ -975,7 +1048,8 @@ const openEditCv = (cv) => {
     id:          cv.id,
     title:       cv.title,
     cv_file:     null,
-    filePreview: '',
+    file_url:    cv.is_local ? '' : cv.file_path,
+    filePreview: cv.is_local ? 'Stored local file' : '',
     sort_order:  cv.sort_order ?? 0,
   });
   showCvModal.value = true;
@@ -1006,34 +1080,28 @@ const submitCvForm = async () => {
 
   cvSaving.value = true;
   try {
-    // Resolve file: prefer uploaded file (convert to base64), fall back to URL
-    let filePath = cvForm.file_url?.trim() || '';
-    if (cvForm.cv_file) {
-      filePath = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload  = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(cvForm.cv_file);
-      });
-    }
+    const filePath = cvForm.file_url?.trim() || '';
+    const fileBlob = cvForm.cv_file || null;
 
     if (cvEditMode.value) {
-      updateCv(cvForm.id, {
+      await updateCv(cvForm.id, {
         title:      cvForm.title,
         sort_order: cvForm.sort_order,
-        ...(filePath ? { file_path: filePath } : {}),
+        file_path:  fileBlob ? '' : filePath,
+        file_blob:  fileBlob,
       });
     } else {
-      createCv({
+      await createCv({
         title:      cvForm.title,
-        file_path:  filePath,
+        file_path:  fileBlob ? '' : filePath,
+        file_blob:  fileBlob,
         sort_order: cvForm.sort_order,
       });
     }
 
     showToast(cvEditMode.value ? 'CV updated ✓' : 'CV created ✓', 'success');
     closeCvModal();
-    loadCvs();
+    await loadCvs();
   } catch (e) {
     cvFormError.value = e.message || 'Failed to save CV.';
   } finally {
@@ -1048,13 +1116,13 @@ const confirmDeleteCv = (cv) => {
   cvDeleteTarget.value = cv;
 };
 
-const deleteCv = () => {
+const deleteCv = async () => {
   cvSaving.value = true;
   try {
-    deleteCvById(cvDeleteTarget.value.id);
+    await deleteCvById(cvDeleteTarget.value.id);
     showToast('CV profile deleted', 'success');
     cvDeleteTarget.value = null;
-    loadCvs();
+    await loadCvs();
   } catch (e) {
     apiError.value = `Delete failed: ${e.message}`;
   } finally {

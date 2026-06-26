@@ -53,13 +53,20 @@ apiClient.interceptors.request.use(
     }
 
     const adminKey = sessionStorage.getItem('admin_key') || import.meta.env.VITE_ADMIN_KEY || '';
+    const adminToken = sessionStorage.getItem('admin_token') || '';
+
     if (adminKey) {
       // Custom header — accepted by the backend's admin middleware
       if (!config.headers['X-Admin-Key']) {
         config.headers['X-Admin-Key'] = adminKey;
       }
-      // Bearer token — needed if the backend uses Sanctum / Passport / static-key auth
-      if (!config.headers['Authorization']) {
+    }
+
+    // Bearer token — JWT token or static admin key fallback
+    if (!config.headers['Authorization']) {
+      if (adminToken) {
+        config.headers['Authorization'] = `Bearer ${adminToken}`;
+      } else if (adminKey) {
         config.headers['Authorization'] = `Bearer ${adminKey}`;
       }
     }
@@ -89,9 +96,14 @@ apiClient.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    // ── Log 401 clearly for debugging ──
+    // ── Log 401 clearly for debugging and clear session credentials ──
     if (response?.status === 401) {
       console.error(`[API Error] 401 Unauthorized — ${config?.baseURL ?? ''}${config?.url ?? ''}. Check X-Admin-Key.`);
+      sessionStorage.removeItem('admin_key');
+      sessionStorage.removeItem('admin_token');
+      if (typeof window !== 'undefined' && window.location.pathname.startsWith('/admin')) {
+        window.location.reload();
+      }
       return Promise.reject(error);
     }
 
@@ -153,10 +165,16 @@ export function getImageUrl(path, fallbackPath = '') {
   }
 
   // Already absolute, data URI, or blob URI
-  // Only allow data: URIs that are images (block data:text/html etc.)
   if (resolvedPath.startsWith('http://') || resolvedPath.startsWith('https://') || resolvedPath.startsWith('blob:')) {
     return resolvedPath;
   }
+
+  // Clean data URI from backslashes (e.g. data:image\/jpeg -> data:image/jpeg)
+  if (resolvedPath.startsWith('data:')) {
+    resolvedPath = resolvedPath.replace(/\\/g, '');
+  }
+
+  // Only allow data: URIs that are images (block data:text/html etc.)
   if (resolvedPath.startsWith('data:image/')) {
     return resolvedPath; // safe image data URI
   }

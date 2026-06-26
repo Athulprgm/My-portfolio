@@ -1,9 +1,9 @@
 <template>
   <nav
-    class="fixed top-0 left-0 w-full z-50 transition-all duration-500"
-    :class="scrolled ? 'h-14 bg-[#0A0A0A] border-b-2 border-[#2A2A2A]' : 'h-18 bg-transparent'"
+    class="fixed left-1/2 -translate-x-1/2 z-50 transition-all duration-500 rounded-full border border-white/10 backdrop-blur-xl shadow-2xl flex items-center"
+    :class="scrolled ? 'top-4 w-[90%] lg:w-max h-14 bg-black/60' : 'top-6 w-[95%] lg:w-max h-16 bg-black/30'"
   >
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-full flex justify-between items-center">
+    <div class="w-full lg:w-auto px-5 lg:px-8 h-full flex justify-between items-center lg:gap-16">
 
       <!-- Logo -->
       <a
@@ -21,10 +21,10 @@
         <li v-for="item in navItems" :key="item.id">
           <a
             :href="`#${item.id}`"
-            class="relative px-4 py-2 font-mono text-[11px] uppercase tracking-widest transition-all duration-200 rounded-none flex items-center gap-1.5 border border-transparent"
+            class="relative px-4 py-2 font-mono text-[11px] uppercase tracking-widest transition-all duration-300 rounded-full flex items-center gap-1.5 border border-transparent"
             :class="activeSection === item.id
-              ? 'text-white border-white bg-white/10'
-              : 'text-[#A1A1AA] hover:text-white hover:border-[#2A2A2A] hover:bg-[#121212]'"
+              ? 'text-white border-white/20 bg-white/10 shadow-[0_0_10px_rgba(255,255,255,0.1)]'
+              : 'text-[#A1A1AA] hover:text-white hover:bg-white/5'"
             @click.prevent="scrollToSection(item.id)"
           >
             <span
@@ -39,7 +39,7 @@
         <li class="ml-4">
           <button
             @click="openCvModal"
-            class="flex items-center gap-2 px-4 py-2 bg-[#121212] text-white hover:bg-[#2A2A2A] border-b-4 border-r-4 border-[#2A2A2A] hover:border-white active:border-b-0 active:border-r-0 active:translate-y-1 active:translate-x-1 font-mono text-[10px] tracking-wider transition-all cursor-pointer rounded-none uppercase font-black"
+            class="flex items-center gap-2 px-5 py-2.5 bg-white/10 text-white hover:bg-white/20 border border-white/20 hover:border-white/40 active:scale-95 font-mono text-[10px] tracking-wider transition-all cursor-pointer rounded-full uppercase font-black backdrop-blur-sm"
           >
             <i class="fa-solid fa-cloud-arrow-down"></i>
             RESUME
@@ -49,7 +49,7 @@
 
       <!-- Mobile toggle -->
       <button
-        class="md:hidden text-[#A1A1AA] hover:text-white text-xl cursor-pointer bg-[#121212] border border-[#2A2A2A] w-10 h-10 rounded-none flex items-center justify-center transition-all hover:border-white"
+        class="md:hidden text-[#A1A1AA] hover:text-white text-xl cursor-pointer bg-white/5 border border-white/10 w-10 h-10 rounded-full flex items-center justify-center transition-all hover:bg-white/10 active:scale-95"
         @click="menuOpen = !menuOpen"
       >
         <i class="fa-solid transition-all duration-300" :class="menuOpen ? 'fa-xmark' : 'fa-bars'"></i>
@@ -60,24 +60,24 @@
     <Transition name="menu-slide">
       <div
         v-if="menuOpen"
-        class="md:hidden fixed left-0 w-full bg-[#0A0A0A] border-b-2 border-[#2A2A2A] flex flex-col py-6 px-6 gap-2 transition-all duration-500"
-        :class="scrolled ? 'top-14' : 'top-18'"
+        class="md:hidden fixed left-1/2 -translate-x-1/2 w-[90%] max-w-sm bg-black/80 backdrop-blur-xl border border-white/10 flex flex-col py-6 px-6 gap-3 transition-all duration-500 rounded-3xl shadow-2xl z-40"
+        :class="scrolled ? 'top-24' : 'top-28'"
       >
         <a
           v-for="item in navItems"
           :key="item.id"
           :href="`#${item.id}`"
-          class="font-mono text-[10px] py-4 px-4 rounded-none transition-all duration-200 border"
+          class="font-mono text-[10px] py-4 px-5 rounded-2xl transition-all duration-300 border"
           :class="activeSection === item.id
-            ? 'text-white border-white bg-white/10'
-            : 'text-[#A1A1AA] border-transparent hover:text-white hover:border-[#2A2A2A] hover:bg-[#121212]'"
+            ? 'text-white border-white/20 bg-white/10 shadow-[0_0_15px_rgba(255,255,255,0.1)]'
+            : 'text-[#A1A1AA] border-transparent hover:text-white hover:bg-white/5'"
           @click.prevent="scrollToSection(item.id); menuOpen = false"
         >
           <span class="text-white mr-2">></span>{{ item.label }}
         </a>
         <button
           @click="openCvModal"
-          class="mt-4 flex items-center justify-center gap-2 py-4 px-4 bg-[#121212] text-white hover:bg-[#2A2A2A] border-b-4 border-r-4 border-[#2A2A2A] hover:border-white active:border-b-0 active:border-r-0 active:translate-y-1 active:translate-x-1 font-mono text-[10px] font-black uppercase transition-all cursor-pointer rounded-none"
+          class="mt-2 flex items-center justify-center gap-2 py-4 px-4 bg-white/10 text-white hover:bg-white/20 border border-white/20 hover:border-white/40 active:scale-95 font-mono text-[10px] font-black uppercase transition-all cursor-pointer rounded-2xl backdrop-blur-md"
         >
           <i class="fa-solid fa-cloud-arrow-down"></i> RESUME
         </button>
@@ -198,16 +198,18 @@ const navItems = [
   { id: 'contact', label: 'Contact' },
 ];
 
-const openCvModal = () => {
+const openCvModal = async () => {
   showCvModal.value = true;
   menuOpen.value    = false;
-  loadingCvs.value  = false;
+  loadingCvs.value  = true;
   cvsError.value    = null;
   try {
-    cvsList.value = getCvs(); // localStorage-backed, synchronous
+    cvsList.value = await getCvs();
   } catch (e) {
     console.error('Failed to load CVs:', e);
     cvsError.value = 'Failed to load CVs. Please try again.';
+  } finally {
+    loadingCvs.value = false;
   }
 };
 

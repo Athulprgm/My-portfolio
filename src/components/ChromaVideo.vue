@@ -118,8 +118,7 @@ const startRendering = () => {
         const w = canvas.width * z;
         const h = canvas.height * z;
         const x = (canvas.width - w) / 2;
-        const bottomGap = canvas.height * 0.06;
-        const y = (canvas.height - h) - bottomGap;
+        const y = (canvas.height - h) / 2;
         ctx.drawImage(video, x, y, w, h);
       } else {
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);

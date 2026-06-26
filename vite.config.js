@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => {
         options = {};
       }
       if (hostname === 'api.athul.online') {
-        const addr = '147.79.69.149';
+        const addr = '147.79.69.124';
         const family = 4;
         if (options.all) {
           callback(null, [{ address: addr, family }]);
