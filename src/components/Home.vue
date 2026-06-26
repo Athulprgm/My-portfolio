@@ -48,8 +48,6 @@
                   :zoom="1.25"
                   canvasClass="w-full h-full object-cover filter drop-shadow-[0_0_20px_rgba(255,255,255,0.15)] mix-blend-screen"
                 />
-                <!-- Spider-Man BGM -->
-                <audio ref="bgmAudioRef" src="/New folder/spiderman_3_simbionte.mp3" loop preload="auto"></audio>
               </div>
 
               <!-- DETAILS PANEL (slides over video) -->
@@ -106,7 +104,7 @@
               class="flex-1 py-2.5 rounded shadow-[0_4px_6px_rgba(0,0,0,0.6),inset_0_2px_4px_rgba(255,255,255,0.2)] font-mono text-[9px] font-bold uppercase tracking-[0.15em] border-t border-purple-400/50 transition-all duration-150 flex items-center justify-center gap-1.5"
               :class="showDetails
                 ? 'bg-gradient-to-b from-purple-900/40 to-purple-900/20 text-purple-700/50 shadow-none translate-y-1 border-t-0 cursor-not-allowed'
-                : 'bg-gradient-to-b from-purple-700/80 to-purple-900/80 text-purple-100 hover:from-purple-600/80 hover:to-purple-800/80 active:translate-y-1 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:border-t-0'"
+                : 'bg-gradient-to-b from-purple-700/80 to-purple-900/80 text-purple-100 active:translate-y-1 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:border-t-0'"
             >
               <i class="fa-solid fa-id-card text-[8px]"></i> DETAILS
             </button>
@@ -117,7 +115,7 @@
               class="w-10 h-10 rounded-full shadow-[0_4px_6px_rgba(0,0,0,0.6),inset_0_2px_4px_rgba(255,255,255,0.2)] border-t transition-all duration-150 flex items-center justify-center shrink-0"
               :class="soundEnabled
                 ? 'bg-gradient-to-b from-emerald-600/80 to-emerald-800/80 border-emerald-400/50 text-emerald-100 active:translate-y-1 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:border-t-0 shadow-[0_0_15px_rgba(16,185,129,0.4)]'
-                : 'bg-gradient-to-b from-gray-700/80 to-gray-900/80 border-gray-400/50 text-gray-400 hover:from-gray-600/80 hover:to-gray-800/80 active:translate-y-1 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:border-t-0'"
+                : 'bg-gradient-to-b from-gray-700/80 to-gray-900/80 border-gray-400/50 text-gray-400 active:translate-y-1 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:border-t-0'"
               :title="soundEnabled ? 'Sound ON' : 'Sound OFF'"
             >
               <i class="fa-solid" :class="soundEnabled ? 'fa-volume-high' : 'fa-volume-xmark'"></i>
@@ -130,18 +128,25 @@
               class="flex-1 py-2.5 rounded shadow-[0_4px_6px_rgba(0,0,0,0.6),inset_0_2px_4px_rgba(255,255,255,0.2)] font-mono text-[9px] font-bold uppercase tracking-[0.15em] border-t transition-all duration-150 flex items-center justify-center gap-1.5"
               :class="!showDetails
                 ? 'bg-gradient-to-b from-gray-800/40 to-gray-900/20 text-gray-600/50 border-gray-700/20 shadow-none translate-y-1 cursor-not-allowed border-t-0'
-                : 'bg-gradient-to-b from-gray-600/80 to-gray-800/80 border-gray-400/50 text-gray-100 hover:from-gray-500/80 hover:to-gray-700/80 active:translate-y-1 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:border-t-0'"
+                : 'bg-gradient-to-b from-gray-600/80 to-gray-800/80 border-gray-400/50 text-gray-100 active:translate-y-1 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:border-t-0'"
             >
               <i class="fa-solid fa-rotate-left text-[8px]"></i> BACK
             </button>
           </div>
 
-          <!-- Speaker Grills (decorative only) -->
-          <div class="flex justify-end gap-1.5 px-4 pb-2 opacity-40">
-            <div class="w-1 h-1 rounded-full bg-purple-400"></div>
-            <div class="w-1 h-1 rounded-full bg-purple-400"></div>
-            <div class="w-1 h-1 rounded-full bg-purple-400"></div>
-            <div class="w-1 h-1 rounded-full bg-purple-400"></div>
+          <!-- Social & Contact Links Row -->
+          <div class="flex justify-center items-center gap-3 px-3 pb-4 pt-1">
+            <a
+              v-for="link in socialLinks"
+              :key="link.icon"
+              :href="link.url"
+              target="_blank"
+              class="w-9 h-9 rounded-full shadow-[0_4px_6px_rgba(0,0,0,0.6),inset_0_2px_4px_rgba(255,255,255,0.15)] bg-gradient-to-b from-gray-800 to-gray-900 border-t border-gray-600 flex items-center justify-center active:translate-y-1 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:border-t-0 transition-all duration-150"
+              :class="link.colorClass"
+              :title="link.name"
+            >
+              <i :class="link.icon" class="text-[14px] drop-shadow-md transition-all duration-150"></i>
+            </a>
           </div>
         </div>
       </div>
@@ -231,22 +236,18 @@ const profileRef    = ref(null);
 const containerRef  = ref(null);
 const terminalBodyRef = ref(null);
 const canvasRef     = ref(null);
-const bgmAudioRef   = ref(null);
 const showDetails   = ref(false);
 const screenGlitch  = ref(false);
 const soundEnabled  = ref(false);
 
-// Automatically handle background music when sound/screen toggles
-watch([soundEnabled, showDetails], ([isSoundOn, isDetailsOpen]) => {
-  if (bgmAudioRef.value) {
-    if (isSoundOn && !isDetailsOpen) {
-      bgmAudioRef.value.volume = 0.15; // Very subtle, non-disturbing background volume
-      bgmAudioRef.value.play().catch(() => console.warn('BGM play blocked'));
-    } else {
-      bgmAudioRef.value.pause();
-    }
-  }
-});
+const socialLinks = [
+  { name: 'Instagram', icon: 'fa-brands fa-instagram', url: 'https://instagram.com/athul.prgm', colorClass: 'text-pink-500' },
+  { name: 'LinkedIn',  icon: 'fa-brands fa-linkedin-in', url: 'https://linkedin.com/in/athulkrishnak', colorClass: 'text-blue-500' },
+  { name: 'Call',      icon: 'fa-solid fa-phone',      url: 'tel:+918590595077', colorClass: 'text-green-400' },
+  { name: 'WhatsApp',  icon: 'fa-brands fa-whatsapp',  url: 'https://wa.me/918590595077', colorClass: 'text-green-500' },
+  { name: 'GitHub',    icon: 'fa-brands fa-github',    url: 'https://github.com/Athulprgm', colorClass: 'text-gray-100' },
+  { name: 'Gmail',     icon: 'fa-solid fa-envelope',   url: 'mailto:athul@trawbit.com', colorClass: 'text-red-500' },
+];
 
 const profileDetails = [
   { label: 'NAME',        value: 'Athul Krishna K'       },
