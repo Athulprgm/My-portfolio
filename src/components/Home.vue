@@ -259,11 +259,28 @@ const profileDetails = [
   { label: 'EMAIL',       value: 'athul@trawbit.com'      },
 ];
 
+let currentAudio = null;
+
 const toggleSound = () => {
   soundEnabled.value = !soundEnabled.value;
+  
+  if (!soundEnabled.value) {
+    // Instantly stop playing audio/voice if turned off
+    if (currentAudio) {
+      currentAudio.pause();
+      currentAudio.currentTime = 0;
+      currentAudio = null;
+    }
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+  } else {
+    // If turned on while details are already visible, start speaking
+    if (showDetails.value) {
+      speakDetails();
+    }
+  }
 };
-
-let currentAudio = null;
 
 const speakDetails = async () => {
   if (!soundEnabled.value) return;
