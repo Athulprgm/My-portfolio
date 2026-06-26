@@ -20,15 +20,15 @@
       <!-- ========== LEFT: 3D Profile Card Widget (ID Badge Style) ========== -->
       <div class="w-full flex justify-center lg:justify-start">
         <div 
-          class="w-full max-w-[345px] rounded-[2rem] border-2 border-purple-400/30 bg-purple-900/40 backdrop-blur-2xl shadow-[inset_0_0_40px_rgba(168,85,247,0.3),0_0_50px_rgba(0,0,0,0.8)] relative font-mono p-3 flex flex-col gap-3"
+          class="w-full max-w-[345px] rounded-[2rem] border-2 border-[#2A2A2A] bg-[#0A0A0A]/80 backdrop-blur-2xl shadow-[inset_0_0_40px_rgba(255,255,255,0.03),0_0_50px_rgba(0,0,0,0.8)] relative font-mono p-3 flex flex-col gap-3"
           ref="profileRef"
         >
           <!-- Top Shoulder Buttons Visuals -->
-          <div class="absolute -top-1 left-6 w-12 h-2 bg-purple-800/80 rounded-t-lg border-t border-purple-400/50"></div>
-          <div class="absolute -top-1 right-6 w-12 h-2 bg-purple-800/80 rounded-t-lg border-t border-purple-400/50"></div>
+          <div class="absolute -top-1 left-6 w-12 h-2 bg-[#1A1A1A] rounded-t-lg border-t border-[#333]"></div>
+          <div class="absolute -top-1 right-6 w-12 h-2 bg-[#1A1A1A] rounded-t-lg border-t border-[#333]"></div>
 
           <!-- Screen Area Bezel -->
-          <div class="bg-black p-3 rounded-[1.25rem] border-b-2 border-r-2 border-purple-900/50 shadow-[inset_0_10px_30px_rgba(0,0,0,1)]">
+          <div class="bg-black p-3 rounded-[1.25rem] border-b-2 border-r-2 border-[#1A1A1A] shadow-[inset_0_10px_30px_rgba(0,0,0,1)]">
             
             <!-- Dark Holographic Screen -->
             <div
@@ -59,7 +59,7 @@
                   </div>
                   <div class="flex flex-col gap-1.5">
                     <div v-for="item in profileDetails" :key="item.label" class="flex justify-between items-center">
-                      <span class="text-[8px] text-purple-400 uppercase tracking-widest font-bold">{{ item.label }}</span>
+                      <span class="text-[8px] text-[#A1A1AA] uppercase tracking-widest font-bold">{{ item.label }}</span>
                       <span class="text-[8px] text-emerald-300 font-bold tracking-wide">{{ item.value }}</span>
                     </div>
                   </div>
@@ -74,10 +74,10 @@
           </div>
 
           <!-- Outer Terminal Data Dashboard -->
-          <div class="flex flex-col bg-black/40 rounded-xl border border-purple-500/20 p-2.5 shadow-inner relative overflow-hidden mt-1">
+          <div class="flex flex-col bg-black/40 rounded-xl border border-[#2A2A2A] p-2.5 shadow-inner relative overflow-hidden mt-1">
             <div class="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:10px_10px] pointer-events-none"></div>
             
-            <div class="flex items-center justify-end mb-1.5 border-b border-purple-500/20 pb-1.5 relative z-10">
+            <div class="flex items-center justify-end mb-1.5 border-b border-[#2A2A2A] pb-1.5 relative z-10">
               <div class="flex gap-1">
                 <div class="w-1.5 h-2 bg-emerald-500 rounded-sm"></div>
                 <div class="w-1.5 h-2 bg-emerald-500 rounded-sm"></div>
@@ -85,12 +85,12 @@
               </div>
             </div>
             
-            <div class="relative z-10 flex items-center justify-between gap-2">
-              <h2 class="text-[7px] font-black text-white tracking-tight whitespace-nowrap leading-tight font-sans uppercase">Athul Krishna K</h2>
-              <div class="flex items-center gap-2 shrink-0">
+            <div class="relative z-10 flex flex-col items-center justify-center gap-1.5 mt-1">
+              <h2 class="text-[10px] transform scale-[0.7] origin-center font-black text-white tracking-tight whitespace-nowrap leading-tight font-sans uppercase">Athul Krishna K</h2>
+              <div class="flex items-center justify-center gap-2 shrink-0">
                 <p class="text-[7px] text-[#A1A1AA] uppercase tracking-widest font-mono font-bold whitespace-nowrap">ID: TT-0003</p>
-                <span class="text-purple-500/40">|</span>
-                <p class="text-[7px] text-indigo-400 uppercase tracking-widest font-mono font-black whitespace-nowrap">FULL-STACK</p>
+                <span class="text-[#333]">|</span>
+                <p class="text-[7px] text-indigo-400 uppercase tracking-widest font-mono font-black whitespace-nowrap">AI-AUGMENTED FULL-STACK ENGINEER</p>
               </div>
             </div>
           </div>
@@ -101,10 +101,10 @@
             <button
               @click="showDetailsPanel"
               :disabled="showDetails"
-              class="flex-1 py-2.5 rounded shadow-[0_4px_6px_rgba(0,0,0,0.6),inset_0_2px_4px_rgba(255,255,255,0.2)] font-mono text-[9px] font-bold uppercase tracking-[0.15em] border-t border-purple-400/50 transition-all duration-150 flex items-center justify-center gap-1.5"
+              class="flex-1 py-2.5 rounded shadow-[0_4px_6px_rgba(0,0,0,0.6),inset_0_2px_4px_rgba(255,255,255,0.2)] font-mono text-[9px] font-bold uppercase tracking-[0.15em] border-t border-[#333] transition-all duration-150 flex items-center justify-center gap-1.5"
               :class="showDetails
-                ? 'bg-gradient-to-b from-purple-900/40 to-purple-900/20 text-purple-700/50 shadow-none translate-y-1 border-t-0 cursor-not-allowed'
-                : 'bg-gradient-to-b from-purple-700/80 to-purple-900/80 text-purple-100 active:translate-y-1 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:border-t-0'"
+                ? 'bg-gradient-to-b from-[#111] to-[#0A0A0A] text-[#555] shadow-none translate-y-1 border-t-0 cursor-not-allowed'
+                : 'bg-gradient-to-b from-[#222] to-[#111] text-[#A1A1AA] active:translate-y-1 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:border-t-0'"
             >
               <i class="fa-solid fa-id-card text-[8px]"></i> DETAILS
             </button>
@@ -115,7 +115,7 @@
               class="w-10 h-10 rounded-full shadow-[0_4px_6px_rgba(0,0,0,0.6),inset_0_2px_4px_rgba(255,255,255,0.2)] border-t transition-all duration-150 flex items-center justify-center shrink-0"
               :class="soundEnabled
                 ? 'bg-gradient-to-b from-emerald-600/80 to-emerald-800/80 border-emerald-400/50 text-emerald-100 active:translate-y-1 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:border-t-0 shadow-[0_0_15px_rgba(16,185,129,0.4)]'
-                : 'bg-gradient-to-b from-gray-700/80 to-gray-900/80 border-gray-400/50 text-gray-400 active:translate-y-1 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:border-t-0'"
+                : 'bg-gradient-to-b from-[#222] to-[#111] border-[#333] text-[#A1A1AA] active:translate-y-1 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:border-t-0'"
               :title="soundEnabled ? 'Sound ON' : 'Sound OFF'"
             >
               <i class="fa-solid" :class="soundEnabled ? 'fa-volume-high' : 'fa-volume-xmark'"></i>
@@ -127,8 +127,8 @@
               :disabled="!showDetails"
               class="flex-1 py-2.5 rounded shadow-[0_4px_6px_rgba(0,0,0,0.6),inset_0_2px_4px_rgba(255,255,255,0.2)] font-mono text-[9px] font-bold uppercase tracking-[0.15em] border-t transition-all duration-150 flex items-center justify-center gap-1.5"
               :class="!showDetails
-                ? 'bg-gradient-to-b from-gray-800/40 to-gray-900/20 text-gray-600/50 border-gray-700/20 shadow-none translate-y-1 cursor-not-allowed border-t-0'
-                : 'bg-gradient-to-b from-gray-600/80 to-gray-800/80 border-gray-400/50 text-gray-100 active:translate-y-1 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:border-t-0'"
+                ? 'bg-gradient-to-b from-[#111] to-[#0A0A0A] text-[#555] shadow-none translate-y-1 cursor-not-allowed border-t-0'
+                : 'bg-gradient-to-b from-[#222] to-[#111] border-[#333] text-[#A1A1AA] active:translate-y-1 active:shadow-[inset_0_2px_4px_rgba(0,0,0,0.6)] active:border-t-0'"
             >
               <i class="fa-solid fa-rotate-left text-[8px]"></i> BACK
             </button>

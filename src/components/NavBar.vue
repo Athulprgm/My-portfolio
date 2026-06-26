@@ -11,9 +11,9 @@
         class="flex items-center gap-2 hover:opacity-80 transition-opacity duration-200 select-none"
         @click.prevent="scrollToSection('home')"
       >
-        <span class="font-mono text-base font-black text-white tracking-tight">athulkrishna</span>
-        <span class="font-mono text-base font-black text-[#A1A1AA] tracking-tight">.online</span>
-        <span class="w-2 h-4 bg-white animate-pulse"></span>
+        <span class="font-mono text-sm font-black text-white tracking-tight">athulkrishna</span>
+        <span class="font-mono text-sm font-black text-[#A1A1AA] tracking-tight">.online</span>
+        
       </a>
 
       <!-- Desktop nav -->
