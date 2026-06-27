@@ -44,20 +44,24 @@
         </div>
 
         <!-- Creative Heading -->
-        <h2 class="relative z-10 font-mono text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-t from-orange-600 via-orange-400 to-yellow-200 mb-6 tracking-widest uppercase drop-shadow-[0_0_15px_rgba(245,158,11,0.4)]">
-          Bonfire Lit
-        </h2>
+        <transition name="fade" mode="out-in">
+          <h2 :key="currentMessageIndex" class="relative z-10 font-mono text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-t from-orange-600 via-orange-400 to-yellow-200 mb-6 tracking-widest uppercase drop-shadow-[0_0_15px_rgba(245,158,11,0.4)]">
+            {{ maintenanceMessages[currentMessageIndex].title }}
+          </h2>
+        </transition>
 
         <!-- Thematic Text -->
-        <p class="relative z-10 font-sans text-[15px] md:text-base text-[#A1A1AA] max-w-lg mx-auto leading-relaxed mb-10">
-          You have discovered a resting place.<br><br>
-          The developer is currently forging new quests, upgrading weapons, and expanding the databank. Rest your cursor here for a moment.
-        </p>
+        <transition name="fade" mode="out-in">
+          <p :key="currentMessageIndex" class="relative z-10 font-sans text-[15px] md:text-base text-[#A1A1AA] max-w-lg mx-auto leading-relaxed mb-10" v-html="maintenanceMessages[currentMessageIndex].desc">
+          </p>
+        </transition>
 
         <!-- Status -->
         <div class="relative z-10 flex items-center gap-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-none px-6 py-2.5">
           <span class="w-2 h-2 rounded-none bg-orange-500 animate-ping"></span>
-          <span class="font-mono text-xs text-orange-400 uppercase tracking-widest">Forging in progress...</span>
+          <transition name="fade" mode="out-in">
+            <span :key="currentMessageIndex" class="font-mono text-xs text-orange-400 uppercase tracking-widest">{{ maintenanceMessages[currentMessageIndex].status }}</span>
+          </transition>
         </div>
       </div>
 
@@ -194,10 +198,36 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useProjects, getImageUrl } from '../composables/useProjects';
 
 const { projects, loading, error, fetchProjects } = useProjects();
+
+const maintenanceMessages = [
+  {
+    title: 'Bonfire Lit',
+    desc: 'You have discovered a resting place.<br><br>The developer is currently forging new quests, upgrading weapons, and expanding the databank. Rest your cursor here for a moment.',
+    status: 'Forging in progress...'
+  },
+  {
+    title: 'System Upgrading',
+    desc: 'New modules are being compiled into the mainframe.<br><br>Expect enhanced performance and expanded databanks shortly. Grab a health potion while you wait.',
+    status: 'Recompiling assets...'
+  },
+  {
+    title: 'Crafting Magic',
+    desc: 'The alchemy lab is currently active.<br><br>Mixing rare elements to create unique project showcases. Good things take time, traveler.',
+    status: 'Brewing code...'
+  },
+  {
+    title: 'Leveling Up',
+    desc: 'Earning XP and allocating skill points.<br><br>The portfolio is undergoing a massive level-up sequence. Prepare for the next phase.',
+    status: 'Allocating stats...'
+  }
+];
+
+const currentMessageIndex = ref(0);
+let messageInterval = null;
 
 const showAll = ref(false);
 
@@ -247,12 +277,28 @@ const handleImageError = (e) => {
 
 onMounted(() => {
   fetchProjects();
+  messageInterval = setInterval(() => {
+    currentMessageIndex.value = (currentMessageIndex.value + 1) % maintenanceMessages.length;
+  }, 5000);
+});
+
+onUnmounted(() => {
+  if (messageInterval) clearInterval(messageInterval);
 });
 </script>
 
 <style scoped>
 .group-hover\:scale-108:hover {
   transform: scale(1.08);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 @keyframes flicker {
