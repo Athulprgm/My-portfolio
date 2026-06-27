@@ -168,7 +168,7 @@ const expertiseSections = [
   {
     title: 'Data Vaults',
     icon: 'fa-solid fa-database',
-    skills: ['MongoDB', 'PostgreSQL', 'MySQL']
+    skills: ['MongoDB', 'PostgreSQL', 'MySQL', 'Firebase']
   },
   {
     title: 'Server Realms',
@@ -196,6 +196,7 @@ const technologies = [
   { name: 'Django', color: '#2BA977', icon: 'fa-solid fa-laptop-code' },
   { name: 'AWS', color: '#FF9900', icon: 'fa-brands fa-aws' },
   { name: 'React Native', color: '#61DAFB', icon: 'fa-brands fa-react' },
+  { name: 'Firebase', color: '#FFCA28', icon: 'fa-solid fa-fire' },
 ];
 
 let observer = null;
