@@ -21,15 +21,45 @@
       </div>
 
       <!-- Maintenance Mode -->
-      <div class="text-center py-20 bg-[#0A0A0A] border border-[#2A2A2A] rounded-none my-12 relative overflow-hidden group">
-        <div class="absolute inset-0 bg-gradient-to-b from-amber-500/5 to-transparent pointer-events-none"></div>
-        <i class="fa-solid fa-screwdriver-wrench text-amber-400 text-4xl mb-6 block animate-pulse"></i>
-        <h2 class="font-mono text-xl md:text-2xl font-bold text-white mb-3 tracking-widest uppercase">System Maintenance</h2>
-        <p class="font-mono text-sm text-[#A1A1AA] max-w-md mx-auto">
-          // The projects databank is currently undergoing upgrades.
-          <br><br>
-          <span class="text-emerald-400">STATUS:</span> Restoring save files...
-        </p>
+      <div class="relative w-full max-w-3xl mx-auto py-24 bg-[#050505] border border-[#2A2A2A] overflow-hidden group my-12">
+        <!-- Scanline animation -->
+        <div class="absolute inset-0 pointer-events-none overflow-hidden z-20">
+           <div class="w-full h-1 bg-amber-500/20 blur-[2px] maintenance-scanline"></div>
+        </div>
+        
+        <!-- Background Grid -->
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] z-0"></div>
+
+        <!-- Corner accents -->
+        <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-amber-500/40 z-10"></div>
+        <div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-amber-500/40 z-10"></div>
+        <div class="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-amber-500/40 z-10"></div>
+        <div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-amber-500/40 z-10"></div>
+
+        <div class="relative z-30 flex flex-col items-center justify-center px-4">
+          <!-- Animated Icon -->
+          <div class="relative mb-10 w-20 h-20 flex items-center justify-center">
+            <i class="fa-solid fa-server text-5xl text-amber-500/80"></i>
+            <i class="fa-solid fa-gear text-2xl text-amber-400 absolute -bottom-2 -right-2 animate-[spin_4s_linear_infinite]"></i>
+            <i class="fa-solid fa-gear text-sm text-amber-300 absolute bottom-4 -left-2 animate-[spin_3s_linear_infinite_reverse]"></i>
+          </div>
+
+          <!-- Glitch Text -->
+          <h2 class="font-mono text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500 mb-6 tracking-[0.2em] uppercase glitch-text text-center">
+            System Upgrading
+          </h2>
+
+          <div class="font-mono text-[11px] sm:text-xs text-[#A1A1AA] max-w-lg mx-auto space-y-3 mb-10 text-left w-full sm:w-auto">
+            <p class="opacity-80">> INITIALIZING MAINTENANCE PROTOCOLS...</p>
+            <p>> <span class="text-amber-400 font-bold">WARNING:</span> PROJECTS DATABANK OFFLINE</p>
+            <p class="flex items-center">> RECOMPILING SAVE FILES <span class="w-2 h-4 bg-emerald-400 inline-block ml-2 animate-pulse"></span></p>
+          </div>
+
+          <!-- Progress Bar -->
+          <div class="w-full max-w-xs sm:max-w-sm h-1.5 bg-[#121212] overflow-hidden rounded-none border border-[#2A2A2A]">
+            <div class="h-full bg-gradient-to-r from-amber-600 via-amber-400 to-amber-200 progress-bar-anim w-1/2"></div>
+          </div>
+        </div>
       </div>
 
       <div v-show="false">
@@ -224,5 +254,75 @@ onMounted(() => {
 <style scoped>
 .group-hover\:scale-108:hover {
   transform: scale(1.08);
+}
+
+.maintenance-scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: rgba(245, 158, 11, 0.4);
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+  animation: scan 3s linear infinite;
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(500px); opacity: 0; }
+}
+
+.progress-bar-anim {
+  animation: progress 2.5s ease-in-out infinite;
+}
+
+@keyframes progress {
+  0% { width: 0%; margin-left: 0%; }
+  50% { width: 100%; margin-left: 0%; }
+  100% { width: 0%; margin-left: 100%; }
+}
+
+.glitch-text {
+  position: relative;
+}
+.glitch-text::before, .glitch-text::after {
+  content: "SYSTEM UPGRADING";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  display: flex;
+  justify-content: center;
+}
+.glitch-text::before {
+  color: #0ff;
+  z-index: -1;
+  animation: glitch-anim 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
+}
+.glitch-text::after {
+  color: #f0f;
+  z-index: -2;
+  animation: glitch-anim-2 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
+}
+
+@keyframes glitch-anim {
+  0% { transform: translate(0) }
+  20% { transform: translate(-2px, 2px) }
+  40% { transform: translate(-2px, -2px) }
+  60% { transform: translate(2px, 2px) }
+  80% { transform: translate(2px, -2px) }
+  100% { transform: translate(0) }
+}
+@keyframes glitch-anim-2 {
+  0% { transform: translate(0) }
+  20% { transform: translate(2px, -2px) }
+  40% { transform: translate(2px, 2px) }
+  60% { transform: translate(-2px, -2px) }
+  80% { transform: translate(-2px, 2px) }
+  100% { transform: translate(0) }
 }
 </style>
