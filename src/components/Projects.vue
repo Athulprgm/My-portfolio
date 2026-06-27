@@ -20,43 +20,44 @@
         </p>
       </div>
 
-      <!-- Humanized Maintenance Mode -->
-      <div class="relative w-full max-w-3xl mx-auto py-20 px-6 sm:px-12 rounded-3xl overflow-hidden group my-12 border border-[#ffffff]/10 bg-white/[0.02] backdrop-blur-xl shadow-[0_0_50px_rgba(0,0,0,0.5)]">
+      <!-- Save Room Maintenance Mode -->
+      <div class="relative w-full max-w-3xl mx-auto py-24 bg-[#050505] border-2 border-[#2A2A2A] overflow-hidden group my-12 flex flex-col items-center justify-center text-center">
         
-        <!-- Soft floating animated background blobs -->
-        <div class="absolute top-0 left-0 w-72 h-72 bg-fuchsia-500/20 rounded-full mix-blend-screen filter blur-[90px] animate-float pointer-events-none"></div>
-        <div class="absolute bottom-0 right-0 w-72 h-72 bg-indigo-500/20 rounded-full mix-blend-screen filter blur-[90px] animate-float-reverse pointer-events-none"></div>
+        <!-- Subtle fire glow background -->
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 h-64 bg-orange-600/10 rounded-full blur-[80px] animate-pulse pointer-events-none"></div>
 
-        <div class="relative z-10 flex flex-col items-center justify-center text-center">
-          <!-- Friendly animated icon (like a magic wand or coffee cup) -->
-          <div class="mb-8 relative flex items-center justify-center w-24 h-24">
-            <div class="absolute inset-0 bg-white/20 blur-2xl rounded-full animate-pulse"></div>
-            <i class="fa-solid fa-mug-hot text-5xl text-white/90 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] animate-[bounce_3s_ease-in-out_infinite]"></i>
-            <!-- Little steam particles -->
-            <i class="fa-solid fa-droplet absolute top-2 right-2 text-sm text-white/60 animate-[ping_2s_ease-in-out_infinite]"></i>
-            <i class="fa-solid fa-droplet absolute -top-2 left-4 text-xs text-white/40 animate-[ping_2.5s_ease-in-out_infinite]"></i>
-          </div>
+        <!-- Animated Bonfire -->
+        <div class="relative w-32 h-32 mb-8 flex items-end justify-center pointer-events-none">
+          <!-- Logs -->
+          <div class="absolute bottom-2 w-16 h-4 bg-[#2c1c16] rounded-full border border-[#1a100c] rotate-12 z-10"></div>
+          <div class="absolute bottom-2 w-16 h-4 bg-[#3d271d] rounded-full border border-[#1a100c] -rotate-12 z-10"></div>
+          
+          <!-- Flames -->
+          <i class="fa-solid fa-fire-flame-curved text-6xl text-orange-500 absolute bottom-6 z-20 animate-flicker"></i>
+          <i class="fa-solid fa-fire text-5xl text-yellow-400 absolute bottom-6 z-30 animate-flicker-reverse"></i>
+          <i class="fa-solid fa-fire-flame-simple text-3xl text-white absolute bottom-8 z-40 animate-flicker-fast"></i>
+          
+          <!-- Floating Embers -->
+          <div class="absolute w-1.5 h-1.5 bg-orange-400 rounded-full animate-float-up left-[40%] bottom-8"></div>
+          <div class="absolute w-1 h-1 bg-yellow-400 rounded-full animate-float-up-delay-1 left-[60%] bottom-10"></div>
+          <div class="absolute w-1.5 h-1.5 bg-red-400 rounded-full animate-float-up-delay-2 left-[50%] bottom-12"></div>
+        </div>
 
-          <!-- Creative Heading -->
-          <h2 class="font-sans text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-white via-indigo-200 to-fuchsia-300 mb-6 tracking-tight drop-shadow-lg">
-            Crafting New Magic
-          </h2>
+        <!-- Creative Heading -->
+        <h2 class="relative z-10 font-mono text-3xl md:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-t from-orange-600 via-orange-400 to-yellow-200 mb-6 tracking-widest uppercase drop-shadow-[0_0_15px_rgba(245,158,11,0.4)]">
+          Bonfire Lit
+        </h2>
 
-          <!-- Friendly text -->
-          <p class="font-sans text-[15px] md:text-base text-gray-300/90 max-w-lg mx-auto leading-relaxed mb-10">
-            I'm currently polishing up my latest projects and adding some fresh ideas to the gallery. 
-            <br><br>
-            Good things take time! Grab a cup of coffee and check back in a little while to see what I've been working on. ✨
-          </p>
+        <!-- Thematic Text -->
+        <p class="relative z-10 font-sans text-[15px] md:text-base text-[#A1A1AA] max-w-lg mx-auto leading-relaxed mb-10">
+          You have discovered a resting place.<br><br>
+          The developer is currently forging new quests, upgrading weapons, and expanding the databank. Rest your cursor here for a moment.
+        </p>
 
-          <!-- Little pulse indicator -->
-          <div class="flex items-center gap-3 bg-white/5 rounded-full px-6 py-3 border border-white/10 shadow-inner">
-            <span class="relative flex h-3 w-3">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-3 w-3 bg-fuchsia-500"></span>
-            </span>
-            <span class="font-sans text-sm font-medium text-fuchsia-200/90 tracking-wide">Creativity in progress...</span>
-          </div>
+        <!-- Status -->
+        <div class="relative z-10 flex items-center gap-3 bg-[#0A0A0A] border border-[#2A2A2A] rounded-none px-6 py-2.5">
+          <span class="w-2 h-2 rounded-none bg-orange-500 animate-ping"></span>
+          <span class="font-mono text-xs text-orange-400 uppercase tracking-widest">Forging in progress...</span>
         </div>
       </div>
 
@@ -254,17 +255,33 @@ onMounted(() => {
   transform: scale(1.08);
 }
 
-@keyframes float {
-  0% { transform: translateY(0px) translateX(0px); }
-  50% { transform: translateY(-20px) translateX(10px); }
-  100% { transform: translateY(0px) translateX(0px); }
+@keyframes flicker {
+  0% { transform: scale(1) rotate(-2deg); opacity: 0.9; }
+  50% { transform: scale(1.05) rotate(2deg); opacity: 1; filter: brightness(1.2); }
+  100% { transform: scale(0.95) rotate(-1deg); opacity: 0.8; }
 }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+@keyframes float-up {
+  0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(-80px) scale(0) rotate(180deg); opacity: 0; }
 }
 
-.animate-float-reverse {
-  animation: float 8s ease-in-out infinite reverse;
+.animate-flicker {
+  animation: flicker 1.5s infinite alternate;
+}
+.animate-flicker-reverse {
+  animation: flicker 1.2s infinite alternate-reverse;
+}
+.animate-flicker-fast {
+  animation: flicker 0.9s infinite alternate;
+}
+.animate-float-up {
+  animation: float-up 2s linear infinite;
+}
+.animate-float-up-delay-1 {
+  animation: float-up 2.5s linear infinite 0.5s;
+}
+.animate-float-up-delay-2 {
+  animation: float-up 3s linear infinite 1s;
 }
 </style>
