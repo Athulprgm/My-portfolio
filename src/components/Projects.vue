@@ -20,44 +20,42 @@
         </p>
       </div>
 
-      <!-- Maintenance Mode -->
-      <div class="relative w-full max-w-3xl mx-auto py-24 bg-[#050505] border border-[#2A2A2A] overflow-hidden group my-12">
-        <!-- Scanline animation -->
-        <div class="absolute inset-0 pointer-events-none overflow-hidden z-20">
-           <div class="w-full h-1 bg-amber-500/20 blur-[2px] maintenance-scanline"></div>
-        </div>
+      <!-- Humanized Maintenance Mode -->
+      <div class="relative w-full max-w-3xl mx-auto py-20 px-6 sm:px-12 rounded-3xl overflow-hidden group my-12 border border-[#ffffff]/10 bg-white/[0.02] backdrop-blur-xl shadow-[0_0_50px_rgba(0,0,0,0.5)]">
         
-        <!-- Background Grid -->
-        <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] z-0"></div>
+        <!-- Soft floating animated background blobs -->
+        <div class="absolute top-0 left-0 w-72 h-72 bg-fuchsia-500/20 rounded-full mix-blend-screen filter blur-[90px] animate-float pointer-events-none"></div>
+        <div class="absolute bottom-0 right-0 w-72 h-72 bg-indigo-500/20 rounded-full mix-blend-screen filter blur-[90px] animate-float-reverse pointer-events-none"></div>
 
-        <!-- Corner accents -->
-        <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-amber-500/40 z-10"></div>
-        <div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-amber-500/40 z-10"></div>
-        <div class="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-amber-500/40 z-10"></div>
-        <div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-amber-500/40 z-10"></div>
-
-        <div class="relative z-30 flex flex-col items-center justify-center px-4">
-          <!-- Animated Icon -->
-          <div class="relative mb-10 w-20 h-20 flex items-center justify-center">
-            <i class="fa-solid fa-server text-5xl text-amber-500/80"></i>
-            <i class="fa-solid fa-gear text-2xl text-amber-400 absolute -bottom-2 -right-2 animate-[spin_4s_linear_infinite]"></i>
-            <i class="fa-solid fa-gear text-sm text-amber-300 absolute bottom-4 -left-2 animate-[spin_3s_linear_infinite_reverse]"></i>
+        <div class="relative z-10 flex flex-col items-center justify-center text-center">
+          <!-- Friendly animated icon (like a magic wand or coffee cup) -->
+          <div class="mb-8 relative flex items-center justify-center w-24 h-24">
+            <div class="absolute inset-0 bg-white/20 blur-2xl rounded-full animate-pulse"></div>
+            <i class="fa-solid fa-mug-hot text-5xl text-white/90 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] animate-[bounce_3s_ease-in-out_infinite]"></i>
+            <!-- Little steam particles -->
+            <i class="fa-solid fa-droplet absolute top-2 right-2 text-sm text-white/60 animate-[ping_2s_ease-in-out_infinite]"></i>
+            <i class="fa-solid fa-droplet absolute -top-2 left-4 text-xs text-white/40 animate-[ping_2.5s_ease-in-out_infinite]"></i>
           </div>
 
-          <!-- Glitch Text -->
-          <h2 class="font-mono text-2xl md:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-200 to-amber-500 mb-6 tracking-[0.2em] uppercase glitch-text text-center">
-            System Upgrading
+          <!-- Creative Heading -->
+          <h2 class="font-sans text-3xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-br from-white via-indigo-200 to-fuchsia-300 mb-6 tracking-tight drop-shadow-lg">
+            Crafting New Magic
           </h2>
 
-          <div class="font-mono text-[11px] sm:text-xs text-[#A1A1AA] max-w-lg mx-auto space-y-3 mb-10 text-left w-full sm:w-auto">
-            <p class="opacity-80">> INITIALIZING MAINTENANCE PROTOCOLS...</p>
-            <p>> <span class="text-amber-400 font-bold">WARNING:</span> PROJECTS DATABANK OFFLINE</p>
-            <p class="flex items-center">> RECOMPILING SAVE FILES <span class="w-2 h-4 bg-emerald-400 inline-block ml-2 animate-pulse"></span></p>
-          </div>
+          <!-- Friendly text -->
+          <p class="font-sans text-[15px] md:text-base text-gray-300/90 max-w-lg mx-auto leading-relaxed mb-10">
+            I'm currently polishing up my latest projects and adding some fresh ideas to the gallery. 
+            <br><br>
+            Good things take time! Grab a cup of coffee and check back in a little while to see what I've been working on. ✨
+          </p>
 
-          <!-- Progress Bar -->
-          <div class="w-full max-w-xs sm:max-w-sm h-1.5 bg-[#121212] overflow-hidden rounded-none border border-[#2A2A2A]">
-            <div class="h-full bg-gradient-to-r from-amber-600 via-amber-400 to-amber-200 progress-bar-anim w-1/2"></div>
+          <!-- Little pulse indicator -->
+          <div class="flex items-center gap-3 bg-white/5 rounded-full px-6 py-3 border border-white/10 shadow-inner">
+            <span class="relative flex h-3 w-3">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-3 w-3 bg-fuchsia-500"></span>
+            </span>
+            <span class="font-sans text-sm font-medium text-fuchsia-200/90 tracking-wide">Creativity in progress...</span>
           </div>
         </div>
       </div>
@@ -256,73 +254,17 @@ onMounted(() => {
   transform: scale(1.08);
 }
 
-.maintenance-scanline {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: rgba(245, 158, 11, 0.4);
-  box-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
-  animation: scan 3s linear infinite;
+@keyframes float {
+  0% { transform: translateY(0px) translateX(0px); }
+  50% { transform: translateY(-20px) translateX(10px); }
+  100% { transform: translateY(0px) translateX(0px); }
 }
 
-@keyframes scan {
-  0% { transform: translateY(-100%); opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { transform: translateY(500px); opacity: 0; }
+.animate-float {
+  animation: float 6s ease-in-out infinite;
 }
 
-.progress-bar-anim {
-  animation: progress 2.5s ease-in-out infinite;
-}
-
-@keyframes progress {
-  0% { width: 0%; margin-left: 0%; }
-  50% { width: 100%; margin-left: 0%; }
-  100% { width: 0%; margin-left: 100%; }
-}
-
-.glitch-text {
-  position: relative;
-}
-.glitch-text::before, .glitch-text::after {
-  content: "SYSTEM UPGRADING";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.8;
-  display: flex;
-  justify-content: center;
-}
-.glitch-text::before {
-  color: #0ff;
-  z-index: -1;
-  animation: glitch-anim 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both infinite;
-}
-.glitch-text::after {
-  color: #f0f;
-  z-index: -2;
-  animation: glitch-anim-2 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) reverse both infinite;
-}
-
-@keyframes glitch-anim {
-  0% { transform: translate(0) }
-  20% { transform: translate(-2px, 2px) }
-  40% { transform: translate(-2px, -2px) }
-  60% { transform: translate(2px, 2px) }
-  80% { transform: translate(2px, -2px) }
-  100% { transform: translate(0) }
-}
-@keyframes glitch-anim-2 {
-  0% { transform: translate(0) }
-  20% { transform: translate(2px, -2px) }
-  40% { transform: translate(2px, 2px) }
-  60% { transform: translate(-2px, -2px) }
-  80% { transform: translate(-2px, 2px) }
-  100% { transform: translate(0) }
+.animate-float-reverse {
+  animation: float 8s ease-in-out infinite reverse;
 }
 </style>
