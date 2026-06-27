@@ -20,8 +20,19 @@
         </p>
       </div>
 
-      <!-- Filter Bar Removed -->
+      <!-- Maintenance Mode -->
+      <div class="text-center py-20 bg-[#0A0A0A] border border-[#2A2A2A] rounded-none my-12 relative overflow-hidden group">
+        <div class="absolute inset-0 bg-gradient-to-b from-amber-500/5 to-transparent pointer-events-none"></div>
+        <i class="fa-solid fa-screwdriver-wrench text-amber-400 text-4xl mb-6 block animate-pulse"></i>
+        <h2 class="font-mono text-xl md:text-2xl font-bold text-white mb-3 tracking-widest uppercase">System Maintenance</h2>
+        <p class="font-mono text-sm text-[#A1A1AA] max-w-md mx-auto">
+          // The projects databank is currently undergoing upgrades.
+          <br><br>
+          <span class="text-emerald-400">STATUS:</span> Restoring save files...
+        </p>
+      </div>
 
+      <div v-show="false">
       <!-- Error state -->
       <div v-if="error" class="text-center py-16">
         <i class="fa-solid fa-triangle-exclamation text-amber-400 text-3xl mb-4 block"></i>
@@ -140,6 +151,7 @@
           {{ showAll ? 'Minimize Quests' : 'Load More Quests' }}
           <i class="fa-solid" :class="showAll ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
         </button>
+      </div>
       </div>
 
       <!-- Bottom note -->
