@@ -12,18 +12,15 @@ const getRealBackendRoot = () => {
     const base = rawEnvUrl.replace(/\/$/, '');
     return base.endsWith('/api') ? base.slice(0, -4) : base;
   }
-  return 'https://api.athul.online';
+  return 'https://portfolio-next-api-eight.vercel.app';
 };
 
 const realBackendRoot = getRealBackendRoot();
 
-// In DEV mode use a relative '/api' path so the Vite proxy tunnels the request
-// server-side — this avoids CORS preflight blocks on the X-Admin-Key header.
-// In production the full absolute URL is used directly.
+// Point directly to the live API backend root. CORS is configured on the backend
+// to allow direct access, avoiding local proxying in development.
 const getNormalizedApiUrl = () => {
-  if (!isProd) {
-    return '/api'; // proxied by vite.config.js → https://api.athul.online/api
-  }
+  // Always point directly to the live backend root
   return `${realBackendRoot}/api`;
 };
 
