@@ -185,7 +185,6 @@ button {
   cursor: pointer;
   border: none;
   outline: none;
-  background: none;
   font-family: var(--font-body);
 }
 

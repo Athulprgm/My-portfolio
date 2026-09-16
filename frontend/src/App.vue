@@ -1,9 +1,6 @@
 <template>
   <LoadingScreenWrapper>
     <div class="App">
-      <!-- Global Interaction Components -->
-      <CursorFollower />
-
       <!-- Animated Background Orbs -->
       <div class="animated-background">
         <div class="gradient-orb orb-1"></div>
@@ -76,7 +73,6 @@ import SpecialDayPopup      from './components/SpecialDayPopup.vue';
 import LoadingScreenWrapper from './components/LoadingScreenWrapper.vue';
 import ProjectDetail        from './components/ProjectDetail.vue';
 import AdminPanel           from './components/AdminPanel.vue';
-import CursorFollower       from './components/CursorFollower.vue';
 import ScrollProgress       from './components/ScrollProgress.vue';
 import { fetchProjectById } from './composables/useProjects';
 

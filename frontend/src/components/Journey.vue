@@ -10,13 +10,13 @@
       <div class="text-center mb-20 scroll-reveal" ref="headerRef">
         <div class="inline-flex items-center gap-2 border border-[#ffffff]/20 bg-green-950/20 rounded-none px-4 py-1.5 mb-5">
           <span class="w-1.5 h-1.5 bg-[#ffffff] rounded-none animate-pulse"></span>
-          <span class="font-mono text-[10.5px] text-[#ffffff] tracking-wide font-semibold uppercase">My Path</span>
+          <span class="font-mono text-[10.5px] text-[#ffffff] tracking-wide font-semibold uppercase">Career Milestones</span>
         </div>
         <h2 class="font-mono text-xl md:text-2xl lg:text-3xl font-black text-white mb-4 tracking-tight leading-loose">
-          The <span class="bg-gradient-to-r from-[#ffffff] via-neutral-300 to-neutral-500 bg-clip-text text-transparent">Journey</span>
+          Professional <span class="bg-gradient-to-r from-[#ffffff] via-neutral-300 to-neutral-500 bg-clip-text text-transparent">Trajectory</span>
         </h2>
         <p class="font-mono text-[11px] text-emerald-400/90 max-w-md mx-auto leading-relaxed font-semibold">
-          // Every milestone that shaped the builder
+          // Academic foundations, engineering specialization & leadership history
         </p>
       </div>
 
@@ -111,9 +111,9 @@ const hoveredItem = ref(null);
 const timeline = reactive([
   {
     year: '2021',
-    title: 'Science Education',
-    institution: 'KMVHSE Kodakkad, Kasaragod',
-    description: 'Completed Higher Secondary with a focus in Science, building a strong analytical foundation and discovering a passion for technology.',
+    title: 'Higher Secondary in Science',
+    institution: 'State Board Higher Secondary',
+    description: 'Completed Higher Secondary education focusing on Mathematics and Physical Sciences, building rigorous logical reasoning and analytical foundations.',
     icon: 'fa-solid fa-graduation-cap',
     color: '#4FC08D',
     status: 'Completed',
@@ -122,28 +122,28 @@ const timeline = reactive([
   {
     year: '2023',
     title: 'BSc Computer Science',
-    institution: 'IHRD CAS Cheemeni, Kasaragod',
-    description: 'Pursued a Bachelor of Science in Computer Science — deep-diving into algorithms, data structures, databases, and software engineering principles.',
+    institution: 'Kannur University Affiliate (IHRD)',
+    description: 'Earned a Bachelor of Science in Computer Science — mastering data structures, algorithms, relational databases, networking, and software engineering.',
     icon: 'fa-solid fa-university',
     color: '#00FFFF',
-    status: 'Completed',
+    status: 'Graduated',
     revealed: false,
   },
   {
     year: '2024',
-    title: 'Full Stack Development',
-    institution: 'Techmindz, Kochi, Kerala',
-    description: 'Intensive MERN stack training at one of Kerala\'s premier tech academies — shipping real-world projects and mastering modern development workflows.',
+    title: 'Full Stack Architecture Program',
+    institution: 'Enterprise Technology Accelerator',
+    description: 'Completed intensive full-stack engineering training — architecting production applications, scalable REST APIs, and modern frontend ecosystems.',
     icon: 'fa-solid fa-laptop-code',
     color: '#008F11',
     status: 'Certified',
     revealed: false,
   },
   {
-    year: '2025',
-    title: 'Co-Founder',
+    year: '2025 - PRESENT',
+    title: 'Co-Founder & Chief Architect',
     institution: 'Trawbit Technologies',
-    description: 'Co-founded Trawbit Technologies — building SaaS platforms, enterprise systems, and scalable digital products. Leading product, architecture, and engineering.',
+    description: 'Co-founded Trawbit Technologies — engineering scalable SaaS platforms, enterprise web backends, and cloud architectures for global clients.',
     icon: 'fa-solid fa-rocket',
     color: '#ffffff',
     status: 'Active',

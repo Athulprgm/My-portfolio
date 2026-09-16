@@ -1,7 +1,7 @@
 <template>
   <nav
-    class="fixed top-0 left-0 w-full z-50 transition-all duration-500"
-    :class="scrolled ? 'h-14 bg-[#0A0A0A] border-b-2 border-[#2A2A2A]' : 'h-18 bg-transparent'"
+    class="fixed top-0 left-0 w-full z-50 transition-all duration-300 backdrop-blur-md"
+    :class="scrolled ? 'h-14 bg-[#0A0A0A]/95 border-b-2 border-[#2A2A2A] shadow-md' : 'h-18 bg-[#0A0A0A]/85 border-b border-[#2A2A2A]/40'"
   >
     <div class="max-w-6xl mx-auto px-4 sm:px-6 h-full flex justify-between items-center">
 
@@ -97,11 +97,11 @@
         <!-- Header -->
         <div class="flex items-center justify-between mb-6 pb-4 border-b-2 border-[#2A2A2A] relative z-10">
           <div>
-            <h3 class="font-mono text-[10px] font-bold text-white flex items-center gap-2 uppercase">
-              <i class="fa-solid fa-file-pdf"></i>
-              SELECT CV FILE
+            <h3 class="font-mono text-[11px] font-bold text-white flex items-center gap-2 uppercase tracking-wider">
+              <i class="fa-solid fa-file-pdf text-emerald-400"></i>
+              RESUME & CV PROFILES
             </h3>
-            <p class="font-mono text-[8px] text-[#A1A1AA] mt-2">// choose profile.exe</p>
+            <p class="font-mono text-[9px] text-[#A1A1AA] mt-1">// select tailored resume format</p>
           </div>
           <button @click="showCvModal = false" class="text-[#A1A1AA] hover:text-white transition-colors cursor-pointer w-8 h-8 flex items-center justify-center border border-transparent hover:border-[#2A2A2A] rounded-none bg-[#121212]">
             <i class="fa-solid fa-times text-sm"></i>
@@ -113,23 +113,23 @@
           <!-- Loading State -->
           <div v-if="loadingCvs" class="flex flex-col items-center justify-center py-10 gap-3">
             <div class="w-8 h-8 border-4 border-[#2A2A2A] border-t-white rounded-none animate-spin"></div>
-            <span class="font-mono text-[8px] text-[#A1A1AA] uppercase animate-pulse">Loading_System...</span>
+            <span class="font-mono text-[9px] text-[#A1A1AA] uppercase">Loading CV profiles...</span>
           </div>
 
           <!-- Error State -->
           <div v-else-if="cvsError" class="text-center py-6 border border-[#2A2A2A] bg-[#121212] p-4">
-            <i class="fa-solid fa-triangle-exclamation text-white text-lg mb-2 block animate-pulse"></i>
-            <p class="font-mono text-[8px] text-[#A1A1AA] uppercase">SYSTEM_ERROR: {{ cvsError }}</p>
-            <button @click="openCvModal" class="mt-4 px-6 py-2 bg-[#121212] text-white font-black uppercase text-[8px] hover:bg-[#2A2A2A] hover:border-white transition-colors rounded-none border-b-2 border-r-2 border-[#2A2A2A] active:border-0 active:translate-y-0.5">
-              REBOOT
+            <i class="fa-solid fa-triangle-exclamation text-amber-400 text-lg mb-2 block"></i>
+            <p class="font-mono text-[9px] text-[#A1A1AA] uppercase">Failed to load CVs: {{ cvsError }}</p>
+            <button @click="openCvModal" class="mt-4 px-6 py-2 bg-[#121212] text-white font-black uppercase text-[9px] hover:bg-[#2A2A2A] hover:border-white transition-colors rounded-none border-b-2 border-r-2 border-[#2A2A2A] active:border-0 active:translate-y-0.5 cursor-pointer">
+              RETRY
             </button>
           </div>
 
           <!-- Empty State -->
           <div v-else-if="cvsList.length === 0" class="text-center py-8 border border-[#2A2A2A] bg-[#121212]">
             <i class="fa-solid fa-folder-open text-[#A1A1AA] text-xl mb-2 block"></i>
-            <p class="font-mono text-[9px] text-white uppercase">DIRECTORY_EMPTY</p>
-            <p class="font-mono text-[7px] text-[#A1A1AA] mt-2">Add profiles in admin.</p>
+            <p class="font-mono text-[10px] text-white uppercase">No CV Profiles Published</p>
+            <p class="font-mono text-[8px] text-[#A1A1AA] mt-1">Upload resumes in admin panel.</p>
           </div>
 
           <!-- CV List -->
@@ -197,9 +197,7 @@ const navItems = [
   { id: 'contact', label: 'Contact' },
 ];
 
-const openCvModal = async () => {
-  showCvModal.value = true;
-  menuOpen.value = false;
+const fetchCvs = async () => {
   if (cvsList.value.length === 0) {
     loadingCvs.value = true;
     cvsError.value = null;
@@ -213,6 +211,12 @@ const openCvModal = async () => {
       loadingCvs.value = false;
     }
   }
+};
+
+const openCvModal = async () => {
+  showCvModal.value = true;
+  menuOpen.value = false;
+  await fetchCvs();
 };
 
 const scrollToSection = (id) => {
@@ -233,7 +237,11 @@ const handleScroll = () => {
   }
 };
 
-onMounted(() => window.addEventListener('scroll', handleScroll));
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+  // Pre-load CVs in background
+  fetchCvs().catch(() => {});
+});
 onUnmounted(() => window.removeEventListener('scroll', handleScroll));
 </script>
 

@@ -10,14 +10,14 @@
       <!-- Section header -->
       <div class="text-center mb-16 scroll-reveal" ref="headerRef">
         <div class="inline-flex items-center gap-2 border border-[#ffffff]/20 bg-green-950/20 rounded-none px-4 py-1.5 mb-5">
-          <i class="fa-solid fa-gamepad text-[#ffffff] text-[10px]"></i>
-          <span class="font-mono text-[10.5px] text-[#ffffff] tracking-wide font-semibold uppercase">Character Screen</span>
+          <i class="fa-solid fa-user-tie text-[#ffffff] text-[10px]"></i>
+          <span class="font-mono text-[10.5px] text-[#ffffff] tracking-wide font-semibold uppercase">Profile & Philosophy</span>
         </div>
         <h1 class="font-mono text-xl md:text-2xl lg:text-3xl font-black text-white mb-4 tracking-tight leading-loose">
-          Player One +<br><span class="bg-gradient-to-r from-[#ffffff] to-neutral-500 bg-clip-text text-transparent">Skill Tree</span>
+          Engineering Leadership &<br><span class="bg-gradient-to-r from-[#ffffff] to-neutral-500 bg-clip-text text-transparent">Core Expertise</span>
         </h1>
         <p class="font-mono text-[11px] text-emerald-400/90 max-w-md mx-auto leading-relaxed font-semibold">
-          // Guild Leader at Trawbit Technologies focused on scalable architectures
+          // Co-Founder & Principal Full-Stack Architect delivering scalable digital products
         </p>
       </div>
 
@@ -27,10 +27,10 @@
         <!-- Bio text -->
         <div class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-none p-6 sm:p-8 flex flex-col justify-between gap-6 text-left hover:border-white transition-colors duration-400 h-full">
           <h3 class="font-mono text-xs font-semibold text-white tracking-wider flex items-center gap-2">
-            <span class="text-white font-bold">//</span> Character Lore
+            <span class="text-white font-bold">//</span> Executive Summary
           </h3>
-          <p class="font-sans text-[11px] leading-loose text-[#A1A1AA] flex-1">
-            Co-Founder & Full-Stack Engineer building scalable SaaS platforms, modern web architectures, and high-performance web and mobile applications. Passionate about creating digital products that blend exceptional user experiences with robust engineering.
+          <p class="font-sans text-[12px] leading-loose text-[#A1A1AA] flex-1">
+            Co-Founder and AI-Assisted Full-Stack Architect leveraging modern AI workflows alongside deep production mastery in <span class="text-white font-semibold">PHP & Laravel</span>, <span class="text-white font-semibold">React & Tailwind CSS</span>, <span class="text-white font-semibold">Flutter</span> for cross-platform mobile, and <span class="text-white font-semibold">SQL / Relational Databases</span> (with Firebase for cloud real-time data). Delivering high-impact digital platforms with rapid delivery velocity, architectural precision, and rock-solid scalability.
           </p>
           <div class="grid grid-cols-3 gap-3 mt-auto">
             <div v-for="stat in stats" :key="stat.label" class="py-4 px-2 border border-[#2A2A2A] rounded-none text-center hover:border-white hover:bg-[#2A2A2A] transition-all group relative overflow-hidden flex flex-col items-center justify-center">
@@ -45,7 +45,7 @@
         <div class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-none p-6 flex flex-col items-center justify-center hover:border-white transition-colors duration-400 group relative h-full">
           
           <!-- Hanging Pull Cord Switch -->
-          <div class="absolute top-0 right-6 flex flex-col items-center z-20 cursor-pointer" @click="toggleVideoColor" title="Toggle Color">
+          <div class="absolute top-0 right-6 flex flex-col items-center z-20 cursor-pointer" @click="toggleVideoColor" title="Toggle Visual Accent">
             <!-- The Cord -->
             <div 
               class="w-[2px] bg-[#A1A1AA] transition-all duration-300 origin-top hover:bg-white"
@@ -60,7 +60,7 @@
               <div class="w-2 h-[2px] bg-[#A1A1AA]" :class="videoColorOn ? 'bg-white' : ''"></div>
             </div>
             <!-- Status Text -->
-            <span class="font-mono text-[8px] mt-2 font-bold tracking-widest transition-colors duration-300" :class="videoColorOn ? 'text-white' : 'text-[#A1A1AA]'">RGB</span>
+            <span class="font-mono text-[8px] mt-2 font-bold tracking-widest transition-colors duration-300" :class="videoColorOn ? 'text-white' : 'text-[#A1A1AA]'">FX</span>
           </div>
 
           <!-- Corner decorations -->
@@ -81,48 +81,81 @@
         </div>
       </div>
 
-      <!-- Bento Grid: Expertise -->
-      <h2 class="font-mono text-xs tracking-[0.2em] font-extrabold text-[#ffffff] uppercase mb-8 flex items-center justify-center scroll-reveal" ref="expertiseTitleRef">
-        <span class="inline-block w-4 h-px bg-[#ffffff] mr-3"></span>
-        Unlocked Abilities
-        <span class="inline-block w-4 h-px bg-[#ffffff] ml-3"></span>
-      </h2>
+      <!-- Section Header: Core Expertise -->
+      <div class="text-center mb-16 scroll-reveal" ref="expertiseTitleRef">
+        <div class="inline-flex items-center gap-2 border border-[#ffffff]/20 bg-green-950/20 rounded-none px-4 py-1.5 mb-5">
+          <i class="fa-solid fa-microchip text-[#ffffff] text-[10px]"></i>
+          <span class="font-mono text-[10.5px] text-[#ffffff] tracking-wide font-semibold uppercase">Architectural Stack</span>
+        </div>
+        <h2 class="font-mono text-xl md:text-2xl lg:text-3xl font-black text-white mb-4 tracking-tight leading-loose">
+          Technical <span class="bg-gradient-to-r from-white to-neutral-500 bg-clip-text text-transparent">Capabilities</span>
+        </h2>
+        <p class="font-mono text-[11px] text-emerald-400/90 max-w-md mx-auto leading-relaxed font-semibold">
+          // Core production technologies & AI-assisted development strengths
+        </p>
+      </div>
       
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-16">
+      <!-- Grid: 6 Balanced Skill Domains -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
         <div
           v-for="(section, i) in expertiseSections"
           :key="section.title"
-          class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-none p-6 hover:border-[#ffffff]/20 hover:bg-[#121212] transition-all duration-400 scroll-reveal group"
+          class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-none p-6 hover:border-white hover:bg-[#121212] transition-all duration-300 scroll-reveal group relative flex flex-col justify-between overflow-hidden"
           :ref="el => { if(el) sectionRefs[i] = el }"
-          :style="{ transitionDelay: `${i * 0.1}s` }"
+          :style="{ transitionDelay: `${i * 0.08}s` }"
         >
-          <div class="flex items-center justify-between mb-6">
-            <h5 class="font-mono text-sm text-white font-bold">
-              {{ section.title }}
-            </h5>
-            <i :class="section.icon" class="text-[#ffffff]/50 group-hover:text-[#ffffff] transition-colors text-lg"></i>
+          <!-- Corner decorations -->
+          <div class="absolute top-0 left-0 w-2.5 h-2.5 border-l-2 border-t-2 border-[#A1A1AA]/60 group-hover:border-white transition-colors pointer-events-none"></div>
+          <div class="absolute bottom-0 right-0 w-2.5 h-2.5 border-r-2 border-b-2 border-[#A1A1AA]/60 group-hover:border-white transition-colors pointer-events-none"></div>
+
+          <!-- Header -->
+          <div>
+            <div class="flex items-start justify-between gap-3 mb-4">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-none bg-[#121212] border border-[#2A2A2A] group-hover:border-white flex items-center justify-center transition-colors">
+                  <i :class="section.icon" class="text-xs text-white"></i>
+                </div>
+                <div>
+                  <h5 class="font-mono text-xs sm:text-[13px] font-bold text-white tracking-wide group-hover:text-white transition-colors">
+                    {{ section.title }}
+                  </h5>
+                  <span class="font-mono text-[8.5px] text-[#A1A1AA] uppercase tracking-wider block mt-0.5 font-medium">
+                    {{ section.subtitle }}
+                  </span>
+                </div>
+              </div>
+              <span class="font-mono text-[9px] text-emerald-400 bg-emerald-950/40 border border-emerald-500/20 px-2 py-0.5 rounded-none font-semibold uppercase tracking-wider">
+                {{ section.code }}
+              </span>
+            </div>
+
+            <!-- Divider -->
+            <div class="w-full h-px bg-[#2A2A2A] group-hover:bg-white/20 transition-colors mb-4"></div>
           </div>
-          <div class="flex flex-wrap gap-2">
-            <div
+
+          <!-- Skills Chips -->
+          <div class="flex flex-wrap gap-2 pt-1">
+            <span
               v-for="skill in section.skills"
               :key="skill"
-              class="inline-flex items-center gap-2 px-3 py-1.5 rounded-none border border-[#2A2A2A] bg-[#2A2A2A] font-mono text-[11px] text-[#A1A1AA] cursor-default transition-all duration-250 hover:text-white hover:border-[#ffffff]/40 hover:bg-[#ffffff]/10 hover:shadow-[0_0_12px_rgba(255, 255, 255,0.15)]"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-none border border-[#2A2A2A] bg-[#121212] font-mono text-[11px] text-[#A1A1AA] cursor-default transition-all duration-200 hover:text-white hover:border-white hover:bg-[#1a1a1a]"
             >
+              <span class="text-white/40 font-bold text-[9px]">//</span>
               {{ skill }}
-            </div>
+            </span>
           </div>
         </div>
       </div>
 
       <!-- Scrolling tech marquee -->
       <div class="border border-[#2A2A2A] rounded-none p-6 bg-[#0A0A0A] mt-8 scroll-reveal" ref="marqueeRef">
-        <p class="font-mono text-[10px] text-[#A1A1AA] tracking-[0.2em] uppercase mb-4 font-semibold">// Complete Skill Inventory</p>
+        <p class="font-mono text-[10px] text-[#A1A1AA] tracking-[0.2em] uppercase mb-4 font-semibold">// Core Technology Inventory</p>
         <div class="flex overflow-hidden relative w-full [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
           <div class="flex gap-4 animate-marquee w-max hover:[animation-play-state:paused]">
             <div
               v-for="(tech, idx) in [...technologies, ...technologies]"
               :key="idx"
-              class="flex items-center gap-2 px-3.5 py-2 bg-[#2A2A2A] border border-[#2A2A2A] rounded-none text-[11px] font-mono text-[#A1A1AA] hover:text-white hover:border-[#2A2A2A] transition-all duration-200 cursor-default whitespace-nowrap"
+              class="flex items-center gap-2 px-3.5 py-2 bg-[#121212] border border-[#2A2A2A] rounded-none text-[11px] font-mono text-[#A1A1AA] hover:text-white hover:border-white transition-all duration-200 cursor-default whitespace-nowrap"
             >
               <i :class="tech.icon" class="text-sm" :style="{ color: tech.color }"></i>
               {{ tech.name }}
@@ -135,7 +168,12 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { useProjects } from '../composables/useProjects';
+import { useSettings } from '../composables/useSettings';
+
+const { projects } = useProjects();
+const { settings, fetchSettings } = useSettings();
 
 const headerRef = ref(null);
 const bioRef = ref(null);
@@ -148,59 +186,82 @@ const toggleVideoColor = () => {
   videoColorOn.value = !videoColorOn.value;
 };
 
-const stats = [
-  { value: '10+', label: 'Quests Cleared' },
-  { value: '3+', label: 'Time Played' },
-  { value: '24/7', label: 'XP Multiplier' },
-];
+const stats = computed(() => [
+  { value: settings.value?.quests_cleared || '15+', label: 'Products Shipped' },
+  { value: settings.value?.time_played || '3+ Yrs', label: 'Years Experience' },
+  { value: settings.value?.uptime_focus || '99.9%', label: 'Uptime Focus' },
+]);
 
 const expertiseSections = [
   {
-    title: 'Frontend Magic',
+    title: 'Frontend Systems',
+    code: '// UI-01',
+    subtitle: 'Modern Web & High-Conversion UIs',
     icon: 'fa-solid fa-wand-magic-sparkles',
-    skills: ['HTML5', 'CSS3', 'JavaScript', 'Vue.js', 'React', 'Tailwind CSS', 'Bootstrap']
+    badgeClass: 'text-cyan-400 bg-cyan-950/40 border-cyan-500/30',
+    skills: ['React', 'Tailwind CSS', 'JavaScript ES6+', 'HTML5 / CSS3', 'Responsive Design']
   },
   {
-    title: 'Backend Sorcery',
+    title: 'Backend & APIs',
+    code: '// API-02',
+    subtitle: 'High-Throughput Engines & Logic',
     icon: 'fa-solid fa-server',
-    skills: ['Node.js', 'Express.js', 'Python', 'Django', 'PHP', 'Laravel']
+    badgeClass: 'text-red-400 bg-red-950/40 border-red-500/30',
+    skills: ['PHP', 'Laravel', 'RESTful APIs', 'Authentication / JWT', 'Microservices']
   },
   {
-    title: 'Data Vaults',
-    icon: 'fa-solid fa-database',
-    skills: ['MongoDB', 'PostgreSQL', 'MySQL']
-  },
-  {
-    title: 'Server Realms',
-    icon: 'fa-solid fa-cloud',
-    skills: ['AWS', 'Geoapify', 'REST APIs', 'System Architecture', 'DevOps']
-  },
-  {
-    title: 'App Development',
+    title: 'Mobile Engineering',
+    code: '// MOB-03',
+    subtitle: 'Cross-Platform Mobile Apps',
     icon: 'fa-solid fa-mobile-screen-button',
-    skills: ['React Native']
+    badgeClass: 'text-sky-400 bg-sky-950/40 border-sky-500/30',
+    skills: ['Flutter', 'Firebase', 'State Management', 'Mobile UI / UX', 'Cross-Platform']
+  },
+  {
+    title: 'Database Architecture',
+    code: '// DB-04',
+    subtitle: 'Relational & Structured Storage',
+    icon: 'fa-solid fa-database',
+    badgeClass: 'text-blue-400 bg-blue-950/40 border-blue-500/30',
+    skills: ['SQL / MySQL', 'PostgreSQL', 'Query Optimization', 'Database Schema Design', 'Indexing']
+  },
+  {
+    title: 'AI-Assisted Workflows',
+    code: '// AI-05',
+    subtitle: 'Accelerated 5x-10x Development',
+    icon: 'fa-solid fa-robot',
+    badgeClass: 'text-emerald-400 bg-emerald-950/40 border-emerald-500/30',
+    skills: ['AI-Augmented Coding', 'Rapid Prototyping', 'Prompt Engineering', 'Automated Workflows', 'High-Velocity Delivery']
+  },
+  {
+    title: 'Cloud & Infrastructure',
+    code: '// CLD-06',
+    subtitle: 'Deployment & DevOps Tooling',
+    icon: 'fa-solid fa-cloud',
+    badgeClass: 'text-amber-400 bg-amber-950/40 border-amber-500/30',
+    skills: ['Firebase (Optional)', 'Docker', 'Git / GitHub', 'Postman / API Docs', 'Linux / Nginx']
   }
 ];
 
 const technologies = [
-  { name: 'HTML5', color: '#E34F26', icon: 'fa-brands fa-html5' },
-  { name: 'CSS3', color: '#1572B6', icon: 'fa-brands fa-css3-alt' },
-  { name: 'JavaScript', color: '#F7DF1E', icon: 'fa-brands fa-js' },
-  { name: 'Vue.js', color: '#4FC08D', icon: 'fa-brands fa-vuejs' },
+  { name: 'PHP', color: '#777BB4', icon: 'fa-brands fa-php' },
+  { name: 'Laravel', color: '#FF2D20', icon: 'fa-brands fa-laravel' },
   { name: 'React', color: '#61DAFB', icon: 'fa-brands fa-react' },
-  { name: 'Tailwind', color: '#38B2AC', icon: 'fa-solid fa-wind' },
-  { name: 'Node.js', color: '#339933', icon: 'fa-brands fa-node' },
-  { name: 'Express', color: '#ffffff', icon: 'fa-solid fa-server' },
-  { name: 'MongoDB', color: '#47A248', icon: 'fa-brands fa-envira' },
-  { name: 'Python', color: '#3776AB', icon: 'fa-brands fa-python' },
-  { name: 'Django', color: '#2BA977', icon: 'fa-solid fa-laptop-code' },
-  { name: 'AWS', color: '#FF9900', icon: 'fa-brands fa-aws' },
-  { name: 'React Native', color: '#61DAFB', icon: 'fa-brands fa-react' },
+  { name: 'Tailwind CSS', color: '#38B2AC', icon: 'fa-solid fa-wind' },
+  { name: 'Flutter', color: '#02569B', icon: 'fa-solid fa-mobile-screen' },
+  { name: 'SQL / MySQL', color: '#4479A1', icon: 'fa-solid fa-database' },
+  { name: 'PostgreSQL', color: '#336791', icon: 'fa-solid fa-database' },
+  { name: 'Firebase', color: '#FFCA28', icon: 'fa-solid fa-fire' },
+  { name: 'Docker', color: '#2496ED', icon: 'fa-brands fa-docker' },
+  { name: 'JavaScript', color: '#F7DF1E', icon: 'fa-brands fa-js' },
+  { name: 'HTML5', color: '#E34F26', icon: 'fa-brands fa-html5' },
+  { name: 'Git', color: '#F05032', icon: 'fa-brands fa-git-alt' },
 ];
 
 let observer = null;
 
 onMounted(() => {
+  fetchSettings();
   observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {

@@ -40,10 +40,10 @@ const titleRef = ref(null);
 const itemRefs = ref([]);
 
 const capabilities = [
-  { metric: 'MERN', label: 'Full Stack Development' },
-  { metric: 'VUE',  label: 'Frontend Systems' },
-  { metric: 'AWS',  label: 'Cloud Infrastructure' },
-  { metric: 'API',  label: 'Backend Architecture' },
+  { metric: 'REACT',    label: 'Frontend Development' },
+  { metric: 'LARAVEL',  label: 'Backend Architecture' },
+  { metric: 'SQL',      label: 'Database Systems' },
+  { metric: 'TAILWIND', label: 'UI / UX Styling' },
 ];
 
 let observer = null;

@@ -12,7 +12,7 @@
     <!-- Minimal Subtle Header -->
     <header class="w-full pt-8 px-8 sm:px-12 flex justify-between items-center z-10 opacity-40">
       <span class="text-[11px] font-mono tracking-[0.3em] uppercase">ATHUL KRISHNA</span>
-      <span class="text-[11px] font-mono tracking-[0.3em] uppercase">© 2026</span>
+      <span class="text-[11px] font-mono tracking-[0.3em] uppercase">© {{ currentYear }}</span>
     </header>
 
     <!-- Center Stage: The Iconic Apple Cursive "hello" Writing Animation -->
@@ -58,6 +58,8 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
+
+const currentYear = new Date().getFullYear();
 
 const emit = defineEmits(['loading-complete']);
 

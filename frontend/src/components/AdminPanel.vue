@@ -43,10 +43,14 @@
           <i class="fa-solid fa-layer-group text-white text-[10px]"></i>
         </div>
         <span class="font-mono text-sm font-bold text-white">
-          {{ currentTab === 'projects' ? 'Projects Admin' : 'CVs Admin' }}
+          <template v-if="currentTab === 'projects'">Projects Management</template>
+          <template v-else-if="currentTab === 'cvs'">CV Profiles Management</template>
+          <template v-else-if="currentTab === 'experience_metrics'">Experience & Metrics</template>
         </span>
-        <span class="font-mono text-[10px] text-[#A1A1AA] border border-[#2A2A2A] rounded px-2 py-0.5 animate-pulse">
-          {{ currentTab === 'projects' ? projects.length : cvs.length }} entries
+        <span class="font-mono text-[10px] text-[#A1A1AA] border border-[#2A2A2A] rounded px-2 py-0.5">
+          <template v-if="currentTab === 'projects'">{{ projects.length }} entries</template>
+          <template v-else-if="currentTab === 'cvs'">{{ cvs.length }} files</template>
+          <template v-else-if="currentTab === 'experience_metrics'">Dynamic Metrics</template>
         </span>
       </div>
       <div class="flex items-center gap-3">
@@ -60,11 +64,22 @@
         </button>
         <!-- Add CV Profile -->
         <button
-          v-else
+          v-else-if="currentTab === 'cvs'"
           @click="openAddCv"
           class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-mono text-xs px-4 py-2 rounded-lg transition-colors cursor-pointer"
         >
           <i class="fa-solid fa-plus"></i> Add CV Profile
+        </button>
+        <!-- Save Settings -->
+        <button
+          v-else
+          @click="saveSiteSettings"
+          :disabled="savingSettings"
+          class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-mono text-xs px-4 py-2 rounded-lg transition-colors cursor-pointer font-bold shadow-lg"
+        >
+          <div v-if="savingSettings" class="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+          <i v-else class="fa-solid fa-floppy-disk"></i>
+          Save Changes
         </button>
 
         <button
@@ -87,10 +102,10 @@
       </div>
 
       <!-- Tab Selector -->
-      <div class="flex items-center gap-2 mb-8 border-b border-[#2A2A2A] pb-4">
+      <div class="flex items-center gap-2 mb-8 border-b border-[#2A2A2A] pb-4 overflow-x-auto">
         <button
           @click="currentTab = 'projects'"
-          class="font-mono text-xs px-4 py-2 rounded-lg border transition-all cursor-pointer"
+          class="font-mono text-xs px-4 py-2 rounded-lg border transition-all cursor-pointer whitespace-nowrap"
           :class="currentTab === 'projects' 
             ? 'bg-[#ffffff]/10 border-[#ffffff]/30 text-[#ffffff] font-bold' 
             : 'border-transparent text-[#A1A1AA] hover:text-neutral-200 hover:bg-[#2A2A2A]'"
@@ -99,12 +114,21 @@
         </button>
         <button
           @click="currentTab = 'cvs'"
-          class="font-mono text-xs px-4 py-2 rounded-lg border transition-all cursor-pointer"
+          class="font-mono text-xs px-4 py-2 rounded-lg border transition-all cursor-pointer whitespace-nowrap"
           :class="currentTab === 'cvs' 
             ? 'bg-[#ffffff]/10 border-[#ffffff]/30 text-[#ffffff] font-bold' 
             : 'border-transparent text-[#A1A1AA] hover:text-neutral-200 hover:bg-[#2A2A2A]'"
         >
           <i class="fa-solid fa-file-pdf mr-1.5"></i> CV Profiles
+        </button>
+        <button
+          @click="currentTab = 'experience_metrics'"
+          class="font-mono text-xs px-4 py-2 rounded-lg border transition-all cursor-pointer whitespace-nowrap"
+          :class="currentTab === 'experience_metrics' 
+            ? 'bg-[#ffffff]/10 border-[#ffffff]/30 text-[#ffffff] font-bold' 
+            : 'border-transparent text-[#A1A1AA] hover:text-neutral-200 hover:bg-[#2A2A2A]'"
+        >
+          <i class="fa-solid fa-chart-simple mr-1.5"></i> Experience & Metrics
         </button>
       </div>
 
@@ -247,6 +271,104 @@
         </div>
       </div>
 
+
+      <!-- ─── Experience & Metrics Section ─── -->
+      <div v-else-if="currentTab === 'experience_metrics'" class="flex flex-col gap-6">
+        <div class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-2xl p-6">
+          <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 pb-4 border-b border-[#2A2A2A]">
+            <div>
+              <h2 class="font-mono text-base font-bold text-white flex items-center gap-2">
+                <i class="fa-solid fa-chart-simple text-indigo-400"></i>
+                Experience & Live Site Metrics
+              </h2>
+              <p class="font-mono text-xs text-[#A1A1AA] mt-1">
+                Customize stats displayed across the hero header, about section, and bio.
+              </p>
+            </div>
+            <button
+              @click="saveSiteSettings"
+              :disabled="savingSettings"
+              class="flex items-center gap-2 font-mono text-xs px-5 py-2.5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white rounded-lg transition-colors cursor-pointer font-bold shadow-lg"
+            >
+              <div v-if="savingSettings" class="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <i v-else class="fa-solid fa-floppy-disk"></i>
+              Save Metrics
+            </button>
+          </div>
+
+          <!-- Metrics form grid -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
+            <div class="field">
+              <label>Years of Experience</label>
+              <input v-model="settingsForm.experience_years" placeholder="e.g. 03+ or 4+" />
+              <span class="text-[10px] text-[#A1A1AA] font-mono mt-1 block">Hero stat (e.g. 03+)</span>
+            </div>
+            <div class="field">
+              <label>Shipped Works Count</label>
+              <input v-model="settingsForm.shipped_works" placeholder="e.g. 15+ or 20+" />
+              <span class="text-[10px] text-[#A1A1AA] font-mono mt-1 block">Hero stat (e.g. 15+)</span>
+            </div>
+            <div class="field">
+              <label>Uptime Focus</label>
+              <input v-model="settingsForm.uptime_focus" placeholder="e.g. 99.9%" />
+              <span class="text-[10px] text-[#A1A1AA] font-mono mt-1 block">Hero stat (e.g. 99.9%)</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
+            <div class="field">
+              <label>Quests Cleared (About Section)</label>
+              <input v-model="settingsForm.quests_cleared" placeholder="e.g. 10+" />
+            </div>
+            <div class="field">
+              <label>Time Played (About Section)</label>
+              <input v-model="settingsForm.time_played" placeholder="e.g. 3+ Yrs" />
+            </div>
+          </div>
+
+          <div class="field mb-8">
+            <label>Bio Specialty Role Header</label>
+            <input v-model="settingsForm.bio_tagline" placeholder="Co-Founder & Full-Stack Architect" />
+          </div>
+
+          <!-- Rotating Role Phrases -->
+          <div class="flex flex-col gap-3 pt-6 border-t border-[#2A2A2A]">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="font-mono text-xs font-bold text-white uppercase flex items-center gap-1.5">
+                  <i class="fa-solid fa-rotate text-indigo-400"></i> Hero Rotating Specialty Phrases
+                </span>
+                <p class="font-mono text-[10px] text-[#A1A1AA] mt-0.5">
+                  Phrases dynamically typed/cycled under "Specializing in..." on the hero.
+                </p>
+              </div>
+              <button
+                type="button"
+                @click="addRolePhrase"
+                class="px-2.5 py-1 bg-indigo-600/30 hover:bg-indigo-600 text-indigo-200 hover:text-white text-[10px] font-mono rounded border border-indigo-500/30 transition-colors cursor-pointer"
+              >
+                <i class="fa-solid fa-plus mr-1"></i> Add Phrase
+              </button>
+            </div>
+
+            <div v-for="(phrase, pIdx) in settingsForm.role_phrases" :key="'rp-'+pIdx" class="flex items-center gap-3">
+              <input
+                v-model="settingsForm.role_phrases[pIdx]"
+                placeholder="e.g. modern React web applications styled with Tailwind CSS..."
+                class="flex-1 bg-[#121212] border border-[#2A2A2A] rounded-lg px-3 py-2 font-mono text-xs text-white"
+              />
+              <button
+                @click="removeRolePhrase(pIdx)"
+                class="w-8 h-8 flex items-center justify-center border border-[#2A2A2A] hover:border-red-500 text-[#A1A1AA] hover:text-red-400 rounded-lg transition-colors cursor-pointer"
+                title="Remove phrase"
+              >
+                <i class="fa-solid fa-trash text-xs"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </main>
 
     <!-- ── Add / Edit Modal ────────────────────────────────────── -->
@@ -273,95 +395,357 @@
             </button>
           </div>
 
+          <!-- Modal subtabs -->
+          <div class="flex items-center gap-2 px-6 pt-4 border-b border-[#2A2A2A] bg-[#121212]/50 overflow-x-auto">
+            <button
+              type="button"
+              @click="projectFormTab = 'basic'"
+              class="font-mono text-xs px-3 py-2 border-b-2 transition-all cursor-pointer whitespace-nowrap"
+              :class="projectFormTab === 'basic' ? 'border-indigo-500 text-white font-bold bg-white/5' : 'border-transparent text-[#A1A1AA] hover:text-white'"
+            >
+              <i class="fa-solid fa-id-card mr-1.5"></i> Card & Media
+            </button>
+            <button
+              type="button"
+              @click="projectFormTab = 'hero'"
+              class="font-mono text-xs px-3 py-2 border-b-2 transition-all cursor-pointer whitespace-nowrap"
+              :class="projectFormTab === 'hero' ? 'border-indigo-500 text-white font-bold bg-white/5' : 'border-transparent text-[#A1A1AA] hover:text-white'"
+            >
+              <i class="fa-solid fa-heading mr-1.5"></i> Hero & Links
+            </button>
+            <button
+              type="button"
+              @click="projectFormTab = 'features_stats'"
+              class="font-mono text-xs px-3 py-2 border-b-2 transition-all cursor-pointer whitespace-nowrap"
+              :class="projectFormTab === 'features_stats' ? 'border-indigo-500 text-white font-bold bg-white/5' : 'border-transparent text-[#A1A1AA] hover:text-white'"
+            >
+              <i class="fa-solid fa-bolt mr-1.5"></i> Features & Stats
+              <span v-if="(form.detailData.features?.length || form.detailData.stats?.length)" class="ml-1 px-1.5 py-0.2 text-[9px] bg-indigo-950 text-indigo-300 rounded-full border border-indigo-500/30">
+                {{ (form.detailData.features?.length || 0) + (form.detailData.stats?.length || 0) }}
+              </span>
+            </button>
+            <button
+              type="button"
+              @click="projectFormTab = 'tech_modules'"
+              class="font-mono text-xs px-3 py-2 border-b-2 transition-all cursor-pointer whitespace-nowrap"
+              :class="projectFormTab === 'tech_modules' ? 'border-indigo-500 text-white font-bold bg-white/5' : 'border-transparent text-[#A1A1AA] hover:text-white'"
+            >
+              <i class="fa-solid fa-layer-group mr-1.5"></i> Tech, Modules & Highlights
+              <span v-if="(form.detailData.technologies?.length || form.detailData.modules?.length || form.detailData.highlights?.length)" class="ml-1 px-1.5 py-0.2 text-[9px] bg-indigo-950 text-indigo-300 rounded-full border border-indigo-500/30">
+                {{ (form.detailData.technologies?.length || 0) + (form.detailData.modules?.length || 0) + (form.detailData.highlights?.length || 0) }}
+              </span>
+            </button>
+          </div>
+
           <!-- Modal body -->
-          <div class="px-6 py-6 flex flex-col gap-5 relative">
+          <div class="px-6 py-6 flex flex-col gap-5 relative max-h-[70vh] overflow-y-auto">
             <div v-if="loadingForm" class="flex flex-col items-center justify-center py-20 gap-3">
               <div class="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
               <span class="font-mono text-xs text-[#A1A1AA]">// fetching project details from db</span>
             </div>
             
             <template v-else>
-              <!-- Row: title -->
-              <div class="field">
-                <label>Title <span class="text-red-400">*</span></label>
-                <input v-model="form.title" placeholder="My Awesome Project" />
-              </div>
-
-              <!-- Row: description -->
-              <div class="field">
-                <label>Description <span class="text-red-400">*</span></label>
-                <textarea v-model="form.description" rows="3" placeholder="Short description shown on the project card..."></textarea>
-              </div>
-
-              <!-- Row: image + thumbnail -->
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <!-- ─── TAB 1: CARD & MEDIA ─── -->
+              <div v-show="projectFormTab === 'basic'" class="flex flex-col gap-5">
+                <!-- Row: title -->
                 <div class="field">
-                  <label>Image(s) <span class="text-[#A1A1AA]">(max 7)</span> <span class="text-red-400">*</span></label>
-                  <input type="file" multiple @change="onImageChange" accept="image/*" class="file-input" />
-                  <div class="flex gap-2 mt-2 flex-wrap">
-                    <img v-for="(img, idx) in form.imagePreviews" :key="'img'+idx" :src="getImageUrl(img)" class="h-16 rounded border border-[#2A2A2A] object-cover" />
+                  <label>Title <span class="text-red-400">*</span></label>
+                  <input v-model="form.title" placeholder="My Awesome Project" />
+                </div>
+
+                <!-- Row: description -->
+                <div class="field">
+                  <label>Card Description <span class="text-red-400">*</span></label>
+                  <textarea v-model="form.description" rows="3" placeholder="Short summary displayed on the main projects grid..."></textarea>
+                </div>
+
+                <!-- Row: image + thumbnail -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div class="field">
+                    <label>Images <span class="text-[#A1A1AA]">(max 7)</span> <span class="text-red-400">*</span></label>
+                    <input type="file" multiple @change="onImageChange" accept="image/*" class="file-input" />
+                    <div class="flex gap-2 mt-2 flex-wrap">
+                      <img v-for="(img, idx) in form.imagePreviews" :key="'img'+idx" :src="getImageUrl(img)" class="h-16 rounded border border-[#2A2A2A] object-cover" />
+                    </div>
+                  </div>
+                  <div class="field">
+                    <label>Card Thumbnail <span class="text-[#A1A1AA]">(Optional)</span></label>
+                    <input type="file" @change="onThumbnailChange" accept="image/*" class="file-input" />
+                    <img v-if="form.thumbnail" :src="getImageUrl(form.thumbnail)" class="mt-2 h-16 rounded border border-[#2A2A2A] object-cover" />
                   </div>
                 </div>
-                <div class="field">
-                  <label>Thumbnail</label>
-                  <input type="file" @change="onThumbnailChange" accept="image/*" class="file-input" />
-                  <img v-if="form.thumbnail" :src="getImageUrl(form.thumbnail)" class="mt-2 h-16 rounded border border-[#2A2A2A] object-cover" />
+
+                <!-- Row: sort_order + tags + hasDetails -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
+                  <div class="field">
+                    <label>Sort Order</label>
+                    <input v-model.number="form.sort_order" type="number" placeholder="10" />
+                  </div>
+                  <div class="field sm:col-span-2">
+                    <label>Tags <span class="text-[#A1A1AA]">(comma-separated)</span></label>
+                    <input v-model="tagsInput" placeholder="React, Laravel, MySQL, Tailwind" />
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-3 p-3 bg-[#121212] border border-[#2A2A2A] rounded-lg">
+                  <input id="hasDetailsCheck" type="checkbox" v-model="form.has_details" class="w-4 h-4 rounded text-indigo-600 focus:ring-0 cursor-pointer" />
+                  <label for="hasDetailsCheck" class="text-xs text-white font-mono cursor-pointer select-none">
+                    Enable Interactive Project Detail Page (Press Start to Play)
+                  </label>
                 </div>
               </div>
 
-              <!-- Row: sort_order -->
-              <div class="field w-1/2">
-                <label>Sort Order</label>
-                <input v-model.number="form.sort_order" type="number" placeholder="10" />
-              </div>
-
-              <!-- Row: tags -->
-              <div class="field">
-                <label>Tags <span class="text-[#A1A1AA]">(comma-separated)</span></label>
-                <input v-model="tagsInput" placeholder="React, Node.js, MongoDB" />
-              </div>
-
-              <!-- Divider: Detail data -->
-              <div class="flex items-center gap-3 my-1">
-                <div class="flex-1 h-px bg-[#2A2A2A]"></div>
-                <span class="font-mono text-[10px] text-[#A1A1AA] uppercase tracking-widest">Detail Data</span>
-                <div class="flex-1 h-px bg-[#2A2A2A]"></div>
-              </div>
-
-              <!-- Row: hero title + subject -->
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="field">
-                  <label>Hero Title</label>
-                  <input v-model="form.detailData.heroTitle" placeholder="My Project" />
+              <!-- ─── TAB 2: HERO & LINKS ─── -->
+              <div v-show="projectFormTab === 'hero'" class="flex flex-col gap-5">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div class="field">
+                    <label>Hero Title</label>
+                    <input v-model="form.detailData.heroTitle" placeholder="Nexus" />
+                  </div>
+                  <div class="field">
+                    <label>Hero Subject (Highlighted Accent)</label>
+                    <input v-model="form.detailData.heroSubject" placeholder="Enterprise OS" />
+                  </div>
                 </div>
+
                 <div class="field">
-                  <label>Hero Subject</label>
-                  <input v-model="form.detailData.heroSubject" placeholder="Subtitle" />
+                  <label>Tagline</label>
+                  <input v-model="form.detailData.tagline" placeholder="// High-throughput distributed cloud architecture" />
+                </div>
+
+                <div class="field">
+                  <label>Abstract (Full Project Story & Case Study)</label>
+                  <textarea v-model="form.detailData.abstract" rows="5" placeholder="Deep dive into the architecture, challenges, and engineering decisions..."></textarea>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div class="field">
+                    <label><i class="fa-brands fa-github mr-1"></i> GitHub Repo URL</label>
+                    <input v-model="form.detailData.repoUrl" placeholder="https://github.com/..." />
+                  </div>
+                  <div class="field">
+                    <label><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Live Demo URL</label>
+                    <input v-model="form.detailData.liveUrl" placeholder="https://..." />
+                  </div>
                 </div>
               </div>
 
-              <!-- Row: tagline -->
-              <div class="field">
-                <label>Tagline</label>
-                <input v-model="form.detailData.tagline" placeholder="// Short developer tagline" />
+              <!-- ─── TAB 3: FEATURES & STATS ─── -->
+              <div v-show="projectFormTab === 'features_stats'" class="flex flex-col gap-6">
+                <!-- Key Features Section -->
+                <div class="flex flex-col gap-3">
+                  <div class="flex items-center justify-between border-b border-[#2A2A2A] pb-2">
+                    <span class="font-mono text-xs font-bold text-white uppercase flex items-center gap-1.5">
+                      <i class="fa-solid fa-bolt text-indigo-400"></i> Key Features
+                    </span>
+                    <button
+                      type="button"
+                      @click="addFeature"
+                      class="px-2.5 py-1 bg-indigo-600/30 hover:bg-indigo-600 text-indigo-200 hover:text-white text-[10px] font-mono rounded border border-indigo-500/30 transition-colors cursor-pointer"
+                    >
+                      <i class="fa-solid fa-plus mr-1"></i> Add Feature
+                    </button>
+                  </div>
+
+                  <div v-if="!form.detailData.features || form.detailData.features.length === 0" class="p-4 border border-dashed border-[#2A2A2A] rounded-lg text-center font-mono text-xs text-[#A1A1AA]">
+                    No features added yet. Click "+ Add Feature" to highlight capabilities.
+                  </div>
+
+                  <div v-for="(feat, fIdx) in form.detailData.features" :key="'feat-'+fIdx" class="p-3 bg-[#121212] border border-[#2A2A2A] rounded-lg flex flex-col gap-2 relative">
+                    <button
+                      type="button"
+                      @click="removeFeature(fIdx)"
+                      class="absolute top-2 right-2 text-[#A1A1AA] hover:text-red-400 text-xs p-1"
+                      title="Remove feature"
+                    >
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                    <div class="field pr-6">
+                      <label>Feature Title</label>
+                      <input v-model="feat.title" placeholder="e.g. Real-Time Event Engine" />
+                    </div>
+                    <div class="field">
+                      <label>Feature Description</label>
+                      <textarea v-model="feat.desc" rows="2" placeholder="Explain what this feature does..."></textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Project Stats Section -->
+                <div class="flex flex-col gap-3 pt-4 border-t border-[#2A2A2A]">
+                  <div class="flex items-center justify-between border-b border-[#2A2A2A] pb-2">
+                    <span class="font-mono text-xs font-bold text-white uppercase flex items-center gap-1.5">
+                      <i class="fa-solid fa-chart-simple text-indigo-400"></i> Project Stats / Metrics
+                    </span>
+                    <button
+                      type="button"
+                      @click="addStat"
+                      class="px-2.5 py-1 bg-indigo-600/30 hover:bg-indigo-600 text-indigo-200 hover:text-white text-[10px] font-mono rounded border border-indigo-500/30 transition-colors cursor-pointer"
+                    >
+                      <i class="fa-solid fa-plus mr-1"></i> Add Stat
+                    </button>
+                  </div>
+
+                  <div v-if="!form.detailData.stats || form.detailData.stats.length === 0" class="p-4 border border-dashed border-[#2A2A2A] rounded-lg text-center font-mono text-xs text-[#A1A1AA]">
+                    No stats added yet (e.g. "99.9% Uptime", "50k+ Users"). Click "+ Add Stat" to add.
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div v-for="(st, sIdx) in form.detailData.stats" :key="'stat-'+sIdx" class="p-3 bg-[#121212] border border-[#2A2A2A] rounded-lg flex flex-col gap-2 relative">
+                      <button
+                        type="button"
+                        @click="removeStat(sIdx)"
+                        class="absolute top-2 right-2 text-[#A1A1AA] hover:text-red-400 text-xs p-1"
+                        title="Remove stat"
+                      >
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                      <div class="field pr-6">
+                        <label>Value / Metric</label>
+                        <input v-model="st.val" placeholder="e.g. 99.9% or 10ms" />
+                      </div>
+                      <div class="field">
+                        <label>Label</label>
+                        <input v-model="st.label" placeholder="e.g. Uptime or Latency" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <!-- Row: abstract -->
-              <div class="field">
-                <label>Abstract</label>
-                <textarea v-model="form.detailData.abstract" rows="4" placeholder="Full description of the project..."></textarea>
-              </div>
+              <!-- ─── TAB 4: TECH, MODULES & HIGHLIGHTS ─── -->
+              <div v-show="projectFormTab === 'tech_modules'" class="flex flex-col gap-6">
+                <!-- Tech Stack Detail List -->
+                <div class="flex flex-col gap-3">
+                  <div class="flex items-center justify-between border-b border-[#2A2A2A] pb-2">
+                    <span class="font-mono text-xs font-bold text-white uppercase flex items-center gap-1.5">
+                      <i class="fa-solid fa-layer-group text-indigo-400"></i> Detail Tech Stack Breakdown
+                    </span>
+                    <button
+                      type="button"
+                      @click="addTech"
+                      class="px-2.5 py-1 bg-indigo-600/30 hover:bg-indigo-600 text-indigo-200 hover:text-white text-[10px] font-mono rounded border border-indigo-500/30 transition-colors cursor-pointer"
+                    >
+                      <i class="fa-solid fa-plus mr-1"></i> Add Tech
+                    </button>
+                  </div>
 
-              <!-- Row: repo / live URLs -->
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div class="field">
-                  <label>Repo URL</label>
-                  <input v-model="form.detailData.repoUrl" placeholder="https://github.com/..." />
+                  <div v-if="!form.detailData.technologies || form.detailData.technologies.length === 0" class="p-4 border border-dashed border-[#2A2A2A] rounded-lg text-center font-mono text-xs text-[#A1A1AA]">
+                    No tech stack items specified. Click "+ Add Tech" (e.g. Frontend -> React / Tailwind).
+                  </div>
+
+                  <div v-for="(tItem, tIdx) in form.detailData.technologies" :key="'tech-'+tIdx" class="p-3 bg-[#121212] border border-[#2A2A2A] rounded-lg grid grid-cols-1 sm:grid-cols-3 gap-3 relative items-end">
+                    <button
+                      type="button"
+                      @click="removeTech(tIdx)"
+                      class="absolute top-2 right-2 text-[#A1A1AA] hover:text-red-400 text-xs p-1"
+                      title="Remove tech"
+                    >
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                    <div class="field">
+                      <label>Category Name</label>
+                      <input v-model="tItem.name" placeholder="e.g. Frontend" />
+                    </div>
+                    <div class="field">
+                      <label>Tech / Tools</label>
+                      <input v-model="tItem.stack" placeholder="e.g. React 19, Tailwind CSS" />
+                    </div>
+                    <div class="field pr-6 sm:pr-0">
+                      <label>FontAwesome Icon</label>
+                      <input v-model="tItem.icon" placeholder="fa-brands fa-react" />
+                    </div>
+                  </div>
                 </div>
-                <div class="field">
-                  <label>Live URL</label>
-                  <input v-model="form.detailData.liveUrl" placeholder="https://..." />
+
+                <!-- System Modules Section -->
+                <div class="flex flex-col gap-3 pt-4 border-t border-[#2A2A2A]">
+                  <div class="flex items-center justify-between border-b border-[#2A2A2A] pb-2">
+                    <span class="font-mono text-xs font-bold text-white uppercase flex items-center gap-1.5">
+                      <i class="fa-solid fa-cubes text-indigo-400"></i> System Modules & Components
+                    </span>
+                    <button
+                      type="button"
+                      @click="addModule"
+                      class="px-2.5 py-1 bg-indigo-600/30 hover:bg-indigo-600 text-indigo-200 hover:text-white text-[10px] font-mono rounded border border-indigo-500/30 transition-colors cursor-pointer"
+                    >
+                      <i class="fa-solid fa-plus mr-1"></i> Add Module
+                    </button>
+                  </div>
+
+                  <div v-if="!form.detailData.modules || form.detailData.modules.length === 0" class="p-4 border border-dashed border-[#2A2A2A] rounded-lg text-center font-mono text-xs text-[#A1A1AA]">
+                    No modules added. Click "+ Add Module" to document subsystems (e.g. Auth, Data Pipeline).
+                  </div>
+
+                  <div v-for="(mod, mIdx) in form.detailData.modules" :key="'mod-'+mIdx" class="p-3 bg-[#121212] border border-[#2A2A2A] rounded-lg flex flex-col gap-2 relative">
+                    <button
+                      type="button"
+                      @click="removeModule(mIdx)"
+                      class="absolute top-2 right-2 text-[#A1A1AA] hover:text-red-400 text-xs p-1"
+                      title="Remove module"
+                    >
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                    <div class="field pr-6">
+                      <label>Module Title</label>
+                      <input v-model="mod.title" placeholder="e.g. Authentication & Security" />
+                    </div>
+                    <div class="field">
+                      <label>Bullet Points / Items <span class="text-[#A1A1AA]">(comma-separated)</span></label>
+                      <input v-model="mod.itemsInput" placeholder="JWT Token Auth, OAuth2 Social Login, Role Permissions" />
+                    </div>
+                  </div>
                 </div>
+
+                <!-- Featured Highlights Section -->
+                <div class="flex flex-col gap-3 pt-4 border-t border-[#2A2A2A]">
+                  <div class="flex items-center justify-between border-b border-[#2A2A2A] pb-2">
+                    <span class="font-mono text-xs font-bold text-white uppercase flex items-center gap-1.5">
+                      <i class="fa-solid fa-star text-indigo-400"></i> Featured Highlights
+                    </span>
+                    <button
+                      type="button"
+                      @click="addHighlight"
+                      class="px-2.5 py-1 bg-indigo-600/30 hover:bg-indigo-600 text-indigo-200 hover:text-white text-[10px] font-mono rounded border border-indigo-500/30 transition-colors cursor-pointer"
+                    >
+                      <i class="fa-solid fa-plus mr-1"></i> Add Highlight
+                    </button>
+                  </div>
+
+                  <div v-if="!form.detailData.highlights || form.detailData.highlights.length === 0" class="p-4 border border-dashed border-[#2A2A2A] rounded-lg text-center font-mono text-xs text-[#A1A1AA]">
+                    No featured highlights added. Click "+ Add Highlight" to add screenshot highlights.
+                  </div>
+
+                  <div v-for="(hl, hIdx) in form.detailData.highlights" :key="'hl-'+hIdx" class="p-3 bg-[#121212] border border-[#2A2A2A] rounded-lg flex flex-col gap-2 relative">
+                    <button
+                      type="button"
+                      @click="removeHighlight(hIdx)"
+                      class="absolute top-2 right-2 text-[#A1A1AA] hover:text-red-400 text-xs p-1"
+                      title="Remove highlight"
+                    >
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pr-6">
+                      <div class="field">
+                        <label>Highlight Title</label>
+                        <input v-model="hl.title" placeholder="e.g. Analytics Command Center" />
+                      </div>
+                      <div class="field">
+                        <label>Badge Tag</label>
+                        <input v-model="hl.tag" placeholder="e.g. CORE UI or AI" />
+                      </div>
+                    </div>
+                    <div class="field">
+                      <label>Highlight Image URL / Path</label>
+                      <input v-model="hl.image" placeholder="Image URL or /storage path" />
+                    </div>
+                    <div class="field">
+                      <label>Highlight Description</label>
+                      <textarea v-model="hl.desc" rows="2" placeholder="Brief explanation of this screenshot or highlight..."></textarea>
+                    </div>
+                  </div>
+                </div>
+
               </div>
 
               <!-- Error -->
@@ -372,23 +756,44 @@
           </div>
 
           <!-- Modal footer -->
-          <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-[#2A2A2A]">
-            <button
-              @click="closeModal"
-              class="font-mono text-xs px-4 py-2 border border-[#2A2A2A] rounded-lg text-[#A1A1AA] hover:text-white hover:border-[#2A2A2A] transition-all"
-            >
-              Cancel
-            </button>
-            <button
-              v-if="!loadingForm"
-              @click="submitForm"
-              :disabled="saving"
-              class="flex items-center gap-2 font-mono text-xs px-5 py-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white rounded-lg transition-colors"
-            >
-              <div v-if="saving" class="w-3.5 h-3.5 border-2 border-[#2A2A2A] border-t-transparent rounded-full animate-spin"></div>
-              <i v-else class="fa-solid fa-floppy-disk"></i>
-              {{ saving ? 'Saving…' : (editMode ? 'Update Project' : 'Create Project') }}
-            </button>
+          <div class="flex items-center justify-between px-6 py-4 border-t border-[#2A2A2A] bg-[#0A0A0A]">
+            <div class="flex items-center gap-2">
+              <button
+                v-if="projectFormTab !== 'basic'"
+                type="button"
+                @click="projectFormTab = projectFormTab === 'tech_modules' ? 'features_stats' : (projectFormTab === 'features_stats' ? 'hero' : 'basic')"
+                class="font-mono text-xs px-3 py-2 border border-[#2A2A2A] rounded-lg text-[#A1A1AA] hover:text-white transition-all cursor-pointer"
+              >
+                <i class="fa-solid fa-arrow-left mr-1"></i> Prev Step
+              </button>
+              <button
+                v-if="projectFormTab !== 'tech_modules'"
+                type="button"
+                @click="projectFormTab = projectFormTab === 'basic' ? 'hero' : (projectFormTab === 'hero' ? 'features_stats' : 'tech_modules')"
+                class="font-mono text-xs px-3 py-2 bg-[#121212] hover:bg-[#1a1a1a] border border-[#2A2A2A] text-white rounded-lg transition-all cursor-pointer"
+              >
+                Next Step <i class="fa-solid fa-arrow-right ml-1"></i>
+              </button>
+            </div>
+
+            <div class="flex items-center gap-3">
+              <button
+                @click="closeModal"
+                class="font-mono text-xs px-4 py-2 border border-[#2A2A2A] rounded-lg text-[#A1A1AA] hover:text-white hover:border-[#2A2A2A] transition-all cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                v-if="!loadingForm"
+                @click="submitForm"
+                :disabled="saving"
+                class="flex items-center gap-2 font-mono text-xs px-5 py-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white rounded-lg transition-colors cursor-pointer font-bold shadow-lg"
+              >
+                <div v-if="saving" class="w-3.5 h-3.5 border-2 border-[#2A2A2A] border-t-transparent rounded-full animate-spin"></div>
+                <i v-else class="fa-solid fa-floppy-disk"></i>
+                {{ saving ? 'Saving…' : (editMode ? 'Update Project' : 'Create Project') }}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -563,12 +968,77 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import { getImageUrl, clearProjectsCache } from '../composables/useProjects';
+import { useSettings } from '../composables/useSettings';
 import apiClient from '../utils/api';
+
+// Settings Composable
+const { settings, fetchSettings, updateSettings } = useSettings();
 
 // Tab State
 const currentTab     = ref('projects');
 const cvs            = ref([]);
 const loadingCvsList = ref(false);
+
+// Dynamic Site Settings State (Experience, Shipped Works & Live Metrics)
+const settingsForm = reactive({
+  experience_years: '03+',
+  shipped_works: '15+',
+  uptime_focus: '99.9%',
+  role_phrases: [
+    'modern React & Vue web applications styled with Tailwind CSS',
+    'high-performance PHP & Laravel backends with SQL databases',
+    'scalable cloud architectures & distributed APIs',
+    'end-to-end full stack platforms with 99.9% uptime',
+  ],
+  bio_tagline: 'Co-Founder & Full-Stack Architect',
+  quests_cleared: '10+',
+  time_played: '3+ Yrs',
+});
+const savingSettings = ref(false);
+
+const loadSettingsData = async () => {
+  try {
+    const data = await fetchSettings(true);
+    if (data) {
+      if (data.experience_years !== undefined) settingsForm.experience_years = data.experience_years;
+      if (data.shipped_works !== undefined) settingsForm.shipped_works = data.shipped_works;
+      if (data.uptime_focus !== undefined) settingsForm.uptime_focus = data.uptime_focus;
+      if (Array.isArray(data.role_phrases) && data.role_phrases.length > 0) {
+        settingsForm.role_phrases = [...data.role_phrases];
+      }
+      if (data.bio_tagline !== undefined) settingsForm.bio_tagline = data.bio_tagline;
+      if (data.quests_cleared !== undefined) settingsForm.quests_cleared = data.quests_cleared;
+      if (data.time_played !== undefined) settingsForm.time_played = data.time_played;
+    }
+  } catch (e) {
+    console.error('Failed to load settings data:', e);
+  }
+};
+
+const addRolePhrase = () => {
+  if (!settingsForm.role_phrases) settingsForm.role_phrases = [];
+  settingsForm.role_phrases.push('');
+};
+
+const removeRolePhrase = (idx) => {
+  settingsForm.role_phrases.splice(idx, 1);
+};
+
+const saveSiteSettings = async () => {
+  savingSettings.value = true;
+  try {
+    const payload = {
+      ...settingsForm,
+      role_phrases: (settingsForm.role_phrases || []).filter(p => p && typeof p === 'string' && p.trim().length > 0),
+    };
+    await updateSettings(payload);
+    showToast('Settings saved successfully ✓', 'success');
+  } catch (e) {
+    showToast(`Failed to save settings: ${e.response?.data?.message || e.message}`, 'error');
+  } finally {
+    savingSettings.value = false;
+  }
+};
 
 // ── Auth ─────────────────────────────────────────────────────────
 const authed     = ref(false);
@@ -589,6 +1059,7 @@ const login = async () => {
     sessionStorage.setItem('admin_key', keyInput.value);
     loadProjects();
     loadCvs();
+    loadSettingsData();
   } catch (err) {
     if (err.response?.status === 401) {
       loginError.value = 'Wrong key — try again.';
@@ -640,6 +1111,7 @@ const loadCvs = async () => {
 };
 
 onMounted(() => {
+  loadSettingsData();
   if (authed.value) {
     loadProjects();
     loadCvs();
@@ -647,12 +1119,13 @@ onMounted(() => {
 });
 
 // ── Modal / Form ──────────────────────────────────────────────────
-const showModal = ref(false);
-const editMode  = ref(false);
-const saving    = ref(false);
-const formError = ref('');
-const tagsInput    = ref('');
-const loadingForm = ref(false);
+const showModal       = ref(false);
+const editMode        = ref(false);
+const saving          = ref(false);
+const formError       = ref('');
+const tagsInput       = ref('');
+const loadingForm     = ref(false);
+const projectFormTab  = ref('basic'); // 'basic' | 'hero' | 'features_stats' | 'tech_modules'
 
 const blankForm = () => ({
   id: null,
@@ -671,11 +1144,57 @@ const blankForm = () => ({
     heroTitle: '', heroSubject: '', tagline: '',
     abstract: '', repoUrl: '', liveUrl: '',
     stats: [], gallery: [], features: [],
-    technologies: [], modules: [], highlights: null,
+    technologies: [], modules: [], highlights: [],
   },
 });
 
 const form = reactive(blankForm());
+
+// ── Feature & Detail Helpers ──────────────────────────────────────────
+const addFeature = () => {
+  if (!form.detailData.features) form.detailData.features = [];
+  form.detailData.features.push({ title: '', desc: '' });
+};
+
+const removeFeature = (idx) => {
+  form.detailData.features.splice(idx, 1);
+};
+
+const addStat = () => {
+  if (!form.detailData.stats) form.detailData.stats = [];
+  form.detailData.stats.push({ val: '', label: '' });
+};
+
+const removeStat = (idx) => {
+  form.detailData.stats.splice(idx, 1);
+};
+
+const addTech = () => {
+  if (!form.detailData.technologies) form.detailData.technologies = [];
+  form.detailData.technologies.push({ name: '', stack: '', icon: 'fa-solid fa-code' });
+};
+
+const removeTech = (idx) => {
+  form.detailData.technologies.splice(idx, 1);
+};
+
+const addModule = () => {
+  if (!form.detailData.modules) form.detailData.modules = [];
+  form.detailData.modules.push({ title: '', itemsInput: '', items: [] });
+};
+
+const removeModule = (idx) => {
+  form.detailData.modules.splice(idx, 1);
+};
+
+const addHighlight = () => {
+  if (!form.detailData.highlights) form.detailData.highlights = [];
+  form.detailData.highlights.push({ title: '', desc: '', tag: 'FEATURE', image: '' });
+};
+
+const removeHighlight = (idx) => {
+  form.detailData.highlights.splice(idx, 1);
+};
 
 const onImageChange = (e) => {
   const files = Array.from(e.target.files).slice(0, 7);
@@ -692,25 +1211,34 @@ const onThumbnailChange = (e) => {
   }
 };
 
-
-
 const openAdd = () => {
   Object.assign(form, blankForm());
-  tagsInput.value    = '';
-  editMode.value     = false;
-  formError.value    = '';
-  showModal.value    = true;
+  tagsInput.value      = '';
+  editMode.value       = false;
+  formError.value      = '';
+  projectFormTab.value = 'basic';
+  showModal.value      = true;
 };
 
 const openEdit = async (p) => {
-  formError.value = '';
-  editMode.value  = true;
-  loadingForm.value = true;
-  showModal.value = true;
+  formError.value      = '';
+  editMode.value       = true;
+  loadingForm.value    = true;
+  projectFormTab.value = 'basic';
+  showModal.value      = true;
 
   try {
     const res = await apiClient.get(`/projects/${p.id}`);
     const full = res.data;
+    
+    // Parse modules itemsInput for easy comma-separated editing
+    const rawModules = Array.isArray(full.detailData?.modules) ? full.detailData.modules : [];
+    const formattedModules = rawModules.map(m => ({
+      title: m.title || '',
+      items: Array.isArray(m.items) ? m.items : [],
+      itemsInput: Array.isArray(m.items) ? m.items.join(', ') : (typeof m.items === 'string' ? m.items : ''),
+    }));
+
     Object.assign(form, {
       id:          full.id,
       title:       full.title,
@@ -730,11 +1258,11 @@ const openEdit = async (p) => {
         abstract:     full.detailData?.abstract     ?? '',
         repoUrl:      full.detailData?.repoUrl      ?? '',
         liveUrl:      full.detailData?.liveUrl      ?? '',
-        stats:        full.detailData?.stats        ?? [],
-        features:     full.detailData?.features     ?? [],
-        technologies: full.detailData?.technologies ?? [],
-        modules:      full.detailData?.modules      ?? [],
-        highlights:   full.detailData?.highlights   ?? null,
+        stats:        Array.isArray(full.detailData?.stats) ? full.detailData.stats : [],
+        features:     Array.isArray(full.detailData?.features) ? full.detailData.features : [],
+        technologies: Array.isArray(full.detailData?.technologies) ? full.detailData.technologies : [],
+        modules:      formattedModules,
+        highlights:   Array.isArray(full.detailData?.highlights) ? full.detailData.highlights : [],
         gallery:      full.detailData?.gallery      ?? [],
       },
     });
@@ -760,6 +1288,15 @@ const submitForm = async () => {
 
   form.tags = tagsInput.value.split(',').map(t => t.trim()).filter(Boolean);
 
+  // Format modules items from itemsInput
+  if (Array.isArray(form.detailData.modules)) {
+    form.detailData.modules.forEach(m => {
+      if (typeof m.itemsInput === 'string') {
+        m.items = m.itemsInput.split(',').map(i => i.trim()).filter(Boolean);
+      }
+    });
+  }
+
   saving.value = true;
   try {
     const url = editMode.value
@@ -784,7 +1321,6 @@ const submitForm = async () => {
     if (form.thumbnailFile) {
       formData.append('thumbnail', form.thumbnailFile);
     }
-
 
     formData.append('tags', JSON.stringify(form.tags));
     formData.append('detailData', JSON.stringify(form.detailData));

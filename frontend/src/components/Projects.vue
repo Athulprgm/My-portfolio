@@ -10,13 +10,13 @@
       <div class="text-center mb-10">
         <div class="inline-flex items-center gap-2 border border-[#ffffff]/20 bg-green-950/20 rounded-none px-4 py-1.5 mb-5">
           <i class="fa-solid fa-code text-[#ffffff] text-[10px]"></i>
-          <span class="font-mono text-[10.5px] text-[#ffffff] tracking-wide font-semibold uppercase">Game Saves</span>
+          <span class="font-mono text-[10.5px] text-[#ffffff] tracking-wide font-semibold uppercase">Selected Portfolio</span>
         </div>
         <h1 class="font-mono text-xl md:text-2xl lg:text-3xl font-black text-white mb-4 tracking-tight leading-loose">
-          Completed <span class="bg-gradient-to-r from-white to-neutral-500 bg-clip-text text-transparent">Quests</span>
+          Featured <span class="bg-gradient-to-r from-white to-neutral-500 bg-clip-text text-transparent">Works & Systems</span>
         </h1>
         <p class="font-mono text-[11px] text-emerald-400/90 max-w-md mx-auto leading-relaxed font-semibold">
-          // High-score campaigns logged in the global leaderboard
+          // Production platforms, distributed architectures & engineering case studies
         </p>
       </div>
 
@@ -25,10 +25,10 @@
       <!-- Error state -->
       <div v-if="error" class="text-center py-16">
         <i class="fa-solid fa-triangle-exclamation text-amber-400 text-3xl mb-4 block"></i>
-        <p class="font-mono text-sm text-[#A1A1AA] mb-4">SYSTEM_ERROR: Failed to fetch save files — <span class="text-amber-400">{{ error }}</span></p>
+        <p class="font-mono text-sm text-[#A1A1AA] mb-4">Error loading project data — <span class="text-amber-400">{{ error }}</span></p>
         <button
           @click="fetchProjects"
-          class="font-mono text-xs px-4 py-2 border border-[#ffffff]/40 text-[#ffffff] rounded hover:bg-[#ffffff]/10 transition-colors"
+          class="font-mono text-xs px-4 py-2 border border-[#ffffff]/40 text-[#ffffff] rounded hover:bg-[#ffffff]/10 transition-colors cursor-pointer"
         >
           $ retry
         </button>
@@ -106,8 +106,8 @@
 
             <!-- CTA -->
             <div class="pt-2.5 border-t border-[#2A2A2A] flex items-center justify-between">
-              <span class="font-mono text-[10.5px] text-[#A1A1AA] uppercase font-bold tracking-widest">
-                {{ project.hasDetails ? 'PRESS START TO PLAY' : 'LOCKED' }}
+              <span class="font-mono text-[10.5px] text-[#A1A1AA] uppercase font-bold tracking-widest group-hover:text-white transition-colors">
+                {{ project.hasDetails ? 'EXPLORE CASE STUDY' : 'VIEW PROJECT' }}
               </span>
               <div
                 v-if="project.hasDetails"
@@ -124,9 +124,9 @@
       <div v-if="!error && !loading && hasMoreProjects" class="flex justify-center mt-12">
         <button
           @click="showAll = !showAll"
-          class="flex items-center gap-2 px-6 py-2.5 bg-[#121212] hover:bg-[#121212] border border-[#2A2A2A] rounded-none font-mono text-[11px] text-white tracking-widest transition-all duration-300 uppercase"
+          class="flex items-center gap-2 px-6 py-2.5 bg-[#121212] hover:bg-[#1f1f1f] border border-[#2A2A2A] hover:border-white rounded-none font-mono text-[11px] text-white tracking-widest transition-all duration-300 uppercase cursor-pointer"
         >
-          {{ showAll ? 'Minimize Quests' : 'Load More Quests' }}
+          {{ showAll ? 'Show Less' : 'Load More Projects' }}
           <i class="fa-solid" :class="showAll ? 'fa-chevron-up' : 'fa-chevron-down'"></i>
         </button>
       </div>
@@ -134,7 +134,7 @@
       <!-- Bottom note -->
       <div class="text-center mt-14">
         <span class="font-mono text-[11px] text-[#A1A1AA]">
-          // More save states available in the global databank on <a href="https://github.com/Athulprgm" target="_blank" rel="noopener" class="text-[#ffffff] hover:text-[#00FFFF] font-bold transition-colors">github.com/Athulprgm</a>
+          // Explore more open-source codebases and production repositories on <a href="https://github.com/Athulprgm" target="_blank" rel="noopener" class="text-[#ffffff] hover:text-emerald-400 font-bold transition-colors">github.com/Athulprgm</a>
         </span>
       </div>
     </div>
@@ -163,13 +163,19 @@ const hasMoreProjects = computed(() => {
 });
 
 const tagColorMap = {
-  'React': 'border-cyan-500/30 bg-cyan-950/30 text-[#A1A1AA]',
+  'React': 'border-cyan-500/30 bg-cyan-950/30 text-cyan-400',
+  'Laravel': 'border-red-500/30 bg-red-950/30 text-red-400',
+  'PHP': 'border-indigo-500/30 bg-indigo-950/30 text-indigo-400',
+  'Tailwind': 'border-teal-500/30 bg-teal-950/30 text-teal-400',
+  'SQL': 'border-blue-500/30 bg-blue-950/30 text-blue-400',
+  'MySQL': 'border-blue-500/30 bg-blue-950/30 text-blue-400',
   'Vue': 'border-emerald-500/30 bg-emerald-950/30 text-emerald-400',
   'Node': 'border-green-500/30 bg-green-950/30 text-green-400',
   'MongoDB': 'border-green-500/30 bg-green-950/30 text-green-400',
-  'Express': 'border-[#2A2A2A]/30 bg-[#121212] text-[#A1A1AA]',
-  'Python': 'border-blue-500/30 bg-blue-950/30 text-blue-400',
-  'Django': 'border-teal-500/30 bg-teal-950/30 text-teal-400',
+  'Next': 'border-neutral-400/30 bg-neutral-900/40 text-white',
+  'Next.js': 'border-neutral-400/30 bg-neutral-900/40 text-white',
+  'Flutter': 'border-sky-500/30 bg-sky-950/30 text-sky-400',
+  'Firebase': 'border-amber-500/30 bg-amber-950/30 text-amber-400',
   'AI': 'border-violet-500/30 bg-violet-950/30 text-violet-400',
   'AWS': 'border-orange-500/30 bg-orange-950/30 text-orange-400',
 };
