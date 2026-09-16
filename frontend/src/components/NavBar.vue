@@ -11,9 +11,9 @@
         class="flex items-center gap-2 hover:opacity-80 transition-opacity duration-200 select-none"
         @click.prevent="scrollToSection('home')"
       >
-        <span class="font-mono text-base font-black text-white tracking-tight">athulkrishna</span>
-        <span class="font-mono text-base font-black text-[#A1A1AA] tracking-tight">.online</span>
-        <span class="w-2 h-4 bg-white animate-pulse"></span>
+        <span class="font-sans text-base font-bold text-white tracking-tight">Athul Krishna</span>
+        <span class="font-mono text-xs font-semibold text-emerald-400">/dev</span>
+        <span class="w-1.5 h-3.5 bg-emerald-400 animate-pulse"></span>
       </a>
 
       <!-- Desktop nav -->
@@ -21,16 +21,12 @@
         <li v-for="item in navItems" :key="item.id">
           <a
             :href="`#${item.id}`"
-            class="relative px-4 py-2 font-mono text-[11px] uppercase tracking-widest transition-all duration-200 rounded-none flex items-center gap-1.5 border border-transparent"
+            class="relative px-3.5 py-1.5 font-mono text-xs uppercase tracking-wider transition-all duration-200 rounded-none flex items-center gap-1.5 border border-transparent"
             :class="activeSection === item.id
               ? 'text-white border-white bg-white/10'
               : 'text-[#A1A1AA] hover:text-white hover:border-[#2A2A2A] hover:bg-[#121212]'"
             @click.prevent="scrollToSection(item.id)"
           >
-            <span
-              class="font-bold transition-opacity duration-200"
-              :class="activeSection === item.id ? 'text-white opacity-100' : 'opacity-0 group-hover:opacity-100'"
-            >> </span>
             {{ item.label }}
           </a>
         </li>
@@ -39,9 +35,9 @@
         <li class="ml-4">
           <button
             @click="openCvModal"
-            class="flex items-center gap-2 px-4 py-2 bg-[#121212] text-white hover:bg-[#2A2A2A] border-b-4 border-r-4 border-[#2A2A2A] hover:border-white active:border-b-0 active:border-r-0 active:translate-y-1 active:translate-x-1 font-mono text-[10px] tracking-wider transition-all cursor-pointer rounded-none uppercase font-black"
+            class="flex items-center gap-2 px-3.5 py-2 bg-[#121212] text-white hover:bg-[#2A2A2A] border border-[#2A2A2A] hover:border-white font-mono text-xs tracking-wider transition-all cursor-pointer rounded-none uppercase font-semibold"
           >
-            <i class="fa-solid fa-cloud-arrow-down"></i>
+            <i class="fa-solid fa-cloud-arrow-down text-emerald-400"></i>
             RESUME
           </button>
         </li>
@@ -67,19 +63,19 @@
           v-for="item in navItems"
           :key="item.id"
           :href="`#${item.id}`"
-          class="font-mono text-[10px] py-4 px-4 rounded-none transition-all duration-200 border"
+          class="font-mono text-xs py-3.5 px-4 rounded-none transition-all duration-200 border"
           :class="activeSection === item.id
             ? 'text-white border-white bg-white/10'
             : 'text-[#A1A1AA] border-transparent hover:text-white hover:border-[#2A2A2A] hover:bg-[#121212]'"
           @click.prevent="scrollToSection(item.id); menuOpen = false"
         >
-          <span class="text-white mr-2">></span>{{ item.label }}
+          <span class="text-emerald-400 mr-2">></span>{{ item.label }}
         </a>
         <button
           @click="openCvModal"
-          class="mt-4 flex items-center justify-center gap-2 py-4 px-4 bg-[#121212] text-white hover:bg-[#2A2A2A] border-b-4 border-r-4 border-[#2A2A2A] hover:border-white active:border-b-0 active:border-r-0 active:translate-y-1 active:translate-x-1 font-mono text-[10px] font-black uppercase transition-all cursor-pointer rounded-none"
+          class="mt-3 flex items-center justify-center gap-2 py-3.5 px-4 bg-[#121212] text-white hover:bg-[#2A2A2A] border border-[#2A2A2A] hover:border-white font-mono text-xs font-bold uppercase transition-all cursor-pointer rounded-none"
         >
-          <i class="fa-solid fa-cloud-arrow-down"></i> RESUME
+          <i class="fa-solid fa-cloud-arrow-down text-emerald-400"></i> RESUME
         </button>
       </div>
     </Transition>
@@ -97,11 +93,11 @@
         <!-- Header -->
         <div class="flex items-center justify-between mb-6 pb-4 border-b-2 border-[#2A2A2A] relative z-10">
           <div>
-            <h3 class="font-mono text-[11px] font-bold text-white flex items-center gap-2 uppercase tracking-wider">
+            <h3 class="font-sans text-sm font-bold text-white flex items-center gap-2 uppercase tracking-wider">
               <i class="fa-solid fa-file-pdf text-emerald-400"></i>
-              RESUME & CV PROFILES
+              Resume & CV Profiles
             </h3>
-            <p class="font-mono text-[9px] text-[#A1A1AA] mt-1">// select tailored resume format</p>
+            <p class="font-sans text-xs text-[#A1A1AA] mt-1">Download tailored resume for specific roles</p>
           </div>
           <button @click="showCvModal = false" class="text-[#A1A1AA] hover:text-white transition-colors cursor-pointer w-8 h-8 flex items-center justify-center border border-transparent hover:border-[#2A2A2A] rounded-none bg-[#121212]">
             <i class="fa-solid fa-times text-sm"></i>
@@ -227,22 +223,33 @@ const scrollToSection = (id) => {
   }
 };
 
+let scrollRaf = null;
 const handleScroll = () => {
-  scrolled.value = window.scrollY > 40;
-  const sections = ['home', 'project', 'about', 'contact'];
-  const scrollPos = window.scrollY + 200;
-  for (let i = sections.length - 1; i >= 0; i--) {
-    const sec = document.getElementById(sections[i]);
-    if (sec && sec.offsetTop <= scrollPos) { activeSection.value = sections[i]; break; }
-  }
+  if (scrollRaf) return;
+  scrollRaf = requestAnimationFrame(() => {
+    scrolled.value = window.scrollY > 40;
+    const sections = ['home', 'project', 'about', 'contact'];
+    const scrollPos = window.scrollY + 200;
+    for (let i = sections.length - 1; i >= 0; i--) {
+      const sec = document.getElementById(sections[i]);
+      if (sec && sec.offsetTop <= scrollPos) { 
+        activeSection.value = sections[i]; 
+        break; 
+      }
+    }
+    scrollRaf = null;
+  });
 };
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
+  window.addEventListener('scroll', handleScroll, { passive: true });
   // Pre-load CVs in background
   fetchCvs().catch(() => {});
 });
-onUnmounted(() => window.removeEventListener('scroll', handleScroll));
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
+  if (scrollRaf) cancelAnimationFrame(scrollRaf);
+});
 </script>
 
 <style scoped>

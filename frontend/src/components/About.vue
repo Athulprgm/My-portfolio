@@ -11,13 +11,13 @@
       <div class="max-w-3xl mb-14 sm:mb-16 scroll-reveal" ref="headerRef">
         <div class="inline-flex items-center gap-2 px-3 py-1 bg-[#141414] border border-[#2A2A2A] text-xs font-mono text-[#A1A1AA] mb-4">
           <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-          <span>About Me</span>
+          <span>About Athul</span>
         </div>
         <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight mb-4">
-          Passionate about building fast, intuitive & reliable software.
+          A pragmatic engineer focused on building products that truly work.
         </h2>
-        <p class="text-base sm:text-lg text-[#A1A1AA] leading-relaxed">
-          I'm a full-stack engineer and co-founder with a strong focus on practical problem solving, clean architecture, and shipping products that make a real difference.
+        <p class="text-base sm:text-lg text-[#A1A1AA] leading-relaxed font-sans">
+          I'm a full-stack engineer and co-founder based in Kerala, India. I care about solid fundamentals, thoughtful architecture, and shipping clean software that solves real problems.
         </p>
       </div>
 
@@ -35,15 +35,15 @@
               <span class="text-xs font-mono text-[#71717A]">Trawbit Technologies</span>
             </div>
 
-            <div class="space-y-4 text-[#A1A1AA] text-sm sm:text-[15px] leading-relaxed">
+            <div class="space-y-4 text-[#A1A1AA] text-sm sm:text-[15px] leading-relaxed font-sans">
               <p>
-                Hi, I'm <strong class="text-white font-semibold">Athul Krishna</strong>. As a Co-Founder at Trawbit Technologies, I work across the entire product lifecycle—from early architecture and database modeling to crafting polished interfaces and mobile apps.
+                Hi, I'm <strong class="text-white font-semibold">Athul Krishna</strong>. As a Co-Founder at <strong class="text-white font-medium">Trawbit Technologies</strong>, I lead full-stack product development—from designing relational database models and architecting secure APIs to creating intuitive web and mobile interfaces.
               </p>
               <p>
-                My core stack revolves around <strong class="text-white font-medium">PHP & Laravel</strong> for robust backends, <strong class="text-white font-medium">React, Next.js, and Vue.js</strong> with <strong class="text-white font-medium">Tailwind CSS</strong> for responsive frontends, <strong class="text-white font-medium">Flutter</strong> for cross-platform mobile apps, and <strong class="text-white font-medium">SQL & Node.js</strong> (paired with Firebase for real-time sync).
+                My daily toolkit centers around <strong class="text-white font-medium">PHP & Laravel</strong> for robust server-side architecture, <strong class="text-white font-medium">React, Next.js, and Vue.js</strong> with <strong class="text-white font-medium">Tailwind CSS</strong> for responsive frontends, <strong class="text-white font-medium">Flutter</strong> for native-feel cross-platform mobile apps, and <strong class="text-white font-medium">SQL & Node.js</strong> for efficient data management.
               </p>
               <p>
-                I actively embrace modern AI-assisted engineering tools to accelerate boilerplate and research, giving me more time to focus on code quality, security, domain logic, and user delight.
+                I believe great software is built on straightforward communication, clean code standards, and relentless attention to detail. I love taking complex client requirements and turning them into simple, dependable digital solutions.
               </p>
             </div>
           </div>
@@ -58,7 +58,7 @@
               <span class="block font-mono text-xl sm:text-2xl font-bold text-white mb-1">
                 {{ stat.value }}
               </span>
-              <span class="block text-[11px] text-[#A1A1AA] font-medium leading-tight">
+              <span class="block text-[11px] font-mono text-[#A1A1AA] uppercase leading-tight font-medium">
                 {{ stat.label }}
               </span>
             </div>
@@ -84,19 +84,21 @@
           <!-- Video Display -->
           <div class="w-full h-full min-h-[250px] relative overflow-hidden bg-black flex items-center justify-center border border-[#222222] my-auto">
             <video 
+              ref="secondaryVideoRef"
               src="/secondary-anim.mp4" 
               autoplay 
               loop 
               muted 
               playsinline 
+              preload="metadata"
               class="w-full h-full object-cover transition-all duration-500"
               :class="videoColorOn ? 'grayscale-0' : 'grayscale opacity-85'"
             ></video>
           </div>
 
           <div class="pt-3 mt-4 border-t border-[#222222] flex items-center justify-between text-xs text-[#71717A]">
-            <span>Crafting digital experiences</span>
-            <span class="text-white font-mono">Kerala, India</span>
+            <span class="font-sans">Crafting digital experiences</span>
+            <span class="text-white font-mono text-xs">Kerala, India</span>
           </div>
         </div>
 
@@ -131,7 +133,7 @@
                 <h4 class="text-base font-bold text-white tracking-tight">
                   {{ section.title }}
                 </h4>
-                <p class="text-xs text-[#71717A]">
+                <p class="text-xs text-[#71717A] font-sans mt-0.5">
                   {{ section.subtitle }}
                 </p>
               </div>
@@ -158,7 +160,7 @@
         <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-6">
           <div>
             <h4 class="text-sm font-bold text-white uppercase tracking-wider font-mono">Tools & Technologies</h4>
-            <p class="text-xs text-[#71717A]">Core technologies and libraries I work with on a regular basis</p>
+            <p class="text-xs text-[#71717A] font-sans mt-0.5">Core technologies and libraries I work with on a regular basis</p>
           </div>
           <span class="text-xs font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-500/20 px-2.5 py-1">
             Always Learning & Evolving
@@ -196,6 +198,7 @@ const bioRef = ref(null);
 const expertiseTitleRef = ref(null);
 const sectionRefs = ref([]);
 const marqueeRef = ref(null);
+const secondaryVideoRef = ref(null);
 
 const videoColorOn = ref(false);
 const toggleVideoColor = () => {
@@ -204,22 +207,22 @@ const toggleVideoColor = () => {
 
 const stats = computed(() => [
   { value: settings.value?.quests_cleared || '15+', label: 'Projects Shipped' },
-  { value: settings.value?.time_played || '3+ Yrs', label: 'Years Experience' },
-  { value: settings.value?.uptime_focus || '99.9%', label: 'Stability & Uptime' },
+  { value: settings.value?.time_played || '3+ Yrs', label: 'Experience' },
+  { value: settings.value?.uptime_focus || '100%', label: 'Commitment' },
 ]);
 
 const expertiseSections = [
   {
-    title: 'Frontend Development',
-    subtitle: 'Fast, responsive web interfaces',
+    title: 'Full-Stack Web',
+    subtitle: 'End-to-end web applications',
     icon: 'fa-solid fa-laptop-code',
-    skills: ['React', 'Next.js', 'Vue.js', 'Tailwind CSS', 'JavaScript (ES6+)', 'HTML5 / CSS3']
+    skills: ['Laravel & PHP', 'React & Next.js', 'Vue.js', 'Node.js', 'Tailwind CSS', 'JavaScript (ES6+)']
   },
   {
     title: 'Backend & APIs',
-    subtitle: 'Scalable server architecture',
+    subtitle: 'Clean server-side architecture',
     icon: 'fa-solid fa-server',
-    skills: ['PHP & Laravel', 'Node.js', 'RESTful APIs', 'Authentication & JWT', 'Microservices']
+    skills: ['RESTful APIs', 'Authentication & JWT', 'Microservices', 'Clean Architecture', 'API Security']
   },
   {
     title: 'Mobile Applications',
@@ -234,16 +237,16 @@ const expertiseSections = [
     skills: ['SQL / MySQL', 'PostgreSQL', 'Schema Design', 'Query Optimization', 'Database Indexing']
   },
   {
-    title: 'AI-Assisted Workflow',
-    subtitle: 'High velocity & rapid delivery',
-    icon: 'fa-solid fa-bolt',
-    skills: ['AI-Augmented Coding', 'Rapid Prototyping', 'Prompt Engineering', 'Automated Testing', 'Fast Iterations']
+    title: 'UI / UX & Frontend Craft',
+    subtitle: 'Responsive, accessible design',
+    icon: 'fa-solid fa-wand-magic-sparkles',
+    skills: ['Responsive Layouts', 'Tailwind CSS', 'Component Systems', 'User Empathy', 'Performance']
   },
   {
     title: 'DevOps & Tooling',
     subtitle: 'Deployment & version control',
     icon: 'fa-solid fa-cloud',
-    skills: ['Docker', 'Git & GitHub', 'Postman / API Docs', 'Linux & Nginx', 'Firebase Cloud']
+    skills: ['Git & GitHub', 'Docker', 'Linux & Nginx', 'Postman / API Docs', 'Cloud Hosting']
   }
 ];
 
@@ -265,6 +268,7 @@ const technologies = [
 ];
 
 let observer = null;
+let videoObserver = null;
 
 onMounted(() => {
   fetchSettings();
@@ -281,9 +285,25 @@ onMounted(() => {
     if (ref.value) observer.observe(ref.value);
   });
   sectionRefs.value.forEach(el => observer.observe(el));
+
+  if (secondaryVideoRef.value) {
+    videoObserver = new IntersectionObserver((entries) => {
+      const vid = secondaryVideoRef.value;
+      if (!vid) return;
+      if (entries[0].isIntersecting) {
+        if (vid.paused) vid.play().catch(() => {});
+      } else {
+        if (!vid.paused) vid.pause();
+      }
+    }, { threshold: 0.05 });
+    videoObserver.observe(secondaryVideoRef.value);
+  }
 });
 
-onUnmounted(() => observer?.disconnect());
+onUnmounted(() => {
+  observer?.disconnect();
+  videoObserver?.disconnect();
+});
 </script>
 
 <style scoped>

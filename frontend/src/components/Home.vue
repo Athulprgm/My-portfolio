@@ -26,33 +26,33 @@
         <!-- ==================== LEFT: EDITORIAL NARRATIVE (Cols 1-7) ==================== -->
         <div class="lg:col-span-7 flex flex-col justify-center text-left">
 
+          <!-- Eyebrow Tag -->
+          <div class="inline-flex items-center gap-2 px-3 py-1 bg-[#141414] border border-[#2A2A2A] text-xs font-mono text-[#A1A1AA] mb-5 w-fit">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span class="text-xs text-white/90 font-medium">Co-Founder & Full-Stack Developer</span>
+          </div>
+
           <!-- Master Headline -->
-          <h1 class="font-sans text-4xl sm:text-5xl lg:text-[3.6rem] font-black text-white leading-[1.08] tracking-[-0.035em] mb-6">
-            Engineering<br />
-            <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-100 to-neutral-400">
-              systems that scale,
-            </span><br />
-            <span class="relative inline-block text-white">
-              crafted with precision.
-              <svg class="absolute -bottom-1.5 left-0 w-full text-emerald-400/60" height="6" viewBox="0 0 200 6" fill="none">
-                <path d="M1 4.5C50 1.5 150 1.5 199 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              </svg>
+          <h1 class="font-sans text-4xl sm:text-5xl lg:text-[3.4rem] font-extrabold text-white leading-[1.12] tracking-tight mb-6">
+            Building reliable web & mobile apps,<br />
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-white via-neutral-200 to-neutral-400">
+              crafted with care and precision.
             </span>
           </h1>
 
           <!-- Narrative Description with Dynamic Rotating Specialty -->
           <p class="font-sans text-base sm:text-lg text-[#A1A1AA] leading-relaxed max-w-xl mb-6 font-normal">
-            Hi, I'm <span class="text-white font-bold">Athul Krishna</span> — {{ settings.bio_tagline || 'Co-Founder & AI-Assisted Full-Stack Architect' }}. Specializing in
+            Hi, I'm <span class="text-white font-semibold">Athul Krishna</span> — {{ settings.bio_tagline || 'Co-Founder & Full-Stack Developer' }} at Trawbit Technologies. Focused on
             <span class="text-white font-medium underline decoration-emerald-400/60 underline-offset-4 transition-all">
               {{ currentRolePhrase }}
             </span>
-            with zero compromise on performance or design fidelity.
+            with clean architecture, solid engineering, and great user experience.
           </p>
 
           <!-- Tech Stack Capsule Bar -->
           <div class="flex flex-wrap items-center gap-2 mb-8">
-            <span class="font-mono text-[9px] text-[#A1A1AA] uppercase tracking-widest mr-1 flex items-center gap-1.5">
-              <i class="fa-solid fa-layer-group text-[8px] text-white/60"></i> Stack:
+            <span class="font-mono text-[10px] text-[#A1A1AA] uppercase tracking-widest mr-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-layer-group text-[9px] text-white/60"></i> Core Stack:
             </span>
             <span 
               v-for="tech in techStack" 
@@ -67,7 +67,7 @@
           <div class="flex flex-wrap items-center gap-3.5 mb-10">
             <button
               @click="scrollToProjects"
-              class="group relative inline-flex items-center gap-3 px-6 py-3.5 !bg-white !text-black font-mono text-xs font-black uppercase tracking-wider rounded-none hover:!bg-neutral-200 active:scale-95 transition-all shadow-[0_0_25px_rgba(255,255,255,0.2)] cursor-pointer"
+              class="group relative inline-flex items-center gap-3 px-6 py-3.5 !bg-white !text-black font-mono text-xs font-bold uppercase tracking-wider rounded-none hover:!bg-neutral-200 active:scale-95 transition-all shadow-[0_0_25px_rgba(255,255,255,0.2)] cursor-pointer"
             >
               <span class="text-black font-black">EXPLORE WORK</span>
               <i class="fa-solid fa-arrow-right-long text-xs text-black group-hover:translate-x-1 transition-transform"></i>
@@ -89,7 +89,7 @@
               :title="copiedEmail ? 'Copied to clipboard!' : 'Copy Email Address'"
             >
               <i :class="copiedEmail ? 'fa-solid fa-check text-emerald-400' : 'fa-regular fa-copy text-white/70'"></i>
-              <span class="text-[10px] uppercase font-bold" :class="copiedEmail ? 'text-emerald-400' : 'text-white'">{{ copiedEmail ? 'COPIED!' : 'EMAIL' }}</span>
+              <span :class="copiedEmail ? 'text-emerald-400' : 'text-white'">{{ copiedEmail ? 'COPIED!' : 'EMAIL' }}</span>
             </button>
 
             <!-- Social Links -->
@@ -129,7 +129,7 @@
               <span class="font-mono text-2xl sm:text-3xl font-black text-white tracking-tight">
                 {{ stat.value }}
               </span>
-              <span class="font-mono text-[9px] text-[#A1A1AA] uppercase tracking-wider mt-1">
+              <span class="font-mono text-[9.5px] text-[#A1A1AA] uppercase tracking-wider mt-1">
                 {{ stat.label }}
               </span>
             </div>
@@ -160,6 +160,8 @@
               <img 
                 src="/profile.png" 
                 alt="Athul Krishna" 
+                fetchpriority="high"
+                decoding="async"
                 class="absolute inset-0 w-full h-full object-cover rounded-full opacity-30 pointer-events-none" 
               />
               <!-- Keyed Green-Screen ChromaVideo -->
@@ -208,10 +210,10 @@ const currentTheme = computed(() => themes.find(t => t.id === activeTheme.value)
 
 // ================= DYNAMIC ROTATING SPECIALTY =================
 const defaultRolePhrases = [
-  'AI-accelerated full stack engineering with PHP, Laravel & Node.js',
-  'high-performance modern web apps with React, Next.js & Vue.js',
+  'full-stack web applications with Laravel, PHP & Node.js',
+  'clean, fast frontend interfaces with React, Next.js & Vue.js',
   'cross-platform mobile applications with Flutter & Firebase',
-  'scalable SQL databases, RESTful APIs & high-velocity delivery',
+  'robust database design, REST APIs & cloud hosting',
 ];
 
 const rolePhrases = computed(() => {
@@ -234,7 +236,7 @@ const initRoleCycle = () => {
   roleTimer = setInterval(() => {
     const len = rolePhrases.value.length || 1;
     currentRoleIndex.value = (currentRoleIndex.value + 1) % len;
-  }, 3200);
+  }, 3400);
 };
 
 // ================= DYNAMIC TECH STACK & METRICS =================
@@ -252,9 +254,9 @@ const techStack = computed(() => {
 });
 
 const keyStats = computed(() => [
-  { value: settings.value?.experience_years || '03+', label: 'Years Exp.' },
-  { value: settings.value?.shipped_works || '15+', label: 'Shipped Works' },
-  { value: settings.value?.uptime_focus || '99.9%', label: 'Uptime Focus' },
+  { value: settings.value?.experience_years || '3+ Yrs', label: 'Experience' },
+  { value: settings.value?.shipped_works || '15+', label: 'Projects Shipped' },
+  { value: settings.value?.uptime_focus || '100%', label: 'Commitment' },
 ]);
 
 // One-Click Copy Email
@@ -363,7 +365,7 @@ onMounted(() => {
 
   if (containerRef.value) observer.observe(containerRef.value);
 
-  window.addEventListener('resize', handleResize);
+  window.addEventListener('resize', handleResize, { passive: true });
 });
 
 onUnmounted(() => {

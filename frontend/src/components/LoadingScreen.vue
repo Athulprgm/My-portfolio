@@ -1,7 +1,8 @@
 <template>
   <div
-    class="hello-loader fixed inset-0 w-screen h-screen bg-[#050505] text-white z-[9999] overflow-hidden flex flex-col justify-between items-center select-none cursor-default"
+    class="hello-loader fixed inset-0 w-screen h-screen bg-[#050505] text-white z-[9999] overflow-hidden flex flex-col justify-between items-center select-none cursor-pointer"
     :class="{ 'hello-loader-exit': isExiting }"
+    @click="triggerExit"
   >
     <!-- Soft Ambient Display Aura -->
     <div
@@ -10,14 +11,15 @@
     ></div>
 
     <!-- Minimal Subtle Header -->
-    <header class="w-full pt-8 px-8 sm:px-12 flex justify-between items-center z-10 opacity-40">
+    <header class="w-full pt-6 px-8 sm:px-12 flex justify-between items-center z-10 opacity-40">
       <span class="text-[11px] font-mono tracking-[0.3em] uppercase">ATHUL KRISHNA</span>
+      <span class="text-[10px] font-mono text-[#71717A] tracking-wider uppercase hidden sm:inline">Click anywhere to enter</span>
       <span class="text-[11px] font-mono tracking-[0.3em] uppercase">© {{ currentYear }}</span>
     </header>
 
     <!-- Center Stage: The Iconic Apple Cursive "hello" Writing Animation -->
     <main class="relative z-10 flex flex-col items-center justify-center my-auto w-full px-6">
-      <div class="w-[210px] sm:w-[280px] md:w-[350px] lg:w-[400px] max-w-[70vw] flex items-center justify-center relative">
+      <div class="w-[200px] sm:w-[260px] md:w-[320px] lg:w-[360px] max-w-[70vw] flex items-center justify-center relative">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="-109.06069946289062 -9 2504.0606994628906 746.156005859375"
@@ -51,8 +53,8 @@
       </div>
     </main>
 
-    <!-- Bottom Minimal Spacing -->
-    <footer class="w-full pb-8 px-8 flex justify-center items-center z-10 h-6"></footer>
+    <!-- Bottom Spacing -->
+    <footer class="w-full pb-6 px-8 flex justify-center items-center z-10 h-6"></footer>
   </div>
 </template>
 
@@ -77,13 +79,21 @@ const triggerExit = () => {
   if (animTimeout1) clearTimeout(animTimeout1);
   if (exitTimeout) clearTimeout(exitTimeout);
 
-  // Smooth slide-up transition duration
+  // Graceful, smooth, and deliberate upward slide
   setTimeout(() => {
     emit('loading-complete');
-  }, 750);
+  }, 650);
+};
+
+const handleKeyDown = (e) => {
+  if (e.key === ' ' || e.key === 'Enter' || e.key === 'Escape') {
+    triggerExit();
+  }
 };
 
 onMounted(() => {
+  window.addEventListener('keydown', handleKeyDown);
+
   const p1 = path1Ref.value;
   const p2 = path2Ref.value;
 
@@ -91,58 +101,58 @@ onMounted(() => {
     const len1 = p1.getTotalLength();
     const len2 = p2.getTotalLength();
 
-    // Set initial dasharray & full offset (hidden)
     p1.style.strokeDasharray = `${len1} ${len1}`;
     p1.style.strokeDashoffset = `${len1}`;
     p2.style.strokeDasharray = `${len2} ${len2}`;
     p2.style.strokeDashoffset = `${len2}`;
 
-    // Force layout reflow
     p1.getBoundingClientRect();
 
-    // Animate Path 1: Initial 'h' stroke (~1050ms)
-    p1.animate([
-      { strokeDashoffset: len1 },
-      { strokeDashoffset: 0 }
-    ], {
-      duration: 1050,
-      easing: 'cubic-bezier(0.45, 0, 0.2, 1)',
-      fill: 'forwards'
-    });
-
-    // Animate Path 2: Starts gracefully as p1 finishes for continuous handwriting flow (~2500ms)
-    animTimeout1 = setTimeout(() => {
-      anim2Instance = p2.animate([
-        { strokeDashoffset: len2 },
+    // Initial brief breath before starting
+    setTimeout(() => {
+      // Path 1 ('h'): 1100ms graceful stroke
+      p1.animate([
+        { strokeDashoffset: len1 },
         { strokeDashoffset: 0 }
       ], {
-        duration: 2500,
-        easing: 'cubic-bezier(0.35, 0.1, 0.25, 1)',
+        duration: 1100,
+        easing: 'cubic-bezier(0.45, 0, 0.2, 1)',
         fill: 'forwards'
       });
 
-      // ONLY after the full handwriting animation has 100% finished drawing:
-      anim2Instance.onfinish = () => {
-        // Linger briefly (600ms) on the completed cursive signature before entering
-        exitTimeout = setTimeout(() => {
-          triggerExit();
-        }, 600);
-      };
-    }, 850);
+      // Path 2 ('ello'): 2200ms flowing cursive handwriting
+      animTimeout1 = setTimeout(() => {
+        anim2Instance = p2.animate([
+          { strokeDashoffset: len2 },
+          { strokeDashoffset: 0 }
+        ], {
+          duration: 2200,
+          easing: 'cubic-bezier(0.35, 0.1, 0.25, 1)',
+          fill: 'forwards'
+        });
 
-    // Safe maximum guard timeout ensuring screen is never stuck
+        anim2Instance.onfinish = () => {
+          // Pause so the user can enjoy the completed "hello" before smooth exit
+          exitTimeout = setTimeout(() => {
+            triggerExit();
+          }, 750);
+        };
+      }, 850);
+    }, 200);
+
+    // Fallback safety exit after 5 seconds
     exitTimeout = setTimeout(() => {
       triggerExit();
-    }, 4500);
+    }, 5000);
   } else {
-    // Fallback safe exit
     exitTimeout = setTimeout(() => {
       triggerExit();
-    }, 3000);
+    }, 1500);
   }
 });
 
 onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeyDown);
   if (animTimeout1) clearTimeout(animTimeout1);
   if (exitTimeout) clearTimeout(exitTimeout);
   if (anim2Instance) {
@@ -161,10 +171,10 @@ onUnmounted(() => {
   will-change: stroke-dashoffset;
 }
 
-/* Premium Apple-style exit: smooth upward slide */
+/* Elegant & smooth upward slide */
 .hello-loader-exit {
   transform: translateY(-100%) !important;
   opacity: 0.95;
-  transition: transform 0.75s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.75s ease !important;
+  transition: transform 0.65s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.65s ease !important;
 }
 </style>

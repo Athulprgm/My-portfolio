@@ -7,16 +7,16 @@
     <div class="max-w-6xl mx-auto relative z-10">
 
       <!-- Section header -->
-      <div class="text-center mb-20 scroll-reveal" ref="headerRef">
-        <div class="inline-flex items-center gap-2 border border-[#ffffff]/20 bg-green-950/20 rounded-none px-4 py-1.5 mb-5">
-          <span class="w-1.5 h-1.5 bg-[#ffffff] rounded-none animate-pulse"></span>
-          <span class="font-mono text-[10.5px] text-[#ffffff] tracking-wide font-semibold uppercase">Career Milestones</span>
+      <div class="text-center mb-16 scroll-reveal" ref="headerRef">
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-[#141414] border border-[#2A2A2A] text-xs font-mono text-[#A1A1AA] mb-4">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>My Journey</span>
         </div>
-        <h2 class="font-mono text-xl md:text-2xl lg:text-3xl font-black text-white mb-4 tracking-tight leading-loose">
-          Professional <span class="bg-gradient-to-r from-[#ffffff] via-neutral-300 to-neutral-500 bg-clip-text text-transparent">Trajectory</span>
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight mb-4">
+          Education & Experience
         </h2>
-        <p class="font-mono text-[11px] text-emerald-400/90 max-w-md mx-auto leading-relaxed font-semibold">
-          // Academic foundations, engineering specialization & leadership history
+        <p class="text-base text-[#A1A1AA] max-w-xl mx-auto leading-relaxed font-sans">
+          A timeline of my academic background, technical training, and building products at Trawbit.
         </p>
       </div>
 
@@ -44,7 +44,7 @@
               :style="{ transitionDelay: `${i * 0.1}s` }"
             >
               <div
-                class="relative p-6 rounded-none border bg-[#0A0A0A] backdrop-blur hover:bg-[#0A0A0A] transition-all duration-500 group-hover:-translate-y-1"
+                class="relative p-6 sm:p-7 rounded-none border bg-[#0A0A0A] backdrop-blur hover:bg-[#121212] transition-all duration-300 group-hover:-translate-y-1"
                 :style="{ borderColor: item.color + '20' }"
                 @mouseenter="hoveredItem = i"
                 @mouseleave="hoveredItem = null"
@@ -57,18 +57,18 @@
 
                 <!-- Year tag -->
                 <div
-                  class="inline-flex items-center gap-2 rounded-none px-3 py-1 text-[9.5px] font-mono font-black tracking-[0.2em] mb-4 border"
+                  class="inline-flex items-center gap-2 rounded-none px-3 py-1 text-[10px] font-mono font-bold tracking-[0.15em] mb-4 border"
                   :style="{ background: item.color + '10', borderColor: item.color + '30', color: item.color }"
                 >
                   <i :class="item.icon" class="text-[9px]"></i>
                   {{ item.year }}
                 </div>
 
-                <h3 class="font-mono text-lg font-black text-white mb-1.5 leading-tight">{{ item.title }}</h3>
-                <p class="font-mono text-[11px] font-semibold tracking-wide mb-3" :style="{ color: item.color }">
+                <h3 class="font-sans text-lg font-bold text-white mb-1.5 leading-tight">{{ item.title }}</h3>
+                <p class="font-mono text-xs font-semibold tracking-wide mb-3" :style="{ color: item.color }">
                   {{ item.institution }}
                 </p>
-                <p class="font-sans text-[13px] text-[#A1A1AA] leading-relaxed">{{ item.description }}</p>
+                <p class="font-sans text-sm text-[#A1A1AA] leading-relaxed">{{ item.description }}</p>
 
                 <!-- Status chip -->
                 <div
@@ -113,7 +113,7 @@ const timeline = reactive([
     year: '2021',
     title: 'Higher Secondary in Science',
     institution: 'State Board Higher Secondary',
-    description: 'Completed Higher Secondary education focusing on Mathematics and Physical Sciences, building rigorous logical reasoning and analytical foundations.',
+    description: 'Completed higher secondary education in Mathematics and Physical Sciences, developing strong logical reasoning and problem-solving fundamentals.',
     icon: 'fa-solid fa-graduation-cap',
     color: '#4FC08D',
     status: 'Completed',
@@ -123,7 +123,7 @@ const timeline = reactive([
     year: '2023',
     title: 'BSc Computer Science',
     institution: 'Kannur University Affiliate (IHRD)',
-    description: 'Earned a Bachelor of Science in Computer Science — mastering data structures, algorithms, relational databases, networking, and software engineering.',
+    description: 'Earned a Bachelor of Science in Computer Science, building core expertise in algorithms, data structures, relational database design, and software engineering.',
     icon: 'fa-solid fa-university',
     color: '#00FFFF',
     status: 'Graduated',
@@ -131,9 +131,9 @@ const timeline = reactive([
   },
   {
     year: '2024',
-    title: 'Full Stack Architecture Program',
-    institution: 'Enterprise Technology Accelerator',
-    description: 'Completed intensive full-stack engineering training — architecting production applications, scalable REST APIs, and modern frontend ecosystems.',
+    title: 'Full-Stack Web & Mobile Specialization',
+    institution: 'Full-Stack Engineering Training',
+    description: 'Intensive practical development with Laravel backends, modern JS frameworks (React & Vue), Flutter mobile development, and production database modeling.',
     icon: 'fa-solid fa-laptop-code',
     color: '#008F11',
     status: 'Certified',
@@ -141,9 +141,9 @@ const timeline = reactive([
   },
   {
     year: '2025 - PRESENT',
-    title: 'Co-Founder & Chief Architect',
+    title: 'Co-Founder & Full-Stack Lead',
     institution: 'Trawbit Technologies',
-    description: 'Co-founded Trawbit Technologies — engineering scalable SaaS platforms, enterprise web backends, and cloud architectures for global clients.',
+    description: 'Co-founded Trawbit Technologies—architecting and delivering production web applications, custom APIs, and mobile apps for clients.',
     icon: 'fa-solid fa-rocket',
     color: '#ffffff',
     status: 'Active',

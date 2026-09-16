@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -69,6 +68,12 @@ html {
   box-sizing: border-box;
   overflow-x: hidden;
   width: 100%;
+}
+
+/* Rendering performance optimizations */
+section:not(#home) {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 750px;
 }
 
 *,

@@ -5,7 +5,7 @@
       <!-- Section Title Label -->
       <div class="w-full md:w-1/4 flex-shrink-0 text-center md:text-left scroll-reveal" ref="titleRef">
         <h3 class="font-mono text-xs uppercase tracking-widest text-emerald-400 font-semibold mb-2">Core Focus</h3>
-        <h2 class="font-mono text-2xl lg:text-3xl font-black text-white">Capabilities</h2>
+        <h2 class="font-sans text-2xl lg:text-3xl font-bold text-white tracking-tight">Capabilities</h2>
       </div>
 
       <!-- Metrics Grid -->
@@ -18,11 +18,11 @@
           :style="{ transitionDelay: `${i * 0.12}s` }"
         >
           <div class="relative overflow-hidden mb-2">
-            <span class="block font-mono text-3xl sm:text-4xl lg:text-5xl font-black text-white group-hover:text-white transition-colors duration-300">
+            <span class="block font-mono text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white group-hover:text-emerald-400 transition-colors duration-300">
               {{ item.metric }}
             </span>
           </div>
-          <p class="font-sans text-[11px] lg:text-xs text-[#A1A1AA] uppercase tracking-wider font-semibold max-w-[130px] text-center md:text-left">
+          <p class="font-mono text-[10.5px] text-[#A1A1AA] uppercase tracking-wider font-medium max-w-[130px] text-center md:text-left">
             {{ item.label }}
           </p>
         </div>

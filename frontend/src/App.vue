@@ -60,7 +60,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, defineAsyncComponent } from 'vue';
 import NavBar               from './components/NavBar.vue';
 import Home                 from './components/Home.vue';
 import Projects             from './components/Projects.vue';
@@ -71,10 +71,11 @@ import Contact              from './components/Contact.vue';
 import ScrollToTop          from './components/ScrollToTop.vue';
 import SpecialDayPopup      from './components/SpecialDayPopup.vue';
 import LoadingScreenWrapper from './components/LoadingScreenWrapper.vue';
-import ProjectDetail        from './components/ProjectDetail.vue';
-import AdminPanel           from './components/AdminPanel.vue';
-import ScrollProgress       from './components/ScrollProgress.vue';
 import { fetchProjectById } from './composables/useProjects';
+
+// Async Lazy-Loaded Components for ultra-fast initial bundle
+const AdminPanel = defineAsyncComponent(() => import('./components/AdminPanel.vue'));
+const ProjectDetail = defineAsyncComponent(() => import('./components/ProjectDetail.vue'));
 
 // ── Routing state ─────────────────────────────────────────────────
 const currentRoute    = ref('home');   // 'home' | 'admin' | 'project'

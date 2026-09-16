@@ -130,6 +130,18 @@
         >
           <i class="fa-solid fa-chart-simple mr-1.5"></i> Experience & Metrics
         </button>
+        <button
+          @click="currentTab = 'enquiries'"
+          class="font-mono text-xs px-4 py-2 rounded-lg border transition-all cursor-pointer whitespace-nowrap flex items-center gap-1.5"
+          :class="currentTab === 'enquiries' 
+            ? 'bg-[#ffffff]/10 border-[#ffffff]/30 text-[#ffffff] font-bold' 
+            : 'border-transparent text-[#A1A1AA] hover:text-neutral-200 hover:bg-[#2A2A2A]'"
+        >
+          <i class="fa-solid fa-inbox mr-1"></i> Client Enquiries
+          <span v-if="enquiryStats.unread > 0" class="px-1.5 py-0.2 text-[10px] bg-emerald-500 text-black font-extrabold rounded-full">
+            {{ enquiryStats.unread }}
+          </span>
+        </button>
       </div>
 
       <!-- ─── Projects Section ─── -->
@@ -179,6 +191,16 @@
                 <td class="px-4 py-3 hidden lg:table-cell font-mono text-[11px] text-[#A1A1AA]">{{ p.created_at ?? '—' }}</td>
                 <td class="px-4 py-3 text-right">
                   <div class="flex items-center justify-end gap-2">
+                    <a
+                      v-if="p.liveUrl"
+                      :href="p.liveUrl"
+                      target="_blank"
+                      rel="noopener"
+                      class="flex items-center gap-1 font-mono text-[10px] px-2.5 py-1.5 border border-emerald-500/30 rounded-lg text-emerald-400 hover:bg-emerald-950/30 transition-all"
+                      title="Open Live Demo Link"
+                    >
+                      <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
                     <button
                       @click="openEdit(p)"
                       class="flex items-center gap-1.5 font-mono text-[10px] px-3 py-1.5 border border-[#2A2A2A] rounded-lg text-[#A1A1AA] hover:border-[#ffffff]/40 hover:text-[#ffffff] transition-all cursor-pointer"
@@ -369,6 +391,156 @@
         </div>
       </div>
 
+      <!-- ─── Client Enquiries Section ─── -->
+      <div v-else-if="currentTab === 'enquiries'" class="flex flex-col gap-6">
+        <!-- Stats Header -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div class="p-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl flex flex-col">
+            <span class="text-xs font-mono text-[#A1A1AA] uppercase">Total Enquiries</span>
+            <span class="text-2xl font-mono font-bold text-white mt-1">{{ enquiryStats.total }}</span>
+          </div>
+          <div class="p-4 bg-[#0A0A0A] border border-emerald-500/30 rounded-xl flex flex-col">
+            <span class="text-xs font-mono text-emerald-400 uppercase">Unread / New</span>
+            <span class="text-2xl font-mono font-bold text-emerald-400 mt-1">{{ enquiryStats.unread }}</span>
+          </div>
+          <div class="p-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl flex flex-col">
+            <span class="text-xs font-mono text-cyan-400 uppercase">Contacted</span>
+            <span class="text-2xl font-mono font-bold text-white mt-1">{{ enquiryStats.contacted }}</span>
+          </div>
+          <div class="p-4 bg-[#0A0A0A] border border-[#2A2A2A] rounded-xl flex flex-col">
+            <span class="text-xs font-mono text-neutral-500 uppercase">Archived</span>
+            <span class="text-2xl font-mono font-bold text-white mt-1">{{ enquiryStats.archived }}</span>
+          </div>
+        </div>
+
+        <!-- Filters & Search Toolbar -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 bg-[#0A0A0A] border border-[#2A2A2A] p-4 rounded-xl">
+          <div class="flex items-center gap-2 overflow-x-auto">
+            <button
+              v-for="filter in ['all', 'new', 'contacted', 'archived']"
+              :key="filter"
+              @click="enquiryFilter = filter; filterEnquiries()"
+              class="px-3 py-1.5 rounded-lg font-mono text-xs capitalize transition-all cursor-pointer whitespace-nowrap"
+              :class="enquiryFilter === filter ? 'bg-white text-black font-bold' : 'text-[#A1A1AA] hover:text-white bg-[#141414] border border-[#2A2A2A]'"
+            >
+              {{ filter }}
+            </button>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <div class="relative flex-1 sm:w-64">
+              <i class="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-[#555] text-xs"></i>
+              <input
+                v-model="enquirySearch"
+                @input="filterEnquiries"
+                placeholder="Search name, email, service..."
+                class="w-full bg-[#121212] border border-[#2A2A2A] rounded-lg pl-8 pr-3 py-1.5 font-mono text-xs text-white focus:outline-none focus:border-indigo-500"
+              />
+            </div>
+            <button
+              @click="loadEnquiries"
+              class="p-2 bg-[#121212] border border-[#2A2A2A] text-[#A1A1AA] hover:text-white rounded-lg transition-colors cursor-pointer"
+              title="Refresh"
+            >
+              <i class="fa-solid fa-rotate text-xs" :class="loadingEnquiries ? 'animate-spin' : ''"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Enquiries List / Table -->
+        <div v-if="loadingEnquiries" class="flex items-center justify-center py-24 gap-3">
+          <div class="w-5 h-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+          <span class="font-mono text-xs text-[#A1A1AA]">Loading client enquiries...</span>
+        </div>
+
+        <div v-else class="overflow-x-auto rounded-2xl border border-[#2A2A2A]">
+          <table class="w-full text-left">
+            <thead class="bg-[#121212] border-b border-[#2A2A2A]">
+              <tr>
+                <th class="font-mono text-[10px] text-[#A1A1AA] uppercase tracking-widest px-4 py-3">Client</th>
+                <th class="font-mono text-[10px] text-[#A1A1AA] uppercase tracking-widest px-4 py-3">Service & Budget</th>
+                <th class="font-mono text-[10px] text-[#A1A1AA] uppercase tracking-widest px-4 py-3 hidden md:table-cell">Message Preview</th>
+                <th class="font-mono text-[10px] text-[#A1A1AA] uppercase tracking-widest px-4 py-3">Status</th>
+                <th class="font-mono text-[10px] text-[#A1A1AA] uppercase tracking-widest px-4 py-3 hidden lg:table-cell">Received</th>
+                <th class="font-mono text-[10px] text-[#A1A1AA] uppercase tracking-widest px-4 py-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/5 bg-[#0A0A0A]">
+              <tr
+                v-for="enq in filteredEnquiries"
+                :key="enq.id"
+                class="hover:bg-[#141414] transition-colors cursor-pointer"
+                :class="!enq.is_read ? 'bg-emerald-950/15' : ''"
+                @click="openEnquiryDetail(enq)"
+              >
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2.5">
+                    <span v-if="!enq.is_read" class="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0 animate-pulse" title="Unread"></span>
+                    <div>
+                      <span class="font-mono text-xs font-bold text-white block">{{ enq.name }}</span>
+                      <span class="font-mono text-[11px] text-[#A1A1AA] block">{{ enq.email }}</span>
+                      <span v-if="enq.phone" class="font-mono text-[10px] text-[#71717A] block">{{ enq.phone }}</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="font-mono text-xs text-indigo-300 block font-medium">{{ enq.service || 'General' }}</span>
+                  <span v-if="enq.budget" class="font-mono text-[10px] text-[#A1A1AA] bg-[#1a1a1a] px-2 py-0.5 rounded mt-1 inline-block">{{ enq.budget }}</span>
+                </td>
+                <td class="px-4 py-3 hidden md:table-cell max-w-xs">
+                  <p class="font-sans text-xs text-[#A1A1AA] truncate">{{ enq.message }}</p>
+                </td>
+                <td class="px-4 py-3" @click.stop>
+                  <select
+                    :value="enq.status"
+                    @change="updateStatusInline(enq, $event.target.value)"
+                    class="bg-[#141414] border border-[#2A2A2A] rounded px-2 py-1 text-[11px] font-mono focus:outline-none cursor-pointer"
+                    :class="enq.status === 'new' ? 'text-emerald-400 border-emerald-500/40' : (enq.status === 'contacted' ? 'text-cyan-400 border-cyan-500/30' : 'text-neutral-400 border-neutral-700')"
+                  >
+                    <option value="new">🟢 New</option>
+                    <option value="contacted">🔵 Contacted</option>
+                    <option value="archived">⚪ Archived</option>
+                  </select>
+                </td>
+                <td class="px-4 py-3 font-mono text-[11px] text-[#71717A] hidden lg:table-cell whitespace-nowrap">
+                  {{ formatEnquiryDate(enq.created_at) }}
+                </td>
+                <td class="px-4 py-3 text-right" @click.stop>
+                  <div class="flex items-center justify-end gap-1.5">
+                    <a
+                      :href="`mailto:${enq.email}?subject=Re: Project Enquiry - Athul Krishna`"
+                      class="p-1.5 border border-[#2A2A2A] rounded-lg text-indigo-400 hover:border-indigo-400 hover:bg-indigo-950/30 transition-all text-xs"
+                      title="Reply via Email"
+                    >
+                      <i class="fa-solid fa-reply"></i>
+                    </a>
+                    <button
+                      @click="toggleReadInline(enq)"
+                      class="p-1.5 border border-[#2A2A2A] rounded-lg text-[#A1A1AA] hover:text-white transition-all text-xs cursor-pointer"
+                      :title="enq.is_read ? 'Mark Unread' : 'Mark Read'"
+                    >
+                      <i :class="enq.is_read ? 'fa-regular fa-envelope-open' : 'fa-solid fa-envelope text-emerald-400'"></i>
+                    </button>
+                    <button
+                      @click="confirmDeleteEnquiry(enq)"
+                      class="p-1.5 border border-[#2A2A2A] rounded-lg text-[#A1A1AA] hover:border-red-500/40 hover:text-red-400 transition-all text-xs cursor-pointer"
+                      title="Delete Enquiry"
+                    >
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+              <tr v-if="filteredEnquiries.length === 0">
+                <td colspan="6" class="text-center py-16 font-mono text-xs text-[#A1A1AA]">
+                  No client enquiries found matching your filter.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </main>
 
     <!-- ── Add / Edit Modal ────────────────────────────────────── -->
@@ -411,7 +583,7 @@
               class="font-mono text-xs px-3 py-2 border-b-2 transition-all cursor-pointer whitespace-nowrap"
               :class="projectFormTab === 'hero' ? 'border-indigo-500 text-white font-bold bg-white/5' : 'border-transparent text-[#A1A1AA] hover:text-white'"
             >
-              <i class="fa-solid fa-heading mr-1.5"></i> Hero & Links
+              <i class="fa-solid fa-heading mr-1.5"></i> Hero & Overview
             </button>
             <button
               type="button"
@@ -475,7 +647,7 @@
                   </div>
                 </div>
 
-                <!-- Row: sort_order + tags + hasDetails -->
+                <!-- Row: sort_order + tags -->
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
                   <div class="field">
                     <label>Sort Order</label>
@@ -487,15 +659,27 @@
                   </div>
                 </div>
 
+                <!-- Optional Direct Links (Live Demo URL and GitHub Repo) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div class="field">
+                    <label><i class="fa-solid fa-arrow-up-right-from-square mr-1 text-emerald-400"></i> Live Project / Demo URL <span class="text-[#A1A1AA] text-[10px] font-normal">(Optional)</span></label>
+                    <input v-model="form.detailData.liveUrl" placeholder="https://example.com" />
+                  </div>
+                  <div class="field">
+                    <label><i class="fa-brands fa-github mr-1 text-indigo-400"></i> GitHub Repository URL <span class="text-[#A1A1AA] text-[10px] font-normal">(Optional)</span></label>
+                    <input v-model="form.detailData.repoUrl" placeholder="https://github.com/..." />
+                  </div>
+                </div>
+
                 <div class="flex items-center gap-3 p-3 bg-[#121212] border border-[#2A2A2A] rounded-lg">
                   <input id="hasDetailsCheck" type="checkbox" v-model="form.has_details" class="w-4 h-4 rounded text-indigo-600 focus:ring-0 cursor-pointer" />
                   <label for="hasDetailsCheck" class="text-xs text-white font-mono cursor-pointer select-none">
-                    Enable Interactive Project Detail Page (Press Start to Play)
+                    Enable Interactive Case Study / Detail Page
                   </label>
                 </div>
               </div>
 
-              <!-- ─── TAB 2: HERO & LINKS ─── -->
+              <!-- ─── TAB 2: HERO & OVERVIEW ─── -->
               <div v-show="projectFormTab === 'hero'" class="flex flex-col gap-5">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div class="field">
@@ -516,17 +700,6 @@
                 <div class="field">
                   <label>Abstract (Full Project Story & Case Study)</label>
                   <textarea v-model="form.detailData.abstract" rows="5" placeholder="Deep dive into the architecture, challenges, and engineering decisions..."></textarea>
-                </div>
-
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div class="field">
-                    <label><i class="fa-brands fa-github mr-1"></i> GitHub Repo URL</label>
-                    <input v-model="form.detailData.repoUrl" placeholder="https://github.com/..." />
-                  </div>
-                  <div class="field">
-                    <label><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Live Demo URL</label>
-                    <input v-model="form.detailData.liveUrl" placeholder="https://..." />
-                  </div>
                 </div>
               </div>
 
@@ -952,6 +1125,166 @@
       </div>
     </Transition>
 
+    <!-- ── Enquiry Detail Modal ────────────────────────────────── -->
+    <Transition name="modal">
+      <div
+        v-if="selectedEnquiry"
+        class="fixed inset-0 z-[105] bg-[#0A0A0A] backdrop-blur-sm flex items-start justify-center p-4 overflow-y-auto"
+        @click.self="selectedEnquiry = null"
+      >
+        <div class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-2xl w-full max-w-xl my-8 shadow-2xl overflow-hidden" @click.stop>
+          <!-- Header -->
+          <div class="flex items-center justify-between px-6 py-4 border-b border-[#2A2A2A] bg-[#121212]">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-envelope text-emerald-400"></i>
+              <h3 class="font-mono text-sm font-bold text-white">Client Enquiry Details</h3>
+            </div>
+            <button @click="selectedEnquiry = null" class="text-[#A1A1AA] hover:text-white transition-colors cursor-pointer">
+              <i class="fa-solid fa-times"></i>
+            </button>
+          </div>
+
+          <!-- Body -->
+          <div class="p-6 flex flex-col gap-5">
+            <!-- Client Info Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 p-4 bg-[#121212] border border-[#2A2A2A] rounded-xl">
+              <div>
+                <span class="text-[10px] font-mono uppercase text-[#A1A1AA] block">Client Name</span>
+                <span class="text-sm font-bold text-white font-mono">{{ selectedEnquiry.name }}</span>
+              </div>
+              <div>
+                <span class="text-[10px] font-mono uppercase text-[#A1A1AA] block">Email Address</span>
+                <a :href="`mailto:${selectedEnquiry.email}`" class="text-sm text-indigo-400 hover:underline font-mono">{{ selectedEnquiry.email }}</a>
+              </div>
+              <div v-if="selectedEnquiry.phone">
+                <span class="text-[10px] font-mono uppercase text-[#A1A1AA] block">Phone / WhatsApp</span>
+                <a :href="`tel:${selectedEnquiry.phone}`" class="text-xs text-white font-mono hover:text-emerald-400">{{ selectedEnquiry.phone }}</a>
+              </div>
+              <div>
+                <span class="text-[10px] font-mono uppercase text-[#A1A1AA] block">Received On</span>
+                <span class="text-xs text-white font-mono">{{ formatEnquiryDate(selectedEnquiry.created_at, true) }}</span>
+              </div>
+            </div>
+
+            <!-- Service & Budget -->
+            <div class="flex flex-wrap items-center gap-3">
+              <div class="px-3 py-1.5 bg-[#141414] border border-[#2A2A2A] rounded-lg">
+                <span class="text-[10px] font-mono text-[#71717A] uppercase block">Service</span>
+                <span class="text-xs font-mono text-indigo-300 font-semibold">{{ selectedEnquiry.service || 'Not specified' }}</span>
+              </div>
+              <div class="px-3 py-1.5 bg-[#141414] border border-[#2A2A2A] rounded-lg">
+                <span class="text-[10px] font-mono text-[#71717A] uppercase block">Budget</span>
+                <span class="text-xs font-mono text-emerald-400 font-semibold">{{ selectedEnquiry.budget || 'Flexible' }}</span>
+              </div>
+              <div class="px-3 py-1.5 bg-[#141414] border border-[#2A2A2A] rounded-lg ml-auto">
+                <span class="text-[10px] font-mono text-[#71717A] uppercase block">Status</span>
+                <select
+                  v-model="selectedEnquiry.status"
+                  @change="updateStatusInline(selectedEnquiry, selectedEnquiry.status)"
+                  class="bg-transparent text-xs font-mono font-bold text-white focus:outline-none cursor-pointer"
+                >
+                  <option value="new" class="bg-[#121212]">🟢 New</option>
+                  <option value="contacted" class="bg-[#121212]">🔵 Contacted</option>
+                  <option value="archived" class="bg-[#121212]">⚪ Archived</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Full Message -->
+            <div>
+              <span class="text-[10px] font-mono uppercase text-[#A1A1AA] block mb-2">Message Content</span>
+              <div class="p-4 bg-[#121212] border border-[#2A2A2A] rounded-xl text-sm text-[#ddd] leading-relaxed whitespace-pre-wrap font-sans">
+                {{ selectedEnquiry.message }}
+              </div>
+            </div>
+
+            <!-- Admin Internal Notes -->
+            <div class="flex flex-col gap-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-mono uppercase text-[#A1A1AA]">Admin Internal Notes</span>
+                <button
+                  @click="saveEnquiryNotes(selectedEnquiry)"
+                  :disabled="savingEnquiryNotes"
+                  class="text-[10px] font-mono px-2 py-0.5 bg-indigo-600/30 hover:bg-indigo-600 text-indigo-300 hover:text-white rounded border border-indigo-500/30 transition-colors cursor-pointer"
+                >
+                  {{ savingEnquiryNotes ? 'Saving...' : 'Save Notes' }}
+                </button>
+              </div>
+              <textarea
+                v-model="selectedEnquiry.notes"
+                rows="2"
+                placeholder="Internal notes about this lead/deal (e.g. Sent quote on WhatsApp, meeting booked for Friday)..."
+                class="w-full bg-[#121212] border border-[#2A2A2A] rounded-lg p-2.5 font-mono text-xs text-white focus:outline-none focus:border-indigo-500"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="flex items-center justify-between px-6 py-4 border-t border-[#2A2A2A] bg-[#121212]">
+            <button
+              @click="toggleReadInline(selectedEnquiry)"
+              class="font-mono text-xs px-3 py-2 border border-[#2A2A2A] rounded-lg text-[#A1A1AA] hover:text-white transition-colors cursor-pointer flex items-center gap-1.5"
+            >
+              <i :class="selectedEnquiry.is_read ? 'fa-regular fa-envelope-open' : 'fa-solid fa-envelope text-emerald-400'"></i>
+              <span>{{ selectedEnquiry.is_read ? 'Mark as Unread' : 'Mark as Read' }}</span>
+            </button>
+
+            <div class="flex items-center gap-3">
+              <a
+                :href="`mailto:${selectedEnquiry.email}?subject=Re: Your Project Enquiry - Athul Krishna`"
+                class="font-mono text-xs px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg transition-colors flex items-center gap-2 font-bold"
+              >
+                <i class="fa-solid fa-reply"></i> Reply via Email
+              </a>
+              <button
+                @click="confirmDeleteEnquiry(selectedEnquiry); selectedEnquiry = null"
+                class="font-mono text-xs px-3 py-2 border border-[#2A2A2A] hover:border-red-500/40 text-red-400 rounded-lg transition-colors cursor-pointer"
+              >
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Transition>
+
+    <!-- ── Enquiry Delete Confirm Modal ────────────────────────── -->
+    <Transition name="modal">
+      <div
+        v-if="enquiryDeleteTarget"
+        class="fixed inset-0 z-[110] bg-[#0A0A0A] backdrop-blur-sm flex items-center justify-center p-4"
+        @click.self="enquiryDeleteTarget = null"
+      >
+        <div class="bg-[#0A0A0A] border border-red-500/20 rounded-2xl p-6 w-full max-w-sm shadow-2xl">
+          <div class="flex flex-col items-center gap-3 text-center">
+            <div class="w-12 h-12 rounded-full bg-red-950/40 border border-red-500/20 flex items-center justify-center">
+              <i class="fa-solid fa-trash text-red-400 text-lg"></i>
+            </div>
+            <h3 class="font-mono text-sm font-bold text-white">Delete Enquiry?</h3>
+            <p class="font-sans text-xs text-[#A1A1AA] leading-relaxed">
+              This will permanently delete the enquiry from <span class="text-white font-semibold">{{ enquiryDeleteTarget.name }}</span> ({{ enquiryDeleteTarget.email }}).
+            </p>
+            <div class="flex gap-3 mt-2 w-full">
+              <button
+                @click="enquiryDeleteTarget = null"
+                class="flex-1 font-mono text-xs py-2 border border-[#2A2A2A] rounded-lg text-[#A1A1AA] hover:text-white transition-colors cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                @click="deleteEnquiryExecute"
+                :disabled="deletingEnquiry"
+                class="flex-1 font-mono text-xs py-2 bg-red-600 hover:bg-red-500 disabled:opacity-50 text-white rounded-lg transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <div v-if="deletingEnquiry" class="w-3 h-3 border-2 border-[#2A2A2A] border-t-transparent rounded-full animate-spin"></div>
+                <span>{{ deletingEnquiry ? 'Deleting…' : 'Delete' }}</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Transition>
+
     <!-- Toast -->
     <Transition name="toast">
       <div
@@ -1060,6 +1393,7 @@ const login = async () => {
     loadProjects();
     loadCvs();
     loadSettingsData();
+    loadEnquiries();
   } catch (err) {
     if (err.response?.status === 401) {
       loginError.value = 'Wrong key — try again.';
@@ -1072,11 +1406,154 @@ const login = async () => {
 };
 
 const savedKey = sessionStorage.getItem('admin_key');
-if (savedKey) { keyInput.value = savedKey; authed.value = true; }
+if (savedKey) { 
+  keyInput.value = savedKey; 
+  authed.value = true;
+}
+
+onMounted(() => {
+  if (savedKey) {
+    loadProjects();
+    loadCvs();
+    loadSettingsData();
+    loadEnquiries();
+  }
+});
 
 const goHome = () => {
   window.history.pushState({}, '', '/');
   window.dispatchEvent(new PopStateEvent('popstate'));
+};
+
+// ── Client Enquiries State ─────────────────────────────────────────
+const rawEnquiries = ref([]);
+const filteredEnquiries = ref([]);
+const enquiryStats = ref({ total: 0, unread: 0, new: 0, contacted: 0, archived: 0 });
+const loadingEnquiries = ref(false);
+const enquiryFilter = ref('all');
+const enquirySearch = ref('');
+const selectedEnquiry = ref(null);
+const savingEnquiryNotes = ref(false);
+const enquiryDeleteTarget = ref(null);
+const deletingEnquiry = ref(false);
+
+const loadEnquiries = async () => {
+  loadingEnquiries.value = true;
+  try {
+    const res = await apiClient.get('/admin/enquiries');
+    if (res.data.success) {
+      rawEnquiries.value = res.data.enquiries || [];
+      if (res.data.stats) {
+        enquiryStats.value = res.data.stats;
+      }
+      filterEnquiries();
+    }
+  } catch (e) {
+    apiError.value = `Failed to load enquiries: ${e.response?.data?.message || e.message}`;
+  } finally {
+    loadingEnquiries.value = false;
+  }
+};
+
+const filterEnquiries = () => {
+  let list = [...rawEnquiries.value];
+  if (enquiryFilter.value !== 'all') {
+    list = list.filter(e => e.status === enquiryFilter.value);
+  }
+  if (enquirySearch.value.trim()) {
+    const s = enquirySearch.value.toLowerCase();
+    list = list.filter(e => 
+      (e.name && e.name.toLowerCase().includes(s)) ||
+      (e.email && e.email.toLowerCase().includes(s)) ||
+      (e.service && e.service.toLowerCase().includes(s)) ||
+      (e.message && e.message.toLowerCase().includes(s))
+    );
+  }
+  filteredEnquiries.value = list;
+};
+
+const openEnquiryDetail = async (enquiry) => {
+  selectedEnquiry.value = { ...enquiry };
+  if (!enquiry.is_read) {
+    toggleReadInline(enquiry, true);
+  }
+};
+
+const toggleReadInline = async (enquiry, forceRead = null) => {
+  const newRead = forceRead !== null ? forceRead : !enquiry.is_read;
+  try {
+    await apiClient.put(`/admin/enquiries/${enquiry.id}`, { is_read: newRead });
+    enquiry.is_read = newRead;
+    if (selectedEnquiry.value && selectedEnquiry.value.id === enquiry.id) {
+      selectedEnquiry.value.is_read = newRead;
+    }
+    const match = rawEnquiries.value.find(e => e.id === enquiry.id);
+    if (match) match.is_read = newRead;
+    enquiryStats.value.unread = rawEnquiries.value.filter(e => !e.is_read).length;
+    showToast(newRead ? 'Marked as read' : 'Marked as unread', 'success');
+  } catch (e) {
+    showToast('Failed to update status', 'error');
+  }
+};
+
+const updateStatusInline = async (enquiry, newStatus) => {
+  try {
+    await apiClient.put(`/admin/enquiries/${enquiry.id}`, { status: newStatus });
+    enquiry.status = newStatus;
+    if (selectedEnquiry.value && selectedEnquiry.value.id === enquiry.id) {
+      selectedEnquiry.value.status = newStatus;
+    }
+    const match = rawEnquiries.value.find(e => e.id === enquiry.id);
+    if (match) match.status = newStatus;
+    showToast(`Status updated to ${newStatus}`, 'success');
+  } catch (e) {
+    showToast('Failed to update status', 'error');
+  }
+};
+
+const saveEnquiryNotes = async (enquiry) => {
+  savingEnquiryNotes.value = true;
+  try {
+    await apiClient.put(`/admin/enquiries/${enquiry.id}`, { notes: enquiry.notes });
+    const match = rawEnquiries.value.find(e => e.id === enquiry.id);
+    if (match) match.notes = enquiry.notes;
+    showToast('Notes saved ✓', 'success');
+  } catch (e) {
+    showToast('Failed to save notes', 'error');
+  } finally {
+    savingEnquiryNotes.value = false;
+  }
+};
+
+const confirmDeleteEnquiry = (enquiry) => {
+  enquiryDeleteTarget.value = enquiry;
+};
+
+const deleteEnquiryExecute = async () => {
+  if (!enquiryDeleteTarget.value) return;
+  deletingEnquiry.value = true;
+  try {
+    await apiClient.delete(`/admin/enquiries/${enquiryDeleteTarget.value.id}`);
+    showToast('Enquiry deleted', 'success');
+    rawEnquiries.value = rawEnquiries.value.filter(e => e.id !== enquiryDeleteTarget.value.id);
+    enquiryStats.value.total = rawEnquiries.value.length;
+    enquiryStats.value.unread = rawEnquiries.value.filter(e => !e.is_read).length;
+    filterEnquiries();
+    enquiryDeleteTarget.value = null;
+  } catch (e) {
+    showToast('Failed to delete enquiry', 'error');
+  } finally {
+    deletingEnquiry.value = false;
+  }
+};
+
+const formatEnquiryDate = (dateStr, full = false) => {
+  if (!dateStr) return '';
+  const d = new Date(dateStr);
+  if (full) {
+    return d.toLocaleString('en-US', { dateStyle: 'medium', timeStyle: 'short' });
+  }
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
 };
 
 // ── Project list ──────────────────────────────────────────────────

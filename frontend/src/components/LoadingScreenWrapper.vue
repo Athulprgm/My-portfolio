@@ -7,7 +7,10 @@
 import { ref } from 'vue';
 import LoadingScreen from './LoadingScreen.vue';
 
-const isLoading = ref(true);
+// Only skip loading screen on explicit /admin routes
+const isAdminRoute = window.location.pathname.startsWith('/admin');
+
+const isLoading = ref(!isAdminRoute);
 
 const handleLoadingComplete = () => {
   isLoading.value = false;

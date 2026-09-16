@@ -16,12 +16,13 @@ import { ref, onMounted, onUnmounted } from 'vue';
 
 const isVisible = ref(false);
 
+let raf = null;
 const toggleVisibility = () => {
-  if (window.scrollY > 300) {
-    isVisible.value = true;
-  } else {
-    isVisible.value = false;
-  }
+  if (raf) return;
+  raf = requestAnimationFrame(() => {
+    isVisible.value = window.scrollY > 300;
+    raf = null;
+  });
 };
 
 const scrollToTop = () => {
@@ -32,10 +33,11 @@ const scrollToTop = () => {
 };
 
 onMounted(() => {
-  window.addEventListener("scroll", toggleVisibility);
+  window.addEventListener("scroll", toggleVisibility, { passive: true });
 });
 
 onUnmounted(() => {
   window.removeEventListener("scroll", toggleVisibility);
+  if (raf) cancelAnimationFrame(raf);
 });
 </script>

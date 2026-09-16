@@ -5,17 +5,17 @@ let _cachedSettings = null;
 let _fetchSettingsPromise = null;
 
 const settings = ref(_cachedSettings || {
-  experience_years: '03+',
+  experience_years: '3+ Yrs',
   shipped_works: '15+',
-  uptime_focus: '99.9%',
+  uptime_focus: '100%',
   role_phrases: [
-    'modern React & Vue web applications styled with Tailwind CSS',
-    'high-performance PHP & Laravel backends with SQL databases',
-    'scalable cloud architectures & distributed APIs',
-    'end-to-end full stack platforms with 99.9% uptime',
+    'full-stack web applications with Laravel, PHP & Node.js',
+    'clean, fast frontend interfaces with React, Next.js & Vue.js',
+    'cross-platform mobile applications with Flutter & Firebase',
+    'robust database design, REST APIs & cloud hosting',
   ],
-  bio_tagline: 'Co-Founder & Full-Stack Architect',
-  quests_cleared: '10+',
+  bio_tagline: 'Co-Founder & Full-Stack Developer',
+  quests_cleared: '15+',
   time_played: '3+ Yrs',
 });
 

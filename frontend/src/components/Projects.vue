@@ -7,16 +7,16 @@
     <div class="max-w-6xl mx-auto relative z-10">
 
       <!-- Section header -->
-      <div class="text-center mb-10">
-        <div class="inline-flex items-center gap-2 border border-[#ffffff]/20 bg-green-950/20 rounded-none px-4 py-1.5 mb-5">
-          <i class="fa-solid fa-code text-[#ffffff] text-[10px]"></i>
-          <span class="font-mono text-[10.5px] text-[#ffffff] tracking-wide font-semibold uppercase">Selected Portfolio</span>
+      <div class="text-center mb-14">
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-[#141414] border border-[#2A2A2A] text-xs font-mono text-[#A1A1AA] mb-4">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>Selected Portfolio</span>
         </div>
-        <h1 class="font-mono text-xl md:text-2xl lg:text-3xl font-black text-white mb-4 tracking-tight leading-loose">
-          Featured <span class="bg-gradient-to-r from-white to-neutral-500 bg-clip-text text-transparent">Works & Systems</span>
-        </h1>
-        <p class="font-mono text-[11px] text-emerald-400/90 max-w-md mx-auto leading-relaxed font-semibold">
-          // Production platforms, distributed architectures & engineering case studies
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight mb-4">
+          Featured Work & Projects
+        </h2>
+        <p class="text-base text-[#A1A1AA] max-w-xl mx-auto leading-relaxed font-sans">
+          A selection of production web applications, mobile apps, and custom systems built with modern technology.
         </p>
       </div>
 
@@ -25,12 +25,12 @@
       <!-- Error state -->
       <div v-if="error" class="text-center py-16">
         <i class="fa-solid fa-triangle-exclamation text-amber-400 text-3xl mb-4 block"></i>
-        <p class="font-mono text-sm text-[#A1A1AA] mb-4">Error loading project data — <span class="text-amber-400">{{ error }}</span></p>
+        <p class="font-sans text-sm text-[#A1A1AA] mb-4">Unable to load projects right now ({{ error }})</p>
         <button
           @click="fetchProjects"
           class="font-mono text-xs px-4 py-2 border border-[#ffffff]/40 text-[#ffffff] rounded hover:bg-[#ffffff]/10 transition-colors cursor-pointer"
         >
-          $ retry
+          Retry
         </button>
       </div>
 
@@ -63,11 +63,11 @@
         <article
           v-for="project in filteredProjects"
           :key="project.id"
-          class="project-card group relative bg-[#0A0A0A] backdrop-blur border-2 border-[#2A2A2A] rounded-none overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:border-[#2A2A2A] hover:shadow-[0_0_20px_rgba(255,255,255,0.4)]"
+          class="project-card group relative bg-[#0A0A0A] backdrop-blur border-2 border-[#2A2A2A] rounded-none overflow-hidden flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:border-[#444] hover:shadow-[0_0_25px_rgba(255,255,255,0.15)]"
           @click="handleProjectClick(project)"
         >
           <!-- Card image -->
-          <div class="relative w-full h-48 overflow-hidden border-b-2 border-[#2A2A2A] group-hover:border-[#2A2A2A] transition-colors">
+          <div class="relative w-full h-48 overflow-hidden border-b-2 border-[#2A2A2A] group-hover:border-[#333] transition-colors">
             <img
               :src="getImageUrl(project.thumbnail, project.image)"
               :alt="project.title"
@@ -76,7 +76,7 @@
               class="w-full h-full object-cover transition-all duration-700 grayscale group-hover:grayscale-0"
             />
             <!-- Gradient overlay -->
-            <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/50 to-transparent pointer-events-none"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/60 via-transparent to-transparent pointer-events-none"></div>
 
             <!-- Project number badge -->
             <div class="absolute top-3 left-3 w-7 h-7 rounded-none bg-[#0A0A0A] border border-[#2A2A2A] flex items-center justify-center font-mono text-[10px] text-[#A1A1AA]">
@@ -97,7 +97,7 @@
             </div>
 
             <!-- Title + description -->
-            <h3 class="font-mono text-[15px] font-black text-white leading-tight group-hover:text-[#ffffff] transition-colors duration-200">
+            <h3 class="font-sans text-base font-bold text-white leading-snug group-hover:text-emerald-400 transition-colors duration-200">
               {{ project.title }}
             </h3>
             <p class="font-sans text-[13px] text-[#A1A1AA] leading-relaxed line-clamp-2 flex-1">
@@ -105,15 +105,18 @@
             </p>
 
             <!-- CTA -->
-            <div class="pt-2.5 border-t border-[#2A2A2A] flex items-center justify-between">
+            <div class="pt-2.5 border-t border-[#222222] flex items-center justify-between">
               <span class="font-mono text-[10.5px] text-[#A1A1AA] uppercase font-bold tracking-widest group-hover:text-white transition-colors">
-                {{ project.hasDetails ? 'EXPLORE CASE STUDY' : 'VIEW PROJECT' }}
+                {{ project.hasDetails ? 'EXPLORE CASE STUDY' : (project.liveUrl ? 'LIVE DEMO' : (project.repoUrl ? 'VIEW CODE' : 'VIEW PROJECT')) }}
               </span>
               <div
-                v-if="project.hasDetails"
+                v-if="project.hasDetails || project.liveUrl || project.repoUrl"
                 class="w-7 h-7 rounded-none bg-[#ffffff]/10 border border-[#ffffff]/40 flex items-center justify-center group-hover:bg-[#ffffff]/20 group-hover:border-[#ffffff] transition-all duration-300"
               >
-                <i class="fa-solid fa-arrow-right text-[#ffffff] group-hover:text-white text-[10px] transition-all duration-300 group-hover:translate-x-0.5"></i>
+                <i
+                  :class="project.hasDetails ? 'fa-solid fa-arrow-right' : (project.liveUrl ? 'fa-solid fa-arrow-up-right-from-square' : 'fa-brands fa-github')"
+                  class="text-[#ffffff] group-hover:text-white text-[10px] transition-all duration-300 group-hover:translate-x-0.5"
+                ></i>
               </div>
             </div>
           </div>
@@ -133,8 +136,8 @@
 
       <!-- Bottom note -->
       <div class="text-center mt-14">
-        <span class="font-mono text-[11px] text-[#A1A1AA]">
-          // Explore more open-source codebases and production repositories on <a href="https://github.com/Athulprgm" target="_blank" rel="noopener" class="text-[#ffffff] hover:text-emerald-400 font-bold transition-colors">github.com/Athulprgm</a>
+        <span class="font-sans text-xs text-[#A1A1AA]">
+          Explore more open-source code and projects on <a href="https://github.com/Athulprgm" target="_blank" rel="noopener" class="text-white hover:text-emerald-400 font-semibold underline underline-offset-4 transition-colors font-mono">github.com/Athulprgm</a>
         </span>
       </div>
     </div>
@@ -192,6 +195,10 @@ const handleProjectClick = (project) => {
     window.history.pushState({}, '', `/project/${project.id}`);
     window.dispatchEvent(new PopStateEvent('popstate'));
     window.scrollTo(0, 0);
+  } else if (project.liveUrl) {
+    window.open(project.liveUrl, '_blank', 'noopener,noreferrer');
+  } else if (project.repoUrl) {
+    window.open(project.repoUrl, '_blank', 'noopener,noreferrer');
   }
 };
 

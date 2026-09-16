@@ -2,12 +2,12 @@
   <div class="min-h-screen bg-[#050505] text-white font-sans py-16 sm:py-24 px-4 sm:px-6 relative overflow-x-hidden">
     <!-- Navigation -->
     <div class="fixed top-0 left-0 w-full h-16 bg-[#0A0A0A] backdrop-blur-md border-b border-[#2A2A2A] px-4 sm:px-6 flex items-center justify-between z-50 no-print">
-      <button @click="handleBack" class="flex items-center gap-2 font-mono text-xs text-[#A1A1AA] hover:text-white transition-colors">
+      <button @click="handleBack" class="flex items-center gap-2 font-mono text-xs text-[#A1A1AA] hover:text-white transition-colors cursor-pointer">
         <i class="fa-solid fa-arrow-left"></i>
-        <span>cd ..</span>
+        <span>Back to Projects</span>
       </button>
       <div class="flex items-center gap-2">
-        <button @click="handlePrint" class="flex items-center gap-2 px-3.5 py-1.5 border border-[#2A2A2A] rounded font-mono text-xs text-[#A1A1AA] hover:border-[#ffffff]/40 hover:text-white transition-all print-btn">
+        <button @click="handlePrint" class="flex items-center gap-2 px-3.5 py-1.5 border border-[#2A2A2A] rounded font-mono text-xs text-[#A1A1AA] hover:border-[#ffffff]/40 hover:text-white transition-all print-btn cursor-pointer">
           <i class="fa-solid fa-file-pdf"></i>
           <span>Download PDF</span>
         </button>
@@ -19,7 +19,7 @@
           class="flex items-center gap-2 px-3.5 py-1.5 border border-[#2A2A2A] rounded font-mono text-xs text-[#A1A1AA] hover:border-[#ffffff]/40 hover:text-white transition-all"
         >
           <i class="fa-brands fa-github"></i>
-          <span>Repo</span>
+          <span>Source Code</span>
         </a>
         <a
           v-if="detailData.liveUrl && detailData.liveUrl !== '#'"
@@ -38,11 +38,11 @@
       <!-- Hero Section -->
       <div class="pt-8 pb-16 border-b border-[#2A2A2A] text-left">
         <div class="max-w-3xl">
-          <h1 class="font-mono text-3xl md:text-4xl font-bold tracking-tight text-white mb-4">
+          <h1 class="font-sans text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-4">
             {{ detailData.heroTitle }} 
-            <span class="text-[#ffffff]">{{ detailData.heroSubject }}</span>
+            <span class="text-emerald-400">{{ detailData.heroSubject }}</span>
           </h1>
-          <p class="font-mono text-xs text-[#A1A1AA] mb-8">{{ detailData.tagline }}</p>
+          <p class="font-sans text-sm text-[#A1A1AA] mb-8">{{ detailData.tagline }}</p>
 
           <div class="flex gap-8 items-center flex-wrap">
             <template v-for="(stat, idx) in detailData.stats" :key="idx">
@@ -62,16 +62,16 @@
         <div class="flex flex-col gap-12">
           <!-- Abstract -->
           <section class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
-            <h3 class="font-mono text-sm font-semibold text-white mb-4 tracking-wider flex items-center gap-2.5">
-              <i class="fa-solid fa-align-left text-[#A1A1AA]"></i> Abstract
+            <h3 class="font-sans text-base font-bold text-white mb-4 tracking-wide flex items-center gap-2.5">
+              <i class="fa-solid fa-align-left text-emerald-400"></i> Project Overview
             </h3>
             <p class="text-sm text-[#A1A1AA] leading-relaxed font-sans">{{ detailData.abstract }}</p>
           </section>
 
           <!-- Highlights (if any) -->
           <section v-if="detailData.highlights" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
-            <h3 class="font-mono text-sm font-semibold text-white mb-6 tracking-wider flex items-center gap-2.5">
-              <i class="fa-solid fa-star text-[#A1A1AA]"></i> Featured Highlights
+            <h3 class="font-sans text-base font-bold text-white mb-6 tracking-wide flex items-center gap-2.5">
+              <i class="fa-solid fa-star text-emerald-400"></i> Featured Highlights
             </h3>
             <div class="flex flex-col gap-6">
               <div v-for="(item, idx) in detailData.highlights" :key="idx" class="flex flex-col sm:flex-row gap-6 border-b border-[#2A2A2A] last:border-b-0 pb-6 last:pb-0">
@@ -80,7 +80,7 @@
                   <span class="absolute top-2 left-2 bg-[#0A0A0A] backdrop-blur-xs border border-[#ffffff]/20 text-[#ffffff] font-mono text-[9px] px-2 py-0.5 rounded-none">{{ item.tag }}</span>
                 </div>
                 <div class="flex flex-col justify-center">
-                  <h4 class="font-mono text-sm font-bold text-white mb-2">{{ item.title }}</h4>
+                  <h4 class="font-sans text-sm font-bold text-white mb-2">{{ item.title }}</h4>
                   <p class="text-xs text-[#A1A1AA] leading-relaxed">{{ item.desc }}</p>
                 </div>
               </div>
@@ -89,8 +89,8 @@
 
           <!-- Gallery -->
           <section v-if="galleryImages.length > 0" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
-            <h3 class="font-mono text-sm font-semibold text-white mb-6 tracking-wider flex items-center gap-2.5">
-              <i class="fa-solid fa-images text-[#A1A1AA]"></i> Interface Gallery
+            <h3 class="font-sans text-base font-bold text-white mb-6 tracking-wide flex items-center gap-2.5">
+              <i class="fa-solid fa-images text-emerald-400"></i> Interface Gallery
             </h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               <div
@@ -109,16 +109,16 @@
 
           <!-- Key Features -->
           <section class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
-            <h3 class="font-mono text-sm font-semibold text-white mb-6 tracking-wider flex items-center gap-2.5">
-              <i class="fa-solid fa-bolt text-[#A1A1AA]"></i> Key Features
+            <h3 class="font-sans text-base font-bold text-white mb-6 tracking-wide flex items-center gap-2.5">
+              <i class="fa-solid fa-bolt text-emerald-400"></i> Key Features
             </h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div v-for="(feature, idx) in detailData.features" :key="idx" class="flex gap-4 p-4 border border-[#2A2A2A] rounded-none bg-[#121212] hover:border-[#2A2A2A] transition-colors">
-                <div class="text-[#ffffff] mt-0.5 text-xs flex-shrink-0">
+              <div v-for="(feature, idx) in detailData.features" :key="idx" class="flex gap-4 p-4 border border-[#2A2A2A] rounded-none bg-[#121212] hover:border-[#333] transition-colors">
+                <div class="text-emerald-400 mt-0.5 text-xs flex-shrink-0">
                   <i class="fa-solid fa-check"></i>
                 </div>
                 <div>
-                  <h4 class="font-mono text-xs font-semibold text-white mb-2 tracking-wide">{{ feature.title }}</h4>
+                  <h4 class="font-sans text-xs font-bold text-white mb-1.5 tracking-wide">{{ feature.title }}</h4>
                   <p class="text-xs text-[#A1A1AA] leading-relaxed font-sans">{{ feature.desc }}</p>
                 </div>
               </div>
@@ -130,8 +130,8 @@
         <div class="flex flex-col gap-12">
           <!-- Tech Stack -->
           <section class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
-            <h3 class="font-mono text-sm font-semibold text-white mb-6 tracking-wider flex items-center gap-2.5">
-              <i class="fa-solid fa-layer-group text-[#A1A1AA]"></i> Tech Stack
+            <h3 class="font-sans text-base font-bold text-white mb-6 tracking-wide flex items-center gap-2.5">
+              <i class="fa-solid fa-layer-group text-emerald-400"></i> Tech Stack
             </h3>
             <div class="flex flex-col gap-3">
               <div v-for="(tech, idx) in detailData.technologies" :key="idx" class="flex items-center gap-4 py-2 border-b border-[#2A2A2A] last:border-b-0">
