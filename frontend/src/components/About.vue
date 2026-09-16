@@ -1,136 +1,143 @@
 <template>
-  <section class="py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden" id="about">
+  <section class="py-20 sm:py-28 px-4 sm:px-6 relative overflow-hidden bg-[#0A0A0A] border-b border-[#2A2A2A]" id="about">
 
-    <!-- Decorative background orbs -->
-    <div class="absolute top-1/3 right-0 w-80 h-80 bg-[#ffffff]/5 rounded-none blur-[120px] pointer-events-none"></div>
-    <div class="absolute bottom-1/4 left-0 w-64 h-64 bg-[#00FFFF]/4 rounded-none blur-[100px] pointer-events-none"></div>
+    <!-- Subtle ambient lighting -->
+    <div class="absolute top-1/4 right-0 w-96 h-96 bg-white/[0.02] rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute bottom-1/4 left-0 w-96 h-96 bg-emerald-500/[0.02] rounded-full blur-[120px] pointer-events-none"></div>
 
     <div class="max-w-6xl mx-auto relative z-10">
 
-      <!-- Section header -->
-      <div class="text-center mb-16 scroll-reveal" ref="headerRef">
-        <div class="inline-flex items-center gap-2 border border-[#ffffff]/20 bg-green-950/20 rounded-none px-4 py-1.5 mb-5">
-          <i class="fa-solid fa-user-tie text-[#ffffff] text-[10px]"></i>
-          <span class="font-mono text-[10.5px] text-[#ffffff] tracking-wide font-semibold uppercase">Profile & Philosophy</span>
+      <!-- ================= SECTION HEADER ================= -->
+      <div class="max-w-3xl mb-14 sm:mb-16 scroll-reveal" ref="headerRef">
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-[#141414] border border-[#2A2A2A] text-xs font-mono text-[#A1A1AA] mb-4">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>About Me</span>
         </div>
-        <h1 class="font-mono text-xl md:text-2xl lg:text-3xl font-black text-white mb-4 tracking-tight leading-loose">
-          Engineering Leadership &<br><span class="bg-gradient-to-r from-[#ffffff] to-neutral-500 bg-clip-text text-transparent">Core Expertise</span>
-        </h1>
-        <p class="font-mono text-[11px] text-emerald-400/90 max-w-md mx-auto leading-relaxed font-semibold">
-          // Co-Founder & Principal Full-Stack Architect delivering scalable digital products
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight mb-4">
+          Passionate about building fast, intuitive & reliable software.
+        </h2>
+        <p class="text-base sm:text-lg text-[#A1A1AA] leading-relaxed">
+          I'm a full-stack engineer and co-founder with a strong focus on practical problem solving, clean architecture, and shipping products that make a real difference.
         </p>
       </div>
 
-      <!-- Bio Card & Animation -->
-      <div class="max-w-6xl mx-auto mb-8 grid grid-cols-1 md:grid-cols-2 gap-6 scroll-reveal items-stretch" ref="bioRef">
+      <!-- ================= STORY & SHOWCASE ================= -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-20 items-stretch scroll-reveal" ref="bioRef">
         
-        <!-- Bio text -->
-        <div class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-none p-6 sm:p-8 flex flex-col justify-between gap-6 text-left hover:border-white transition-colors duration-400 h-full">
-          <h3 class="font-mono text-xs font-semibold text-white tracking-wider flex items-center gap-2">
-            <span class="text-white font-bold">//</span> Executive Summary
-          </h3>
-          <p class="font-sans text-[12px] leading-loose text-[#A1A1AA] flex-1">
-            Co-Founder and AI-Assisted Full-Stack Architect leveraging modern AI workflows alongside deep production mastery in <span class="text-white font-semibold">PHP & Laravel</span>, <span class="text-white font-semibold">React & Tailwind CSS</span>, <span class="text-white font-semibold">Flutter</span> for cross-platform mobile, and <span class="text-white font-semibold">SQL / Relational Databases</span> (with Firebase for cloud real-time data). Delivering high-impact digital platforms with rapid delivery velocity, architectural precision, and rock-solid scalability.
-          </p>
-          <div class="grid grid-cols-3 gap-3 mt-auto">
-            <div v-for="stat in stats" :key="stat.label" class="py-4 px-2 border border-[#2A2A2A] rounded-none text-center hover:border-white hover:bg-[#2A2A2A] transition-all group relative overflow-hidden flex flex-col items-center justify-center">
-              <div class="absolute inset-0 bg-[#A1A1AA]/10 -translate-x-full group-hover:animate-[shimmer_0.5s_fast-forwards]"></div>
-              <span class="block font-mono text-sm sm:text-base font-extrabold text-white mb-2 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-75">{{ stat.value }}</span>
-              <span class="block font-mono text-[7px] text-[#A1A1AA] tracking-widest uppercase font-semibold leading-tight">{{ stat.label }}</span>
+        <!-- Left: Story & Values (7 cols) -->
+        <div class="lg:col-span-7 bg-[#111111] border border-[#222222] p-7 sm:p-9 flex flex-col justify-between hover:border-[#3A3A3A] transition-colors">
+          <div>
+            <div class="flex items-center justify-between pb-4 mb-6 border-b border-[#222222]">
+              <span class="text-xs font-mono font-semibold uppercase tracking-wider text-white flex items-center gap-2">
+                <i class="fa-solid fa-user text-emerald-400 text-xs"></i>
+                Background & Approach
+              </span>
+              <span class="text-xs font-mono text-[#71717A]">Trawbit Technologies</span>
+            </div>
+
+            <div class="space-y-4 text-[#A1A1AA] text-sm sm:text-[15px] leading-relaxed">
+              <p>
+                Hi, I'm <strong class="text-white font-semibold">Athul Krishna</strong>. As a Co-Founder at Trawbit Technologies, I work across the entire product lifecycle—from early architecture and database modeling to crafting polished interfaces and mobile apps.
+              </p>
+              <p>
+                My core stack revolves around <strong class="text-white font-medium">PHP & Laravel</strong> for robust backends, <strong class="text-white font-medium">React, Next.js, and Vue.js</strong> with <strong class="text-white font-medium">Tailwind CSS</strong> for responsive frontends, <strong class="text-white font-medium">Flutter</strong> for cross-platform mobile apps, and <strong class="text-white font-medium">SQL & Node.js</strong> (paired with Firebase for real-time sync).
+              </p>
+              <p>
+                I actively embrace modern AI-assisted engineering tools to accelerate boilerplate and research, giving me more time to focus on code quality, security, domain logic, and user delight.
+              </p>
+            </div>
+          </div>
+
+          <!-- Key Metrics -->
+          <div class="grid grid-cols-3 gap-3 pt-6 mt-8 border-t border-[#222222]">
+            <div 
+              v-for="stat in stats" 
+              :key="stat.label" 
+              class="p-4 bg-[#0A0A0A] border border-[#222222] text-center hover:border-[#444] transition-all"
+            >
+              <span class="block font-mono text-xl sm:text-2xl font-bold text-white mb-1">
+                {{ stat.value }}
+              </span>
+              <span class="block text-[11px] text-[#A1A1AA] font-medium leading-tight">
+                {{ stat.label }}
+              </span>
             </div>
           </div>
         </div>
 
-        <!-- Animated Image / Video -->
-        <div class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-none p-6 flex flex-col items-center justify-center hover:border-white transition-colors duration-400 group relative h-full">
-          
-          <!-- Hanging Pull Cord Switch -->
-          <div class="absolute top-0 right-6 flex flex-col items-center z-20 cursor-pointer" @click="toggleVideoColor" title="Toggle Visual Accent">
-            <!-- The Cord -->
-            <div 
-              class="w-[2px] bg-[#A1A1AA] transition-all duration-300 origin-top hover:bg-white"
-              :class="videoColorOn ? 'h-16' : 'h-8'"
-            ></div>
-            <!-- The Handle -->
-            <div 
-              class="w-4 h-6 border-2 border-[#A1A1AA] bg-[#121212] transition-all duration-300 hover:border-white flex flex-col items-center justify-end pb-0.5"
-              :class="videoColorOn ? 'translate-y-2 border-white' : ''"
+        <!-- Right: Creative Visual Feature (5 cols) -->
+        <div class="lg:col-span-5 bg-[#111111] border border-[#222222] p-6 sm:p-7 flex flex-col justify-between hover:border-[#3A3A3A] transition-colors">
+          <div class="flex items-center justify-between pb-3 mb-4 border-b border-[#222222]">
+            <span class="text-xs font-mono font-semibold uppercase tracking-wider text-white flex items-center gap-2">
+              <i class="fa-solid fa-play text-cyan-400 text-xs"></i>
+              Motion & Visuals
+            </span>
+            <button 
+              @click="toggleVideoColor"
+              class="text-[11px] font-mono px-2.5 py-1 bg-[#1a1a1a] border border-[#333] hover:border-white text-[#A1A1AA] hover:text-white transition-all cursor-pointer flex items-center gap-1.5"
             >
-              <div class="w-2 h-[2px] bg-[#A1A1AA] mb-[2px]" :class="videoColorOn ? 'bg-white' : ''"></div>
-              <div class="w-2 h-[2px] bg-[#A1A1AA]" :class="videoColorOn ? 'bg-white' : ''"></div>
-            </div>
-            <!-- Status Text -->
-            <span class="font-mono text-[8px] mt-2 font-bold tracking-widest transition-colors duration-300" :class="videoColorOn ? 'text-white' : 'text-[#A1A1AA]'">FX</span>
+              <span>Color mode:</span>
+              <span :class="videoColorOn ? 'text-emerald-400 font-bold' : 'text-neutral-400'">{{ videoColorOn ? 'Active' : 'Muted' }}</span>
+            </button>
           </div>
 
-          <!-- Corner decorations -->
-          <div class="absolute top-0 left-0 w-3 h-3 border-l-2 border-t-2 border-[#A1A1AA] group-hover:border-white transition-colors pointer-events-none"></div>
-          <div class="absolute bottom-0 right-0 w-3 h-3 border-r-2 border-b-2 border-[#A1A1AA] group-hover:border-white transition-colors pointer-events-none"></div>
-          
-          <div class="w-full h-full relative overflow-hidden bg-black flex items-center justify-center border border-[#2A2A2A]">
+          <!-- Video Display -->
+          <div class="w-full h-full min-h-[250px] relative overflow-hidden bg-black flex items-center justify-center border border-[#222222] my-auto">
             <video 
               src="/secondary-anim.mp4" 
               autoplay 
               loop 
               muted 
               playsinline 
-              class="w-full h-full object-cover filter transition-all duration-700 opacity-90 group-hover:opacity-100"
-              :class="videoColorOn ? 'grayscale-0' : 'grayscale'"
+              class="w-full h-full object-cover transition-all duration-500"
+              :class="videoColorOn ? 'grayscale-0' : 'grayscale opacity-85'"
             ></video>
           </div>
+
+          <div class="pt-3 mt-4 border-t border-[#222222] flex items-center justify-between text-xs text-[#71717A]">
+            <span>Crafting digital experiences</span>
+            <span class="text-white font-mono">Kerala, India</span>
+          </div>
         </div>
+
       </div>
 
-      <!-- Section Header: Core Expertise -->
-      <div class="text-center mb-16 scroll-reveal" ref="expertiseTitleRef">
-        <div class="inline-flex items-center gap-2 border border-[#ffffff]/20 bg-green-950/20 rounded-none px-4 py-1.5 mb-5">
-          <i class="fa-solid fa-microchip text-[#ffffff] text-[10px]"></i>
-          <span class="font-mono text-[10.5px] text-[#ffffff] tracking-wide font-semibold uppercase">Architectural Stack</span>
+      <!-- ================= EXPERTISE DOMAINS ================= -->
+      <div class="mb-10 scroll-reveal" ref="expertiseTitleRef">
+        <div class="inline-flex items-center gap-2 px-3 py-1 bg-[#141414] border border-[#2A2A2A] text-xs font-mono text-[#A1A1AA] mb-3">
+          <i class="fa-solid fa-code text-xs text-emerald-400"></i>
+          <span>What I Do</span>
         </div>
-        <h2 class="font-mono text-xl md:text-2xl lg:text-3xl font-black text-white mb-4 tracking-tight leading-loose">
-          Technical <span class="bg-gradient-to-r from-white to-neutral-500 bg-clip-text text-transparent">Capabilities</span>
-        </h2>
-        <p class="font-mono text-[11px] text-emerald-400/90 max-w-md mx-auto leading-relaxed font-semibold">
-          // Core production technologies & AI-assisted development strengths
-        </p>
+        <h3 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">
+          Areas of Expertise
+        </h3>
       </div>
       
-      <!-- Grid: 6 Balanced Skill Domains -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+      <!-- Grid: 6 Clean Expertise Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
         <div
           v-for="(section, i) in expertiseSections"
           :key="section.title"
-          class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-none p-6 hover:border-white hover:bg-[#121212] transition-all duration-300 scroll-reveal group relative flex flex-col justify-between overflow-hidden"
+          class="bg-[#111111] border border-[#222222] p-6 hover:border-[#444] hover:bg-[#141414] transition-all duration-200 scroll-reveal flex flex-col justify-between"
           :ref="el => { if(el) sectionRefs[i] = el }"
-          :style="{ transitionDelay: `${i * 0.08}s` }"
+          :style="{ transitionDelay: `${i * 0.05}s` }"
         >
-          <!-- Corner decorations -->
-          <div class="absolute top-0 left-0 w-2.5 h-2.5 border-l-2 border-t-2 border-[#A1A1AA]/60 group-hover:border-white transition-colors pointer-events-none"></div>
-          <div class="absolute bottom-0 right-0 w-2.5 h-2.5 border-r-2 border-b-2 border-[#A1A1AA]/60 group-hover:border-white transition-colors pointer-events-none"></div>
-
-          <!-- Header -->
           <div>
-            <div class="flex items-start justify-between gap-3 mb-4">
-              <div class="flex items-center gap-3">
-                <div class="w-8 h-8 rounded-none bg-[#121212] border border-[#2A2A2A] group-hover:border-white flex items-center justify-center transition-colors">
-                  <i :class="section.icon" class="text-xs text-white"></i>
-                </div>
-                <div>
-                  <h5 class="font-mono text-xs sm:text-[13px] font-bold text-white tracking-wide group-hover:text-white transition-colors">
-                    {{ section.title }}
-                  </h5>
-                  <span class="font-mono text-[8.5px] text-[#A1A1AA] uppercase tracking-wider block mt-0.5 font-medium">
-                    {{ section.subtitle }}
-                  </span>
-                </div>
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 bg-[#181818] border border-[#2A2A2A] flex items-center justify-center text-white">
+                <i :class="section.icon" class="text-sm"></i>
               </div>
-              <span class="font-mono text-[9px] text-emerald-400 bg-emerald-950/40 border border-emerald-500/20 px-2 py-0.5 rounded-none font-semibold uppercase tracking-wider">
-                {{ section.code }}
-              </span>
+              <div>
+                <h4 class="text-base font-bold text-white tracking-tight">
+                  {{ section.title }}
+                </h4>
+                <p class="text-xs text-[#71717A]">
+                  {{ section.subtitle }}
+                </p>
+              </div>
             </div>
 
-            <!-- Divider -->
-            <div class="w-full h-px bg-[#2A2A2A] group-hover:bg-white/20 transition-colors mb-4"></div>
+            <div class="w-full h-px bg-[#222222] mb-4"></div>
           </div>
 
           <!-- Skills Chips -->
@@ -138,31 +145,40 @@
             <span
               v-for="skill in section.skills"
               :key="skill"
-              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-none border border-[#2A2A2A] bg-[#121212] font-mono text-[11px] text-[#A1A1AA] cursor-default transition-all duration-200 hover:text-white hover:border-white hover:bg-[#1a1a1a]"
+              class="px-2.5 py-1 bg-[#0A0A0A] border border-[#262626] text-xs font-mono text-[#A1A1AA] hover:text-white hover:border-[#555] transition-colors"
             >
-              <span class="text-white/40 font-bold text-[9px]">//</span>
               {{ skill }}
             </span>
           </div>
         </div>
       </div>
 
-      <!-- Scrolling tech marquee -->
-      <div class="border border-[#2A2A2A] rounded-none p-6 bg-[#0A0A0A] mt-8 scroll-reveal" ref="marqueeRef">
-        <p class="font-mono text-[10px] text-[#A1A1AA] tracking-[0.2em] uppercase mb-4 font-semibold">// Core Technology Inventory</p>
-        <div class="flex overflow-hidden relative w-full [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-          <div class="flex gap-4 animate-marquee w-max hover:[animation-play-state:paused]">
+      <!-- ================= TECH STACK MARQUEE ================= -->
+      <div class="border border-[#222222] p-6 sm:p-8 bg-[#111111] scroll-reveal" ref="marqueeRef">
+        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-6">
+          <div>
+            <h4 class="text-sm font-bold text-white uppercase tracking-wider font-mono">Tools & Technologies</h4>
+            <p class="text-xs text-[#71717A]">Core technologies and libraries I work with on a regular basis</p>
+          </div>
+          <span class="text-xs font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-500/20 px-2.5 py-1">
+            Always Learning & Evolving
+          </span>
+        </div>
+
+        <div class="flex overflow-hidden relative w-full [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
+          <div class="flex gap-3 animate-marquee w-max hover:[animation-play-state:paused]">
             <div
               v-for="(tech, idx) in [...technologies, ...technologies]"
               :key="idx"
-              class="flex items-center gap-2 px-3.5 py-2 bg-[#121212] border border-[#2A2A2A] rounded-none text-[11px] font-mono text-[#A1A1AA] hover:text-white hover:border-white transition-all duration-200 cursor-default whitespace-nowrap"
+              class="flex items-center gap-2.5 px-4 py-2.5 bg-[#0A0A0A] border border-[#222222] text-xs font-mono text-[#A1A1AA] hover:text-white hover:border-white transition-all duration-200 cursor-default whitespace-nowrap"
             >
               <i :class="tech.icon" class="text-sm" :style="{ color: tech.color }"></i>
-              {{ tech.name }}
+              <span class="font-medium text-white/90">{{ tech.name }}</span>
             </div>
           </div>
         </div>
       </div>
+
     </div>
   </section>
 </template>
@@ -187,59 +203,47 @@ const toggleVideoColor = () => {
 };
 
 const stats = computed(() => [
-  { value: settings.value?.quests_cleared || '15+', label: 'Products Shipped' },
+  { value: settings.value?.quests_cleared || '15+', label: 'Projects Shipped' },
   { value: settings.value?.time_played || '3+ Yrs', label: 'Years Experience' },
-  { value: settings.value?.uptime_focus || '99.9%', label: 'Uptime Focus' },
+  { value: settings.value?.uptime_focus || '99.9%', label: 'Stability & Uptime' },
 ]);
 
 const expertiseSections = [
   {
-    title: 'Frontend Systems',
-    code: '// UI-01',
-    subtitle: 'Modern Web & High-Conversion UIs',
-    icon: 'fa-solid fa-wand-magic-sparkles',
-    badgeClass: 'text-cyan-400 bg-cyan-950/40 border-cyan-500/30',
-    skills: ['React', 'Tailwind CSS', 'JavaScript ES6+', 'HTML5 / CSS3', 'Responsive Design']
+    title: 'Frontend Development',
+    subtitle: 'Fast, responsive web interfaces',
+    icon: 'fa-solid fa-laptop-code',
+    skills: ['React', 'Next.js', 'Vue.js', 'Tailwind CSS', 'JavaScript (ES6+)', 'HTML5 / CSS3']
   },
   {
     title: 'Backend & APIs',
-    code: '// API-02',
-    subtitle: 'High-Throughput Engines & Logic',
+    subtitle: 'Scalable server architecture',
     icon: 'fa-solid fa-server',
-    badgeClass: 'text-red-400 bg-red-950/40 border-red-500/30',
-    skills: ['PHP', 'Laravel', 'RESTful APIs', 'Authentication / JWT', 'Microservices']
+    skills: ['PHP & Laravel', 'Node.js', 'RESTful APIs', 'Authentication & JWT', 'Microservices']
   },
   {
-    title: 'Mobile Engineering',
-    code: '// MOB-03',
-    subtitle: 'Cross-Platform Mobile Apps',
-    icon: 'fa-solid fa-mobile-screen-button',
-    badgeClass: 'text-sky-400 bg-sky-950/40 border-sky-500/30',
-    skills: ['Flutter', 'Firebase', 'State Management', 'Mobile UI / UX', 'Cross-Platform']
+    title: 'Mobile Applications',
+    subtitle: 'Cross-platform iOS & Android',
+    icon: 'fa-solid fa-mobile-screen',
+    skills: ['Flutter', 'Firebase', 'State Management', 'Mobile UI / UX', 'App Architecture']
   },
   {
     title: 'Database Architecture',
-    code: '// DB-04',
-    subtitle: 'Relational & Structured Storage',
+    subtitle: 'Relational & cloud data modeling',
     icon: 'fa-solid fa-database',
-    badgeClass: 'text-blue-400 bg-blue-950/40 border-blue-500/30',
-    skills: ['SQL / MySQL', 'PostgreSQL', 'Query Optimization', 'Database Schema Design', 'Indexing']
+    skills: ['SQL / MySQL', 'PostgreSQL', 'Schema Design', 'Query Optimization', 'Database Indexing']
   },
   {
-    title: 'AI-Assisted Workflows',
-    code: '// AI-05',
-    subtitle: 'Accelerated 5x-10x Development',
-    icon: 'fa-solid fa-robot',
-    badgeClass: 'text-emerald-400 bg-emerald-950/40 border-emerald-500/30',
-    skills: ['AI-Augmented Coding', 'Rapid Prototyping', 'Prompt Engineering', 'Automated Workflows', 'High-Velocity Delivery']
+    title: 'AI-Assisted Workflow',
+    subtitle: 'High velocity & rapid delivery',
+    icon: 'fa-solid fa-bolt',
+    skills: ['AI-Augmented Coding', 'Rapid Prototyping', 'Prompt Engineering', 'Automated Testing', 'Fast Iterations']
   },
   {
-    title: 'Cloud & Infrastructure',
-    code: '// CLD-06',
-    subtitle: 'Deployment & DevOps Tooling',
+    title: 'DevOps & Tooling',
+    subtitle: 'Deployment & version control',
     icon: 'fa-solid fa-cloud',
-    badgeClass: 'text-amber-400 bg-amber-950/40 border-amber-500/30',
-    skills: ['Firebase (Optional)', 'Docker', 'Git / GitHub', 'Postman / API Docs', 'Linux / Nginx']
+    skills: ['Docker', 'Git & GitHub', 'Postman / API Docs', 'Linux & Nginx', 'Firebase Cloud']
   }
 ];
 
@@ -247,6 +251,9 @@ const technologies = [
   { name: 'PHP', color: '#777BB4', icon: 'fa-brands fa-php' },
   { name: 'Laravel', color: '#FF2D20', icon: 'fa-brands fa-laravel' },
   { name: 'React', color: '#61DAFB', icon: 'fa-brands fa-react' },
+  { name: 'Next.js', color: '#FFFFFF', icon: 'fa-solid fa-bolt' },
+  { name: 'Vue.js', color: '#4FC08D', icon: 'fa-brands fa-vuejs' },
+  { name: 'Node.js', color: '#68A063', icon: 'fa-brands fa-node-js' },
   { name: 'Tailwind CSS', color: '#38B2AC', icon: 'fa-solid fa-wind' },
   { name: 'Flutter', color: '#02569B', icon: 'fa-solid fa-mobile-screen' },
   { name: 'SQL / MySQL', color: '#4479A1', icon: 'fa-solid fa-database' },
@@ -254,7 +261,6 @@ const technologies = [
   { name: 'Firebase', color: '#FFCA28', icon: 'fa-solid fa-fire' },
   { name: 'Docker', color: '#2496ED', icon: 'fa-brands fa-docker' },
   { name: 'JavaScript', color: '#F7DF1E', icon: 'fa-brands fa-js' },
-  { name: 'HTML5', color: '#E34F26', icon: 'fa-brands fa-html5' },
   { name: 'Git', color: '#F05032', icon: 'fa-brands fa-git-alt' },
 ];
 
@@ -289,3 +295,4 @@ onUnmounted(() => observer?.disconnect());
   to { transform: translateX(-50%); }
 }
 </style>
+

@@ -208,10 +208,10 @@ const currentTheme = computed(() => themes.find(t => t.id === activeTheme.value)
 
 // ================= DYNAMIC ROTATING SPECIALTY =================
 const defaultRolePhrases = [
-  'AI-accelerated full stack engineering with PHP, Laravel & SQL',
-  'high-performance web interfaces with React & Tailwind CSS',
+  'AI-accelerated full stack engineering with PHP, Laravel & Node.js',
+  'high-performance modern web apps with React, Next.js & Vue.js',
   'cross-platform mobile applications with Flutter & Firebase',
-  'scalable backend APIs & automated development workflows',
+  'scalable SQL databases, RESTful APIs & high-velocity delivery',
 ];
 
 const rolePhrases = computed(() => {
@@ -238,7 +238,7 @@ const initRoleCycle = () => {
 };
 
 // ================= DYNAMIC TECH STACK & METRICS =================
-const defaultTech = ['PHP', 'Laravel', 'React', 'Tailwind CSS', 'Flutter', 'SQL', 'Firebase'];
+const defaultTech = ['PHP', 'Laravel', 'React', 'Next.js', 'Vue.js', 'Node.js', 'Tailwind CSS', 'Flutter', 'SQL', 'Firebase'];
 
 const techStack = computed(() => {
   if (projects.value && projects.value.length > 0) {

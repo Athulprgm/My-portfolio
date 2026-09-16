@@ -4,7 +4,7 @@
       
       <!-- Section Title Label -->
       <div class="w-full md:w-1/4 flex-shrink-0 text-center md:text-left scroll-reveal" ref="titleRef">
-        <h3 class="font-mono text-sm uppercase tracking-widest text-[#A1A1AA] font-semibold mb-2">// Selected</h3>
+        <h3 class="font-mono text-xs uppercase tracking-widest text-emerald-400 font-semibold mb-2">Core Focus</h3>
         <h2 class="font-mono text-2xl lg:text-3xl font-black text-white">Capabilities</h2>
       </div>
 
@@ -15,15 +15,14 @@
           :key="i"
           class="flex flex-col items-center md:items-start group scroll-reveal"
           :ref="el => { if(el) itemRefs[i] = el }"
-          :style="{ transitionDelay: `${i * 0.15}s` }"
+          :style="{ transitionDelay: `${i * 0.12}s` }"
         >
           <div class="relative overflow-hidden mb-2">
-            <!-- Glitch text effect on hover -->
-            <span class="block font-mono text-4xl lg:text-5xl font-black text-white group-hover:text-[#ffffff] transition-colors duration-300">
+            <span class="block font-mono text-3xl sm:text-4xl lg:text-5xl font-black text-white group-hover:text-white transition-colors duration-300">
               {{ item.metric }}
             </span>
           </div>
-          <p class="font-sans text-[11px] lg:text-xs text-[#A1A1AA] uppercase tracking-widest font-semibold max-w-[120px] text-center md:text-left">
+          <p class="font-sans text-[11px] lg:text-xs text-[#A1A1AA] uppercase tracking-wider font-semibold max-w-[130px] text-center md:text-left">
             {{ item.label }}
           </p>
         </div>
@@ -40,10 +39,10 @@ const titleRef = ref(null);
 const itemRefs = ref([]);
 
 const capabilities = [
-  { metric: 'REACT',    label: 'Frontend Development' },
-  { metric: 'LARAVEL',  label: 'Backend Architecture' },
-  { metric: 'SQL',      label: 'Database Systems' },
-  { metric: 'TAILWIND', label: 'UI / UX Styling' },
+  { metric: 'LARAVEL',  label: 'PHP & Backend APIs' },
+  { metric: 'REACT',    label: 'Next.js & Tailwind' },
+  { metric: 'FLUTTER',  label: 'Mobile & Firebase' },
+  { metric: 'SQL',      label: 'Databases & Node.js' },
 ];
 
 let observer = null;
