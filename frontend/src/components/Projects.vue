@@ -67,13 +67,13 @@
           @click="handleProjectClick(project)"
         >
           <!-- Card image -->
-          <div class="relative w-full h-48 overflow-hidden border-b-2 border-[#2A2A2A] group-hover:border-[#333] transition-colors">
+          <div class="relative w-full h-48 overflow-hidden border-b-2 border-[#2A2A2A] group-hover:border-[#333] transition-colors bg-[#121212]">
             <img
               :src="getImageUrl(project.thumbnail, project.image)"
               :alt="project.title"
               loading="lazy"
               @error="handleImageError"
-              class="w-full h-full object-cover transition-all duration-700 grayscale group-hover:grayscale-0"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
             />
             <!-- Gradient overlay -->
             <div class="absolute inset-0 bg-gradient-to-t from-neutral-950/60 via-transparent to-transparent pointer-events-none"></div>
@@ -190,15 +190,23 @@ const tagStyle = (tag) => {
   return 'border-[#2A2A2A] bg-[#2A2A2A] text-[#A1A1AA]';
 };
 
+const ensureHttp = (url) => {
+  if (!url || typeof url !== 'string') return '';
+  const trimmed = url.trim();
+  if (!trimmed || trimmed === '#') return '';
+  if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return trimmed;
+  return `https://${trimmed}`;
+};
+
 const handleProjectClick = (project) => {
   if (project.hasDetails) {
     window.history.pushState({}, '', `/project/${project.id}`);
     window.dispatchEvent(new PopStateEvent('popstate'));
     window.scrollTo(0, 0);
   } else if (project.liveUrl) {
-    window.open(project.liveUrl, '_blank', 'noopener,noreferrer');
+    window.open(ensureHttp(project.liveUrl), '_blank', 'noopener,noreferrer');
   } else if (project.repoUrl) {
-    window.open(project.repoUrl, '_blank', 'noopener,noreferrer');
+    window.open(ensureHttp(project.repoUrl), '_blank', 'noopener,noreferrer');
   }
 };
 

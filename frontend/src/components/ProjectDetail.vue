@@ -40,11 +40,11 @@
         <div class="max-w-3xl">
           <h1 class="font-sans text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-4">
             {{ detailData.heroTitle }} 
-            <span class="text-emerald-400">{{ detailData.heroSubject }}</span>
+            <span v-if="detailData.heroSubject" class="text-emerald-400">{{ detailData.heroSubject }}</span>
           </h1>
-          <p class="font-sans text-sm text-[#A1A1AA] mb-8">{{ detailData.tagline }}</p>
+          <p class="font-sans text-sm text-[#A1A1AA] mb-8 leading-relaxed">{{ detailData.tagline }}</p>
 
-          <div class="flex gap-8 items-center flex-wrap">
+          <div v-if="detailData.stats && detailData.stats.length > 0" class="flex gap-8 items-center flex-wrap">
             <template v-for="(stat, idx) in detailData.stats" :key="idx">
               <div class="flex flex-col gap-1">
                 <span class="font-sans text-xl font-bold text-white">{{ stat.val }}</span>
@@ -57,27 +57,27 @@
       </div>
 
       <!-- content grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-12 mt-12 text-left">
+      <div class="grid grid-cols-1 gap-12 mt-12 text-left" :class="hasSidebarContent ? 'lg:grid-cols-[1fr_320px]' : 'max-w-4xl mx-auto'">
         <!-- Left Column -->
         <div class="flex flex-col gap-12">
-          <!-- Abstract -->
-          <section class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
+          <!-- Abstract / Overview -->
+          <section v-if="detailData.abstract" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
             <h3 class="font-sans text-base font-bold text-white mb-4 tracking-wide flex items-center gap-2.5">
               <i class="fa-solid fa-align-left text-emerald-400"></i> Project Overview
             </h3>
-            <p class="text-sm text-[#A1A1AA] leading-relaxed font-sans">{{ detailData.abstract }}</p>
+            <p class="text-sm text-[#A1A1AA] leading-relaxed font-sans whitespace-pre-line">{{ detailData.abstract }}</p>
           </section>
 
           <!-- Highlights (if any) -->
-          <section v-if="detailData.highlights" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
+          <section v-if="detailData.highlights && detailData.highlights.length > 0" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
             <h3 class="font-sans text-base font-bold text-white mb-6 tracking-wide flex items-center gap-2.5">
               <i class="fa-solid fa-star text-emerald-400"></i> Featured Highlights
             </h3>
             <div class="flex flex-col gap-6">
               <div v-for="(item, idx) in detailData.highlights" :key="idx" class="flex flex-col sm:flex-row gap-6 border-b border-[#2A2A2A] last:border-b-0 pb-6 last:pb-0">
-                <div class="relative w-full sm:w-[220px] aspect-video rounded-none overflow-hidden border border-[#2A2A2A] flex-shrink-0">
+                <div v-if="item.image" class="relative w-full sm:w-[220px] aspect-video rounded-none overflow-hidden border border-[#2A2A2A] flex-shrink-0">
                   <img :src="getImageUrl(item.image)" :alt="item.title" @error="handleImageError" class="w-full h-full object-cover" />
-                  <span class="absolute top-2 left-2 bg-[#0A0A0A] backdrop-blur-xs border border-[#ffffff]/20 text-[#ffffff] font-mono text-[9px] px-2 py-0.5 rounded-none">{{ item.tag }}</span>
+                  <span v-if="item.tag" class="absolute top-2 left-2 bg-[#0A0A0A] backdrop-blur-xs border border-[#ffffff]/20 text-[#ffffff] font-mono text-[9px] px-2 py-0.5 rounded-none">{{ item.tag }}</span>
                 </div>
                 <div class="flex flex-col justify-center">
                   <h4 class="font-sans text-sm font-bold text-white mb-2">{{ item.title }}</h4>
@@ -90,17 +90,17 @@
           <!-- Gallery -->
           <section v-if="galleryImages.length > 0" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
             <h3 class="font-sans text-base font-bold text-white mb-6 tracking-wide flex items-center gap-2.5">
-              <i class="fa-solid fa-images text-emerald-400"></i> Interface Gallery
+              <i class="fa-solid fa-images text-emerald-400"></i> Project Media & Gallery
             </h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div
                 v-for="(img, index) in galleryImages"
                 :key="index"
-                class="relative aspect-video rounded-none overflow-hidden border border-[#2A2A2A] group cursor-pointer transition-all duration-300"
+                class="relative aspect-video rounded-none overflow-hidden border border-[#2A2A2A] group cursor-pointer transition-all duration-300 bg-[#0A0A0A]"
                 @click="selectedImage = index"
               >
-                <img :src="getImageUrl(img)" :alt="`Screen ${index + 1}`" loading="lazy" @error="handleImageError" class="w-full h-full object-cover transition-transform duration-500" />
-                <div class="absolute inset-0 bg-[#0A0A0A] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <img :src="getImageUrl(img)" :alt="`Screen ${index + 1}`" loading="lazy" @error="handleImageError" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <div class="absolute inset-0 bg-[#0A0A0A]/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <i class="fa-solid fa-maximize text-white text-sm"></i>
                 </div>
               </div>
@@ -108,7 +108,7 @@
           </section>
 
           <!-- Key Features -->
-          <section class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
+          <section v-if="detailData.features && detailData.features.length > 0" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
             <h3 class="font-sans text-base font-bold text-white mb-6 tracking-wide flex items-center gap-2.5">
               <i class="fa-solid fa-bolt text-emerald-400"></i> Key Features
             </h3>
@@ -127,16 +127,16 @@
         </div>
 
         <!-- Right Column -->
-        <div class="flex flex-col gap-12">
+        <div v-if="hasSidebarContent" class="flex flex-col gap-12">
           <!-- Tech Stack -->
-          <section class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
+          <section v-if="computedTechStack.length > 0" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
             <h3 class="font-sans text-base font-bold text-white mb-6 tracking-wide flex items-center gap-2.5">
-              <i class="fa-solid fa-layer-group text-emerald-400"></i> Tech Stack
+              <i class="fa-solid fa-layer-group text-emerald-400"></i> Technologies
             </h3>
             <div class="flex flex-col gap-3">
-              <div v-for="(tech, idx) in detailData.technologies" :key="idx" class="flex items-center gap-4 py-2 border-b border-[#2A2A2A] last:border-b-0">
+              <div v-for="(tech, idx) in computedTechStack" :key="idx" class="flex items-center gap-4 py-2 border-b border-[#2A2A2A] last:border-b-0">
                 <div class="text-lg text-[#A1A1AA] w-6 text-center">
-                  <i :class="tech.icon"></i>
+                  <i :class="tech.icon || 'fa-solid fa-code'"></i>
                 </div>
                 <div class="flex flex-col">
                   <span class="font-mono text-[10px] text-[#A1A1AA] uppercase tracking-wider">{{ tech.name }}</span>
@@ -147,7 +147,7 @@
           </section>
 
           <!-- Modules -->
-          <section class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
+          <section v-if="detailData.modules && detailData.modules.length > 0" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
             <h3 class="font-mono text-sm font-semibold text-white mb-6 tracking-wider flex items-center gap-2.5">
               <i class="fa-solid fa-cubes text-[#A1A1AA]"></i> System Modules
             </h3>
@@ -164,11 +164,11 @@
       </div>
     </div>
 
-    <!-- Image Modal -->
+    <!-- Modal for Fullscreen Image View -->
     <Transition name="fade">
       <div
         v-if="selectedImage !== null"
-        class="fixed inset-0 z-[100] bg-[#0A0A0A] backdrop-blur-md flex items-center justify-center p-4 cursor-pointer"
+        class="fixed inset-0 z-[100] bg-[#0A0A0A]/90 backdrop-blur-md flex items-center justify-center p-4 cursor-pointer"
         @click="selectedImage = null"
       >
         <div
@@ -176,7 +176,7 @@
           @click.stop
         >
           <button
-            class="absolute -top-10 right-0 text-white hover:text-[#ffffff] text-lg transition-colors cursor-pointer"
+            class="absolute -top-10 right-0 text-white hover:text-emerald-400 text-lg transition-colors cursor-pointer"
             @click="selectedImage = null"
           >
             <i class="fa-solid fa-times"></i>
@@ -204,28 +204,62 @@ const props = defineProps({
   }
 });
 
+const ensureHttp = (url) => {
+  if (!url || typeof url !== 'string') return '';
+  const trimmed = url.trim();
+  if (!trimmed || trimmed === '#') return '';
+  if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return trimmed;
+  return `https://${trimmed}`;
+};
+
 const selectedImage = ref(null);
+
 const detailData = computed(() => {
-  const d = props.project?.detailData || {};
+  const p = props.project || {};
+  const d = p.detailData || {};
+
   return {
-    heroTitle: d.heroTitle || '',
+    heroTitle: d.heroTitle || p.title || 'Project Case Study',
     heroSubject: d.heroSubject || '',
-    tagline: d.tagline || '',
+    tagline: d.tagline || p.description || '',
     stats: Array.isArray(d.stats) ? d.stats : [],
-    abstract: d.abstract || '',
+    abstract: d.abstract || p.description || '',
     highlights: Array.isArray(d.highlights) ? d.highlights : null,
     gallery: Array.isArray(d.gallery) ? d.gallery : [],
     features: Array.isArray(d.features) ? d.features : [],
     technologies: Array.isArray(d.technologies) ? d.technologies : [],
     modules: Array.isArray(d.modules) ? d.modules : [],
-    repoUrl: d.repoUrl || '',
-    liveUrl: d.liveUrl || '',
+    repoUrl: ensureHttp(d.repoUrl || p.repoUrl),
+    liveUrl: ensureHttp(d.liveUrl || p.liveUrl),
   };
+});
+
+const computedTechStack = computed(() => {
+  if (detailData.value.technologies && detailData.value.technologies.length > 0) {
+    return detailData.value.technologies;
+  }
+  // Fallback to tags if tech stack not configured in detail
+  const tags = props.project?.tags || [];
+  if (Array.isArray(tags) && tags.length > 0) {
+    return tags.map(tag => ({
+      name: 'Stack',
+      stack: tag,
+      icon: 'fa-solid fa-code',
+    }));
+  }
+  return [];
+});
+
+const hasSidebarContent = computed(() => {
+  return computedTechStack.value.length > 0 || (detailData.value.modules && detailData.value.modules.length > 0);
 });
 
 const galleryImages = computed(() => {
   const images = [];
   if (props.project) {
+    if (props.project.thumbnail) {
+      images.push(props.project.thumbnail);
+    }
     if (Array.isArray(props.project.image)) {
       images.push(...props.project.image);
     } else if (typeof props.project.image === 'string' && props.project.image) {
@@ -237,13 +271,16 @@ const galleryImages = computed(() => {
     images.push(...dData.gallery);
   }
   
-  // Deduplicate and filter out default/placeholder images
-  return [...new Set(images)].filter(img => {
-    if (!img) return false;
-    const lower = img.toLowerCase();
-    return !lower.includes('web-development-programming-and-code-testing-ui-concept-with-laptop-displaying-futuristic') 
-        && !lower.includes('360_f_541698271');
-  });
+  // Deduplicate and filter out empty strings
+  const valid = [];
+  const seen = new Set();
+  for (const img of images) {
+    if (img && typeof img === 'string' && img.trim() !== '' && !seen.has(img)) {
+      seen.add(img);
+      valid.push(img);
+    }
+  }
+  return valid;
 });
 
 const handleImageError = (e) => {

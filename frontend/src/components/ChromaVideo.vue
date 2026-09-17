@@ -1,5 +1,5 @@
 <template>
-  <div class="chroma-video-container relative w-full h-full flex items-center justify-center">
+  <div class="chroma-video-container relative w-full h-full flex items-center justify-center overflow-hidden">
     <!-- Hidden video element -->
     <video
       ref="videoRef"
@@ -9,20 +9,22 @@
       muted
       playsinline
       preload="auto"
+      crossorigin="anonymous"
       class="absolute pointer-events-none opacity-0 w-0 h-0"
       @play="startRendering"
+      @loadeddata="onDataLoaded"
       @loadedmetadata="onMetadataLoaded"
     ></video>
     <!-- Canvas element showing the keyed video -->
     <canvas
       ref="canvasRef"
-      :class="['w-full h-full', canvasClass]"
+      :class="['w-full h-full block', canvasClass]"
     ></canvas>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, watch } from 'vue';
 
 const props = defineProps({
   src: {
@@ -31,39 +33,57 @@ const props = defineProps({
   },
   tolerance: {
     type: Number,
-    default: 50 // Color distance tolerance
+    default: 45 // Distance tolerance
+  },
+  smoothness: {
+    type: Number,
+    default: 25 // Edge feathering range
   },
   zoom: {
     type: Number,
-    default: 1.0 // Zoom level (CSS scale)
+    default: 1.0 // Zoom level
   },
   chromaColor: {
     type: String,
-    default: 'black' // 'black', 'green', or 'auto'
+    default: 'green' // 'green', 'black', 'auto', 'none'
   },
   canvasClass: {
     type: String,
-    default: 'object-cover rounded-full'
+    default: 'object-cover'
+  },
+  maxResolution: {
+    type: Number,
+    default: 540 // Crisp high-definition target cap
+  },
+  despill: {
+    type: Boolean,
+    default: true // Remove green spill along edges
   }
 });
+
+const emit = defineEmits(['loaded', 'playing', 'error']);
 
 const videoRef = ref(null);
 const canvasRef = ref(null);
 let animationFrameId = null;
 let observer = null;
 const isVisible = ref(true);
-
-// Target background color to remove
-let bgR = null;
-let bgG = null;
-let bgB = null;
+const isReady = ref(false);
 
 const onMetadataLoaded = () => {
+  isReady.value = true;
+  emit('loaded');
+  startRendering();
+};
+
+const onDataLoaded = () => {
+  if (videoRef.value && videoRef.value.paused) {
+    videoRef.value.play().catch(() => {});
+  }
   startRendering();
 };
 
 const startRendering = () => {
-  // Prevent duplicate rendering loops
   if (animationFrameId) {
     cancelAnimationFrame(animationFrameId);
     animationFrameId = null;
@@ -73,121 +93,111 @@ const startRendering = () => {
   const canvas = canvasRef.value;
   if (!video || !canvas || !isVisible.value) return;
 
-  const ctx = canvas.getContext('2d', { willReadFrequently: true });
-  
-  const maxResolution = 256; // High performance target resolution cap
+  const ctx = canvas.getContext('2d', { willReadFrequently: true, alpha: true });
+  const maxRes = props.maxResolution || 540;
 
   const renderFrame = () => {
     if (!isVisible.value) return;
 
-    if (!video || video.paused || video.ended) {
+    if (!video || video.paused || video.ended || video.readyState < 2) {
       animationFrameId = requestAnimationFrame(renderFrame);
       return;
     }
 
-    // Set canvas sizes with resolution constraint
-    if (canvas.width === 0 || canvas.height === 0 || canvas.width !== video.videoWidth || canvas.height !== video.videoHeight) {
-      if (video.videoWidth > 0 && video.videoHeight > 0) {
-        let targetWidth = video.videoWidth;
-        let targetHeight = video.videoHeight;
-        
-        // Cap the canvas resolution to drastically reduce CPU/pixel-loop calculations
-        if (targetWidth > maxResolution || targetHeight > maxResolution) {
-          const aspect = targetWidth / targetHeight;
-          if (targetWidth > targetHeight) {
-            targetWidth = maxResolution;
-            targetHeight = Math.round(maxResolution / aspect);
-          } else {
-            targetHeight = maxResolution;
-            targetWidth = Math.round(maxResolution * aspect);
-          }
+    // Adapt canvas size to match video aspect ratio with high-definition cap
+    if (video.videoWidth > 0 && video.videoHeight > 0) {
+      let targetWidth = video.videoWidth;
+      let targetHeight = video.videoHeight;
+      const aspect = targetWidth / targetHeight;
+
+      if (targetWidth > maxRes || targetHeight > maxRes) {
+        if (targetWidth >= targetHeight) {
+          targetWidth = maxRes;
+          targetHeight = Math.round(maxRes / aspect);
+        } else {
+          targetHeight = maxRes;
+          targetWidth = Math.round(maxRes * aspect);
         }
-        
-        if (canvas.width !== targetWidth || canvas.height !== targetHeight) {
-          canvas.width = targetWidth;
-          canvas.height = targetHeight;
-        }
+      }
+
+      if (canvas.width !== targetWidth || canvas.height !== targetHeight) {
+        canvas.width = targetWidth;
+        canvas.height = targetHeight;
       }
     }
 
     if (canvas.width > 0 && canvas.height > 0) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
+
       const z = props.zoom;
       if (z !== 1.0) {
         const w = canvas.width * z;
         const h = canvas.height * z;
         const x = (canvas.width - w) / 2;
-        const y = (canvas.height - h) * 0.4; // Naturally center vertically with proper headroom
+        const y = (canvas.height - h) * 0.45;
         ctx.drawImage(video, x, y, w, h);
       } else {
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
       }
-      
-      try {
-        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = imgData.data;
-        const length = data.length;
 
-        // Determine background color key values if not yet initialized
-        if (bgR === null) {
-          if (props.chromaColor === 'black') {
-            bgR = 0;
-            bgG = 0;
-            bgB = 0;
-          } else if (props.chromaColor === 'green') {
-            bgR = 0;
-            bgG = 255;
-            bgB = 0;
-          } else {
-            // Auto-detect background color from the top-left pixel on the first frame
-            if (length > 0) {
-              bgR = data[0];
-              bgG = data[1];
-              bgB = data[2];
+      if (props.chromaColor !== 'none') {
+        try {
+          const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const data = imgData.data;
+          const length = data.length;
+          const mode = props.chromaColor;
+          const tol = props.tolerance;
+          const smooth = props.smoothness;
+          const shouldDespill = props.despill;
 
-              // If green color is dominant, optimize as a green-screen chroma keyer
-              if (bgG > 100 && bgG > bgR * 1.2 && bgG > bgB * 1.2) {
-                bgR = 0;
-                bgG = 255;
-                bgB = 0;
+          if (mode === 'green') {
+            for (let i = 0; i < length; i += 4) {
+              const r = data[i];
+              const g = data[i + 1];
+              const b = data[i + 2];
+
+              // Green screen delta metric
+              const maxRB = (r > b ? r : b);
+              const greenDelta = g - maxRB;
+
+              if (greenDelta > tol) {
+                // Fully green background
+                data[i + 3] = 0;
+              } else if (greenDelta > tol - smooth) {
+                // Soft edge blend
+                const factor = (tol - greenDelta) / smooth;
+                data[i + 3] = Math.round(data[i + 3] * Math.max(0, Math.min(1, factor)));
+                if (shouldDespill && g > maxRB) {
+                  data[i + 1] = Math.round(maxRB * 0.95 + g * 0.05);
+                }
+              } else if (shouldDespill && g > maxRB * 1.05) {
+                // Despill subtle green bounce reflections on hair/edges
+                data[i + 1] = Math.round((r + b) * 0.52);
+              }
+            }
+          } else if (mode === 'black') {
+            const tolSquared = tol * tol;
+            const outerTolSquared = (tol + smooth) * (tol + smooth);
+            for (let i = 0; i < length; i += 4) {
+              const r = data[i];
+              const g = data[i + 1];
+              const b = data[i + 2];
+              const distSq = r * r + g * g + b * b;
+
+              if (distSq < tolSquared) {
+                data[i + 3] = 0;
+              } else if (distSq < outerTolSquared) {
+                const dist = Math.sqrt(distSq);
+                const alphaRatio = (dist - tol) / smooth;
+                data[i + 3] = Math.round(data[i + 3] * alphaRatio);
               }
             }
           }
+
+          ctx.putImageData(imgData, 0, 0);
+        } catch (e) {
+          // Fallback if cross-origin canvas security prevents reading
         }
-
-        const tol = props.tolerance;
-        const tolSquared = tol * tol;
-        const outerTolSquared = (tol + 20) * (tol + 20);
-
-        for (let i = 0; i < length; i += 4) {
-          const r = data[i];
-          const g = data[i + 1];
-          const b = data[i + 2];
-
-          let distanceSquared;
-          if (bgR === 0 && bgG === 255 && bgB === 0) {
-            // Green screen mode: check green dominance
-            const isGreen = g > 85 && g > r * 1.1 && g > b * 1.1;
-            distanceSquared = isGreen ? 0 : 65025; // 255 squared
-          } else {
-            // Squared Euclidean distance in color space (avoids Math.sqrt)
-            distanceSquared = (r - bgR) * (r - bgR) + (g - bgG) * (g - bgG) + (b - bgB) * (b - bgB);
-          }
-
-          if (distanceSquared < tolSquared) {
-            data[i + 3] = 0; // Make pixel transparent
-          } else if (distanceSquared < outerTolSquared) {
-            // Only calculate square root for boundary pixels in the feathering range
-            const distance = Math.sqrt(distanceSquared);
-            const alphaRatio = (distance - tol) / 20;
-            data[i + 3] = Math.round(data[i + 3] * alphaRatio);
-          }
-        }
-
-        ctx.putImageData(imgData, 0, 0);
-      } catch (e) {
-        // Handle security exceptions when loading cross-origin sources
       }
     }
 
@@ -200,36 +210,63 @@ const startRendering = () => {
 onMounted(() => {
   const video = videoRef.value;
   const canvas = canvasRef.value;
-  
+
+  const ensurePlay = () => {
+    if (video && isVisible.value) {
+      video.muted = true;
+      video.playsInline = true;
+      video.loop = true;
+      const playPromise = video.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {});
+      }
+    }
+  };
+
   if (video) {
-    video.play().catch(() => {});
+    ensurePlay();
+    video.addEventListener('ended', ensurePlay);
+    video.addEventListener('pause', () => {
+      if (isVisible.value) {
+        setTimeout(ensurePlay, 100);
+      }
+    });
   }
 
-  // Setup IntersectionObserver to pause processing when video is offscreen
+  // Handle visibility and mobile touch wakeups
+  const handleVisibilityChange = () => {
+    if (document.visibilityState === 'visible') {
+      ensurePlay();
+      startRendering();
+    }
+  };
+  document.addEventListener('visibilitychange', handleVisibilityChange);
+
+  // User interaction resume trigger
+  const handleUserInteraction = () => {
+    ensurePlay();
+  };
+  window.addEventListener('touchstart', handleUserInteraction, { passive: true });
+  window.addEventListener('click', handleUserInteraction, { passive: true });
+
   if (canvas && typeof IntersectionObserver !== 'undefined') {
     observer = new IntersectionObserver((entries) => {
       const entry = entries[0];
       isVisible.value = entry.isIntersecting;
-      
+
       if (entry.isIntersecting) {
-        if (video && video.paused) {
-          video.play().catch(() => {});
-        }
+        ensurePlay();
         startRendering();
       } else {
-        if (video && !video.paused) {
-          video.pause();
-        }
         if (animationFrameId) {
           cancelAnimationFrame(animationFrameId);
           animationFrameId = null;
         }
       }
     }, { threshold: 0.05 });
-    
+
     observer.observe(canvas);
   } else {
-    // Fallback if IntersectionObserver is not supported
     startRendering();
   }
 });
@@ -241,6 +278,16 @@ onUnmounted(() => {
   }
   if (observer) {
     observer.disconnect();
+  }
+  document.removeEventListener('visibilitychange', handleVisibilityChange);
+  window.removeEventListener('touchstart', handleUserInteraction);
+  window.removeEventListener('click', handleUserInteraction);
+});
+
+watch(() => props.src, () => {
+  if (videoRef.value) {
+    videoRef.value.load();
+    videoRef.value.play().catch(() => {});
   }
 });
 </script>

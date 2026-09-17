@@ -4,9 +4,6 @@
     id="home"
     ref="containerRef"
   >
-    <!-- Background Interactive Canvas (Constellation & Proximity Mesh) -->
-    <canvas ref="canvasRef" class="absolute inset-0 pointer-events-none z-0 opacity-35"></canvas>
-
     <!-- Fixed Atmospheric Ambient Glow (Theme-Aware, Static, NO Cursor Following Light) -->
     <div
       class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[420px] pointer-events-none z-0 blur-[140px] opacity-35 transition-all duration-700 rounded-full"
@@ -23,8 +20,8 @@
       <!-- Main Content Grid: Modern Editorial Split -->
       <div class="w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
 
-        <!-- ==================== LEFT: EDITORIAL NARRATIVE (Cols 1-7) ==================== -->
-        <div class="lg:col-span-7 flex flex-col justify-center text-left">
+        <!-- ==================== LEFT: EDITORIAL NARRATIVE (Cols 1-7, Order-2 on Mobile) ==================== -->
+        <div class="order-2 lg:order-1 lg:col-span-7 flex flex-col justify-center text-left">
 
           <!-- Eyebrow Tag -->
           <div class="inline-flex items-center gap-2 px-3 py-1 bg-[#141414] border border-[#2A2A2A] text-xs font-mono text-[#A1A1AA] mb-5 w-fit">
@@ -137,45 +134,116 @@
 
         </div>
 
-        <!-- ==================== RIGHT: SCULPTURAL HOLOGRAPHIC PORTAL ==================== -->
-        <div class="lg:col-span-5 flex items-center justify-center relative select-none mt-8 lg:mt-0">
+        <!-- ==================== RIGHT: MEDIUM CLASSIC ID CARD (Order-1 on Mobile) ==================== -->
+        <div 
+          class="order-1 lg:order-2 lg:col-span-5 flex flex-col items-center justify-center relative select-none mb-6 lg:mb-0 pt-2 lg:pt-0"
+        >
           
-          <!-- Soft Behind Halo Glow -->
+          <!-- Soft Atmospheric Backlight Glow -->
           <div 
-            class="absolute w-72 h-72 sm:w-80 sm:h-80 rounded-full blur-3xl opacity-35 pointer-events-none transition-colors duration-700"
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-80 sm:w-88 sm:h-96 rounded-full blur-[90px] opacity-30 pointer-events-none transition-colors duration-700 -z-10"
             :style="{ background: currentTheme.glow }"
           ></div>
 
-          <!-- Celestial Concentric Orbit Rings -->
-          <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <div class="w-80 h-80 rounded-full border border-white/[0.05] animate-[spin_55s_linear_infinite]"></div>
-            <div class="w-64 h-64 rounded-full border border-dashed border-white/[0.08] animate-[spin_35s_linear_infinite_reverse]"></div>
-            <div class="w-48 h-48 rounded-full border border-white/[0.04]"></div>
-          </div>
+          <!-- Continuous Swinging Lanyard & Card Assembly -->
+          <div class="relative flex flex-col items-center animate-lanyard-swing">
 
-          <!-- Central Borderless Avatar Portal -->
-          <div class="relative w-64 h-64 sm:w-72 sm:h-72 rounded-full p-1 bg-gradient-to-b from-white/25 via-white/10 to-white/5 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
-            <div class="w-full h-full rounded-full overflow-hidden bg-[#0A0A0A] border border-white/10 relative flex items-center justify-center">
-              <!-- Underlay Portrait Image -->
-              <img 
-                src="/profile.png" 
-                alt="Athul Krishna" 
-                fetchpriority="high"
-                decoding="async"
-                class="absolute inset-0 w-full h-full object-cover rounded-full opacity-30 pointer-events-none" 
-              />
-              <!-- Keyed Green-Screen ChromaVideo -->
+            <!-- ================= LANYARD RIBBON ================= -->
+            <div class="relative flex flex-col items-center z-20 pointer-events-none -mb-3">
+              
+              <!-- Responsive Woven Fabric Ribbon Straps: directly to top navbar on mobile & desktop -->
+              <div class="relative w-9 sm:w-10 lg:w-12 h-20 sm:h-24 lg:h-[500px] -mt-14 sm:-mt-18 lg:-mt-[480px] flex justify-center overflow-hidden">
+                <!-- Left Ribbon Strap -->
+                <div class="w-3.5 sm:w-4 h-full bg-gradient-to-b from-[#18181b] via-[#242428] to-[#18181b] border-x border-[#333338] shadow-md -mr-1 rotate-[-1.5deg] relative flex items-center justify-center">
+                  <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:3px_3px]"></div>
+                </div>
+                <!-- Right Ribbon Strap -->
+                <div class="w-3.5 sm:w-4 h-full bg-gradient-to-b from-[#18181b] via-[#242428] to-[#18181b] border-x border-[#333338] shadow-md -ml-1 rotate-[1.5deg] relative flex items-center justify-center">
+                  <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:3px_3px]"></div>
+                </div>
+              </div>
+
+              <!-- Metallic Crimp Buckle / Clamp -->
+              <div class="relative z-10 w-7 sm:w-8 h-2.5 sm:h-3 rounded-[1px] bg-gradient-to-b from-[#d4d4d8] via-[#71717a] to-[#27272a] border border-[#a1a1aa]/60 shadow-sm flex items-center justify-between px-1.5 -mt-0.5">
+                <div class="w-0.5 h-0.5 rounded-full bg-[#18181b]"></div>
+                <div class="w-0.5 h-0.5 rounded-full bg-[#18181b]"></div>
+              </div>
+
+              <!-- Metallic Clasp Hook (passing through badge slot) -->
+              <div class="w-2 sm:w-2.5 h-4.5 sm:h-5 rounded-b-sm bg-gradient-to-b from-[#d4d4d8] via-[#a1a1aa] to-[#52525b] border border-[#d4d4d8]/40 -mt-0.5 shadow-sm relative z-30">
+                <div class="absolute top-0.5 left-1/2 -translate-x-1/2 w-1 h-2 bg-[#27272a] rounded-xs"></div>
+              </div>
+            </div>
+
+            <!-- ================= MEDIUM MINIMAL ID CARD ================= -->
+            <div 
+              class="id-card-assembly relative w-full max-w-[260px] sm:max-w-[285px] rounded-2xl p-3.5 bg-gradient-to-b from-[#18181b] via-[#121214] to-[#0a0a0c] border border-white/[0.12] shadow-[0_22px_55px_-12px_rgba(0,0,0,0.95)] backdrop-blur-xl cursor-default overflow-hidden"
+            >
+              <!-- Lanyard Punch Hole Slot -->
+              <div class="relative w-full flex justify-center mb-2.5 z-20">
+                <div class="w-11 h-2 rounded-full bg-[#050505] border border-white/20 shadow-inner"></div>
+              </div>
+
+            <!-- Header: Clean Brand Header -->
+            <div class="flex items-center justify-between px-1 mb-2.5 z-20 relative">
+              <span class="font-mono text-[10px] uppercase tracking-widest text-neutral-200 font-bold">
+                TRAWBIT
+              </span>
+              <span class="font-mono text-[8.5px] uppercase tracking-wider text-[#71717a]">
+                IDENTIFICATION PASS
+              </span>
+            </div>
+
+            <!-- Crisp Framed Photo / Video Window -->
+            <div class="relative w-full aspect-square rounded-xl overflow-hidden bg-[#0a0a0c] border border-white/10 shadow-inner flex items-center justify-center mb-3">
+              <!-- High-Fidelity Despilled Keyed Video -->
               <ChromaVideo
                 src="/profile-video.mp4"
                 chromaColor="green"
-                :zoom="1.08"
-                canvasClass="w-full h-full object-cover rounded-full relative z-10"
+                :zoom="1.0"
+                :tolerance="42"
+                :smoothness="22"
+                :maxResolution="540"
+                canvasClass="w-full h-full object-cover relative z-10"
               />
-              <!-- Bottom smooth vignette so character base curves into the portal -->
-              <div class="absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/60 to-transparent pointer-events-none z-15"></div>
-              <!-- Subtle Organic Scanline Sweep -->
-              <div class="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-white/[0.04] to-transparent h-16 w-full scan-sweep z-20"></div>
             </div>
+
+            <!-- Identity Credential Information -->
+            <div class="px-1 mb-2.5">
+              <h3 class="font-sans text-base sm:text-lg font-bold text-white tracking-tight leading-tight mb-0.5">
+                Athul Krishna
+              </h3>
+              <p class="font-sans text-xs sm:text-[11.5px] text-[#a1a1aa] font-medium leading-tight">
+                Co-Founder & Developer
+              </p>
+              <p class="font-mono text-[9.5px] text-[#71717a] mt-1">
+                Kerala, India
+              </p>
+            </div>
+
+            <!-- Bottom Clean Barcode Strip -->
+            <div class="pt-2 border-t border-white/10 flex items-center justify-between px-1">
+              <!-- Clean Single-Line Barcode -->
+              <div class="flex items-center gap-[1.5px] h-3.5 opacity-80">
+                <div class="w-[2px] h-full bg-white"></div>
+                <div class="w-[1px] h-full bg-white"></div>
+                <div class="w-[3px] h-full bg-white"></div>
+                <div class="w-[1px] h-full bg-white"></div>
+                <div class="w-[2px] h-full bg-white"></div>
+                <div class="w-[4px] h-full bg-white"></div>
+                <div class="w-[1px] h-full bg-white"></div>
+                <div class="w-[2px] h-full bg-white"></div>
+                <div class="w-[1px] h-full bg-white"></div>
+                <div class="w-[3px] h-full bg-white"></div>
+                <div class="w-[2px] h-full bg-white"></div>
+                <div class="w-[1px] h-full bg-white"></div>
+                <div class="w-[2px] h-full bg-white"></div>
+              </div>
+              <span class="font-mono text-[8.5px] text-[#71717a] tracking-wider font-medium">
+                TRAWBIT-AK
+              </span>
+            </div>
+
           </div>
 
         </div>
@@ -183,6 +251,8 @@
       </div>
 
     </div>
+
+  </div>
   </section>
 </template>
 
@@ -196,7 +266,6 @@ const { projects, fetchProjects } = useProjects();
 const { settings, fetchSettings: fetchSiteSettings } = useSettings();
 
 const containerRef = ref(null);
-const canvasRef = ref(null);
 
 // ================= THEME ACCENT MOODS =================
 const activeTheme = ref('emerald');
@@ -273,114 +342,15 @@ const copyEmail = async () => {
   }
 };
 
-// ================= CONSTELLATION CANVAS =================
-let rafId = null;
-let isSectionVisible = true;
-const particles = [];
-const PARTICLE_COUNT = 36;
-
-const initParticles = () => {
-  const canvas = canvasRef.value;
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  
-  const resizeCanvas = () => {
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-  };
-  resizeCanvas();
-
-  particles.length = 0;
-  for (let i = 0; i < PARTICLE_COUNT; i++) {
-    particles.push({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      size: Math.random() * 1.3 + 0.6,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      opacity: Math.random() * 0.45 + 0.15,
-    });
-  }
-
-  const animate = () => {
-    if (!isSectionVisible) {
-      rafId = requestAnimationFrame(animate);
-      return;
-    }
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    for (let i = 0; i < particles.length; i++) {
-      const p = particles[i];
-      p.x += p.vx;
-      p.y += p.vy;
-
-      if (p.x < 0) p.x = canvas.width;
-      if (p.x > canvas.width) p.x = 0;
-      if (p.y < 0) p.y = canvas.height;
-      if (p.y > canvas.height) p.y = 0;
-
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255, 255, 255, ${p.opacity})`;
-      ctx.fill();
-
-      // Constellation connections
-      for (let j = i + 1; j < particles.length; j++) {
-        const p2 = particles[j];
-        const dx = p.x - p2.x;
-        const dy = p.y - p2.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < 80) {
-          ctx.beginPath();
-          ctx.moveTo(p.x, p.y);
-          ctx.lineTo(p2.x, p2.y);
-          ctx.strokeStyle = `rgba(255, 255, 255, ${0.07 * (1 - dist / 80)})`;
-          ctx.lineWidth = 0.6;
-          ctx.stroke();
-        }
-      }
-    }
-
-    rafId = requestAnimationFrame(animate);
-  };
-
-  animate();
-};
-
-let observer = null;
-
 onMounted(() => {
   fetchProjects();
   fetchSiteSettings();
-  initParticles();
   initRoleCycle();
-
-  observer = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      isSectionVisible = e.isIntersecting;
-    });
-  }, { threshold: 0.05 });
-
-  if (containerRef.value) observer.observe(containerRef.value);
-
-  window.addEventListener('resize', handleResize, { passive: true });
 });
 
 onUnmounted(() => {
-  if (rafId) cancelAnimationFrame(rafId);
   if (roleTimer) clearInterval(roleTimer);
-  if (observer) observer.disconnect();
-  window.removeEventListener('resize', handleResize);
 });
-
-const handleResize = () => {
-  const canvas = canvasRef.value;
-  if (!canvas) return;
-  canvas.width = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
-};
 
 // Smooth Scrolling Actions
 const scrollToSection = (id) => {
@@ -397,13 +367,28 @@ const scrollToContact = () => scrollToSection('contact');
 </script>
 
 <style scoped>
-.scan-sweep {
-  animation: scan 4.5s ease-in-out infinite;
+@keyframes lanyard-swing {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(1.2deg);
+  }
+  75% {
+    transform: rotate(-1.2deg);
+  }
 }
 
-@keyframes scan {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(350%); }
+.animate-lanyard-swing {
+  transform-origin: top center;
+  animation: lanyard-swing 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+@media (min-width: 1024px) {
+  .animate-lanyard-swing {
+    transform-origin: 50% -480px;
+  }
 }
 </style>
 

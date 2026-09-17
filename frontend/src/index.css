@@ -254,56 +254,89 @@ button {
 
 /* ── Text Reveal ────────────────────────────────────────── */
 @keyframes textReveal {
-  from { clip-path: inset(0 100% 0 0); opacity: 0; }
-  to   { clip-path: inset(0 0% 0 0);   opacity: 1; }
+  from {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+
+  to {
+    clip-path: inset(0 0% 0 0);
+    opacity: 1;
+  }
 }
 
 .text-reveal {
   clip-path: inset(0 100% 0 0);
   animation: textReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-.text-reveal-delay-1 { animation-delay: 0.15s; }
-.text-reveal-delay-2 { animation-delay: 0.30s; }
-.text-reveal-delay-3 { animation-delay: 0.45s; }
+
+.text-reveal-delay-1 {
+  animation-delay: 0.15s;
+}
+
+.text-reveal-delay-2 {
+  animation-delay: 0.30s;
+}
+
+.text-reveal-delay-3 {
+  animation-delay: 0.45s;
+}
 
 /* ── Scroll Reveal ──────────────────────────────────────── */
 .scroll-reveal {
   opacity: 0;
   transform: translateY(40px);
   transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
+
 .scroll-reveal.revealed {
   opacity: 1;
   transform: translateY(0);
 }
+
 .scroll-reveal-left {
   opacity: 0;
   transform: translateX(-40px);
   transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.scroll-reveal-left.revealed { opacity: 1; transform: translateX(0); }
+
+.scroll-reveal-left.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 .scroll-reveal-right {
   opacity: 0;
   transform: translateX(40px);
   transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.scroll-reveal-right.revealed { opacity: 1; transform: translateX(0); }
+
+.scroll-reveal-right.revealed {
+  opacity: 1;
+  transform: translateX(0);
+}
 
 
 /* ── Animated Grid (hero) ───────────────────────────────── */
 .hero-grid {
   background-image:
-    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
   background-size: 60px 60px;
   animation: gridDrift 20s linear infinite;
 }
+
 @keyframes gridDrift {
-  from { background-position: 0 0; }
-  to   { background-position: 60px 60px; }
+  from {
+    background-position: 0 0;
+  }
+
+  to {
+    background-position: 60px 60px;
+  }
 }
 
 /* ── Noise Texture ──────────────────────────────────────── */
@@ -319,26 +352,61 @@ button {
 
 /* ── Float particle (canvas fallback) ──────────────────── */
 @keyframes floatUp {
-  0%   { opacity: 0; transform: translateY(0) scale(0.8); }
-  10%  { opacity: 0.6; }
-  90%  { opacity: 0.2; }
-  100% { opacity: 0; transform: translateY(-120px) scale(1.2); }
+  0% {
+    opacity: 0;
+    transform: translateY(0) scale(0.8);
+  }
+
+  10% {
+    opacity: 0.6;
+  }
+
+  90% {
+    opacity: 0.2;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-120px) scale(1.2);
+  }
 }
 
 /* ── Gradient glow pulse ────────────────────────────────── */
 @keyframes glowPulse {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50%       { opacity: 0.65; transform: scale(1.05); }
+
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.65;
+    transform: scale(1.05);
+  }
 }
-.glow-pulse { animation: glowPulse 4s ease-in-out infinite; }
+
+.glow-pulse {
+  animation: glowPulse 4s ease-in-out infinite;
+}
 
 /* ── Section fade-in on mount ───────────────────────────── */
 /* ── Section fade-in on mount ───────────────────────────── */
 @keyframes sectionFadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-.section-enter { animation: sectionFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+.section-enter {
+  animation: sectionFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
 
 /* --- PEAK CREATIVE RETRO ARCADE EFFECTS --- */
 body::after {
@@ -355,14 +423,26 @@ body::after {
   pointer-events: none;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   text-shadow: 2px 2px 0px rgba(255, 255, 255, 0.08);
 }
 
-.contact-card, .project-card, .timeline-card {
+.contact-card,
+.project-card,
+.timeline-card {
   box-shadow: 4px 4px 0px 0px rgba(255, 255, 255, 0.1);
 }
-.section-enter { animation: sectionFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+.section-enter {
+  animation: sectionFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
 
 /* ── Magnetic button ────────────────────────────────────── */
-.magnetic-btn { transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.magnetic-btn {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
