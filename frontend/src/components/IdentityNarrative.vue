@@ -7,11 +7,11 @@
       <div class="flex items-center gap-2 mb-2">
         <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
         <span class="text-xs font-mono-clean tracking-widest uppercase text-[var(--text-muted)]">
-          02 // ABOUT &amp; VENTURE
+          02 // ABOUT
         </span>
       </div>
       <h2 class="text-3xl sm:text-5xl font-sans-clean font-extrabold tracking-tight text-[var(--text-primary)]">
-        PHILOSOPHY &amp; BACKGROUND
+        BUILDING ACROSS THE STACK.
       </h2>
       <div class="h-[1px] bg-[var(--border-color)] mt-6 w-full"></div>
     </div>
@@ -20,39 +20,52 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
       <div class="lg:col-span-7 space-y-6 text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed font-sans-clean">
         <p class="text-xl sm:text-2xl text-[var(--text-primary)] font-semibold leading-snug">
-          “Bridging rigorous systems architecture with refined product intuition. Designing software where performance, simplicity, and business utility converge.”
+          “Good software should feel simple. Behind every simple experience is thoughtful engineering.”
         </p>
 
         <p>
-          I work across the entire lifecycle — from relational database design and distributed backend architectures in Laravel and Node.js, to responsive, accessible client interfaces in Vue 3, React, and React Native.
+          I’m a Full-Stack Developer focused on building practical, reliable, and well-crafted digital products. I focus on clean interfaces, reliable systems, maintainable code, and products that solve real problems.
         </p>
 
         <p>
-          As co-founder and technical lead at <strong class="text-[var(--text-primary)] font-semibold">Trawbit Technologies</strong>, I lead commercial software engineering: multi-branch retail POS engines, emergency healthcare dispatch networks, and enterprise automation tools.
+          I work across frontend, backend, databases, mobile development, and cloud services — choosing the right tools for the problem rather than limiting the product to a single stack.
+        </p>
+
+        <p>
+          As a Co-Founder at <strong class="text-[var(--text-primary)] font-semibold">Trawbit Technologies</strong>, I also work on real-world software products and digital solutions from concept to production.
         </p>
       </div>
 
       <!-- Right Column: Concise Metrics & Background -->
       <div class="lg:col-span-5 space-y-4">
         <div class="worth-card p-6 rounded-sm transition-all duration-200 hover:border-[var(--text-primary)] hover:translate-y-[-2px]">
-          <span class="text-[10px] font-mono-clean uppercase tracking-wider text-[var(--text-muted)] block mb-1">VENTURE LEADERSHIP</span>
-          <h3 class="text-lg font-sans-clean font-bold text-[var(--text-primary)] mb-1">Trawbit Technologies</h3>
-          <p class="text-xs text-[var(--text-secondary)] font-sans-clean leading-relaxed">
-            Co-Founder &amp; Tech Lead delivering production software with 99.9% uptime SLAs and sub-second transaction throughput.
+          <span class="text-[10px] font-mono-clean uppercase tracking-wider text-[var(--text-muted)] block mb-1">06 // TRAWBIT TECHNOLOGIES</span>
+          <h3 class="text-lg font-sans-clean font-bold text-[var(--text-primary)] mb-1">Building more than software.</h3>
+          <p class="text-xs text-[var(--text-secondary)] font-sans-clean leading-relaxed mb-3">
+            As a Co-Founder at Trawbit Technologies, I work across engineering, product development, and digital solutions — turning ideas into usable software.
           </p>
+          <a
+            href="https://trawbit.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-[11px] font-mono-clean text-[var(--text-primary)] hover:underline inline-flex items-center gap-1 font-bold"
+          >
+            <span>VISIT TRAWBIT</span>
+            <span>↗</span>
+          </a>
         </div>
 
         <div class="worth-card p-6 rounded-sm transition-all duration-200 hover:border-[var(--text-primary)] hover:translate-y-[-2px]">
-          <span class="text-[10px] font-mono-clean uppercase tracking-wider text-[var(--text-muted)] block mb-1">ACADEMIC FOUNDATIONS</span>
-          <h3 class="text-lg font-sans-clean font-bold text-[var(--text-primary)] mb-1">B.Sc. in Computer Science</h3>
+          <span class="text-[10px] font-mono-clean uppercase tracking-wider text-[var(--text-muted)] block mb-1">ENGINEERING PHILOSOPHY</span>
+          <h3 class="text-lg font-sans-clean font-bold text-[var(--text-primary)] mb-1">Clean &amp; Maintainable</h3>
           <p class="text-xs text-[var(--text-secondary)] font-sans-clean leading-relaxed mb-3">
-            Kannur University. Grounded in core computational theory, data structures, relational database modeling, and software engineering methodologies.
+            Grounded in core computational theory, data structures, relational database modeling, and software engineering methodologies that scale.
           </p>
           <div class="flex flex-wrap gap-1">
-            <span class="worth-tag text-[9px] py-0.5 px-2">Data Structures</span>
-            <span class="worth-tag text-[9px] py-0.5 px-2">RDBMS &amp; SQL</span>
-            <span class="worth-tag text-[9px] py-0.5 px-2">OS &amp; Networks</span>
-            <span class="worth-tag text-[9px] py-0.5 px-2">System Design</span>
+            <span class="worth-tag text-[9px] py-0.5 px-2">Frontend</span>
+            <span class="worth-tag text-[9px] py-0.5 px-2">Backend APIs</span>
+            <span class="worth-tag text-[9px] py-0.5 px-2">Databases</span>
+            <span class="worth-tag text-[9px] py-0.5 px-2">Mobile Apps</span>
           </div>
         </div>
 

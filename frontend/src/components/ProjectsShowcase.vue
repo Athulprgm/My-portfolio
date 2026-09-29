@@ -13,10 +13,10 @@
         <div class="flex items-center gap-4">
           <div>
             <span class="text-[10px] font-mono-clean tracking-widest uppercase text-[var(--text-muted)] block">
-              03 // SELECTED WORKS
+              03 // SELECTED WORK
             </span>
             <h2 class="text-xl sm:text-2xl lg:text-3xl font-sans-clean font-extrabold tracking-tight text-[var(--text-primary)]">
-              FEATURED WORKS
+              THINGS I'VE BUILT.
             </h2>
           </div>
 
@@ -167,7 +167,7 @@
                     @click="openCaseStudy(proj)"
                     class="btn-worth text-xs py-2 px-4 cursor-pointer"
                   >
-                    <span>CASE STUDY</span>
+                    <span>{{ proj.buttonText || 'VIEW CASE STUDY' }}</span>
                     <span>→</span>
                   </button>
 
@@ -188,11 +188,14 @@
       <div class="flex items-center justify-between mb-8">
         <div>
           <span class="text-xs font-mono-clean tracking-widest uppercase text-[var(--text-muted)] block mb-1">
-            03 // SELECTED WORKS
+            03 // SELECTED WORK
           </span>
           <h2 class="text-3xl sm:text-4xl font-sans-clean font-extrabold tracking-tight text-[var(--text-primary)]">
-            INDEX DIRECTORY
+            THINGS I'VE BUILT.
           </h2>
+          <p class="text-xs font-mono-clean text-[var(--text-secondary)] mt-1">
+            A selection of products, platforms, and software systems I've worked on.
+          </p>
         </div>
 
         <div class="flex items-center border border-[var(--border-color)] rounded-sm p-0.5 bg-[var(--bg-card)]">
@@ -388,57 +391,60 @@ const projectList = [
     id: 1,
     num: '01',
     shortName: 'JEEVALINK',
-    title: 'Jeevalink Platform',
-    category: 'HEALTHCARE NETWORK',
+    title: 'Jeevalink',
+    category: 'HEALTHCARE · DIGITAL PLATFORM',
     domain: 'jeevalink.org',
     role: 'Lead Architect & Full-Stack',
     year: '2025',
     metric: 'Under 60s emergency matching',
-    description: 'A location-aware emergency healthcare network connecting critical triage centers with verified local donors across a 15km real-time dispatch index.',
-    stack: ['React Native', 'Node.js', 'PostgreSQL', 'WebSockets'],
+    description: 'A digital platform connecting blood donors, volunteers, and emergency blood requests through web and mobile experiences.',
+    stack: ['React', 'Node.js', 'PostgreSQL', 'Firebase', 'Flutter'],
     image: '/projects/jeevalink.jpg',
+    buttonText: 'VIEW CASE STUDY',
     caseData: {
       problem: 'Regional hospitals faced life-threatening communication delays due to manual telephone trees and outdated donor registers during urgent emergency transfusions.',
-      solution: 'Architected a geospatial web and mobile ecosystem that matches eligible donors within a 15km radius via real-time GPS indexing, delivering push alerts and coordination workflows directly to nurses.',
-      deliverables: ['Real-Time GPS Radial Matching', 'Hospital Triage Coordination Desk', 'Automated SMS & Push Broadcasts', 'Verified Donor Security Ledger'],
+      solution: 'A digital platform connecting blood donors, volunteers, and emergency blood requests through web and mobile experiences with real-time GPS dispatch indexing.',
+      deliverables: ['Real-Time Donor Matching', 'Emergency Triage Dashboard', 'Volunteer Mobilization App', 'Verified Blood Inventory Ledger'],
     },
   },
   {
     id: 2,
     num: '02',
     shortName: 'LIBGO',
-    title: 'Libgo Digital Library',
-    category: 'CIRCULATION ENGINE',
+    title: 'Libgo',
+    category: 'DIGITAL LIBRARY',
     domain: 'libgo.app',
     role: 'Full-Stack Lead Engineer',
     year: '2025',
     metric: '10,000+ catalog titles indexed',
-    description: 'A modern digital library circulation engine supporting high-velocity catalog indexing, digital QR borrower cards, and automated renewal queues.',
-    stack: ['Vue 3', 'Laravel 11', 'MySQL', 'Redis'],
+    description: 'A modern digital library platform designed to simplify resource management, access, and everyday library operations.',
+    stack: ['Vue', 'Laravel', 'MySQL'],
     image: '/projects/libgo.jpg',
+    buttonText: 'VIEW CASE STUDY',
     caseData: {
       problem: 'Academic and institutional libraries struggled with slow legacy desktop software, paper checkout slips, and overdue book losses caused by absent member notification systems.',
-      solution: 'Engineered an accessible web platform with sub-second catalog search, QR-code borrower identification, automated return notification queues, and multi-branch inventory tracking.',
-      deliverables: ['Sub-Second Full-Text Book Search', 'QR Member Barcode Check-In', 'Automated Queue Reminders', 'Multi-Branch Circulation Matrix'],
+      solution: 'A modern digital library platform designed to simplify resource management, access, and everyday library operations with sub-second catalog search and QR borrower cards.',
+      deliverables: ['Sub-Second Catalog Search', 'Digital QR Borrower Identification', 'Automated Renewal Queues', 'Multi-Branch Inventory Matrix'],
     },
   },
   {
     id: 3,
     num: '03',
-    shortName: 'EXAMS',
-    title: 'Exams Assessment Engine',
-    category: 'ASSESSMENT & PROCTORING',
-    domain: 'exams.trawbit.com',
-    role: 'Systems Architect',
-    year: '2025',
-    metric: '99.8% concurrent exam reliability',
-    description: 'Centralized examination infrastructure with automated test scheduling, state auto-save recovery, proctoring anomaly audits, and real-time score analytics.',
-    stack: ['Laravel', 'Vue 3', 'PostgreSQL', 'Docker'],
-    image: '/projects/exam_engine.jpg',
+    shortName: 'TRAWBIT',
+    title: 'Trawbit Technologies',
+    category: 'SOFTWARE · PRODUCT DEVELOPMENT',
+    domain: 'trawbit.com',
+    role: 'Co-Founder & Technical Architect',
+    year: '2026',
+    metric: 'Production Software Delivery',
+    description: 'A software company building digital products, websites, applications, and technology solutions for real-world business needs.',
+    stack: ['React', 'Next.js', 'Laravel', 'Node.js', 'MongoDB'],
+    image: '/projects/pos_retail.jpg',
+    buttonText: 'VIEW COMPANY',
     caseData: {
-      problem: 'Educational institutions needed a secure, tamper-proof assessment engine capable of administering high-stakes exams concurrently without data loss or server timeouts.',
-      solution: 'Constructed an ACID-compliant examination platform with automated test scheduling, question randomization, auto-save state recovery, and analytics dashboards for evaluating candidate score distributions.',
-      deliverables: ['Automated Timetable Scheduling', 'Continuous State Auto-Save Ledger', 'Proctoring Anomaly Log', 'Statistical Grade Distribution Curves'],
+      problem: 'Modern businesses require resilient, scalable digital systems built with velocity, clean architectures, and reliable long-term maintenance.',
+      solution: 'A software company building digital products, websites, applications, and technology solutions for real-world business needs from concept to production.',
+      deliverables: ['Commercial Web Platforms', 'Distributed API Architectures', 'Enterprise POS Systems', 'Cross-Platform Mobile Apps'],
     },
   },
   {
@@ -454,6 +460,7 @@ const projectList = [
     description: 'A multi-outlet store management system with high-speed barcode checkout, automated inventory replenishment tracking, and live gross revenue analytics.',
     stack: ['Laravel', 'Vue 3', 'MySQL', 'TailwindCSS'],
     image: '/projects/pos_retail.jpg',
+    buttonText: 'VIEW CASE STUDY',
     caseData: {
       problem: 'Retail store owners lacked real-time visibility into multi-branch stock levels, suffering from checkout bottlenecks during peak shopping hours and manual inventory reconciliation errors.',
       solution: 'Architected an all-in-one retail POS operating system supporting instant barcode scanning, low-stock threshold triggers, digital receipts, and real-time revenue analytics accessible from mobile or desktop.',

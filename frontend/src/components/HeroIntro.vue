@@ -28,20 +28,20 @@
       <!-- Minimalist Eyebrow -->
       <div class="flex items-center gap-2 mb-8 text-xs font-mono-clean uppercase tracking-widest text-[var(--text-muted)]">
         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-        <span>01 // ATHUL KRISHNA · CO-FOUNDER @ TRAWBIT</span>
+        <span>FULL-STACK DEVELOPER · CO-FOUNDER</span>
       </div>
 
       <!-- Simplified Grand Headline -->
       <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-[5.25rem] font-sans-clean font-extrabold tracking-tight text-[var(--text-primary)] leading-[1.05] mb-8">
-        Engineering software with
+        Building digital products
         <span class="font-editorial font-normal italic text-[var(--text-primary)] underline decoration-[var(--border-color)] decoration-1 underline-offset-8">
-          taste &amp; precision.
+          from idea to reality.
         </span>
       </h1>
 
       <!-- Simplified Single-Sentence Bio -->
       <p class="text-lg sm:text-xl text-[var(--text-secondary)] font-normal leading-relaxed max-w-xl mb-10 font-sans-clean">
-        Full-stack engineer building resilient web platforms, distributed APIs, and responsive interfaces.
+        I build modern web, mobile, and software products across the full stack — from intuitive interfaces and APIs to databases, authentication, and deployment.
       </p>
 
       <!-- Minimal Actions -->
@@ -50,7 +50,7 @@
           @click="scrollToSection('works')"
           class="btn-worth cursor-pointer group"
         >
-          <span>VIEW WORKS</span>
+          <span>VIEW WORK</span>
           <span class="group-hover:translate-y-0.5 transition-transform">↓</span>
         </button>
 

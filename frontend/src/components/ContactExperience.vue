@@ -6,7 +6,7 @@
     <div class="scroll-reveal flex items-center justify-between mb-16 text-xs font-mono-clean tracking-widest uppercase text-[var(--text-muted)]">
       <div class="flex items-center gap-2">
         <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
-        <span>05 // CONCLUSION &amp; INQUIRY</span>
+        <span>07 // CONTACT</span>
       </div>
       <span>ENGAGEMENTS</span>
     </div>
@@ -14,15 +14,14 @@
     <!-- Final High-Impact Minimalist Statement (Worth Agency Style) -->
     <div class="max-w-5xl mb-16 sm:mb-24">
       <h2 class="scroll-reveal reveal-delay-100 text-4xl sm:text-6xl lg:text-[5.5rem] font-sans-clean font-extrabold tracking-tight text-[var(--text-primary)] leading-[1.04] mb-8">
-        HAVE A PROJECT<br />
-        IN MIND?<br />
+        HAVE SOMETHING<br />
         <span class="font-editorial font-normal tracking-normal text-[var(--text-primary)] underline decoration-[var(--border-color)] decoration-1 underline-offset-8">
-          Let's build something worthy.
+          worth building?
         </span>
       </h2>
 
       <p class="scroll-reveal reveal-delay-200 text-xl sm:text-2xl text-[var(--text-secondary)] font-normal leading-relaxed max-w-2xl mb-12 font-sans-clean">
-        Whether you require a mission-critical commercial application, a distributed API architecture, or a technical partner to turn vision into scalable reality.
+        I’m open to building meaningful products, collaborating on ambitious ideas, and solving interesting technical problems.
       </p>
 
       <!-- Primary Action Buttons -->
@@ -31,7 +30,7 @@
           @click="openInquiryModal"
           class="btn-worth text-sm py-4 px-8 cursor-pointer group"
         >
-          <span>START A CONVERSATION</span>
+          <span>LET'S TALK</span>
           <span class="group-hover:translate-x-0.5 transition-transform">→</span>
         </button>
 
@@ -116,14 +115,22 @@
 
     <!-- Editorial Studio Footer -->
     <footer class="pt-12 flex flex-col md:flex-row md:items-center justify-between gap-6 text-xs font-mono-clean text-[var(--text-muted)]">
-      <div class="flex flex-col sm:flex-row sm:items-center gap-4">
-        <span class="text-[var(--text-primary)] font-bold">ATHUL KRISHNA © 2026</span>
+      <div class="flex flex-col sm:flex-row sm:items-center gap-3">
+        <span class="text-[var(--text-primary)] font-bold">ATHUL KRISHNA</span>
         <span class="hidden sm:inline opacity-30">|</span>
-        <span>TRAWBIT TECHNOLOGIES</span>
+        <span>FULL-STACK DEVELOPER · CO-FOUNDER</span>
+        <span class="hidden sm:inline opacity-30">|</span>
+        <span>KERALA, INDIA</span>
       </div>
 
-      <div class="flex items-center gap-6">
-        <span>CRAFTED WITH TASTE, CLARITY, AND PURPOSE</span>
+      <div class="flex flex-wrap items-center gap-5">
+        <div class="flex items-center gap-4">
+          <a href="https://github.com/Athulprgm" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--text-primary)] uppercase font-semibold">GITHUB</a>
+          <a href="https://www.linkedin.com/in/athul-krishna-k/" target="_blank" rel="noopener noreferrer" class="hover:text-[var(--text-primary)] uppercase font-semibold">LINKEDIN</a>
+          <a href="mailto:athul@trawbit.com" class="hover:text-[var(--text-primary)] uppercase font-semibold">EMAIL</a>
+        </div>
+        <span class="hidden md:inline opacity-30">|</span>
+        <span class="uppercase tracking-wider">CRAFTED WITH CLARITY &amp; PURPOSE.</span>
         <button
           @click="scrollToTop"
           class="text-[var(--text-primary)] hover:underline flex items-center gap-1.5 cursor-pointer uppercase font-bold"
