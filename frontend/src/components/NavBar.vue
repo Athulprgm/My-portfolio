@@ -1,240 +1,138 @@
 <template>
-  <nav
-    class="fixed top-0 left-0 w-full z-50 transition-all duration-300 backdrop-blur-md"
-    :class="scrolled ? 'h-14 bg-[#0A0A0A]/95 border-b-2 border-[#2A2A2A] shadow-md' : 'h-18 bg-[#0A0A0A]/85 border-b border-[#2A2A2A]/40'"
+  <header
+    class="fixed top-0 left-0 w-full z-50 transition-all duration-300 select-none"
+    :class="scrolled 
+      ? 'bg-[var(--bg-primary)]/90 backdrop-blur-md border-b border-[var(--border-color)] py-4' 
+      : 'bg-transparent py-6'"
   >
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-full flex justify-between items-center">
-
-      <!-- Logo -->
+    <div class="max-w-6xl mx-auto px-6 sm:px-8 flex items-center justify-between">
+      
+      <!-- Wordmark -->
       <a
-        href="#home"
-        class="flex items-center gap-2 hover:opacity-80 transition-opacity duration-200 select-none"
-        @click.prevent="scrollToSection('home')"
+        href="#intro"
+        class="flex items-center gap-2 group cursor-pointer"
+        @click.prevent="scrollToChapter('intro')"
       >
-        <span class="font-sans text-base font-bold text-white tracking-tight">Athul Krishna</span>
-        <span class="font-mono text-xs font-semibold text-emerald-400">/dev</span>
-        <span class="w-1.5 h-3.5 bg-emerald-400 animate-pulse"></span>
+        <span class="font-sans-clean font-bold text-sm tracking-widest uppercase text-[var(--text-primary)]">
+          ATHUL KRISHNA
+        </span>
       </a>
 
-      <!-- Desktop nav -->
-      <ul class="hidden md:flex items-center gap-1 list-none m-0 p-0">
-        <li v-for="item in navItems" :key="item.id">
-          <a
-            :href="`#${item.id}`"
-            class="relative px-3.5 py-1.5 font-mono text-xs uppercase tracking-wider transition-all duration-200 rounded-none flex items-center gap-1.5 border border-transparent"
-            :class="activeSection === item.id
-              ? 'text-white border-white bg-white/10'
-              : 'text-[#A1A1AA] hover:text-white hover:border-[#2A2A2A] hover:bg-[#121212]'"
-            @click.prevent="scrollToSection(item.id)"
-          >
-            {{ item.label }}
-          </a>
-        </li>
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-8 text-xs font-mono-clean uppercase tracking-wider">
+        <button
+          v-for="item in navLinks"
+          :key="item.id"
+          @click="scrollToChapter(item.id)"
+          class="transition-colors cursor-pointer py-1"
+          :class="activeChapter === item.id
+            ? 'text-[var(--text-primary)] font-bold border-b border-[var(--text-primary)]'
+            : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'"
+        >
+          {{ item.label }}
+        </button>
+      </nav>
 
-        <!-- Resume button -->
-        <li class="ml-4">
-          <button
-            @click="openCvModal"
-            class="flex items-center gap-2 px-3.5 py-2 bg-[#121212] text-white hover:bg-[#2A2A2A] border border-[#2A2A2A] hover:border-white font-mono text-xs tracking-wider transition-all cursor-pointer rounded-none uppercase font-semibold"
-          >
-            <i class="fa-solid fa-cloud-arrow-down text-emerald-400"></i>
-            RESUME
-          </button>
-        </li>
-      </ul>
+      <!-- Right: Theme Switcher & Contact Button -->
+      <div class="flex items-center gap-3">
+        <!-- Theme Toggle -->
+        <button
+          @click="toggleTheme"
+          class="px-2.5 py-1.5 border border-[var(--border-color)] hover:border-[var(--text-primary)] rounded-sm text-xs font-mono-clean text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all cursor-pointer bg-[var(--bg-card)] flex items-center gap-1.5"
+          :title="theme === 'light' ? 'Switch to Dark' : 'Switch to Light'"
+        >
+          <i :class="theme === 'light' ? 'fa-solid fa-moon text-xs' : 'fa-solid fa-sun text-xs text-amber-400'"></i>
+          <span class="text-[10px] uppercase font-bold tracking-wider">{{ theme === 'light' ? 'DARK' : 'LIGHT' }}</span>
+        </button>
 
-      <!-- Mobile toggle -->
-      <button
-        class="md:hidden text-[#A1A1AA] hover:text-white text-xl cursor-pointer bg-[#121212] border border-[#2A2A2A] w-10 h-10 rounded-none flex items-center justify-center transition-all hover:border-white"
-        @click="menuOpen = !menuOpen"
-      >
-        <i class="fa-solid transition-all duration-300" :class="menuOpen ? 'fa-xmark' : 'fa-bars'"></i>
-      </button>
+        <!-- Minimal Contact CTA -->
+        <button
+          @click="scrollToChapter('contact')"
+          class="btn-worth text-xs py-1.5 px-3.5 cursor-pointer"
+        >
+          <span>CONTACT</span>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button
+          @click="mobileOpen = !mobileOpen"
+          class="md:hidden p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] border border-[var(--border-color)] rounded-sm text-xs font-mono-clean uppercase cursor-pointer"
+        >
+          {{ mobileOpen ? 'CLOSE' : 'MENU' }}
+        </button>
+      </div>
+
     </div>
 
-    <!-- Mobile menu -->
-    <Transition name="menu-slide">
+    <!-- Mobile Drawer -->
+    <Transition name="fade">
       <div
-        v-if="menuOpen"
-        class="md:hidden fixed left-0 w-full bg-[#0A0A0A] border-b-2 border-[#2A2A2A] flex flex-col py-6 px-6 gap-2 transition-all duration-500"
-        :class="scrolled ? 'top-14' : 'top-18'"
+        v-if="mobileOpen"
+        class="md:hidden fixed inset-x-0 top-[68px] bg-[var(--bg-primary)]/98 backdrop-blur-xl border-b border-[var(--border-color)] p-6 flex flex-col gap-4 shadow-xl z-50"
       >
-        <a
-          v-for="item in navItems"
-          :key="item.id"
-          :href="`#${item.id}`"
-          class="font-mono text-xs py-3.5 px-4 rounded-none transition-all duration-200 border"
-          :class="activeSection === item.id
-            ? 'text-white border-white bg-white/10'
-            : 'text-[#A1A1AA] border-transparent hover:text-white hover:border-[#2A2A2A] hover:bg-[#121212]'"
-          @click.prevent="scrollToSection(item.id); menuOpen = false"
-        >
-          <span class="text-emerald-400 mr-2">></span>{{ item.label }}
-        </a>
         <button
-          @click="openCvModal"
-          class="mt-3 flex items-center justify-center gap-2 py-3.5 px-4 bg-[#121212] text-white hover:bg-[#2A2A2A] border border-[#2A2A2A] hover:border-white font-mono text-xs font-bold uppercase transition-all cursor-pointer rounded-none"
+          v-for="item in navLinks"
+          :key="item.id"
+          @click="scrollToChapter(item.id); mobileOpen = false"
+          class="text-left py-2 text-xs font-mono-clean uppercase tracking-wider border-b border-[var(--border-color)]/40"
+          :class="activeChapter === item.id ? 'text-[var(--text-primary)] font-bold' : 'text-[var(--text-secondary)]'"
         >
-          <i class="fa-solid fa-cloud-arrow-down text-emerald-400"></i> RESUME
+          {{ item.label }}
+        </button>
+
+        <button
+          @click="scrollToChapter('contact'); mobileOpen = false"
+          class="w-full btn-worth py-2.5 text-center justify-center mt-2 cursor-pointer"
+        >
+          LET'S TALK →
         </button>
       </div>
     </Transition>
-  </nav>
-
-  <!-- CV Selection Modal -->
-  <Transition name="modal">
-    <div
-      v-if="showCvModal"
-      class="fixed inset-0 z-[100] bg-black/80 flex items-center justify-center p-4 animate-fade-in"
-      @click.self="showCvModal = false"
-    >
-      <div class="bg-[#0A0A0A] border-2 border-white rounded-none w-full max-w-md shadow-[8px_8px_0_rgba(255,255,255,0.1)] p-6 relative overflow-hidden transform transition-all duration-300">
-
-        <!-- Header -->
-        <div class="flex items-center justify-between mb-6 pb-4 border-b-2 border-[#2A2A2A] relative z-10">
-          <div>
-            <h3 class="font-sans text-sm font-bold text-white flex items-center gap-2 uppercase tracking-wider">
-              <i class="fa-solid fa-file-pdf text-emerald-400"></i>
-              Resume & CV Profiles
-            </h3>
-            <p class="font-sans text-xs text-[#A1A1AA] mt-1">Download tailored resume for specific roles</p>
-          </div>
-          <button @click="showCvModal = false" class="text-[#A1A1AA] hover:text-white transition-colors cursor-pointer w-8 h-8 flex items-center justify-center border border-transparent hover:border-[#2A2A2A] rounded-none bg-[#121212]">
-            <i class="fa-solid fa-times text-sm"></i>
-          </button>
-        </div>
-
-        <!-- Content -->
-        <div class="relative z-10">
-          <!-- Loading State -->
-          <div v-if="loadingCvs" class="flex flex-col items-center justify-center py-10 gap-3">
-            <div class="w-8 h-8 border-4 border-[#2A2A2A] border-t-white rounded-none animate-spin"></div>
-            <span class="font-mono text-[9px] text-[#A1A1AA] uppercase">Loading CV profiles...</span>
-          </div>
-
-          <!-- Error State -->
-          <div v-else-if="cvsError" class="text-center py-6 border border-[#2A2A2A] bg-[#121212] p-4">
-            <i class="fa-solid fa-triangle-exclamation text-amber-400 text-lg mb-2 block"></i>
-            <p class="font-mono text-[9px] text-[#A1A1AA] uppercase">Failed to load CVs: {{ cvsError }}</p>
-            <button @click="openCvModal" class="mt-4 px-6 py-2 bg-[#121212] text-white font-black uppercase text-[9px] hover:bg-[#2A2A2A] hover:border-white transition-colors rounded-none border-b-2 border-r-2 border-[#2A2A2A] active:border-0 active:translate-y-0.5 cursor-pointer">
-              RETRY
-            </button>
-          </div>
-
-          <!-- Empty State -->
-          <div v-else-if="cvsList.length === 0" class="text-center py-8 border border-[#2A2A2A] bg-[#121212]">
-            <i class="fa-solid fa-folder-open text-[#A1A1AA] text-xl mb-2 block"></i>
-            <p class="font-mono text-[10px] text-white uppercase">No CV Profiles Published</p>
-            <p class="font-mono text-[8px] text-[#A1A1AA] mt-1">Upload resumes in admin panel.</p>
-          </div>
-
-          <!-- CV List -->
-          <div v-else class="flex flex-col gap-4 max-h-[60vh] overflow-y-auto pr-1">
-            <div
-              v-for="cv in cvsList"
-              :key="cv.id"
-              class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-[#121212] border border-[#2A2A2A] hover:border-white rounded-none transition-all group gap-4"
-            >
-              <div class="flex items-center gap-3">
-                <div class="w-8 h-8 bg-white text-black flex items-center justify-center rounded-none group-hover:scale-110 transition-transform">
-                  <i class="fa-solid fa-file-pdf text-xs"></i>
-                </div>
-                <span class="font-mono text-[8px] font-bold text-white group-hover:text-white transition-colors uppercase tracking-widest leading-loose">
-                  {{ cv.title }}
-                </span>
-              </div>
-
-              <div class="flex gap-2 w-full sm:w-auto">
-                <!-- View Button -->
-                <a
-                  :href="getImageUrl(cv.file_path)"
-                  target="_blank"
-                  class="flex-1 sm:flex-none flex items-center justify-center px-3 py-2 border border-[#2A2A2A] rounded-none text-[#A1A1AA] hover:text-white hover:border-white transition-all text-[8px] hover:bg-[#2A2A2A] uppercase font-bold"
-                  title="View CV"
-                >
-                  <i class="fa-solid fa-eye mr-2 sm:mr-0"></i><span class="sm:hidden">VIEW</span>
-                </a>
-                <!-- Download Button -->
-                <a
-                  :href="getImageUrl(cv.file_path)"
-                  download
-                  target="_blank"
-                  class="flex-1 sm:flex-none flex items-center justify-center px-3 py-2 bg-[#121212] text-white hover:bg-[#2A2A2A] hover:border-white rounded-none border-b-2 border-r-2 border-[#2A2A2A] active:border-0 active:translate-y-0.5 active:translate-x-0.5 transition-all text-[8px] font-black uppercase"
-                  title="Download CV"
-                >
-                  <i class="fa-solid fa-download mr-2 sm:mr-0"></i><span class="sm:hidden">DL</span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </Transition>
+  </header>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
-import apiClient, { getImageUrl } from '../utils/api';
+import { useTheme } from '../composables/useTheme';
+import { useSmoothScroll } from '../composables/useSmoothScroll';
 
-const menuOpen = ref(false);
+const { theme, toggleTheme } = useTheme();
+const { scrollTo: smoothScrollTo } = useSmoothScroll();
+
 const scrolled = ref(false);
-const activeSection = ref('home');
+const mobileOpen = ref(false);
+const activeChapter = ref('intro');
 
-const showCvModal = ref(false);
-const cvsList = ref([]);
-const loadingCvs = ref(false);
-const cvsError = ref(null);
-
-const navItems = [
-  { id: 'home', label: 'Home' },
-  { id: 'project', label: 'Projects' },
+const navLinks = [
+  { id: 'intro', label: 'Home' },
   { id: 'about', label: 'About' },
+  { id: 'works', label: 'Works' },
+  { id: 'stack', label: 'Stack' },
   { id: 'contact', label: 'Contact' },
 ];
 
-const fetchCvs = async () => {
-  if (cvsList.value.length === 0) {
-    loadingCvs.value = true;
-    cvsError.value = null;
-    try {
-      const res = await apiClient.get('/cvs');
-      cvsList.value = res.data;
-    } catch (e) {
-      console.error('Failed to fetch CVs:', e);
-      cvsError.value = 'Failed to load CVs. Please try again.';
-    } finally {
-      loadingCvs.value = false;
-    }
-  }
-};
-
-const openCvModal = async () => {
-  showCvModal.value = true;
-  menuOpen.value = false;
-  await fetchCvs();
-};
-
-const scrollToSection = (id) => {
-  const el = document.getElementById(id);
-  if (el) {
-    const offset = 80;
-    window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - offset, behavior: 'smooth' });
-  }
+const scrollToChapter = (id) => {
+  smoothScrollTo('#' + id, { offset: -75, duration: 1.0 });
 };
 
 let scrollRaf = null;
 const handleScroll = () => {
   if (scrollRaf) return;
   scrollRaf = requestAnimationFrame(() => {
-    scrolled.value = window.scrollY > 40;
-    const sections = ['home', 'project', 'about', 'contact'];
-    const scrollPos = window.scrollY + 200;
-    for (let i = sections.length - 1; i >= 0; i--) {
-      const sec = document.getElementById(sections[i]);
-      if (sec && sec.offsetTop <= scrollPos) { 
-        activeSection.value = sections[i]; 
-        break; 
+    scrolled.value = window.scrollY > 20;
+
+    if (window.scrollY < 200) {
+      activeChapter.value = 'intro';
+    } else {
+      for (let i = navLinks.length - 1; i >= 0; i--) {
+        const el = document.getElementById(navLinks[i].id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= 250) {
+            activeChapter.value = navLinks[i].id;
+            break;
+          }
+        }
       }
     }
     scrollRaf = null;
@@ -243,9 +141,8 @@ const handleScroll = () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll, { passive: true });
-  // Pre-load CVs in background
-  fetchCvs().catch(() => {});
 });
+
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
   if (scrollRaf) cancelAnimationFrame(scrollRaf);
@@ -253,27 +150,12 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-.menu-slide-enter-active,
-.menu-slide-leave-active {
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
 }
-.menu-slide-enter-from,
-.menu-slide-leave-to {
+.fade-enter-from,
+.fade-leave-to {
   opacity: 0;
-  transform: translateY(-8px);
-}
-
-/* Modal transition */
-.modal-enter-active, .modal-leave-active {
-  transition: opacity 0.3s ease;
-}
-.modal-enter-from, .modal-leave-to {
-  opacity: 0;
-}
-.modal-enter-active .transform, .modal-leave-active .transform {
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.modal-enter-from .transform, .modal-leave-to .transform {
-  transform: scale(0.95) translateY(-8px);
 }
 </style>

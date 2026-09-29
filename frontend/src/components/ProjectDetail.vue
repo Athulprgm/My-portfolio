@@ -1,13 +1,13 @@
 <template>
-  <div class="min-h-screen bg-[#050505] text-white font-sans py-16 sm:py-24 px-4 sm:px-6 relative overflow-x-hidden">
+  <div class="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans py-16 sm:py-24 px-4 sm:px-6 relative overflow-x-hidden transition-colors">
     <!-- Navigation -->
-    <div class="fixed top-0 left-0 w-full h-16 bg-[#0A0A0A] backdrop-blur-md border-b border-[#2A2A2A] px-4 sm:px-6 flex items-center justify-between z-50 no-print">
-      <button @click="handleBack" class="flex items-center gap-2 font-mono text-xs text-[#A1A1AA] hover:text-white transition-colors cursor-pointer">
+    <div class="fixed top-0 left-0 w-full h-16 bg-[var(--bg-surface)]/95 backdrop-blur-md border-b border-[var(--border-color)] px-4 sm:px-6 flex items-center justify-between z-50 no-print">
+      <button @click="handleBack" class="flex items-center gap-2 font-mono text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors cursor-pointer">
         <i class="fa-solid fa-arrow-left"></i>
         <span>Back to Projects</span>
       </button>
       <div class="flex items-center gap-2">
-        <button @click="handlePrint" class="flex items-center gap-2 px-3.5 py-1.5 border border-[#2A2A2A] rounded font-mono text-xs text-[#A1A1AA] hover:border-[#ffffff]/40 hover:text-white transition-all print-btn cursor-pointer">
+        <button @click="handlePrint" class="flex items-center gap-2 px-3.5 py-1.5 border border-[var(--border-color)] rounded font-mono text-xs text-[var(--text-secondary)] hover:border-[var(--text-primary)] hover:text-[var(--text-primary)] transition-all print-btn cursor-pointer bg-[var(--bg-card)]">
           <i class="fa-solid fa-file-pdf"></i>
           <span>Download PDF</span>
         </button>

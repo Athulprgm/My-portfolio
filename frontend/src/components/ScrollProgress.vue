@@ -1,27 +1,54 @@
 <template>
+  <!-- ── Top Hairline Progress Track ── -->
   <div
-    class="fixed top-0 left-0 z-[200] h-[2px] pointer-events-none"
-    :style="{ width: progress + '%', background: 'linear-gradient(to right, #FF3B30, #ff6b35)' }"
+    class="fixed top-0 left-0 right-0 z-[100] h-[2px] pointer-events-none bg-transparent"
   >
-    <!-- Glow tip -->
     <div
-      class="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full"
-      :style="{ background: '#FF3B30', boxShadow: '0 0 8px 2px rgba(255,59,48,0.8)', opacity: progress > 1 ? 1 : 0 }"
-    ></div>
+      class="h-full bg-[var(--text-primary)] relative transition-all duration-75 ease-out"
+      :style="{ width: progress + '%' }"
+    >
+      <!-- Glowing Emerald Pip Tip -->
+      <div
+        v-if="progress > 1"
+        class="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#10B981]"
+      ></div>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
+import { useSmoothScroll } from '../composables/useSmoothScroll';
+
+const { registerScrollCallback } = useSmoothScroll();
 
 const progress = ref(0);
+let unregisterScroll = null;
+let ticking = false;
 
 const updateProgress = () => {
-  const scrollTop = window.scrollY;
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-  progress.value = docHeight > 0 ? Math.min(100, (scrollTop / docHeight) * 100) : 0;
+  if (ticking) return;
+  ticking = true;
+
+  requestAnimationFrame(() => {
+    const scrollY = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+    progress.value = docHeight > 0 ? Math.min(100, Math.max(0, (scrollY / docHeight) * 100)) : 0;
+    ticking = false;
+  });
 };
 
-onMounted(() => window.addEventListener('scroll', updateProgress, { passive: true }));
-onUnmounted(() => window.removeEventListener('scroll', updateProgress));
+onMounted(() => {
+  unregisterScroll = registerScrollCallback(updateProgress);
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  window.addEventListener('resize', updateProgress, { passive: true });
+  updateProgress();
+});
+
+onUnmounted(() => {
+  if (unregisterScroll) unregisterScroll();
+  window.removeEventListener('scroll', updateProgress);
+  window.removeEventListener('resize', updateProgress);
+});
 </script>

@@ -1,12 +1,9 @@
 <template>
   <LoadingScreenWrapper>
-    <div class="App">
-      <!-- Animated Background Orbs -->
-      <div class="animated-background">
-        <div class="gradient-orb orb-1"></div>
-        <div class="gradient-orb orb-2"></div>
-        <div class="gradient-orb orb-3"></div>
-      </div>
+    <div class="App bg-[var(--bg-primary)] min-h-screen text-[var(--text-primary)] relative transition-colors duration-300">
+
+      <!-- ── Persistent Background System & Ambient Space ── -->
+      <BackgroundSystem />
 
       <!-- ── Admin Panel ──────────────────────── -->
       <template v-if="currentRoute === 'admin'">
@@ -15,43 +12,64 @@
 
       <!-- ── Project loading spinner ─────────── -->
       <template v-else-if="projectLoading">
-        <div class="min-h-screen flex items-center justify-center bg-[#050505]">
+        <div class="min-h-screen flex items-center justify-center bg-[var(--bg-primary)] relative z-20">
           <div class="flex flex-col items-center gap-4">
-            <div class="w-8 h-8 border-2 border-[#ffffff] border-t-transparent rounded-full animate-spin"></div>
-            <span class="font-mono text-xs text-[#A1A1AA]">// fetching project data</span>
+            <div class="w-8 h-8 border-2 border-[var(--text-primary)] border-t-transparent rounded-full animate-spin"></div>
+            <span class="font-mono text-xs text-[var(--text-muted)]">// loading project specifications</span>
           </div>
         </div>
       </template>
 
       <!-- ── Project error state ──────────────── -->
       <template v-else-if="projectError">
-        <div class="min-h-screen flex items-center justify-center bg-[#050505]">
-          <div class="text-center flex flex-col items-center gap-4">
-            <i class="fa-solid fa-triangle-exclamation text-amber-400 text-3xl"></i>
-            <p class="font-mono text-sm text-[#A1A1AA]">{{ projectError }}</p>
-            <button @click="goBack" class="font-mono text-xs px-4 py-2 border border-[#ffffff]/40 text-[#ffffff] rounded hover:bg-[#ffffff]/10 transition-colors">
-              $ cd ..
+        <div class="min-h-screen flex items-center justify-center bg-[var(--bg-primary)] relative z-20">
+          <div class="text-center flex flex-col items-center gap-4 p-8 worth-card rounded-sm max-w-md">
+            <span class="text-[var(--text-primary)] font-mono text-xs font-bold">[ERROR 404]</span>
+            <p class="font-mono text-sm text-[var(--text-muted)]">{{ projectError }}</p>
+            <button @click="goBack" class="btn-worth text-xs py-2 px-4 cursor-pointer">
+              ← Return to Experience
             </button>
           </div>
         </div>
       </template>
 
-      <!-- ── Project detail ───────────────────── -->
+      <!-- ── Project detail view ──────────────── -->
       <template v-else-if="selectedProject">
         <ProjectDetail :project="selectedProject" :backAction="goBack" />
       </template>
 
-      <!-- ── Main portfolio ───────────────────── -->
+      <!-- ── Continuous Cinematic Editorial Experience ── -->
       <template v-else>
+        <ScrollProgress />
         <NavBar />
-        <main>
-          <Home />
-          <Projects />
-          <About />
-          <Journey />
-          <Capabilities />
-          <Contact />
+        
+        <main class="relative z-10 w-full">
+          <!-- ── Section 01: Hero Intro (Home) ── -->
+          <section id="intro" class="relative w-full bg-[var(--bg-primary)]">
+            <HeroIntro />
+          </section>
+
+          <!-- ── Section 02: About & Philosophy ── -->
+          <section id="about" class="relative w-full border-t border-[var(--border-color)] bg-[var(--bg-primary)]">
+            <IdentityNarrative />
+          </section>
+
+          <!-- ── Section 03: Selected Works ── -->
+          <section id="works" class="relative w-full border-t border-[var(--border-color)] bg-[var(--bg-primary)]">
+            <ProjectsShowcase />
+          </section>
+
+          <!-- ── Section 04: Technical Disciplines (Stack) ── -->
+          <section id="stack" class="relative w-full border-t border-[var(--border-color)] bg-[var(--bg-primary)]">
+            <TechSequence />
+          </section>
+
+          <!-- ── Section 05: Conclusion & Contact ── -->
+          <section id="contact" class="relative w-full border-t border-[var(--border-color)] bg-[var(--bg-primary)]">
+            <ContactExperience />
+          </section>
         </main>
+
         <ScrollToTop />
         <SpecialDayPopup />
       </template>
@@ -60,22 +78,28 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineAsyncComponent } from 'vue';
+import { ref, onMounted, onUnmounted, defineAsyncComponent, nextTick } from 'vue';
+import BackgroundSystem     from './components/BackgroundSystem.vue';
+import ScrollProgress       from './components/ScrollProgress.vue';
 import NavBar               from './components/NavBar.vue';
-import Home                 from './components/Home.vue';
-import Projects             from './components/Projects.vue';
-import About                from './components/About.vue';
-import Journey              from './components/Journey.vue';
-import Capabilities         from './components/Capabilities.vue';
-import Contact              from './components/Contact.vue';
+import HeroIntro            from './components/HeroIntro.vue';
+import ProjectsShowcase     from './components/ProjectsShowcase.vue';
+import IdentityNarrative    from './components/IdentityNarrative.vue';
+import TechSequence         from './components/TechSequence.vue';
+import ContactExperience    from './components/ContactExperience.vue';
 import ScrollToTop          from './components/ScrollToTop.vue';
 import SpecialDayPopup      from './components/SpecialDayPopup.vue';
 import LoadingScreenWrapper from './components/LoadingScreenWrapper.vue';
 import { fetchProjectById } from './composables/useProjects';
+import { useTheme } from './composables/useTheme';
+import { useScrollReveal } from './composables/useScrollReveal';
 
-// Async Lazy-Loaded Components for ultra-fast initial bundle
+// Async Lazy-Loaded Components
 const AdminPanel = defineAsyncComponent(() => import('./components/AdminPanel.vue'));
 const ProjectDetail = defineAsyncComponent(() => import('./components/ProjectDetail.vue'));
+
+const { initTheme } = useTheme();
+const { scanAndObserve } = useScrollReveal();
 
 // ── Routing state ─────────────────────────────────────────────────
 const currentRoute    = ref('home');   // 'home' | 'admin' | 'project'
@@ -114,6 +138,9 @@ const parseRoute = async () => {
   currentRoute.value    = 'home';
   selectedProject.value = null;
   projectError.value    = null;
+  nextTick(() => {
+    setTimeout(scanAndObserve, 100);
+  });
 };
 
 const goBack = () => {
@@ -122,13 +149,18 @@ const goBack = () => {
 };
 
 onMounted(() => {
+  initTheme();
   parseRoute();
   window.addEventListener('popstate', parseRoute);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('popstate', parseRoute);
 });
 </script>
 
 <style>
 section {
-  scroll-margin-top: 80px;
+  scroll-margin-top: 70px;
 }
 </style>

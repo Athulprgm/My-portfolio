@@ -1,301 +1,233 @@
 <template>
-  <section class="relative py-20 sm:py-28 px-4 sm:px-6 overflow-hidden bg-[#0A0A0A] border-t border-[#2A2A2A]" id="contact">
+  <div class="border-t border-[#1E1E1E] bg-black text-white" id="contact">
 
-    <!-- Background ambient glow -->
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_100%,rgba(255,255,255,0.04),transparent)] pointer-events-none"></div>
-
-    <div class="max-w-6xl mx-auto w-full relative z-10 flex-1">
-
-      <!-- ================= SECTION HEADER ================= -->
-      <div class="max-w-3xl mb-14 sm:mb-16 scroll-reveal" ref="headerRef">
-        <div class="inline-flex items-center gap-2 px-3 py-1 bg-[#141414] border border-[#2A2A2A] text-xs font-mono text-[#A1A1AA] mb-4">
-          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-          <span>Get In Touch</span>
+    <!-- ══════════════════ SECTION 09 — RECRUITMENT ══════════════════ -->
+    <section class="py-28 sm:py-36 px-6 sm:px-8 border-b border-[#1E1E1E]">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-[11px] font-mono tracking-[0.2em] text-[#10B981] font-bold mb-4 uppercase scroll-reveal flex items-center gap-2">
+          <span class="w-1.5 h-1.5 bg-[#10B981]"></span>
+          <span>09 / RECRUITMENT &amp; ROLES</span>
         </div>
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white tracking-tight leading-tight mb-4">
-          Let's discuss your next project.
-        </h2>
-        <p class="text-base sm:text-lg text-[#A1A1AA] leading-relaxed">
-          Whether you need a complete web application, mobile app development, backend APIs, or technical consulting—send a message below and let's talk.
-        </p>
-      </div>
 
-      <!-- ================= MAIN GRID: CONTACT INFO & ENQUIRY FORM ================= -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-20 items-start">
-        
-        <!-- Left: Contact Info & Value Props (5 cols) -->
-        <div class="lg:col-span-5 flex flex-col gap-6 scroll-reveal" ref="infoRef">
-          
-          <!-- Availability Badge Card -->
-          <div class="bg-[#111111] border border-[#222222] p-6">
-            <div class="flex items-center gap-3 mb-3">
-              <span class="relative flex h-3 w-3">
-                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-              </span>
-              <h3 class="text-sm font-bold text-white uppercase tracking-wider font-mono">Available For Work</h3>
-            </div>
-            <p class="text-xs sm:text-sm text-[#A1A1AA] leading-relaxed font-sans">
-              Accepting new freelance contracts, high-impact venture partnerships, and technical development projects worldwide.
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          <div class="lg:col-span-8 flex flex-col items-start scroll-reveal-left">
+            <h2 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6">
+              Looking for a builder?
+            </h2>
+            <p class="text-lg sm:text-xl text-[#888888] leading-relaxed max-w-2xl font-normal">
+              “I'm interested in opportunities where engineering, product thinking and real-world problem solving come together.”
             </p>
           </div>
 
-          <!-- Direct Communication Channels -->
-          <div class="bg-[#111111] border border-[#222222] p-6 flex flex-col gap-4">
-            <h4 class="text-xs font-bold text-white uppercase tracking-wider font-mono pb-3 border-b border-[#222222]">
-              Direct Contacts
-            </h4>
+          <!-- Recruitment Action Buttons (Sharp Slide Fill Boxes) -->
+          <div class="lg:col-span-4 flex flex-col gap-3.5 w-full pt-2 scroll-reveal-right">
+            <a
+              href="/Athul_Krishna_Resume.pdf"
+              download
+              class="btn-slide-fill w-full py-4 px-6 text-xs font-bold tracking-wider uppercase flex items-center justify-between group"
+            >
+              <span>VIEW RESUME</span>
+              <span class="arrow-slide">→</span>
+            </a>
 
-            <div class="flex flex-col gap-3">
-              <a 
-                v-for="c in contacts" 
-                :key="c.label"
-                :href="c.link"
-                :target="c.link.startsWith('http') ? '_blank' : '_self'"
-                rel="noopener noreferrer"
-                class="flex items-center justify-between p-3 bg-[#0A0A0A] border border-[#222222] hover:border-white/40 hover:bg-[#161616] transition-all group"
-              >
-                <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 bg-[#141414] border border-[#2A2A2A] group-hover:border-white flex items-center justify-center text-white transition-colors">
-                    <i :class="c.icon" class="text-xs" :style="{ color: c.color }"></i>
-                  </div>
-                  <div>
-                    <span class="text-xs text-[#71717A] block leading-tight">{{ c.label }}</span>
-                    <span class="text-xs font-mono font-medium text-white group-hover:text-emerald-400 transition-colors">{{ c.value }}</span>
-                  </div>
-                </div>
-                <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-[#555] group-hover:text-white transition-colors"></i>
-              </a>
-            </div>
+            <a
+              href="https://github.com/Athulprgm"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-slide-color w-full py-4 px-6 text-xs font-bold tracking-wider uppercase flex items-center justify-between group"
+            >
+              <span>GITHUB</span>
+              <span class="arrow-slide">→</span>
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/athul-krishna-k/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-slide-color w-full py-4 px-6 text-xs font-bold tracking-wider uppercase flex items-center justify-between group"
+            >
+              <span>LINKEDIN</span>
+              <span class="arrow-slide">→</span>
+            </a>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <!-- Working Guarantees -->
-          <div class="bg-[#111111] border border-[#222222] p-6">
-            <h4 class="text-xs font-bold text-white uppercase tracking-wider font-mono mb-4">
-              What to Expect
-            </h4>
-            <ul class="space-y-2.5 text-xs text-[#A1A1AA] font-sans">
-              <li class="flex items-center gap-2">
-                <i class="fa-solid fa-check text-emerald-400 text-[11px]"></i>
-                <span>Direct, prompt reply within 24 hours</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <i class="fa-solid fa-check text-emerald-400 text-[11px]"></i>
-                <span>Honest technical scoping & advice</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <i class="fa-solid fa-check text-emerald-400 text-[11px]"></i>
-                <span>Clean, maintainable code & clear milestones</span>
-              </li>
-            </ul>
-          </div>
+    <!-- ══════════════════ SECTION 10 — FINAL CTA ══════════════════ -->
+    <section class="py-36 sm:py-48 px-6 sm:px-8 bg-black flex flex-col justify-center items-start border-b border-[#1E1E1E]">
+      <div class="max-w-7xl mx-auto w-full">
 
+        <!-- Huge Typography Statement with Scroll Reveal -->
+        <h2 class="text-5xl sm:text-7xl lg:text-[5.5rem] font-extrabold text-white tracking-tight leading-[1.05] mb-8 max-w-4xl scroll-reveal">
+          Have something<br />
+          worth building?
+        </h2>
+
+        <!-- Supporting Text -->
+        <p class="text-xl sm:text-2xl text-[#888888] font-normal leading-relaxed max-w-2xl mb-12 scroll-reveal stagger-1">
+          Let's turn the idea into something people actually want to use.
+        </p>
+
+        <!-- CTA Trigger Button (Sharp Slide Fill) -->
+        <button
+          @click="showContactModal = true"
+          class="btn-slide-fill px-9 py-4.5 text-xs font-bold tracking-wider uppercase flex items-center gap-3 group cursor-pointer scroll-reveal stagger-2"
+        >
+          <span>START A CONVERSATION</span>
+          <span class="arrow-slide">→</span>
+        </button>
+
+      </div>
+    </section>
+
+    <!-- ══════════════════ FOOTER ══════════════════ -->
+    <footer class="py-16 sm:py-20 px-6 sm:px-8 bg-black text-[#888888] text-xs font-mono scroll-reveal">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+
+        <!-- Left: Identity -->
+        <div class="flex flex-col">
+          <span class="text-sm font-bold text-white tracking-wider uppercase mb-1 flex items-center gap-2">
+            <span>ATHUL KRISHNA</span>
+            <span class="w-1.5 h-1.5 bg-[#10B981]"></span>
+          </span>
+          <span class="text-[#666666]">
+            Full-Stack Developer · Co-Founder
+          </span>
         </div>
 
-        <!-- Right: Interactive Dynamic Project Enquiry Form (7 cols) -->
-        <div class="lg:col-span-7 bg-[#111111] border border-[#222222] p-7 sm:p-9 scroll-reveal" ref="formRef">
-          
-          <div class="flex items-center justify-between pb-4 mb-6 border-b border-[#222222]">
-            <div>
-              <h3 class="text-base sm:text-lg font-bold text-white">Project Enquiry Form</h3>
-              <p class="text-xs text-[#71717A] mt-0.5 font-sans">Send project details and I'll review your requirements</p>
-            </div>
-            <span class="text-xs font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-500/20 px-2 py-0.5">
-              Direct Contact
-            </span>
-          </div>
+        <!-- Center: Links -->
+        <div class="flex items-center gap-8 text-[#888888] uppercase tracking-wider">
+          <a href="https://github.com/Athulprgm" target="_blank" rel="noopener" class="hover:text-white transition-colors">
+            GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/athul-krishna-k/" target="_blank" rel="noopener" class="hover:text-white transition-colors">
+            LinkedIn
+          </a>
+          <a href="mailto:athul@trawbit.com" class="hover:text-white transition-colors">
+            Email
+          </a>
+        </div>
 
-          <!-- Success State Message -->
-          <div v-if="submitSuccess" class="py-10 px-6 text-center bg-[#0A0A0A] border border-emerald-500/30 flex flex-col items-center gap-4 animate-[fadeIn_0.4s_ease-out]">
-            <div class="w-14 h-14 rounded-full bg-emerald-950/60 border border-emerald-500/40 flex items-center justify-center text-emerald-400 text-2xl">
-              <i class="fa-solid fa-check"></i>
+        <!-- Right: Copyright -->
+        <div class="text-[#555555]">
+          © 2026 Athul Krishna
+        </div>
+
+      </div>
+    </footer>
+
+    <!-- ══════════════════ CONVERSATION MODAL (Sharp Zero-Radius) ══════════════════ -->
+    <Transition name="fade-modal">
+      <div
+        v-if="showContactModal"
+        class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
+        @click.self="showContactModal = false"
+      >
+        <div class="modal-card glass-panel border-white/20 max-w-xl w-full p-6 sm:p-10 shadow-2xl relative">
+          <button
+            @click="showContactModal = false"
+            class="absolute top-6 right-6 text-[#888888] hover:text-white text-xs font-mono uppercase tracking-wider cursor-pointer border border-white/15 hover:border-white px-2.5 py-1 transition-colors"
+          >
+            [CLOSE ×]
+          </button>
+
+          <div class="text-xs font-mono text-[#10B981] uppercase tracking-widest mb-2 font-semibold flex items-center gap-2">
+            <span class="w-1.5 h-1.5 bg-[#10B981]"></span>
+            <span>DIRECT INQUIRY</span>
+          </div>
+          <h3 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight mb-2">
+            Start a Conversation
+          </h3>
+          <p class="text-xs font-mono text-[#888888] uppercase tracking-wider mb-8">
+            athul@trawbit.com · Usually replies within 24 hours
+          </p>
+
+          <!-- Success Message -->
+          <div v-if="submitSuccess" class="py-8 text-center flex flex-col items-center gap-3">
+            <div class="text-[#10B981] font-bold font-mono text-sm">
+              ✓ Message Received
             </div>
-            <div>
-              <h4 class="text-lg font-bold text-white mb-1">Enquiry Received!</h4>
-              <p class="text-xs sm:text-sm text-[#A1A1AA] max-w-md mx-auto leading-relaxed">
-                Thank you, <span class="text-white font-semibold">{{ form.name }}</span>. Your message has been received. I will review your project details and get back to you shortly.
-              </p>
-            </div>
+            <p class="text-sm text-[#888888]">
+              Thank you for reaching out. Athul will review your message and reply directly to your email shortly.
+            </p>
             <button
-              @click="resetForm"
-              class="mt-3 px-5 py-2.5 bg-[#1a1a1a] border border-[#333] hover:border-white text-xs font-mono text-white transition-all cursor-pointer"
+              @click="showContactModal = false; submitSuccess = false"
+              class="mt-4 px-6 py-2.5 btn-slide-fill text-xs font-bold uppercase tracking-wider"
             >
-              Send Another Message
+              Done
             </button>
           </div>
 
-          <!-- Form Input Fields -->
-          <form v-else @submit.prevent="handleSubmit" class="flex flex-col gap-4">
-            
-            <!-- Error Banner -->
-            <div v-if="submitError" class="p-3 bg-red-950/40 border border-red-500/40 text-red-300 text-xs flex items-center gap-2">
-              <i class="fa-solid fa-triangle-exclamation"></i>
-              <span>{{ submitError }}</span>
+          <!-- Form -->
+          <form v-else @submit.prevent="handleSubmit" class="space-y-4">
+            <div v-if="submitError" class="p-3 bg-red-950/40 border border-red-500/40 text-red-300 text-xs font-mono">
+              Error: {{ submitError }}
             </div>
 
-            <!-- Row 1: Name & Email -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="flex flex-col gap-1.5">
-                <label class="text-xs font-mono text-[#A1A1AA]">
-                  Your Name <span class="text-red-400">*</span>
-                </label>
-                <input
-                  v-model="form.name"
-                  type="text"
-                  required
-                  placeholder="e.g. John Doe"
-                  class="w-full bg-[#0A0A0A] border border-[#2A2A2A] focus:border-white focus:outline-none px-3.5 py-2.5 text-xs sm:text-sm text-white font-sans transition-colors placeholder:text-[#555]"
-                />
-              </div>
-
-              <div class="flex flex-col gap-1.5">
-                <label class="text-xs font-mono text-[#A1A1AA]">
-                  Email Address <span class="text-red-400">*</span>
-                </label>
-                <input
-                  v-model="form.email"
-                  type="email"
-                  required
-                  placeholder="john@example.com"
-                  class="w-full bg-[#0A0A0A] border border-[#2A2A2A] focus:border-white focus:outline-none px-3.5 py-2.5 text-xs sm:text-sm text-white font-sans transition-colors placeholder:text-[#555]"
-                />
-              </div>
+            <div>
+              <label class="block text-xs font-mono text-[#888888] uppercase mb-1.5">Your Name</label>
+              <input
+                v-model="form.name"
+                type="text"
+                required
+                placeholder="Name or Organization"
+                class="w-full glass-input p-3.5 text-sm text-white font-sans placeholder:text-[#555555]"
+              />
             </div>
 
-            <!-- Row 2: Phone & Service Category -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="flex flex-col gap-1.5">
-                <label class="text-xs font-mono text-[#A1A1AA]">
-                  Phone / WhatsApp <span class="text-[#666]">(Optional)</span>
-                </label>
-                <input
-                  v-model="form.phone"
-                  type="text"
-                  placeholder="+1 (555) 000-0000"
-                  class="w-full bg-[#0A0A0A] border border-[#2A2A2A] focus:border-white focus:outline-none px-3.5 py-2.5 text-xs sm:text-sm text-white font-sans transition-colors placeholder:text-[#555]"
-                />
-              </div>
-
-              <div class="flex flex-col gap-1.5">
-                <label class="text-xs font-mono text-[#A1A1AA]">
-                  Project Type / Service
-                </label>
-                <select
-                  v-model="form.service"
-                  class="w-full bg-[#0A0A0A] border border-[#2A2A2A] focus:border-white focus:outline-none px-3.5 py-2.5 text-xs sm:text-sm text-white font-sans transition-colors"
-                >
-                  <option value="Full-Stack Web Application (Laravel / React / Vue)">Full-Stack Web Application (Laravel / React / Vue)</option>
-                  <option value="Mobile App Development (Flutter & Firebase)">Mobile App Development (Flutter & Firebase)</option>
-                  <option value="Backend APIs & Database Architecture (PHP / Node.js)">Backend APIs & Database Architecture (PHP / Node.js)</option>
-                  <option value="Frontend Engineering & UI Redesign">Frontend Engineering & UI Redesign</option>
-                  <option value="Technical Consulting & Code Review">Technical Consulting & Code Review</option>
-                  <option value="General Freelance / Contract Work">General Freelance / Contract Work</option>
-                  <option value="Other Inquiries">Other Inquiries</option>
-                </select>
-              </div>
+            <div>
+              <label class="block text-xs font-mono text-[#888888] uppercase mb-1.5">Email Address</label>
+              <input
+                v-model="form.email"
+                type="email"
+                required
+                placeholder="name@company.com"
+                class="w-full glass-input p-3.5 text-sm text-white font-sans placeholder:text-[#555555]"
+              />
             </div>
 
-            <!-- Row 3: Budget Range -->
-            <div class="flex flex-col gap-1.5">
-              <label class="text-xs font-mono text-[#A1A1AA]">
-                Estimated Budget Range
-              </label>
-              <select
-                v-model="form.budget"
-                class="w-full bg-[#0A0A0A] border border-[#2A2A2A] focus:border-white focus:outline-none px-3.5 py-2.5 text-xs sm:text-sm text-white font-sans transition-colors"
-              >
-                <option value="Flexible / To be discussed">Flexible / To be discussed</option>
-                <option value="Under $1,000">Under $1,000</option>
-                <option value="$1,000 - $3,000">$1,000 - $3,000</option>
-                <option value="$3,000 - $5,000">$3,000 - $5,000</option>
-                <option value="$5,000+">$5,000+</option>
-              </select>
-            </div>
-
-            <!-- Row 4: Message Content -->
-            <div class="flex flex-col gap-1.5">
-              <label class="text-xs font-mono text-[#A1A1AA]">
-                Project Overview & Requirements <span class="text-red-400">*</span>
-              </label>
+            <div>
+              <label class="block text-xs font-mono text-[#888888] uppercase mb-1.5">What are you looking to build?</label>
               <textarea
                 v-model="form.message"
                 required
                 rows="4"
-                placeholder="Briefly describe your goals, timeline, key features, or any questions..."
-                class="w-full bg-[#0A0A0A] border border-[#2A2A2A] focus:border-white focus:outline-none p-3.5 text-xs sm:text-sm text-white font-sans transition-colors placeholder:text-[#555] resize-y"
+                placeholder="Tell me about the product concept, role or challenge..."
+                class="w-full glass-input p-3.5 text-sm text-white font-sans placeholder:text-[#555555] resize-y"
               ></textarea>
             </div>
 
-            <!-- Submit Button -->
             <button
               type="submit"
               :disabled="submitting"
-              class="mt-2 w-full py-3.5 px-6 bg-white text-black font-mono text-xs font-black uppercase tracking-wider hover:bg-neutral-200 active:scale-[0.99] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_20px_rgba(255,255,255,0.15)]"
+              class="w-full py-4 btn-slide-fill text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 group disabled:opacity-50 cursor-pointer"
             >
-              <i v-if="submitting" class="fa-solid fa-circle-notch animate-spin"></i>
-              <i v-else class="fa-solid fa-paper-plane text-xs text-black"></i>
-              <span>{{ submitting ? 'SENDING ENQUIRY...' : 'SUBMIT PROJECT ENQUIRY' }}</span>
+              <span>{{ submitting ? 'Sending...' : 'Send Message' }}</span>
+              <span class="arrow-slide">→</span>
             </button>
-
-            <p class="text-center text-[10px] text-[#71717A] mt-1 font-mono">
-              🔒 Your information is confidential and will never be shared.
-            </p>
           </form>
-
         </div>
-
       </div>
-
-    </div>
-
-    <!-- Terminal footer status bar -->
-    <div class="w-full bg-[#0a0a0f] border-t border-[#222222] py-2 px-6 flex items-center justify-between font-mono text-[10px] text-[#6b6b80] select-none relative z-10">
-      <div class="flex items-center gap-4">
-        <span class="flex items-center gap-1.5 text-white/80">
-          <i class="fa-solid fa-circle-check text-emerald-400"></i> Backend API: Active
-        </span>
-        <span class="hidden sm:inline-flex items-center gap-1">
-          <i class="fa-solid fa-location-dot text-[#888]"></i> Kerala, India
-        </span>
-      </div>
-      <span>© {{ currentYear }} Athul Krishna K · Trawbit Technologies</span>
-      <div class="flex items-center gap-3">
-        <span class="hidden md:inline">Laravel API · Vue 3</span>
-      </div>
-    </div>
-  </section>
+    </Transition>
+  </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, onUnmounted } from 'vue';
+import { ref, reactive } from 'vue';
 import { useEnquiries } from '../composables/useEnquiries';
-
-const currentYear = new Date().getFullYear();
 
 const { submitEnquiry, submitting } = useEnquiries();
 
-const headerRef = ref(null);
-const infoRef = ref(null);
-const formRef = ref(null);
-
-const submitSuccess = ref(false);
-const submitError = ref(null);
+const showContactModal = ref(false);
+const submitSuccess    = ref(false);
+const submitError      = ref(null);
 
 const form = reactive({
   name: '',
   email: '',
-  phone: '',
-  service: 'Full-Stack Web Application (Laravel / React / Vue)',
-  budget: 'Flexible / To be discussed',
   message: '',
 });
-
-const contacts = [
-  { icon: 'fa-solid fa-envelope', label: 'Primary Email', value: 'athul@trawbit.com', link: 'mailto:athul@trawbit.com', color: '#e87d79' },
-  { icon: 'fa-brands fa-linkedin', label: 'LinkedIn', value: 'athul-krishna-k', link: 'https://www.linkedin.com/in/athul-krishna-k/', color: '#0A66C2' },
-  { icon: 'fa-brands fa-github', label: 'GitHub', value: '@Athulprgm', link: 'https://github.com/Athulprgm', color: '#ffffff' },
-  { icon: 'fa-solid fa-phone', label: 'WhatsApp & Phone', value: '+91 8590595077', link: 'tel:+918590595077', color: '#25D366' },
-];
 
 const handleSubmit = async () => {
   submitError.value = null;
@@ -303,45 +235,41 @@ const handleSubmit = async () => {
     await submitEnquiry({
       name: form.name.trim(),
       email: form.email.trim(),
-      phone: form.phone ? form.phone.trim() : null,
-      service: form.service,
-      budget: form.budget,
       message: form.message.trim(),
+      service: 'Editorial Inbound Conversation',
     });
     submitSuccess.value = true;
+    form.name = '';
+    form.email = '';
+    form.message = '';
   } catch (err) {
-    submitError.value = err.message || 'Failed to submit enquiry. Please try again or email directly.';
+    submitError.value = err.message || 'Unable to submit enquiry. Please email directly.';
   }
 };
-
-const resetForm = () => {
-  form.name = '';
-  form.email = '';
-  form.phone = '';
-  form.service = 'Full-Stack Web Application (Laravel / React / Vue)';
-  form.budget = 'Flexible / To be discussed';
-  form.message = '';
-  submitSuccess.value = false;
-  submitError.value = null;
-};
-
-let observer = null;
-
-onMounted(() => {
-  observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('revealed');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-
-  [headerRef, infoRef, formRef].forEach(ref => {
-    if (ref.value) observer.observe(ref.value);
-  });
-});
-
-onUnmounted(() => observer?.disconnect());
 </script>
 
+<style scoped>
+.fade-modal-enter-active,
+.fade-modal-leave-active {
+  transition: opacity 0.25s ease;
+}
+.fade-modal-enter-from,
+.fade-modal-leave-to {
+  opacity: 0;
+}
+
+.fade-modal-enter-active .modal-card {
+  animation: modalSlideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
