@@ -35,14 +35,25 @@
 
       <!-- Right: Theme Switcher & Contact Button -->
       <div class="flex items-center gap-3">
-        <!-- Theme Toggle -->
+        <!-- Theme Toggle Pill -->
         <button
           @click="toggleTheme"
-          class="px-2.5 py-1.5 border border-[var(--border-color)] hover:border-[var(--text-primary)] rounded-sm text-xs font-mono-clean text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition-all cursor-pointer bg-[var(--bg-card)] flex items-center gap-1.5"
-          :title="theme === 'light' ? 'Switch to Dark' : 'Switch to Light'"
+          class="flex items-center gap-0.5 p-1 border border-[var(--border-color)] hover:border-[var(--text-primary)] rounded-full text-xs font-mono-clean transition-all cursor-pointer bg-[var(--bg-card)]"
+          :title="theme === 'light' ? 'Switch to Dark mode' : 'Switch to Light mode'"
+          aria-label="Toggle color theme"
         >
-          <i :class="theme === 'light' ? 'fa-solid fa-moon text-xs' : 'fa-solid fa-sun text-xs text-amber-400'"></i>
-          <span class="text-[10px] uppercase font-bold tracking-wider">{{ theme === 'light' ? 'DARK' : 'LIGHT' }}</span>
+          <span
+            class="w-6 h-6 rounded-full flex items-center justify-center transition-all duration-200"
+            :class="theme === 'light' ? 'bg-[var(--accent-solid)] text-[var(--accent-text)] shadow-xs font-bold' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'"
+          >
+            <i class="fa-solid fa-sun text-[11px]"></i>
+          </span>
+          <span
+            class="w-6 h-6 rounded-full flex items-center justify-center transition-all duration-200"
+            :class="theme === 'dark' ? 'bg-[var(--accent-solid)] text-[var(--accent-text)] shadow-xs font-bold' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'"
+          >
+            <i class="fa-solid fa-moon text-[11px]"></i>
+          </span>
         </button>
 
         <!-- Minimal Contact CTA -->

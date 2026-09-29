@@ -44,28 +44,39 @@
         <NavBar />
         
         <main class="relative z-10 w-full">
-          <!-- ── Section 01: Hero Intro (Home) ── -->
-          <section id="intro" class="relative w-full bg-[var(--bg-primary)]">
+          <!-- ── Section 01: Hero Intro (Home - Sticky Pin Deep Obsidian / Alabaster) ── -->
+          <section id="intro" class="sticky top-0 h-screen w-full z-0 overflow-hidden bg-[var(--hero-bg)] text-[var(--text-primary)] transition-colors duration-300">
             <HeroIntro />
           </section>
 
-          <!-- ── Section 02: About & Philosophy ── -->
-          <section id="about" class="relative w-full border-t border-[var(--border-color)] bg-[var(--bg-primary)]">
+          <!-- ── Section 02: About & Philosophy (Cinematic Card / Curtain Over Home - Studio Surface) ── -->
+          <section
+            id="about"
+            class="relative w-full z-20 bg-[var(--sheet-bg)] text-[var(--text-primary)] border-t border-[var(--sheet-border)] rounded-t-[30px] sm:rounded-t-[40px] shadow-[var(--sheet-shadow)] transition-colors duration-300"
+          >
+            <!-- Minimalist Architectural Notch with Emerald Glow -->
+            <div class="flex justify-center pt-3.5 pb-1 select-none pointer-events-none">
+              <div
+                class="w-14 h-1 rounded-full bg-[var(--notch-bg)] transition-all"
+                :style="{ boxShadow: 'var(--notch-shadow)' }"
+              ></div>
+            </div>
+
             <IdentityNarrative />
           </section>
 
           <!-- ── Section 03: Selected Works ── -->
-          <section id="works" class="relative w-full border-t border-[var(--border-color)] bg-[var(--bg-primary)]">
+          <section id="works" class="relative w-full z-20 border-t border-[var(--border-color)] bg-[var(--sheet-bg)] text-[var(--text-primary)] transition-colors duration-300">
             <ProjectsShowcase />
           </section>
 
           <!-- ── Section 04: Technical Disciplines (Stack) ── -->
-          <section id="stack" class="relative w-full border-t border-[var(--border-color)] bg-[var(--bg-primary)]">
+          <section id="stack" class="relative w-full z-20 border-t border-[var(--border-color)] bg-[var(--sheet-bg)] text-[var(--text-primary)] transition-colors duration-300">
             <TechSequence />
           </section>
 
           <!-- ── Section 05: Conclusion & Contact ── -->
-          <section id="contact" class="relative w-full border-t border-[var(--border-color)] bg-[var(--bg-primary)]">
+          <section id="contact" class="relative w-full z-20 border-t border-[var(--border-color)] bg-[var(--sheet-bg)] text-[var(--text-primary)] transition-colors duration-300">
             <ContactExperience />
           </section>
         </main>
