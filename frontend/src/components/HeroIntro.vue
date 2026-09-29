@@ -4,13 +4,13 @@
   >
     <div class="max-w-4xl my-auto">
       <!-- Minimalist Eyebrow -->
-      <div class="scroll-reveal reveal-delay-100 flex items-center gap-2 mb-8 text-xs font-mono-clean uppercase tracking-widest text-[var(--text-muted)]">
+      <div class="flex items-center gap-2 mb-8 text-xs font-mono-clean uppercase tracking-widest text-[var(--text-muted)]">
         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
         <span>01 // ATHUL KRISHNA · CO-FOUNDER @ TRAWBIT</span>
       </div>
 
       <!-- Simplified Grand Headline -->
-      <h1 class="scroll-reveal reveal-delay-200 text-4xl sm:text-6xl md:text-7xl lg:text-[5.25rem] font-sans-clean font-extrabold tracking-tight text-[var(--text-primary)] leading-[1.05] mb-8">
+      <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-[5.25rem] font-sans-clean font-extrabold tracking-tight text-[var(--text-primary)] leading-[1.05] mb-8">
         Engineering software with
         <span class="font-editorial font-normal italic text-[var(--text-primary)] underline decoration-[var(--border-color)] decoration-1 underline-offset-8">
           taste &amp; precision.
@@ -18,12 +18,12 @@
       </h1>
 
       <!-- Simplified Single-Sentence Bio -->
-      <p class="scroll-reveal reveal-delay-300 text-lg sm:text-xl text-[var(--text-secondary)] font-normal leading-relaxed max-w-xl mb-10 font-sans-clean">
+      <p class="text-lg sm:text-xl text-[var(--text-secondary)] font-normal leading-relaxed max-w-xl mb-10 font-sans-clean">
         Full-stack engineer building resilient web platforms, distributed APIs, and responsive interfaces.
       </p>
 
       <!-- Minimal Actions -->
-      <div class="scroll-reveal reveal-delay-400 flex flex-wrap items-center gap-4">
+      <div class="flex flex-wrap items-center gap-4">
         <button
           @click="scrollToSection('works')"
           class="btn-worth cursor-pointer group"
@@ -45,7 +45,7 @@
     <!-- Subtle Editorial Scroll Cue with Dynamic Hairline & Bounce -->
     <div
       @click="scrollToSection('about')"
-      class="scroll-reveal reveal-delay-500 flex items-center justify-between pt-6 border-t border-[var(--border-color)] text-xs font-mono-clean text-[var(--text-muted)] tracking-wider cursor-pointer group hover:text-[var(--text-primary)] transition-colors"
+      class="flex items-center justify-between pt-6 border-t border-[var(--border-color)] text-xs font-mono-clean text-[var(--text-muted)] tracking-wider cursor-pointer group hover:text-[var(--text-primary)] transition-colors"
     >
       <div class="flex items-center gap-2">
         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500/70"></span>
@@ -62,10 +62,8 @@
 <script setup>
 import { ref } from 'vue';
 import { useSmoothScroll } from '../composables/useSmoothScroll';
-import { useScrollReveal } from '../composables/useScrollReveal';
 
 const { scrollTo: smoothScrollTo } = useSmoothScroll();
-useScrollReveal();
 
 const copied = ref(false);
 
