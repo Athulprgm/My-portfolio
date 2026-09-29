@@ -8,7 +8,8 @@
   --font-editorial: 'Newsreader', Georgia, serif;
 }
 
-:root, html.light {
+:root,
+html.light {
   --bg-primary: #FAF9F6;
   --bg-surface: #FFFFFF;
   --bg-card: #FFFFFF;
@@ -69,6 +70,39 @@ html.dark {
   --notch-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
 }
 
+/* ── Cinematic Theme Transition System (GPU Accelerated, Ultra-Smooth 100fps+) ── */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+  will-change: clip-path, transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+::view-transition-old(root) {
+  z-index: 1;
+}
+
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
+/* Fallback smooth transition for all elements during theme toggle */
+html.theme-transitioning,
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+  transition: background-color 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    fill 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    stroke 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.9s cubic-bezier(0.22, 1, 0.36, 1) !important;
+  transition-delay: 0s !important;
+  will-change: background-color, border-color, color;
+}
+
 html {
   /* Lenis provides virtual smooth scrolling; browser native smooth scroll is disabled to eliminate physics jitter */
   scroll-behavior: auto;
@@ -77,11 +111,11 @@ html {
   width: 100%;
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Lenis standard smooth scrolling foundation */
-html.lenis, html.lenis body {
+html.lenis,
+html.lenis body {
   height: auto;
 }
 
@@ -114,7 +148,8 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-#root, #app {
+#root,
+#app {
   width: 100%;
   min-height: 100vh;
   position: relative;
@@ -131,19 +166,27 @@ body {
 ::-webkit-scrollbar {
   width: 4px;
 }
+
 ::-webkit-scrollbar-track {
   background: var(--bg-primary);
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--border-color);
   border-radius: 2px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--text-muted);
 }
 
 /* Typography Hierarchy */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   letter-spacing: -0.03em;
   font-weight: 700;
@@ -261,7 +304,7 @@ button {
 
 /* Subtle Architectural Grid Lines Overlay */
 .architectural-grid {
-  background-image: 
+  background-image:
     linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
   background-size: 80px 80px;
@@ -303,8 +346,8 @@ button {
   transform: translateY(28px);
   filter: blur(4px);
   transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform, filter;
 }
 
@@ -315,14 +358,37 @@ button {
 }
 
 /* Stagger delay variants */
-.reveal-delay-100 { transition-delay: 100ms; }
-.reveal-delay-150 { transition-delay: 150ms; }
-.reveal-delay-200 { transition-delay: 200ms; }
-.reveal-delay-250 { transition-delay: 250ms; }
-.reveal-delay-300 { transition-delay: 300ms; }
-.reveal-delay-350 { transition-delay: 350ms; }
-.reveal-delay-400 { transition-delay: 400ms; }
-.reveal-delay-500 { transition-delay: 500ms; }
+.reveal-delay-100 {
+  transition-delay: 100ms;
+}
+
+.reveal-delay-150 {
+  transition-delay: 150ms;
+}
+
+.reveal-delay-200 {
+  transition-delay: 200ms;
+}
+
+.reveal-delay-250 {
+  transition-delay: 250ms;
+}
+
+.reveal-delay-300 {
+  transition-delay: 300ms;
+}
+
+.reveal-delay-350 {
+  transition-delay: 350ms;
+}
+
+.reveal-delay-400 {
+  transition-delay: 400ms;
+}
+
+.reveal-delay-500 {
+  transition-delay: 500ms;
+}
 
 /* Scale & lift entrance for cards */
 .scroll-reveal-scale {
@@ -330,8 +396,8 @@ button {
   transform: scale(0.96) translateY(24px);
   filter: blur(3px);
   transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform, filter;
 }
 
@@ -354,13 +420,17 @@ button {
 }
 
 /* Section scroll margin */
-section, .stack-sheet {
+section,
+.stack-sheet {
   scroll-margin-top: 75px;
 }
 
 /* Respect user preference */
 @media (prefers-reduced-motion: reduce) {
-  *, ::before, ::after {
+
+  *,
+  ::before,
+  ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;

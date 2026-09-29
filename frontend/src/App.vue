@@ -82,7 +82,6 @@
         </main>
 
         <ScrollToTop />
-        <SpecialDayPopup />
       </template>
     </div>
   </LoadingScreenWrapper>
@@ -99,7 +98,6 @@ import IdentityNarrative    from './components/IdentityNarrative.vue';
 import TechSequence         from './components/TechSequence.vue';
 import ContactExperience    from './components/ContactExperience.vue';
 import ScrollToTop          from './components/ScrollToTop.vue';
-import SpecialDayPopup      from './components/SpecialDayPopup.vue';
 import LoadingScreenWrapper from './components/LoadingScreenWrapper.vue';
 import { fetchProjectById } from './composables/useProjects';
 import { useTheme } from './composables/useTheme';

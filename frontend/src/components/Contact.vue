@@ -49,6 +49,16 @@
               <span>LINKEDIN</span>
               <span class="arrow-slide">→</span>
             </a>
+
+            <a
+              href="https://www.instagram.com/_athul_krishnaa?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw=="
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-slide-color w-full py-4 px-6 text-xs font-bold tracking-wider uppercase flex items-center justify-between group hover:text-[#E1306C]"
+            >
+              <span>INSTAGRAM</span>
+              <span class="arrow-slide">↗</span>
+            </a>
           </div>
         </div>
       </div>
@@ -103,6 +113,9 @@
           </a>
           <a href="https://www.linkedin.com/in/athul-krishna-k/" target="_blank" rel="noopener" class="hover:text-white transition-colors">
             LinkedIn
+          </a>
+          <a href="https://www.instagram.com/_athul_krishnaa?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw==" target="_blank" rel="noopener" class="hover:text-white transition-colors">
+            Instagram
           </a>
           <a href="mailto:athul@trawbit.com" class="hover:text-white transition-colors">
             Email

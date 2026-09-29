@@ -15,9 +15,6 @@
           <h2 class="text-3xl sm:text-5xl font-sans-clean font-extrabold tracking-tight text-[var(--text-primary)]">
             ACROSS THE STACK.
           </h2>
-          <p class="text-sm font-mono-clean text-[var(--text-secondary)] mt-2">
-            Dual-rail kinetic spec &amp; production toolchain.
-          </p>
         </div>
 
         <!-- Interactive Discipline Filter Pills -->
@@ -222,25 +219,6 @@
           </div>
         </div>
       </div>
-
-      <!-- 05 // TOOLS: The tools behind the work -->
-      <div class="mt-14 pt-8 border-t border-[var(--border-color)] scroll-reveal">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <span class="text-[10px] font-mono-clean tracking-widest uppercase text-[var(--text-muted)] block mb-1">
-              05 // TOOLS
-            </span>
-            <h3 class="text-lg sm:text-xl font-sans-clean font-bold text-[var(--text-primary)]">
-              The tools behind the work.
-            </h3>
-          </div>
-          <div class="flex flex-wrap gap-2">
-            <span class="worth-tag text-[11px] py-1 px-3">Git</span>
-            <span class="worth-tag text-[11px] py-1 px-3">GitHub</span>
-            <span class="worth-tag text-[11px] py-1 px-3">Firebase</span>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -423,10 +401,10 @@ const capabilities = [
   },
   {
     id: '04',
-    category: 'MOBILE',
+    category: 'MOBILE & TOOLING',
     title: 'Mobile Development',
-    description: 'Building cross-platform mobile applications designed for real-world use.',
-    technologies: ['Flutter', 'Firebase'],
+    description: 'Building cross-platform mobile applications designed for real-world use with modern toolchains.',
+    technologies: ['Flutter', 'Firebase', 'Git', 'GitHub', 'Docker'],
   },
 ];
 </script>

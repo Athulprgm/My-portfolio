@@ -39,7 +39,7 @@
       <!-- Right Column: Concise Metrics & Background -->
       <div class="lg:col-span-5 space-y-4">
         <div class="worth-card p-6 rounded-sm transition-all duration-200 hover:border-[var(--text-primary)] hover:translate-y-[-2px]">
-          <span class="text-[10px] font-mono-clean uppercase tracking-wider text-[var(--text-muted)] block mb-1">06 // TRAWBIT TECHNOLOGIES</span>
+          <span class="text-[10px] font-mono-clean uppercase tracking-wider text-[var(--text-muted)] block mb-1">CO-FOUNDER · VENTURE</span>
           <h3 class="text-lg font-sans-clean font-bold text-[var(--text-primary)] mb-1">Building more than software.</h3>
           <p class="text-xs text-[var(--text-secondary)] font-sans-clean leading-relaxed mb-3">
             As a Co-Founder at Trawbit Technologies, I work across engineering, product development, and digital solutions — turning ideas into usable software.
@@ -62,10 +62,10 @@
             Grounded in core computational theory, data structures, relational database modeling, and software engineering methodologies that scale.
           </p>
           <div class="flex flex-wrap gap-1">
-            <span class="worth-tag text-[9px] py-0.5 px-2">Frontend</span>
-            <span class="worth-tag text-[9px] py-0.5 px-2">Backend APIs</span>
-            <span class="worth-tag text-[9px] py-0.5 px-2">Databases</span>
-            <span class="worth-tag text-[9px] py-0.5 px-2">Mobile Apps</span>
+            <span class="worth-tag text-[9px] py-0.5 px-2">Architecture</span>
+            <span class="worth-tag text-[9px] py-0.5 px-2">Clean Code</span>
+            <span class="worth-tag text-[9px] py-0.5 px-2">Scalability</span>
+            <span class="worth-tag text-[9px] py-0.5 px-2">Reliability</span>
           </div>
         </div>
 
