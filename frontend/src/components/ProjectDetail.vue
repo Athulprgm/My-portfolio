@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] font-sans py-16 sm:py-24 px-4 sm:px-6 relative overflow-x-hidden transition-colors">
+  <div class="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] font-body py-16 sm:py-24 px-4 sm:px-6 relative overflow-x-hidden transition-colors">
     <!-- Navigation -->
     <div class="fixed top-0 left-0 w-full h-16 bg-[var(--bg-surface)]/95 backdrop-blur-md border-b border-[var(--border-color)] px-4 sm:px-6 flex items-center justify-between z-50 no-print">
       <button @click="handleBack" class="flex items-center gap-2 font-mono text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors cursor-pointer">
@@ -38,16 +38,16 @@
       <!-- Hero Section -->
       <div class="pt-8 pb-16 border-b border-[#2A2A2A] text-left">
         <div class="max-w-3xl">
-          <h1 class="font-sans text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-4">
+          <h1 class="font-heading text-3xl md:text-5xl font-bold tracking-tight text-white mb-4">
             {{ detailData.heroTitle }} 
             <span v-if="detailData.heroSubject" class="text-emerald-400">{{ detailData.heroSubject }}</span>
           </h1>
-          <p class="font-sans text-sm text-[#A1A1AA] mb-8 leading-relaxed">{{ detailData.tagline }}</p>
+          <p class="font-body text-sm text-[#A1A1AA] mb-8 leading-relaxed">{{ detailData.tagline }}</p>
 
           <div v-if="detailData.stats && detailData.stats.length > 0" class="flex gap-8 items-center flex-wrap">
             <template v-for="(stat, idx) in detailData.stats" :key="idx">
               <div class="flex flex-col gap-1">
-                <span class="font-sans text-xl font-bold text-white">{{ stat.val }}</span>
+                <span class="font-heading text-xl font-bold text-white">{{ stat.val }}</span>
                 <span class="font-mono text-[9px] text-[#A1A1AA] uppercase tracking-widest font-semibold">{{ stat.label }}</span>
               </div>
               <div v-if="idx < detailData.stats.length - 1" class="w-[1px] h-8 bg-[#2A2A2A] hidden sm:block"></div>
@@ -62,15 +62,15 @@
         <div class="flex flex-col gap-12">
           <!-- Abstract / Overview -->
           <section v-if="detailData.abstract" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
-            <h3 class="font-sans text-base font-bold text-white mb-4 tracking-wide flex items-center gap-2.5">
+            <h3 class="font-heading text-base font-semibold text-white mb-4 tracking-wide flex items-center gap-2.5">
               <i class="fa-solid fa-align-left text-emerald-400"></i> Project Overview
             </h3>
-            <p class="text-sm text-[#A1A1AA] leading-relaxed font-sans whitespace-pre-line">{{ detailData.abstract }}</p>
+            <p class="text-sm text-[#A1A1AA] leading-relaxed font-body whitespace-pre-line">{{ detailData.abstract }}</p>
           </section>
 
           <!-- Highlights (if any) -->
           <section v-if="detailData.highlights && detailData.highlights.length > 0" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
-            <h3 class="font-sans text-base font-bold text-white mb-6 tracking-wide flex items-center gap-2.5">
+            <h3 class="font-heading text-base font-semibold text-white mb-6 tracking-wide flex items-center gap-2.5">
               <i class="fa-solid fa-star text-emerald-400"></i> Featured Highlights
             </h3>
             <div class="flex flex-col gap-6">
@@ -80,8 +80,8 @@
                   <span v-if="item.tag" class="absolute top-2 left-2 bg-[#0A0A0A] backdrop-blur-xs border border-[#ffffff]/20 text-[#ffffff] font-mono text-[9px] px-2 py-0.5 rounded-none">{{ item.tag }}</span>
                 </div>
                 <div class="flex flex-col justify-center">
-                  <h4 class="font-sans text-sm font-bold text-white mb-2">{{ item.title }}</h4>
-                  <p class="text-xs text-[#A1A1AA] leading-relaxed">{{ item.desc }}</p>
+                  <h4 class="font-heading text-sm font-bold text-white mb-2">{{ item.title }}</h4>
+                  <p class="text-xs text-[#A1A1AA] leading-relaxed font-body">{{ item.desc }}</p>
                 </div>
               </div>
             </div>
@@ -89,7 +89,7 @@
 
           <!-- Gallery -->
           <section v-if="galleryImages.length > 0" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
-            <h3 class="font-sans text-base font-bold text-white mb-6 tracking-wide flex items-center gap-2.5">
+            <h3 class="font-heading text-base font-semibold text-white mb-6 tracking-wide flex items-center gap-2.5">
               <i class="fa-solid fa-images text-emerald-400"></i> Project Media & Gallery
             </h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -109,7 +109,7 @@
 
           <!-- Key Features -->
           <section v-if="detailData.features && detailData.features.length > 0" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
-            <h3 class="font-sans text-base font-bold text-white mb-6 tracking-wide flex items-center gap-2.5">
+            <h3 class="font-heading text-base font-semibold text-white mb-6 tracking-wide flex items-center gap-2.5">
               <i class="fa-solid fa-bolt text-emerald-400"></i> Key Features
             </h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -118,8 +118,8 @@
                   <i class="fa-solid fa-check"></i>
                 </div>
                 <div>
-                  <h4 class="font-sans text-xs font-bold text-white mb-1.5 tracking-wide">{{ feature.title }}</h4>
-                  <p class="text-xs text-[#A1A1AA] leading-relaxed font-sans">{{ feature.desc }}</p>
+                  <h4 class="font-heading text-xs font-bold text-white mb-1.5 tracking-wide">{{ feature.title }}</h4>
+                  <p class="text-xs text-[#A1A1AA] leading-relaxed font-body">{{ feature.desc }}</p>
                 </div>
               </div>
             </div>
@@ -130,7 +130,7 @@
         <div v-if="hasSidebarContent" class="flex flex-col gap-12">
           <!-- Tech Stack -->
           <section v-if="computedTechStack.length > 0" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
-            <h3 class="font-sans text-base font-bold text-white mb-6 tracking-wide flex items-center gap-2.5">
+            <h3 class="font-heading text-base font-semibold text-white mb-6 tracking-wide flex items-center gap-2.5">
               <i class="fa-solid fa-layer-group text-emerald-400"></i> Technologies
             </h3>
             <div class="flex flex-col gap-3">
@@ -140,7 +140,7 @@
                 </div>
                 <div class="flex flex-col">
                   <span class="font-mono text-[10px] text-[#A1A1AA] uppercase tracking-wider">{{ tech.name }}</span>
-                  <span class="font-sans text-xs text-neutral-200 font-semibold mt-0.5">{{ tech.stack }}</span>
+                  <span class="font-body text-xs text-neutral-200 font-semibold mt-0.5">{{ tech.stack }}</span>
                 </div>
               </div>
             </div>

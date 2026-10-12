@@ -13,13 +13,13 @@
         class="flex items-center gap-2 group cursor-pointer"
         @click.prevent="scrollToChapter('intro')"
       >
-        <span class="font-sans-clean font-bold text-sm tracking-widest uppercase text-[var(--text-primary)]">
+        <span class="font-heading font-bold text-sm tracking-widest uppercase text-[var(--text-primary)]">
           ATHUL KRISHNA
         </span>
       </a>
 
       <!-- Desktop Nav -->
-      <nav class="hidden md:flex items-center gap-8 text-xs font-mono-clean uppercase tracking-wider">
+      <nav class="hidden md:flex items-center gap-8 text-xs font-body font-medium uppercase tracking-wider">
         <button
           v-for="item in navLinks"
           :key="item.id"
@@ -99,7 +99,7 @@
           v-for="item in navLinks"
           :key="item.id"
           @click="scrollToChapter(item.id); mobileOpen = false"
-          class="text-left py-2 text-xs font-mono-clean uppercase tracking-wider border-b border-[var(--border-color)]/40"
+          class="text-left py-2 text-xs font-body font-medium uppercase tracking-wider border-b border-[var(--border-color)]/40"
           :class="activeChapter === item.id ? 'text-[var(--text-primary)] font-bold' : 'text-[var(--text-secondary)]'"
         >
           {{ item.label }}
