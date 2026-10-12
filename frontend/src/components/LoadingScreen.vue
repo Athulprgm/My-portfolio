@@ -209,7 +209,7 @@ onUnmounted(() => {
 
 <style scoped>
 .hello-loader {
-  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif !important;
+  font-family: var(--font-body);
   will-change: transform, opacity;
 }
 

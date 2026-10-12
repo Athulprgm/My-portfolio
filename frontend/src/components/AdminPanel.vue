@@ -1967,7 +1967,7 @@ const showToast = (msg, type = 'success') => {
 /* Field helpers */
 .field label {
   display: block;
-  font-family: monospace;
+  font-family: var(--font-mono, monospace);
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -1981,7 +1981,7 @@ const showToast = (msg, type = 'success') => {
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 8px;
   padding: 8px 12px;
-  font-family: monospace;
+  font-family: var(--font-mono, monospace);
   font-size: 12px;
   color: #fff;
   outline: none;
