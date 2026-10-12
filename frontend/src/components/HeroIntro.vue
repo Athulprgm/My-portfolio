@@ -32,15 +32,15 @@
       </div>
 
       <!-- Simplified Grand Headline -->
-      <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-[5.25rem] font-sans-clean font-extrabold tracking-tight text-[var(--text-primary)] leading-[1.05] mb-8">
+      <h1 class="text-4xl sm:text-6xl md:text-7xl lg:text-[5.25rem] font-heading font-bold uppercase tracking-tight text-[var(--text-primary)] leading-[1.02] mb-8">
         Building digital products
-        <span class="font-editorial font-normal italic text-[var(--text-primary)] underline decoration-[var(--border-color)] decoration-1 underline-offset-8">
+        <span class="font-heading font-bold text-[var(--text-primary)] underline decoration-[var(--border-color)] decoration-1 underline-offset-8">
           from idea to reality.
         </span>
       </h1>
 
       <!-- Simplified Single-Sentence Bio -->
-      <p class="text-lg sm:text-xl text-[var(--text-secondary)] font-normal leading-relaxed max-w-xl mb-10 font-sans-clean">
+      <p class="text-lg sm:text-xl text-[var(--text-secondary)] font-body font-normal leading-relaxed max-w-xl mb-10">
         I build modern web, mobile, and software products across the full stack — from intuitive interfaces and APIs to databases, authentication, and deployment.
       </p>
 

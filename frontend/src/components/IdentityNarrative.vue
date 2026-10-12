@@ -10,7 +10,7 @@
           02 // ABOUT
         </span>
       </div>
-      <h2 class="text-3xl sm:text-5xl font-sans-clean font-extrabold tracking-tight text-[var(--text-primary)]">
+      <h2 class="text-3xl sm:text-5xl font-heading font-semibold tracking-tight text-[var(--text-primary)]">
         BUILDING ACROSS THE STACK.
       </h2>
       <div class="h-[1px] bg-[var(--border-color)] mt-6 w-full"></div>
@@ -18,8 +18,8 @@
 
     <!-- Editorial 2-Column Layout -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-      <div class="lg:col-span-7 space-y-6 text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed font-sans-clean">
-        <p class="text-xl sm:text-2xl text-[var(--text-primary)] font-semibold leading-snug">
+      <div class="lg:col-span-7 space-y-6 text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed font-body font-normal">
+        <p class="text-xl sm:text-2xl text-[var(--text-primary)] font-semibold leading-snug font-body">
           “Good software should feel simple. Behind every simple experience is thoughtful engineering.”
         </p>
 
@@ -40,8 +40,8 @@
       <div class="lg:col-span-5 space-y-4">
         <div class="worth-card p-6 rounded-sm transition-all duration-200 hover:border-[var(--text-primary)] hover:translate-y-[-2px]">
           <span class="text-[10px] font-mono-clean uppercase tracking-wider text-[var(--text-muted)] block mb-1">CO-FOUNDER · VENTURE</span>
-          <h3 class="text-lg font-sans-clean font-bold text-[var(--text-primary)] mb-1">Building more than software.</h3>
-          <p class="text-xs text-[var(--text-secondary)] font-sans-clean leading-relaxed mb-3">
+          <h3 class="text-lg font-heading font-semibold text-[var(--text-primary)] mb-1">Building more than software.</h3>
+          <p class="text-xs text-[var(--text-secondary)] font-body font-normal leading-relaxed mb-3">
             As a Co-Founder at Trawbit Technologies, I work across engineering, product development, and digital solutions — turning ideas into usable software.
           </p>
           <a
@@ -57,8 +57,8 @@
 
         <div class="worth-card p-6 rounded-sm transition-all duration-200 hover:border-[var(--text-primary)] hover:translate-y-[-2px]">
           <span class="text-[10px] font-mono-clean uppercase tracking-wider text-[var(--text-muted)] block mb-1">ENGINEERING PHILOSOPHY</span>
-          <h3 class="text-lg font-sans-clean font-bold text-[var(--text-primary)] mb-1">Clean &amp; Maintainable</h3>
-          <p class="text-xs text-[var(--text-secondary)] font-sans-clean leading-relaxed mb-3">
+          <h3 class="text-lg font-heading font-semibold text-[var(--text-primary)] mb-1">Clean &amp; Maintainable</h3>
+          <p class="text-xs text-[var(--text-secondary)] font-body font-normal leading-relaxed mb-3">
             Grounded in core computational theory, data structures, relational database modeling, and software engineering methodologies that scale.
           </p>
           <div class="flex flex-wrap gap-1">
