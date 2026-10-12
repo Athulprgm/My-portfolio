@@ -3,9 +3,10 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: 'Instrument Sans', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'Space Mono', 'JetBrains Mono', monospace;
-  --font-editorial: 'Newsreader', Georgia, serif;
+  --font-sans: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-heading: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
 }
 
 :root,
@@ -36,10 +37,9 @@ html.light {
   --notch-bg: #CBD5E1;
   --notch-shadow: none;
 
-  --font-heading: 'Instrument Sans', 'Inter', system-ui, sans-serif;
-  --font-body: 'Instrument Sans', 'Inter', system-ui, sans-serif;
-  --font-editorial: 'Newsreader', Georgia, serif;
-  --font-mono: 'Space Mono', 'JetBrains Mono', monospace;
+  --font-heading: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
 }
 
 html.dark {
@@ -68,6 +68,10 @@ html.dark {
   --sheet-shadow: 0 -30px 90px -15px rgba(0, 0, 0, 0.95), 0 0 35px rgba(16, 185, 129, 0.06);
   --notch-bg: rgba(16, 185, 129, 0.5);
   --notch-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+
+  --font-heading: 'Rajdhani', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
 }
 
 /* ── Cinematic Theme Transition System (GPU Accelerated, Ultra-Smooth 100fps+) ── */
@@ -188,24 +192,51 @@ h4,
 h5,
 h6 {
   font-family: var(--font-heading);
-  letter-spacing: -0.03em;
-  font-weight: 700;
+  letter-spacing: -0.015em;
   color: var(--text-primary);
-  line-height: 1.08;
+  line-height: 1.1;
+}
+
+h1 {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+h2 {
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+h3 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+h4,
+h5,
+h6 {
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.font-heading {
+  font-family: var(--font-heading);
+}
+
+.font-body {
+  font-family: var(--font-body);
 }
 
 .font-editorial {
-  font-family: 'Newsreader', Georgia, serif;
-  font-style: italic;
-  font-weight: 400;
+  font-family: var(--font-heading);
 }
 
 .font-sans-clean {
-  font-family: 'Instrument Sans', 'Inter', system-ui, sans-serif;
+  font-family: var(--font-body);
 }
 
 .font-mono-clean {
-  font-family: 'Space Mono', 'JetBrains Mono', monospace;
+  font-family: var(--font-mono);
 }
 
 a {
@@ -219,6 +250,7 @@ button {
   border: none;
   outline: none;
   font-family: var(--font-body);
+  font-weight: 500;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -248,6 +280,7 @@ button {
 .worth-tag {
   font-family: var(--font-mono);
   font-size: 11px;
+  font-weight: 400;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--text-secondary);
