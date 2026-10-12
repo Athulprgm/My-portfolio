@@ -15,7 +15,7 @@
             <span class="text-[10px] font-mono-clean tracking-widest uppercase text-[var(--text-muted)] block">
               03 // SELECTED WORK
             </span>
-            <h2 class="text-xl sm:text-2xl lg:text-3xl font-sans-clean font-extrabold tracking-tight text-[var(--text-primary)]">
+            <h2 class="text-xl sm:text-2xl lg:text-3xl font-heading font-semibold tracking-tight text-[var(--text-primary)]">
               THINGS I'VE BUILT.
             </h2>
           </div>
@@ -133,13 +133,13 @@
                   <!-- Title -->
                   <h3
                     @click="openCaseStudy(proj)"
-                    class="text-xl sm:text-2xl font-sans-clean font-extrabold text-[var(--text-primary)] tracking-tight mb-2 cursor-pointer hover:underline"
+                    class="text-xl sm:text-2xl font-heading font-bold text-[var(--text-primary)] tracking-tight mb-2 cursor-pointer hover:underline"
                   >
                     {{ proj.title }}
                   </h3>
 
                   <!-- Concise Summary Description -->
-                  <p class="text-xs sm:text-sm text-[var(--text-secondary)] font-sans-clean leading-relaxed mb-3 line-clamp-2 sm:line-clamp-3">
+                  <p class="text-xs sm:text-sm text-[var(--text-secondary)] font-body font-normal leading-relaxed mb-3 line-clamp-2 sm:line-clamp-3">
                     {{ proj.description }}
                   </p>
 
@@ -190,7 +190,7 @@
           <span class="text-xs font-mono-clean tracking-widest uppercase text-[var(--text-muted)] block mb-1">
             03 // SELECTED WORK
           </span>
-          <h2 class="text-3xl sm:text-4xl font-sans-clean font-extrabold tracking-tight text-[var(--text-primary)]">
+          <h2 class="text-3xl sm:text-4xl font-heading font-semibold tracking-tight text-[var(--text-primary)]">
             THINGS I'VE BUILT.
           </h2>
           <p class="text-xs font-mono-clean text-[var(--text-secondary)] mt-1">
@@ -220,7 +220,7 @@
             <thead>
               <tr class="border-b border-[var(--border-color)] bg-[var(--bg-subtle)] text-[var(--text-muted)] uppercase text-[10px] tracking-wider">
                 <th class="py-4 px-6">#</th>
-                <th class="py-4 px-6 font-sans-clean font-bold">PROJECT</th>
+                <th class="py-4 px-6 font-mono-clean font-bold">PROJECT</th>
                 <th class="py-4 px-6 hidden sm:table-cell">DELIVERABLES &amp; STACK</th>
                 <th class="py-4 px-6 hidden md:table-cell">YEAR</th>
                 <th class="py-4 px-6 hidden lg:table-cell">KEY METRIC</th>
@@ -238,7 +238,7 @@
                   {{ proj.num }}
                 </td>
                 <td class="py-5 px-6">
-                  <span class="font-sans-clean font-bold text-sm text-[var(--text-primary)] block group-hover:underline">
+                  <span class="font-heading font-bold text-sm text-[var(--text-primary)] block group-hover:underline">
                     {{ proj.title }}
                   </span>
                   <span class="text-[11px] text-[var(--text-muted)]">{{ proj.domain }}</span>
@@ -295,7 +295,7 @@
             <span>CASE STUDY // {{ selectedCaseStudy.num }}</span>
           </div>
 
-          <h3 class="text-2xl sm:text-4xl font-sans-clean font-extrabold text-[var(--text-primary)] tracking-tight mb-2">
+          <h3 class="text-2xl sm:text-4xl font-heading font-bold text-[var(--text-primary)] tracking-tight mb-2">
             {{ selectedCaseStudy.title }}
           </h3>
           <p class="text-xs font-mono-clean text-[var(--text-muted)] uppercase tracking-wider mb-8">
@@ -311,7 +311,7 @@
           </div>
 
           <!-- Narrative Breakdown -->
-          <div class="space-y-6 text-sm text-[var(--text-secondary)] leading-relaxed font-sans-clean">
+          <div class="space-y-6 text-sm text-[var(--text-secondary)] leading-relaxed font-body font-normal">
             <div>
               <h4 class="text-xs font-mono-clean text-[var(--text-primary)] uppercase tracking-wider mb-2 font-bold flex items-center gap-2">
                 <span>[01]</span>

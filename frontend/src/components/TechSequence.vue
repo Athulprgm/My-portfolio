@@ -12,7 +12,7 @@
       </div>
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <h2 class="text-3xl sm:text-5xl font-sans-clean font-extrabold tracking-tight text-[var(--text-primary)]">
+          <h2 class="text-3xl sm:text-5xl font-heading font-semibold tracking-tight text-[var(--text-primary)]">
             ACROSS THE STACK.
           </h2>
         </div>
@@ -199,11 +199,11 @@
               <span class="uppercase tracking-wider text-[10px]">{{ cap.category }}</span>
             </div>
 
-            <h3 class="text-xl sm:text-2xl font-sans-clean font-bold text-[var(--text-primary)] mb-3 group-hover:translate-x-0.5 transition-transform">
+            <h3 class="text-xl sm:text-2xl font-heading font-bold text-[var(--text-primary)] mb-3 group-hover:translate-x-0.5 transition-transform">
               {{ cap.title }}
             </h3>
 
-            <p class="text-sm text-[var(--text-secondary)] leading-relaxed mb-6 font-sans-clean">
+            <p class="text-sm text-[var(--text-secondary)] leading-relaxed mb-6 font-body font-normal">
               {{ cap.description }}
             </p>
           </div>
