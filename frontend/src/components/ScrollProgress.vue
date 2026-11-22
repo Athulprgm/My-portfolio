@@ -1,18 +1,6 @@
 <template>
-  <!-- ── Top Hairline Progress Track ── -->
-  <div
-    class="fixed top-0 left-0 right-0 z-[100] h-[2px] pointer-events-none bg-transparent"
-  >
-    <div
-      class="h-full bg-[var(--text-primary)] relative transition-all duration-75 ease-out"
-      :style="{ width: progress + '%' }"
-    >
-      <!-- Glowing Emerald Pip Tip -->
-      <div
-        v-if="progress > 1"
-        class="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_#10B981]"
-      ></div>
-    </div>
+  <div class="fixed top-0 left-0 right-0 z-[100] h-[2px] pointer-events-none" aria-hidden="true">
+    <div class="h-full bg-[var(--accent)] origin-left" :style="{ transform: `scaleX(${progress / 100})` }"></div>
   </div>
 </template>
 
@@ -29,12 +17,9 @@ let ticking = false;
 const updateProgress = () => {
   if (ticking) return;
   ticking = true;
-
   requestAnimationFrame(() => {
-    const scrollY = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-
-    progress.value = docHeight > 0 ? Math.min(100, Math.max(0, (scrollY / docHeight) * 100)) : 0;
+    progress.value = docHeight > 0 ? Math.min(100, Math.max(0, (window.scrollY / docHeight) * 100)) : 0;
     ticking = false;
   });
 };

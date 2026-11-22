@@ -1,179 +1,187 @@
 <template>
   <header
-    class="fixed top-0 left-0 w-full z-50 transition-all duration-300 select-none"
-    :class="scrolled 
-      ? 'bg-[var(--bg-primary)]/90 backdrop-blur-md border-b border-[var(--border-color)] py-4' 
-      : 'bg-transparent py-6'"
+    class="fixed top-0 left-0 w-full z-50 select-none transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)]"
+    :class="hidden && !mobileOpen ? '-translate-y-full' : 'translate-y-0'"
   >
-    <div class="max-w-6xl mx-auto px-6 sm:px-8 flex items-center justify-between">
-      
-      <!-- Wordmark -->
-      <a
-        href="#intro"
-        class="flex items-center gap-2 group cursor-pointer"
-        @click.prevent="scrollToChapter('intro')"
-      >
-        <span class="font-heading font-bold text-sm tracking-widest uppercase text-[var(--text-primary)]">
-          ATHUL KRISHNA
-        </span>
-      </a>
-
-      <!-- Desktop Nav -->
-      <nav class="hidden md:flex items-center gap-8 text-xs font-body font-medium uppercase tracking-wider">
-        <button
-          v-for="item in navLinks"
-          :key="item.id"
-          @click="scrollToChapter(item.id)"
-          class="transition-colors cursor-pointer py-1"
-          :class="activeChapter === item.id
-            ? 'text-[var(--text-primary)] font-bold border-b border-[var(--text-primary)]'
-            : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'"
-        >
-          {{ item.label }}
-        </button>
-      </nav>
-
-      <!-- Right: Social, Theme Switcher & Contact Button -->
-      <div class="flex items-center gap-3">
-        <!-- Direct Instagram Option Link -->
-        <a
-          href="https://www.instagram.com/_athul_krishnaa?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw=="
-          target="_blank"
-          rel="noopener noreferrer"
-          class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono-clean text-[var(--text-muted)] hover:text-[#E1306C] border border-[var(--border-color)] hover:border-[#E1306C] rounded-sm transition-all bg-[var(--bg-card)]"
-          title="Instagram @_athul_krishnaa"
-        >
-          <svg class="w-3.5 h-3.5 fill-current text-[#E1306C]" viewBox="0 0 24 24">
-            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-          </svg>
-          <span class="hidden lg:inline text-[11px] font-semibold">@_athul_krishnaa</span>
-        </a>
-
-        <!-- Theme Toggle Pill -->
-        <button
-          @click="toggleTheme($event)"
-          class="flex items-center gap-0.5 p-1 border border-[var(--border-color)] hover:border-[var(--text-primary)] rounded-full text-xs font-mono-clean transition-all cursor-pointer bg-[var(--bg-card)]"
-          :title="theme === 'light' ? 'Switch to Dark mode' : 'Switch to Light mode'"
-          aria-label="Toggle color theme"
-        >
-          <span
-            class="w-6 h-6 rounded-full flex items-center justify-center transition-all duration-200"
-            :class="theme === 'light' ? 'bg-[var(--accent-solid)] text-[var(--accent-text)] shadow-xs font-bold' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'"
+    <div
+      class="transition-colors duration-500"
+      :class="scrolled && !mobileOpen ? 'bg-[var(--bg-glass)] backdrop-blur-md border-b border-[var(--border-color)]' : 'border-b border-transparent'"
+    >
+      <div class="sw-container">
+        <div class="sw-grid items-center h-16">
+          <!-- Wordmark -->
+          <a
+            href="#intro"
+            class="group col-span-2 md:col-span-3 font-heading font-medium text-[15px] tracking-[-0.02em] text-[var(--text-primary)] flex items-center gap-2.5"
+            @click.prevent="scrollToChapter('intro')"
+            aria-label="Athul Krishna — Home"
           >
-            <i class="fa-solid fa-sun text-[11px]"></i>
-          </span>
-          <span
-            class="w-6 h-6 rounded-full flex items-center justify-center transition-all duration-200"
-            :class="theme === 'dark' ? 'bg-[var(--accent-solid)] text-[var(--accent-text)] shadow-xs font-bold' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'"
-          >
-            <i class="fa-solid fa-moon text-[11px]"></i>
-          </span>
-        </button>
+            <span class="relative w-7 h-7 rounded-full bg-[var(--bg-subtle)] border border-[var(--border-strong)] group-hover:border-[var(--accent)] overflow-hidden shrink-0 transition-colors duration-300">
+              <picture>
+                <source srcset="/avatar.webp" type="image/webp" />
+                <img
+                  src="/avatar.png"
+                  alt="Athul Krishna"
+                  width="56"
+                  height="56"
+                  class="w-full h-full object-cover object-top scale-110 translate-y-0.5 transition-transform duration-500 group-hover:scale-125"
+                />
+              </picture>
+            </span>
+            <span>
+              Athul Krishna<sup class="text-[9px] text-[var(--text-muted)] font-mono-clean">©26</sup>
+            </span>
+          </a>
 
-        <!-- Minimal Contact CTA -->
-        <button
-          @click="scrollToChapter('contact')"
-          class="btn-worth text-xs py-1.5 px-3.5 cursor-pointer"
-        >
-          <span>CONTACT</span>
-        </button>
+          <!-- Desktop links -->
+          <nav class="hidden md:flex md:col-span-6 items-center gap-7" aria-label="Primary navigation">
+            <button
+              v-for="(item, idx) in navLinks.slice(1)"
+              :key="item.id"
+              @click="scrollToChapter(item.id)"
+              class="group flex items-baseline gap-1.5 text-[13px] cursor-pointer"
+              :class="activeChapter === item.id ? 'text-[var(--text-primary)]' : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'"
+            >
+              <span class="font-mono-clean text-[9px]" :class="activeChapter === item.id ? 'text-[var(--accent)]' : ''">0{{ idx + 2 }}</span>
+              <span class="sw-roll">
+                <span><span>{{ item.label }}</span><span>{{ item.label }}</span></span>
+              </span>
+            </button>
+          </nav>
 
-        <!-- Mobile Menu Toggle -->
-        <button
-          @click="mobileOpen = !mobileOpen"
-          class="md:hidden p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] border border-[var(--border-color)] rounded-sm text-xs font-mono-clean uppercase cursor-pointer"
-        >
-          {{ mobileOpen ? 'CLOSE' : 'MENU' }}
-        </button>
+          <!-- Right controls -->
+          <div class="col-span-2 md:col-span-3 flex items-center justify-end gap-5">
+            <button
+              @click="toggleTheme($event)"
+              class="group flex items-center gap-2 text-[12px] font-mono-clean uppercase tracking-[0.06em] text-[var(--text-muted)] hover:text-[var(--text-primary)] cursor-pointer"
+              :title="theme === 'light' ? 'Switch to dark' : 'Switch to light'"
+              aria-label="Toggle color theme"
+            >
+              <span
+                class="relative w-3.5 h-3.5 rounded-full border border-current overflow-hidden transition-transform duration-700"
+                :class="theme === 'dark' ? 'rotate-180' : 'rotate-0'"
+              >
+                <span class="absolute inset-y-0 left-0 w-1/2 bg-current"></span>
+              </span>
+              <span class="hidden sm:inline">{{ theme === 'light' ? 'Dark' : 'Light' }}</span>
+            </button>
+
+            <button
+              @click="scrollToChapter('contact')"
+              class="hidden md:inline-flex group items-center gap-2 text-[13px] text-[var(--text-primary)] cursor-pointer"
+            >
+              <span class="sw-dot"></span>
+              <span class="sw-link">Let's talk</span>
+            </button>
+
+            <!-- Mobile trigger -->
+            <button
+              @click="mobileOpen = !mobileOpen"
+              class="md:hidden text-[12px] font-mono-clean uppercase tracking-[0.06em] text-[var(--text-primary)] cursor-pointer"
+              :aria-expanded="mobileOpen"
+              aria-label="Toggle navigation menu"
+            >
+              {{ mobileOpen ? 'Close' : 'Menu' }}
+            </button>
+          </div>
+        </div>
       </div>
-
     </div>
 
-    <!-- Mobile Drawer -->
-    <Transition name="fade">
+    <!-- Mobile full-screen menu -->
+    <Transition name="menu">
       <div
         v-if="mobileOpen"
-        class="md:hidden fixed inset-x-0 top-[68px] bg-[var(--bg-primary)]/98 backdrop-blur-xl border-b border-[var(--border-color)] p-6 flex flex-col gap-4 shadow-xl z-50"
+        class="md:hidden fixed inset-0 top-16 bg-[var(--bg-primary)] z-40 flex flex-col justify-between sw-container pb-8"
       >
-        <button
-          v-for="item in navLinks"
-          :key="item.id"
-          @click="scrollToChapter(item.id); mobileOpen = false"
-          class="text-left py-2 text-xs font-body font-medium uppercase tracking-wider border-b border-[var(--border-color)]/40"
-          :class="activeChapter === item.id ? 'text-[var(--text-primary)] font-bold' : 'text-[var(--text-secondary)]'"
-        >
-          {{ item.label }}
-        </button>
-
-        <!-- Direct Instagram Option in Mobile Drawer -->
-        <a
-          href="https://www.instagram.com/_athul_krishnaa?utm_source=ig_web_button_share_sheet&stkn=ZDNlZDc0MzIxNw=="
-          target="_blank"
-          rel="noopener noreferrer"
-          class="py-2.5 px-3 text-xs font-mono-clean uppercase tracking-wider border border-[var(--border-color)] rounded-sm text-[var(--text-primary)] flex items-center justify-between hover:border-[#E1306C] hover:text-[#E1306C]"
-          @click="mobileOpen = false"
-        >
-          <span class="flex items-center gap-2">
-            <svg class="w-3.5 h-3.5 fill-current text-[#E1306C]" viewBox="0 0 24 24">
-              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-            </svg>
-            <span>Instagram @_athul_krishnaa</span>
-          </span>
-          <span>↗</span>
-        </a>
-
-        <button
-          @click="scrollToChapter('contact'); mobileOpen = false"
-          class="w-full btn-worth py-2.5 text-center justify-center mt-2 cursor-pointer"
-        >
-          LET'S TALK →
-        </button>
+        <nav class="flex flex-col pt-6">
+          <button
+            v-for="(item, idx) in navLinks"
+            :key="item.id"
+            @click="scrollToChapter(item.id); mobileOpen = false"
+            class="flex items-baseline justify-between py-3 border-b border-[var(--border-color)] text-left cursor-pointer"
+          >
+            <span
+              class="font-heading text-5xl tracking-[-0.045em] leading-none"
+              :class="activeChapter === item.id ? 'text-[var(--accent)]' : 'text-[var(--text-primary)]'"
+            >{{ item.label }}</span>
+            <span class="sw-label">0{{ idx + 1 }}</span>
+          </button>
+        </nav>
+        <div class="flex items-end justify-between sw-label">
+          <span>Kerala, IN<br />{{ istTime }} IST</span>
+          <a href="mailto:athul@trawbit.com" class="text-[var(--text-primary)]">athul@trawbit.com</a>
+        </div>
       </div>
     </Transition>
   </header>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, watch } from 'vue';
 import { useTheme } from '../composables/useTheme';
 import { useSmoothScroll } from '../composables/useSmoothScroll';
 
 const { theme, toggleTheme } = useTheme();
-const { scrollTo: smoothScrollTo } = useSmoothScroll();
+const { scrollTo: smoothScrollTo, registerScrollCallback, stopScroll, startScroll } = useSmoothScroll();
 
 const scrolled = ref(false);
+const hidden = ref(false);
 const mobileOpen = ref(false);
 const activeChapter = ref('intro');
+const istTime = ref('');
 
 const navLinks = [
-  { id: 'intro', label: 'Home' },
+  { id: 'intro', label: 'Index' },
   { id: 'about', label: 'About' },
-  { id: 'works', label: 'Works' },
+  { id: 'works', label: 'Work' },
   { id: 'stack', label: 'Stack' },
   { id: 'contact', label: 'Contact' },
 ];
 
+const updateClock = () => {
+  try {
+    istTime.value = new Intl.DateTimeFormat('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: false,
+    }).format(new Date());
+  } catch {
+    istTime.value = '--:--';
+  }
+};
+
 const scrollToChapter = (id) => {
-  smoothScrollTo('#' + id, { offset: -75, duration: 1.0 });
+  if (id === 'intro') {
+    smoothScrollTo(0, { offset: 0, duration: 1.2 });
+    return;
+  }
+  smoothScrollTo('#' + id, { offset: 0, duration: 1.2 });
 };
 
 let scrollRaf = null;
+let unregisterScroll = null;
+let clockInterval = null;
+let lastY = 0;
+
 const handleScroll = () => {
   if (scrollRaf) return;
   scrollRaf = requestAnimationFrame(() => {
-    scrolled.value = window.scrollY > 20;
+    const y = window.scrollY;
+    scrolled.value = y > 24;
+    hidden.value = y > 160 && y > lastY + 2;
+    if (y < lastY - 2) hidden.value = false;
+    lastY = y;
 
-    if (window.scrollY < 200) {
+    if (y < window.innerHeight * 0.45) {
       activeChapter.value = 'intro';
     } else {
-      for (let i = navLinks.length - 1; i >= 0; i--) {
+      for (let i = navLinks.length - 1; i >= 1; i--) {
         const el = document.getElementById(navLinks[i].id);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 250) {
-            activeChapter.value = navLinks[i].id;
-            break;
-          }
+        if (el && el.getBoundingClientRect().top <= 240) {
+          activeChapter.value = navLinks[i].id;
+          break;
         }
       }
     }
@@ -181,23 +189,45 @@ const handleScroll = () => {
   });
 };
 
+const handleKeyDown = (e) => {
+  if (e.key === 'Escape' && mobileOpen.value) mobileOpen.value = false;
+};
+
+watch(mobileOpen, (open) => {
+  if (open) stopScroll?.();
+  else startScroll?.();
+});
+
 onMounted(() => {
+  updateClock();
+  clockInterval = setInterval(updateClock, 30000);
+  unregisterScroll = registerScrollCallback(handleScroll);
   window.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener('keydown', handleKeyDown);
+  handleScroll();
 });
 
 onUnmounted(() => {
+  if (clockInterval) clearInterval(clockInterval);
+  if (unregisterScroll) unregisterScroll();
   window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('keydown', handleKeyDown);
   if (scrollRaf) cancelAnimationFrame(scrollRaf);
 });
 </script>
 
 <style scoped>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.2s ease;
+.menu-enter-active,
+.menu-leave-active {
+  transition: opacity 0.4s cubic-bezier(0.65, 0, 0.35, 1), clip-path 0.6s cubic-bezier(0.65, 0, 0.35, 1);
 }
-.fade-enter-from,
-.fade-leave-to {
+.menu-enter-from,
+.menu-leave-to {
   opacity: 0;
+  clip-path: inset(0 0 100% 0);
+}
+.menu-enter-to,
+.menu-leave-from {
+  clip-path: inset(0 0 0 0);
 }
 </style>

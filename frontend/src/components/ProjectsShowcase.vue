@@ -1,573 +1,560 @@
 <template>
-  <section
-    ref="horizontalTrackContainer"
-    :class="viewMode === 'side' ? 'projects-scroll-track' : 'pt-12 pb-24 px-6 sm:px-8 max-w-6xl mx-auto'"
+  <div
+    ref="sectionRef"
+    class="sw-container pt-28 sm:pt-40 pb-24 sm:pb-36"
+    @mousemove="onPointerMove"
   >
-    <!-- ══════════════════ VIEW 1: HORIZONTAL SIDE-SCROLLING SHOWCASE ══════════════════ -->
-    <div
-      v-if="viewMode === 'side'"
-      class="projects-sticky-frame pt-20 sm:pt-22 pb-4 sm:pb-6 px-4 sm:px-10"
-    >
-      <!-- Top Bar: Header, Stage Indicator, Arrow Buttons & View Mode -->
-      <div class="flex items-center justify-between gap-4 max-w-7xl mx-auto w-full border-b border-[var(--border-color)] pb-2.5 shrink-0">
-        <div class="flex items-center gap-4">
-          <div>
-            <span class="text-[10px] font-mono-clean tracking-widest uppercase text-[var(--text-muted)] block">
-              03 // SELECTED WORK
-            </span>
-            <h2 class="text-xl sm:text-2xl lg:text-3xl font-heading font-semibold tracking-tight text-[var(--text-primary)]">
-              THINGS I'VE BUILT.
-            </h2>
-          </div>
-
-          <!-- Interactive Project Jump Dots (Desktop) -->
-          <div class="hidden lg:flex items-center gap-1.5 ml-6 pl-6 border-l border-[var(--border-color)]">
-            <button
-              v-for="(proj, idx) in projectList"
-              :key="proj.id"
-              @click="goToCardIndex(idx)"
-              class="px-2.5 py-1 rounded-full text-[10px] font-mono-clean uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5"
-              :class="activeCardIndex === idx
-                ? 'bg-[var(--accent-solid)] text-[var(--accent-text)] font-bold shadow-sm'
-                : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--badge-bg)]'"
-            >
-              <span
-                class="w-1.5 h-1.5 rounded-full"
-                :class="activeCardIndex === idx ? 'bg-emerald-400' : 'bg-transparent border border-[var(--text-muted)]'"
-              ></span>
-              <span>{{ proj.num }} {{ proj.shortName }}</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="flex items-center gap-2 sm:gap-3">
-          <!-- Stage Badge (Mobile/Tablet) -->
-          <div class="lg:hidden flex items-center gap-1.5 px-2.5 py-1 bg-[var(--badge-bg)] border border-[var(--border-color)] rounded-full text-[11px] font-mono-clean text-[var(--text-primary)] font-semibold">
-            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>0{{ activeCardIndex + 1 }}/04</span>
-          </div>
-
-          <!-- Prev/Next Step Arrows -->
-          <div class="flex items-center border border-[var(--border-color)] rounded-sm bg-[var(--bg-card)]">
-            <button
-              @click="prevCard"
-              :disabled="activeCardIndex === 0"
-              class="px-2.5 py-1 text-xs font-mono-clean text-[var(--text-muted)] hover:text-[var(--text-primary)] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer border-r border-[var(--border-color)] transition-colors"
-              title="Previous project"
-            >
-              ←
-            </button>
-            <button
-              @click="nextCard"
-              :disabled="activeCardIndex === projectList.length - 1"
-              class="px-2.5 py-1 text-xs font-mono-clean text-[var(--text-muted)] hover:text-[var(--text-primary)] disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition-colors"
-              title="Next project"
-            >
-              →
-            </button>
-          </div>
-
-          <!-- View Mode Toggle -->
-          <div class="flex items-center border border-[var(--border-color)] rounded-sm p-0.5 bg-[var(--bg-card)]">
-            <button
-              @click="viewMode = 'side'"
-              class="px-2.5 py-1 text-[11px] font-mono-clean uppercase tracking-wider rounded-sm transition-all cursor-pointer font-semibold bg-[var(--accent-solid)] text-[var(--accent-text)]"
-            >
-              SIDE
-            </button>
-            <button
-              @click="viewMode = 'index'"
-              class="px-2.5 py-1 text-[11px] font-mono-clean uppercase tracking-wider rounded-sm transition-all cursor-pointer text-[var(--text-muted)] hover:text-[var(--text-primary)]"
-            >
-              INDEX
-            </button>
-          </div>
-        </div>
+    <!-- ══════════════════ SECTION HEADER ══════════════════ -->
+    <div class="sw-grid gap-y-6 items-end mb-12 sm:mb-16 scroll-reveal">
+      <div class="col-span-4 md:col-span-3 sw-label">
+        <span>(03) — Selected work</span>
+        <span class="block mt-1 text-[var(--text-primary)]">
+          {{ formatNum(projectList.length) }} selected works · 2025–26
+        </span>
       </div>
 
-      <!-- Center Horizontal Sliding Track Canvas -->
-      <div class="relative w-full flex-1 min-h-0 flex items-center overflow-hidden py-2">
-        <div
-          ref="cardsRowRef"
-          class="flex flex-row items-center gap-6 sm:gap-8 will-change-transform pl-2 sm:pl-4 pr-16 sm:pr-40"
-          :style="{ transform: `translate3d(-${currentTranslateX}px, 0, 0)` }"
-        >
-          <!-- Individual Sized Horizontal Split Cards (Fit Any Screen Height) -->
-          <div
+      <h2 class="col-span-4 md:col-span-6 sw-h2">
+        Things I've <span class="font-serif-editorial text-[1.08em] text-[var(--accent)]">built.</span>
+      </h2>
+
+      <div class="col-span-4 md:col-span-3 flex md:justify-end items-center">
+        <span class="sw-label">Index · 01 — {{ formatNum(projectList.length) }}</span>
+      </div>
+    </div>
+
+    <!-- ══════════════════ FULL-WIDTH TYPOGRAPHIC PROJECT INDEX ══════════════════ -->
+    <div class="sw-grid items-start">
+      <div
+        class="col-span-4 md:col-span-12"
+        @mouseenter="isOverList = true"
+        @mouseleave="isOverList = false"
+      >
+        <ul class="border-b border-[var(--border-strong)]">
+          <li
             v-for="(proj, idx) in projectList"
             :key="proj.id"
-            class="w-[86vw] sm:w-[680px] md:w-[760px] lg:w-[840px] shrink-0 worth-card rounded-2xl p-4 sm:p-6 border border-[var(--border-color)] bg-[var(--bg-card)] shadow-2xl transition-all duration-300 group hover:border-[var(--text-primary)] flex flex-col justify-between max-h-[64vh] min-h-[360px] overflow-hidden"
-            :class="activeCardIndex === idx ? 'opacity-100 scale-100 ring-1 ring-[var(--border-color)]' : 'opacity-85 scale-[0.98]'"
+            class="scroll-reveal"
+            :class="`reveal-delay-${Math.min(idx + 1, 4) * 100}`"
           >
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6 items-center h-full">
-              
-              <!-- Left: Mockup Visual (Col 7) -->
-              <div
-                class="md:col-span-7 relative overflow-hidden rounded-xl border border-[var(--border-color)] aspect-[16/10] bg-[var(--bg-surface)] cursor-pointer group/mockup"
-                @click="openCaseStudy(proj)"
-              >
-                <img
-                  :src="proj.image"
-                  :alt="proj.title"
-                  class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover/mockup:scale-105"
-                  @error="onImageError"
-                />
-                <div class="absolute inset-0 bg-black/5 group-hover/mockup:bg-black/0 transition-colors pointer-events-none"></div>
+            <div
+              @mouseenter="setActive(idx)"
+              @click="openCaseStudy(proj)"
+              role="button"
+              tabindex="0"
+              @keydown.enter="openCaseStudy(proj)"
+              class="group relative w-full text-left border-t border-[var(--border-strong)] py-6 sm:py-8 cursor-pointer select-none overflow-hidden"
+            >
+              <!-- Animated signal-orange top sweep bar on active row -->
+              <span
+                class="absolute top-0 left-0 h-[2px] bg-[var(--accent)] transition-all duration-700 ease-[cubic-bezier(0.19,1,0.22,1)]"
+                :class="activeIdx === idx ? 'w-full' : 'w-0'"
+                aria-hidden="true"
+              ></span>
 
-                <!-- Hover Floating Inspect Badge -->
-                <div class="absolute bottom-3 right-3 px-3 py-1.5 bg-[var(--bg-card)]/90 backdrop-blur-md border border-[var(--border-color)] rounded-xs text-[10px] font-mono-clean text-[var(--text-primary)] font-bold flex items-center gap-1.5 opacity-0 group-hover/mockup:opacity-100 transition-opacity">
-                  <span>INSPECT SPEC</span>
-                  <span>↗</span>
-                </div>
-              </div>
+              <!-- Row Top Meta + Title -->
+              <div class="flex items-baseline justify-between gap-4">
+                <div class="flex items-baseline gap-4 sm:gap-6 min-w-0">
+                  <span
+                    class="font-mono-clean text-[11px] shrink-0 transition-colors duration-300 flex items-center gap-1.5"
+                    :class="activeIdx === idx ? 'text-[var(--accent)] font-medium' : 'text-[var(--text-muted)]'"
+                  >
+                    <span
+                      class="inline-block w-1.5 h-1.5 rounded-full bg-[var(--accent)] transition-transform duration-300"
+                      :class="activeIdx === idx ? 'scale-100' : 'scale-0'"
+                    ></span>
+                    <span>{{ proj.num }}</span>
+                  </span>
 
-              <!-- Right: Content Narrative & Metrics (Col 5) -->
-              <div class="md:col-span-5 flex flex-col justify-between h-full space-y-3">
-                <div>
-                  <!-- Category & Year -->
-                  <div class="flex items-center justify-between text-[11px] font-mono-clean text-[var(--text-muted)] uppercase tracking-wider mb-1.5">
-                    <span>{{ proj.num }} // {{ proj.category }}</span>
-                    <span>{{ proj.year }}</span>
-                  </div>
-
-                  <!-- Title -->
                   <h3
-                    @click="openCaseStudy(proj)"
-                    class="text-xl sm:text-2xl font-heading font-bold text-[var(--text-primary)] tracking-tight mb-2 cursor-pointer hover:underline"
+                    class="font-heading font-medium text-[clamp(2.1rem,5.2vw,4.75rem)] leading-[0.92] tracking-[-0.05em] transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] truncate"
+                    :class="activeIdx === idx
+                      ? 'text-[var(--text-primary)] translate-x-2'
+                      : 'text-[var(--text-muted)] opacity-55 group-hover:opacity-90'"
                   >
                     {{ proj.title }}
                   </h3>
-
-                  <!-- Concise Summary Description -->
-                  <p class="text-xs sm:text-sm text-[var(--text-secondary)] font-body font-normal leading-relaxed mb-3 line-clamp-2 sm:line-clamp-3">
-                    {{ proj.description }}
-                  </p>
-
-                  <!-- Live Impact Pill -->
-                  <div class="inline-flex items-center gap-1.5 px-2.5 py-1 bg-[var(--badge-bg)] border border-[var(--border-color)] rounded-xs text-[11px] font-mono-clean text-[var(--text-primary)] font-semibold mb-3">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                    <span>{{ proj.metric }}</span>
-                  </div>
-
-                  <!-- Tech Stack Pills -->
-                  <div class="flex flex-wrap gap-1.5">
-                    <span
-                      v-for="tech in proj.stack"
-                      :key="tech"
-                      class="worth-tag text-[9px] py-0.5 px-2"
-                    >
-                      {{ tech }}
-                    </span>
-                  </div>
                 </div>
 
-                <!-- Bottom Button & Link -->
-                <div class="pt-3 border-t border-[var(--border-color)] flex items-center justify-between">
-                  <button
-                    @click="openCaseStudy(proj)"
-                    class="btn-worth text-xs py-2 px-4 cursor-pointer"
+                <!-- Right Meta + Category + Arrow -->
+                <div class="flex items-center gap-4 sm:gap-6 shrink-0">
+                  <span class="hidden lg:inline font-mono-clean text-[10.5px] uppercase tracking-[0.06em] text-[var(--text-muted)]">
+                    {{ proj.domain }} · [{{ proj.year }}]
+                  </span>
+                  <span class="hidden sm:inline sw-label !text-[10px]">
+                    {{ proj.category }}
+                  </span>
+                  <span
+                    class="w-7 h-7 rounded-full border flex items-center justify-center text-xs transition-all duration-500"
+                    :class="activeIdx === idx
+                      ? 'border-[var(--accent)] bg-[var(--accent)] text-white rotate-45'
+                      : 'border-[var(--border-color)] text-[var(--text-muted)]'"
                   >
-                    <span>{{ proj.buttonText || 'VIEW CASE STUDY' }}</span>
-                    <span>→</span>
-                  </button>
-
-                  <span class="text-[11px] font-mono-clean text-[var(--text-muted)]">
-                    {{ proj.domain }}
+                    ↗
                   </span>
                 </div>
               </div>
 
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══════════════════ VIEW 2: SWISS INDEX TABLE ══════════════════ -->
-    <div v-else>
-      <div class="flex items-center justify-between mb-8">
-        <div>
-          <span class="text-xs font-mono-clean tracking-widest uppercase text-[var(--text-muted)] block mb-1">
-            03 // SELECTED WORK
-          </span>
-          <h2 class="text-3xl sm:text-4xl font-heading font-semibold tracking-tight text-[var(--text-primary)]">
-            THINGS I'VE BUILT.
-          </h2>
-          <p class="text-xs font-mono-clean text-[var(--text-secondary)] mt-1">
-            A selection of products, platforms, and software systems I've worked on.
-          </p>
-        </div>
-
-        <div class="flex items-center border border-[var(--border-color)] rounded-sm p-0.5 bg-[var(--bg-card)]">
-          <button
-            @click="viewMode = 'side'"
-            class="px-3 py-1.5 text-xs font-mono-clean uppercase tracking-wider rounded-sm transition-all cursor-pointer text-[var(--text-muted)] hover:text-[var(--text-primary)]"
-          >
-            SIDE
-          </button>
-          <button
-            @click="viewMode = 'index'"
-            class="px-3 py-1.5 text-xs font-mono-clean uppercase tracking-wider rounded-sm transition-all cursor-pointer font-semibold bg-[var(--accent-solid)] text-[var(--accent-text)]"
-          >
-            INDEX
-          </button>
-        </div>
-      </div>
-
-      <div class="worth-card rounded-sm overflow-hidden border border-[var(--border-color)]">
-        <div class="overflow-x-auto">
-          <table class="w-full text-left border-collapse font-mono-clean text-xs">
-            <thead>
-              <tr class="border-b border-[var(--border-color)] bg-[var(--bg-subtle)] text-[var(--text-muted)] uppercase text-[10px] tracking-wider">
-                <th class="py-4 px-6">#</th>
-                <th class="py-4 px-6 font-mono-clean font-bold">PROJECT</th>
-                <th class="py-4 px-6 hidden sm:table-cell">DELIVERABLES &amp; STACK</th>
-                <th class="py-4 px-6 hidden md:table-cell">YEAR</th>
-                <th class="py-4 px-6 hidden lg:table-cell">KEY METRIC</th>
-                <th class="py-4 px-6 text-right">ACTION</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-[var(--border-color)]">
-              <tr
-                v-for="proj in projectList"
-                :key="proj.id"
-                class="group hover:bg-[var(--bg-subtle)] transition-colors cursor-pointer"
-                @click="openCaseStudy(proj)"
+              <!-- Expandable Editorial Drawer inside the active row -->
+              <div
+                class="grid transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]"
+                :class="activeIdx === idx ? 'grid-rows-[1fr] opacity-100 mt-4' : 'grid-rows-[0fr] opacity-0 mt-0'"
               >
-                <td class="py-5 px-6 font-bold text-[var(--text-muted)] group-hover:text-[var(--text-primary)]">
-                  {{ proj.num }}
-                </td>
-                <td class="py-5 px-6">
-                  <span class="font-heading font-bold text-sm text-[var(--text-primary)] block group-hover:underline">
-                    {{ proj.title }}
-                  </span>
-                  <span class="text-[11px] text-[var(--text-muted)]">{{ proj.domain }}</span>
-                </td>
-                <td class="py-5 px-6 hidden sm:table-cell">
-                  <div class="flex flex-wrap gap-1">
-                    <span
-                      v-for="t in proj.stack.slice(0, 3)"
-                      :key="t"
-                      class="px-2 py-0.5 border border-[var(--border-color)] rounded-xs text-[10px] text-[var(--text-secondary)] bg-[var(--bg-card)]"
-                    >
-                      {{ t }}
-                    </span>
+                <div class="overflow-hidden">
+                  <div class="pl-8 sm:pl-11 pr-2 pt-1 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div class="flex flex-col gap-3">
+                      <p class="text-[14px] sm:text-[15px] leading-relaxed text-[var(--text-secondary)] max-w-[64ch]">
+                        {{ proj.description }}
+                      </p>
+
+                      <div class="flex flex-wrap items-center gap-1.5 pt-1">
+                        <span
+                          v-for="tech in proj.stack"
+                          :key="tech"
+                          class="worth-tag !text-[9.5px] !py-0.5 !px-2"
+                        >
+                          {{ tech }}
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="flex flex-wrap md:flex-col md:items-end justify-between gap-2 shrink-0">
+                      <div class="text-left md:text-right">
+                        <span class="sw-label !text-[9.5px] block">Role &amp; Architecture</span>
+                        <span class="text-[13px] font-medium text-[var(--text-primary)]">{{ proj.role }}</span>
+                      </div>
+                      <span class="font-mono-clean text-[10.5px] uppercase tracking-[0.06em] text-[var(--accent)]">
+                        ● {{ proj.metric }}
+                      </span>
+                    </div>
                   </div>
-                </td>
-                <td class="py-5 px-6 hidden md:table-cell text-[var(--text-secondary)]">
-                  {{ proj.year }}
-                </td>
-                <td class="py-5 px-6 hidden lg:table-cell text-[var(--text-primary)] font-semibold">
-                  {{ proj.metric }}
-                </td>
-                <td class="py-5 px-6 text-right">
-                  <span class="inline-flex items-center gap-1.5 px-3 py-1.5 border border-[var(--border-color)] group-hover:border-[var(--text-primary)] rounded-sm text-[11px] font-semibold text-[var(--text-primary)] bg-[var(--bg-card)]">
-                    <span>INSPECT</span>
-                    <span>↗</span>
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+
+        <!-- Bottom Hint -->
+        <div class="flex items-center justify-between pt-4 sw-label">
+          <span>Hover to inspect project · Click for full case study</span>
+          <span class="hidden sm:inline">{{ activeProject.num }} / {{ formatNum(projectList.length) }}</span>
         </div>
       </div>
     </div>
 
-    <!-- ── Case Study Inspection Modal ── -->
-    <Transition name="modal">
+    <!-- Subtle Magnetic Cursor Pill (Only over list, never blocks text!) -->
+    <div
+      ref="cursorPillRef"
+      class="hidden md:block fixed top-0 left-0 z-30 pointer-events-none"
+      style="will-change: transform"
+      aria-hidden="true"
+    >
       <div
-        v-if="selectedCaseStudy"
-        class="fixed inset-0 z-[100] bg-black/75 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
-        @click.self="selectedCaseStudy = null"
+        class="translate-x-5 -translate-y-7 px-2.5 py-1 bg-[var(--text-primary)] text-[var(--bg-primary)] font-mono-clean text-[9.5px] uppercase tracking-[0.1em] flex items-center gap-1.5 shadow-lg transition-all duration-300 ease-out"
+        :class="isOverList && !selectedCaseStudy ? 'opacity-100 scale-100' : 'opacity-0 scale-75'"
       >
-        <div class="worth-card border-[var(--border-color)] max-w-3xl w-full max-h-[88vh] overflow-y-auto p-6 sm:p-10 shadow-2xl relative rounded-sm bg-[var(--bg-surface)]">
-          <!-- Close Button -->
-          <button
-            @click="selectedCaseStudy = null"
-            class="absolute top-6 right-6 text-[var(--text-muted)] hover:text-[var(--text-primary)] text-xs font-mono-clean uppercase tracking-wider cursor-pointer border border-[var(--border-color)] hover:border-[var(--text-primary)] px-3 py-1.5 transition-colors rounded-sm bg-[var(--bg-card)]"
-          >
-            [CLOSE ×]
-          </button>
+        <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent)]"></span>
+        <span>FIG. {{ activeProject.num }} · CASE ↗</span>
+      </div>
+    </div>
 
-          <!-- Top Meta -->
-          <div class="text-xs font-mono-clean text-[var(--text-muted)] uppercase tracking-widest mb-2 font-semibold flex items-center gap-2">
-            <span class="w-1.5 h-1.5 bg-[var(--text-primary)]"></span>
-            <span>CASE STUDY // {{ selectedCaseStudy.num }}</span>
+    <!-- ══════════════════ CASE STUDY DRAWER ══════════════════ -->
+    <Teleport to="body">
+      <Transition name="scrim">
+        <div
+          v-if="selectedCaseStudy"
+          class="fixed inset-0 z-[100] bg-black/40 backdrop-blur-[2px]"
+          @click="closeCaseStudy"
+        ></div>
+      </Transition>
+      <Transition name="drawer">
+        <aside
+          v-if="selectedCaseStudy"
+          data-lenis-prevent
+          class="fixed top-0 right-0 bottom-0 z-[101] w-full max-w-[760px] bg-[var(--bg-primary)] text-[var(--text-primary)] border-l border-[var(--border-color)] overflow-y-auto"
+          role="dialog"
+          aria-modal="true"
+          :aria-label="selectedCaseStudy.title"
+        >
+          <div class="sticky top-0 z-10 flex items-center justify-between px-6 sm:px-10 h-16 bg-[var(--bg-glass)] backdrop-blur-md border-b border-[var(--border-color)]">
+            <span class="sw-label">Case study — {{ selectedCaseStudy.num }}/{{ formatNum(projectList.length) }}</span>
+            <button @click="closeCaseStudy" class="group sw-label !text-[var(--text-primary)] flex items-center gap-2 cursor-pointer">
+              <span class="sw-link">Close</span>
+              <span class="transition-transform duration-500 group-hover:rotate-90">✕</span>
+            </button>
           </div>
 
-          <h3 class="text-2xl sm:text-4xl font-heading font-bold text-[var(--text-primary)] tracking-tight mb-2">
-            {{ selectedCaseStudy.title }}
-          </h3>
-          <p class="text-xs font-mono-clean text-[var(--text-muted)] uppercase tracking-wider mb-8">
-            {{ selectedCaseStudy.domain }} · {{ selectedCaseStudy.role }} ({{ selectedCaseStudy.year }})
-          </p>
+          <div class="px-6 sm:px-10 pt-10 pb-12">
+            <h3 class="font-heading font-medium text-[clamp(2.75rem,8vw,5.5rem)] leading-[0.88] tracking-[-0.055em] mb-8">
+              {{ selectedCaseStudy.title }}<span class="text-[var(--accent)]">.</span>
+            </h3>
 
-          <!-- Modal Mockup Frame -->
-          <div class="aspect-video w-full bg-black border border-[var(--border-color)] mb-8 overflow-hidden rounded-sm relative">
-            <img :src="selectedCaseStudy.image" :alt="selectedCaseStudy.title" class="w-full h-full object-cover" />
-            <div class="absolute bottom-3 left-3 px-3 py-1 bg-black/90 border border-white/10 text-xs font-mono-clean text-emerald-400">
-              IMPACT: {{ selectedCaseStudy.metric }}
-            </div>
-          </div>
+            <dl class="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-5 border-t border-[var(--text-primary)] pt-4 mb-10">
+              <div>
+                <dt class="sw-label mb-1">Role</dt>
+                <dd class="text-[13px] leading-snug">{{ selectedCaseStudy.role }}</dd>
+              </div>
+              <div>
+                <dt class="sw-label mb-1">Year</dt>
+                <dd class="text-[13px]">{{ selectedCaseStudy.year }}</dd>
+              </div>
+              <div>
+                <dt class="sw-label mb-1">Domain</dt>
+                <dd class="text-[13px]">{{ selectedCaseStudy.domain }}</dd>
+              </div>
+              <div>
+                <dt class="sw-label mb-1">Impact</dt>
+                <dd class="text-[13px] leading-snug text-[var(--accent)]">{{ selectedCaseStudy.metric }}</dd>
+              </div>
+            </dl>
 
-          <!-- Narrative Breakdown -->
-          <div class="space-y-6 text-sm text-[var(--text-secondary)] leading-relaxed font-body font-normal">
-            <div>
-              <h4 class="text-xs font-mono-clean text-[var(--text-primary)] uppercase tracking-wider mb-2 font-bold flex items-center gap-2">
-                <span>[01]</span>
-                <span>The Core Challenge</span>
-              </h4>
-              <p>{{ selectedCaseStudy.caseData.problem }}</p>
-            </div>
+            <p class="text-xl sm:text-2xl leading-[1.3] tracking-[-0.02em] mb-12">
+              {{ selectedCaseStudy.description }}
+            </p>
 
-            <div>
-              <h4 class="text-xs font-mono-clean text-[var(--text-primary)] uppercase tracking-wider mb-2 font-bold flex items-center gap-2">
-                <span>[02]</span>
-                <span>Architecture &amp; Delivery</span>
-              </h4>
-              <p>{{ selectedCaseStudy.caseData.solution }}</p>
-            </div>
-
-            <div>
-              <h4 class="text-xs font-mono-clean text-[var(--text-primary)] uppercase tracking-wider mb-2 font-bold flex items-center gap-2">
-                <span>[03]</span>
-                <span>Production Deliverables</span>
-              </h4>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2">
-                <div
-                  v-for="deliv in selectedCaseStudy.caseData.deliverables"
-                  :key="deliv"
-                  class="p-2.5 bg-[var(--bg-subtle)] border border-[var(--border-color)] rounded-xs text-xs font-mono-clean text-[var(--text-primary)] flex items-center gap-2"
-                >
-                  <span class="text-emerald-500 font-bold">✓</span>
-                  <span>{{ deliv }}</span>
+            <div class="space-y-10">
+              <div class="grid grid-cols-12 gap-x-4 border-t border-[var(--border-color)] pt-4">
+                <span class="col-span-12 sm:col-span-4 sw-label mb-3">01 — Challenge</span>
+                <p class="col-span-12 sm:col-span-8 text-[15px] leading-relaxed text-[var(--text-secondary)]">
+                  {{ selectedCaseStudy.caseData.problem }}
+                </p>
+              </div>
+              <div class="grid grid-cols-12 gap-x-4 border-t border-[var(--border-color)] pt-4">
+                <span class="col-span-12 sm:col-span-4 sw-label mb-3">02 — Architecture</span>
+                <p class="col-span-12 sm:col-span-8 text-[15px] leading-relaxed text-[var(--text-secondary)]">
+                  {{ selectedCaseStudy.caseData.solution }}
+                </p>
+              </div>
+              <div class="grid grid-cols-12 gap-x-4 border-t border-[var(--border-color)] pt-4">
+                <span class="col-span-12 sm:col-span-4 sw-label mb-3">03 — Deliverables</span>
+                <ul class="col-span-12 sm:col-span-8">
+                  <li
+                    v-for="(deliv, i) in selectedCaseStudy.caseData.deliverables"
+                    :key="deliv"
+                    class="flex items-baseline gap-4 py-2.5 border-b border-[var(--border-color)] text-[15px]"
+                  >
+                    <span class="font-mono-clean text-[10px] text-[var(--text-muted)]">{{ formatNum(i + 1) }}</span>
+                    <span>{{ deliv }}</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="grid grid-cols-12 gap-x-4 border-t border-[var(--border-color)] pt-4">
+                <span class="col-span-12 sm:col-span-4 sw-label mb-3">04 — Stack</span>
+                <div class="col-span-12 sm:col-span-8 flex flex-wrap gap-1.5">
+                  <span v-for="tech in selectedCaseStudy.stack" :key="tech" class="worth-tag">{{ tech }}</span>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Modal Bottom Actions -->
-          <div class="mt-10 pt-6 border-t border-[var(--border-color)] flex items-center justify-between">
-            <button
-              @click="selectedCaseStudy = null"
-              class="text-xs font-mono-clean uppercase text-[var(--text-muted)] hover:text-[var(--text-primary)] cursor-pointer"
-            >
-              ← Back to Showcase
-            </button>
-            <button
-              @click="scrollToContactAndClose"
-              class="btn-worth cursor-pointer"
-            >
-              <span>DISCUSS SIMILAR PROJECT</span>
-              <span>→</span>
-            </button>
+            <div class="mt-14 flex flex-wrap items-center gap-3">
+              <button @click="scrollToContactAndClose" class="btn-worth cursor-pointer">
+                Build something similar →
+              </button>
+              <a
+                v-if="selectedCaseStudy.liveUrl"
+                :href="selectedCaseStudy.liveUrl"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-worth-outline"
+              >
+                Visit site ↗
+              </a>
+              <button
+                @click="nextCaseStudy"
+                class="ml-auto group sw-label !text-[var(--text-primary)] flex items-center gap-2 cursor-pointer"
+              >
+                <span class="sw-link">Next project</span>
+                <span class="transition-transform duration-500 group-hover:translate-x-1">→</span>
+              </button>
+            </div>
           </div>
-        </div>
-      </div>
-    </Transition>
-  </section>
+        </aside>
+      </Transition>
+    </Teleport>
+  </div>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useSmoothScroll } from '../composables/useSmoothScroll';
+import { useScrollReveal } from '../composables/useScrollReveal';
+import { useProjects } from '../composables/useProjects';
 
-const viewMode = ref('side'); // 'side' | 'index'
+useScrollReveal();
+
+const { scrollTo: smoothScrollTo, stopScroll, startScroll } = useSmoothScroll();
+const { projects: apiProjects, fetchProjects } = useProjects();
+
+const activeIdx = ref(0);
+const isOverList = ref(false);
 const selectedCaseStudy = ref(null);
-const horizontalTrackContainer = ref(null);
-const cardsRowRef = ref(null);
+const cursorPillRef = ref(null);
 
-const currentTranslateX = ref(0);
-const horizontalProgress = ref(0);
-const activeCardIndex = ref(0);
-const isCompleted = ref(false);
+const formatNum = (n) => String(n).padStart(2, '0');
 
-const { scrollTo: smoothScrollTo, registerScrollCallback } = useSmoothScroll();
-let unregisterScroll = null;
-
-// Curated Projects Data with short names for top jump pills
-const projectList = [
+const defaultProjects = [
   {
     id: 1,
     num: '01',
-    shortName: 'JEEVALINK',
     title: 'Jeevalink',
-    category: 'HEALTHCARE · DIGITAL PLATFORM',
+    category: 'Healthcare platform',
     domain: 'jeevalink.org',
-    role: 'Lead Architect & Full-Stack',
+    role: 'Lead architect & full-stack',
     year: '2025',
     metric: 'Under 60s emergency matching',
-    description: 'A digital platform connecting blood donors, volunteers, and emergency blood requests through web and mobile experiences.',
+    description:
+      'A real-time platform connecting blood donors, volunteer coordinators, and urgent hospital blood requests across web and mobile.',
     stack: ['React', 'Node.js', 'PostgreSQL', 'Firebase', 'Flutter'],
     image: '/projects/jeevalink.jpg',
-    buttonText: 'VIEW CASE STUDY',
     caseData: {
-      problem: 'Regional hospitals faced life-threatening communication delays due to manual telephone trees and outdated donor registers during urgent emergency transfusions.',
-      solution: 'A digital platform connecting blood donors, volunteers, and emergency blood requests through web and mobile experiences with real-time GPS dispatch indexing.',
-      deliverables: ['Real-Time Donor Matching', 'Emergency Triage Dashboard', 'Volunteer Mobilization App', 'Verified Blood Inventory Ledger'],
+      problem:
+        'Regional hospitals faced life-threatening communication delays due to manual telephone trees and outdated donor registers during urgent emergency transfusions.',
+      solution:
+        'Engineered a location-aware web and mobile platform with live GPS donor indexing, instant emergency triage dispatch, and verified blood inventory tracking.',
+      deliverables: [
+        'Real-time donor matching',
+        'Emergency triage dashboard',
+        'Volunteer mobilization app',
+        'Verified blood inventory ledger',
+      ],
     },
   },
   {
     id: 2,
     num: '02',
-    shortName: 'LIBGO',
     title: 'Libgo',
-    category: 'DIGITAL LIBRARY',
+    category: 'Digital library',
     domain: 'libgo.app',
-    role: 'Full-Stack Lead Engineer',
+    role: 'Full-stack lead engineer',
     year: '2025',
     metric: '10,000+ catalog titles indexed',
-    description: 'A modern digital library platform designed to simplify resource management, access, and everyday library operations.',
-    stack: ['Vue', 'Laravel', 'MySQL'],
+    description:
+      'A modern digital library platform built to streamline institutional cataloging, QR member checkouts, and automated circulation.',
+    stack: ['Vue 3', 'Laravel', 'MySQL'],
     image: '/projects/libgo.jpg',
-    buttonText: 'VIEW CASE STUDY',
     caseData: {
-      problem: 'Academic and institutional libraries struggled with slow legacy desktop software, paper checkout slips, and overdue book losses caused by absent member notification systems.',
-      solution: 'A modern digital library platform designed to simplify resource management, access, and everyday library operations with sub-second catalog search and QR borrower cards.',
-      deliverables: ['Sub-Second Catalog Search', 'Digital QR Borrower Identification', 'Automated Renewal Queues', 'Multi-Branch Inventory Matrix'],
+      problem:
+        'Academic and institutional libraries struggled with sluggish legacy desktop tools, paper checkout registers, and overdue book losses caused by missing reminders.',
+      solution:
+        'Built an intuitive web ecosystem with sub-second catalog search, digital QR borrower IDs, automated renewal queues, and multi-branch inventory visibility.',
+      deliverables: [
+        'Sub-second catalog search',
+        'Digital QR borrower cards',
+        'Automated renewal queues',
+        'Multi-branch inventory matrix',
+      ],
     },
   },
   {
     id: 3,
     num: '03',
-    shortName: 'TRAWBIT',
-    title: 'Trawbit Technologies',
-    category: 'SOFTWARE · PRODUCT DEVELOPMENT',
-    domain: 'trawbit.com',
-    role: 'Co-Founder & Technical Architect',
+    title: 'Retail POS',
+    category: 'Commerce infrastructure',
+    domain: 'pos.trawbit.com',
+    role: 'Co-founder & architect',
     year: '2026',
-    metric: 'Production Software Delivery',
-    description: 'A software company building digital products, websites, applications, and technology solutions for real-world business needs.',
-    stack: ['React', 'Next.js', 'Laravel', 'Node.js', 'MongoDB'],
+    metric: 'Sub-second barcode checkout',
+    description:
+      'A multi-outlet retail operating system with instant barcode checkout, automated stock replenishment alerts, and live gross revenue analytics.',
+    stack: ['Laravel', 'Vue 3', 'MySQL', 'Tailwind CSS'],
     image: '/projects/pos_retail.jpg',
-    buttonText: 'VIEW COMPANY',
     caseData: {
-      problem: 'Modern businesses require resilient, scalable digital systems built with velocity, clean architectures, and reliable long-term maintenance.',
-      solution: 'A software company building digital products, websites, applications, and technology solutions for real-world business needs from concept to production.',
-      deliverables: ['Commercial Web Platforms', 'Distributed API Architectures', 'Enterprise POS Systems', 'Cross-Platform Mobile Apps'],
+      problem:
+        'Retail store owners lacked real-time visibility into multi-branch stock levels, facing peak-hour checkout bottlenecks and error-prone manual reconciliation.',
+      solution:
+        'Architected an all-in-one POS platform with instant barcode scanning, low-stock threshold alerts, thermal & digital receipts, and live profit dashboards.',
+      deliverables: [
+        'Sub-second barcode checkout flow',
+        'Multi-store stock ledger',
+        'Live gross profit analytics',
+        'Thermal & digital receipt engine',
+      ],
     },
   },
   {
     id: 4,
     num: '04',
-    shortName: 'RETAIL POS',
-    title: 'Enterprise Retail POS',
-    category: 'COMMERCE INFRASTRUCTURE',
-    domain: 'pos.trawbit.com',
-    role: 'Co-Founder & Technical Architect',
+    title: 'Trawbit',
+    category: 'Software venture',
+    domain: 'trawbit.com',
+    liveUrl: 'https://trawbit.com',
+    role: 'Co-founder & technical lead',
     year: '2026',
-    metric: 'Sub-second barcode checkout',
-    description: 'A multi-outlet store management system with high-speed barcode checkout, automated inventory replenishment tracking, and live gross revenue analytics.',
-    stack: ['Laravel', 'Vue 3', 'MySQL', 'TailwindCSS'],
-    image: '/projects/pos_retail.jpg',
-    buttonText: 'VIEW CASE STUDY',
+    metric: 'Commercial software studio',
+    description:
+      'Co-founded software engineering venture designing and shipping commercial web platforms, mobile applications, and business automation systems.',
+    stack: ['React', 'Next.js', 'Laravel', 'Node.js', 'MongoDB'],
+    visualType: 'trawbit',
+    image: '/projects/exam_engine.jpg',
     caseData: {
-      problem: 'Retail store owners lacked real-time visibility into multi-branch stock levels, suffering from checkout bottlenecks during peak shopping hours and manual inventory reconciliation errors.',
-      solution: 'Architected an all-in-one retail POS operating system supporting instant barcode scanning, low-stock threshold triggers, digital receipts, and real-time revenue analytics accessible from mobile or desktop.',
-      deliverables: ['Sub-Second Barcode Checkout Flow', 'Multi-Store Synchronized Stock Ledger', 'Live Gross Profit & Revenue Stream', 'Thermal Receipt & Digital Dispatch'],
+      problem:
+        'Growing businesses often face fragile prototypes or bloated agency deliverables instead of dependable software built for long-term operational scale.',
+      solution:
+        'Co-founded Trawbit Technologies to deliver focused, production-grade software systems across retail commerce, healthcare, education, and custom SaaS.',
+      deliverables: [
+        'Commercial web platforms',
+        'Distributed API architectures',
+        'Enterprise POS systems',
+        'Cross-platform mobile apps',
+      ],
     },
   },
 ];
 
-// High performance side-scrolling physics with completion buffer
-const updateHorizontalScroll = () => {
-  if (viewMode.value !== 'side' || !horizontalTrackContainer.value || !cardsRowRef.value) return;
-
-  const rect = horizontalTrackContainer.value.getBoundingClientRect();
-  const vh = window.innerHeight;
-  const totalVerticalDistance = horizontalTrackContainer.value.offsetHeight - vh;
-
-  if (totalVerticalDistance <= 0) return;
-
-  // Raw scroll progress in the container: 0 to 1
-  const rawProgress = Math.max(0, Math.min(1, -rect.top / totalVerticalDistance));
-
-  // Continuous full-span horizontal travel (0 to 1.0)
-  const travelZone = 1.0;
-  const travelProgress = Math.min(1, rawProgress / travelZone);
-  horizontalProgress.value = travelProgress;
-
-  // Calculate maximum horizontal travel so the last card is fully, completely shown
-  const trackWidth = cardsRowRef.value.scrollWidth;
-  const viewportWidth = window.innerWidth;
-  const maxScrollX = Math.max(0, trackWidth - viewportWidth);
-
-  currentTranslateX.value = travelProgress * maxScrollX;
-
-  // Track active project index
-  const index = Math.min(
-    projectList.length - 1,
-    Math.floor(travelProgress * (projectList.length - 0.05))
-  );
-  activeCardIndex.value = Math.max(0, index);
-
-  // Set completion state
-  isCompleted.value = rawProgress >= 0.96;
-};
-
-// Arrow navigation helpers
-const goToCardIndex = (idx) => {
-  if (!horizontalTrackContainer.value) return;
-  const vh = window.innerHeight;
-  const totalVerticalDistance = horizontalTrackContainer.value.offsetHeight - vh;
-  const targetTravel = idx / (projectList.length - 1);
-  const targetRawProgress = targetTravel * 1.0;
-  const containerDocTop = horizontalTrackContainer.value.getBoundingClientRect().top + window.scrollY;
-  const targetScrollY = containerDocTop + targetRawProgress * totalVerticalDistance;
-
-  smoothScrollTo(targetScrollY, { offset: 0, duration: 0.7 });
-};
-
-const nextCard = () => {
-  if (activeCardIndex.value < projectList.length - 1) {
-    goToCardIndex(activeCardIndex.value + 1);
+const extractDomain = (url, fallback) => {
+  if (!url || typeof url !== 'string') return fallback;
+  try {
+    const normalized = url.startsWith('http') ? url : `https://${url}`;
+    return new URL(normalized).hostname.replace(/^www\./, '');
+  } catch {
+    return fallback;
   }
 };
 
-const prevCard = () => {
-  if (activeCardIndex.value > 0) {
-    goToCardIndex(activeCardIndex.value - 1);
+const projectList = computed(() => {
+  if (!Array.isArray(apiProjects.value) || apiProjects.value.length === 0) {
+    return defaultProjects;
+  }
+
+  return apiProjects.value.map((p, idx) => {
+    const matchedDefault = defaultProjects.find(
+      (dp) => dp.title.toLowerCase() === (p.title || '').toLowerCase()
+    );
+    const d = p.detailData || {};
+    const firstStat = Array.isArray(d.stats) && d.stats.length > 0 ? d.stats[0] : null;
+    const metricFromStat = firstStat
+      ? [firstStat.val, firstStat.label].filter(Boolean).join(' ').trim()
+      : '';
+    const featureDeliverables = Array.isArray(d.features) && d.features.length > 0
+      ? d.features.map((f) => (typeof f === 'string' ? f : f.title || f.desc)).filter(Boolean)
+      : null;
+
+    const liveUrl = d.liveUrl || p.liveUrl || matchedDefault?.liveUrl || '';
+    const repoUrl = d.repoUrl || p.repoUrl || '';
+
+    return {
+      id: p.id ?? idx + 1,
+      num: formatNum(idx + 1),
+      title: p.title || matchedDefault?.title || 'Project',
+      category: d.heroSubject || matchedDefault?.category || 'Software platform',
+      domain: extractDomain(liveUrl, matchedDefault?.domain || 'production'),
+      liveUrl,
+      repoUrl,
+      role: (d.heroTitle && d.heroTitle !== p.title ? d.heroTitle : null) || matchedDefault?.role || 'Full-stack lead engineer',
+      year: matchedDefault?.year || (p.created_at ? String(p.created_at).slice(0, 4) : '2026'),
+      metric: metricFromStat || matchedDefault?.metric || 'Production system',
+      description: p.description || matchedDefault?.description || '',
+      stack: Array.isArray(p.tags) && p.tags.length > 0 ? p.tags : (matchedDefault?.stack || []),
+      caseData: {
+        problem:
+          (d.abstract && d.abstract !== p.description ? d.abstract : null) ||
+          matchedDefault?.caseData?.problem ||
+          p.description ||
+          '',
+        solution:
+          (d.tagline && d.tagline !== p.description ? d.tagline : null) ||
+          matchedDefault?.caseData?.solution ||
+          d.abstract ||
+          p.description ||
+          '',
+        deliverables:
+          featureDeliverables ||
+          matchedDefault?.caseData?.deliverables ||
+          (Array.isArray(p.tags) ? p.tags : []),
+      },
+    };
+  });
+});
+
+const activeProject = computed(() => projectList.value[activeIdx.value] || projectList.value[0]);
+
+const setActive = (idx) => {
+  activeIdx.value = idx;
+};
+
+/* ── Smooth cursor-following micro-pill + subtle parallax ── */
+const pos = { x: 0, y: 0 };
+const target = { x: 0, y: 0 };
+let rafId = null;
+
+const tick = () => {
+  pos.x += (target.x - pos.x) * 0.18;
+  pos.y += (target.y - pos.y) * 0.18;
+  if (cursorPillRef.value) {
+    cursorPillRef.value.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`;
+  }
+  if (Math.abs(target.x - pos.x) > 0.2 || Math.abs(target.y - pos.y) > 0.2) {
+    rafId = requestAnimationFrame(tick);
+  } else {
+    rafId = null;
   }
 };
 
+const onPointerMove = (e) => {
+  target.x = e.clientX;
+  target.y = e.clientY;
+  if (!rafId) rafId = requestAnimationFrame(tick);
+};
+
+/* ── Case study drawer ── */
 const openCaseStudy = (proj) => {
   selectedCaseStudy.value = proj;
+  stopScroll();
 };
 
-const onImageError = (e) => {
-  e.target.src = '/projects/jeevalink.jpg';
+const closeCaseStudy = () => {
+  selectedCaseStudy.value = null;
+  startScroll();
+};
+
+const nextCaseStudy = () => {
+  if (!selectedCaseStudy.value) return;
+  const list = projectList.value;
+  const i = list.findIndex((p) => p.id === selectedCaseStudy.value.id);
+  const next = (i + 1) % list.length;
+  activeIdx.value = next;
+  selectedCaseStudy.value = list[next];
+  const drawer = document.querySelector('aside[role="dialog"]');
+  if (drawer) drawer.scrollTop = 0;
 };
 
 const scrollToContactAndClose = () => {
-  selectedCaseStudy.value = null;
-  smoothScrollTo('#contact', { offset: -80, duration: 1.85 });
+  closeCaseStudy();
+  setTimeout(() => {
+    smoothScrollTo('#contact', { offset: 0, duration: 1.25 });
+  }, 60);
+};
+
+const handleKeyDown = (e) => {
+  if (e.key === 'Escape' && selectedCaseStudy.value) closeCaseStudy();
 };
 
 onMounted(() => {
-  setTimeout(() => {
-    updateHorizontalScroll();
-  }, 60);
-
-  unregisterScroll = registerScrollCallback(() => {
-    updateHorizontalScroll();
-  });
-
-  window.addEventListener('resize', updateHorizontalScroll, { passive: true });
+  fetchProjects();
+  window.addEventListener('keydown', handleKeyDown);
 });
 
 onUnmounted(() => {
-  if (unregisterScroll) unregisterScroll();
-  window.removeEventListener('resize', updateHorizontalScroll);
+  window.removeEventListener('keydown', handleKeyDown);
+  if (rafId) cancelAnimationFrame(rafId);
+  startScroll();
 });
 </script>
 
 <style scoped>
-.modal-enter-active,
-.modal-leave-active {
-  transition: opacity 0.2s ease;
+.scrim-enter-active,
+.scrim-leave-active {
+  transition: opacity 0.5s ease;
 }
-.modal-enter-from,
-.modal-leave-to {
+.scrim-enter-from,
+.scrim-leave-to {
   opacity: 0;
+}
+.drawer-enter-active,
+.drawer-leave-active {
+  transition: transform 0.7s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.drawer-enter-from,
+.drawer-leave-to {
+  transform: translateX(100%);
 }
 </style>

@@ -207,45 +207,47 @@ const startRendering = () => {
   renderFrame();
 };
 
+const ensurePlay = () => {
+  const video = videoRef.value;
+  if (video && isVisible.value) {
+    video.muted = true;
+    video.playsInline = true;
+    video.loop = true;
+    const playPromise = video.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(() => {});
+    }
+  }
+};
+
+const handleVisibilityChange = () => {
+  if (document.visibilityState === 'visible') {
+    ensurePlay();
+    startRendering();
+  }
+};
+
+const handleUserInteraction = () => {
+  ensurePlay();
+};
+
+const handleVideoPause = () => {
+  if (isVisible.value) {
+    setTimeout(ensurePlay, 100);
+  }
+};
+
 onMounted(() => {
   const video = videoRef.value;
   const canvas = canvasRef.value;
 
-  const ensurePlay = () => {
-    if (video && isVisible.value) {
-      video.muted = true;
-      video.playsInline = true;
-      video.loop = true;
-      const playPromise = video.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {});
-      }
-    }
-  };
-
   if (video) {
     ensurePlay();
     video.addEventListener('ended', ensurePlay);
-    video.addEventListener('pause', () => {
-      if (isVisible.value) {
-        setTimeout(ensurePlay, 100);
-      }
-    });
+    video.addEventListener('pause', handleVideoPause);
   }
 
-  // Handle visibility and mobile touch wakeups
-  const handleVisibilityChange = () => {
-    if (document.visibilityState === 'visible') {
-      ensurePlay();
-      startRendering();
-    }
-  };
   document.addEventListener('visibilitychange', handleVisibilityChange);
-
-  // User interaction resume trigger
-  const handleUserInteraction = () => {
-    ensurePlay();
-  };
   window.addEventListener('touchstart', handleUserInteraction, { passive: true });
   window.addEventListener('click', handleUserInteraction, { passive: true });
 
@@ -278,6 +280,11 @@ onUnmounted(() => {
   }
   if (observer) {
     observer.disconnect();
+  }
+  const video = videoRef.value;
+  if (video) {
+    video.removeEventListener('ended', ensurePlay);
+    video.removeEventListener('pause', handleVideoPause);
   }
   document.removeEventListener('visibilitychange', handleVisibilityChange);
   window.removeEventListener('touchstart', handleUserInteraction);

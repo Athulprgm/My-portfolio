@@ -1,100 +1,127 @@
 <template>
-  <div
-    class="pt-16 pb-24 sm:pb-32 px-6 sm:px-8 max-w-6xl mx-auto"
-  >
-    <!-- Eyebrow & Section Heading -->
-    <div class="mb-12">
-      <div class="flex items-center gap-2 mb-2">
-        <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full"></span>
-        <span class="text-xs font-mono-clean tracking-widest uppercase text-[var(--text-muted)]">
-          02 // ABOUT
-        </span>
-      </div>
-      <h2 class="text-3xl sm:text-5xl font-heading font-semibold tracking-tight text-[var(--text-primary)]">
-        BUILDING ACROSS THE STACK.
-      </h2>
-      <div class="h-[1px] bg-[var(--border-color)] mt-6 w-full"></div>
+  <div class="sw-container pt-28 sm:pt-40 pb-24 sm:pb-36">
+    <!-- Section head -->
+    <div class="sw-grid gap-y-8 scroll-reveal">
+      <div class="col-span-4 md:col-span-3 sw-label">(02) — About</div>
+
+      <p class="col-span-4 md:col-span-9 font-heading text-[clamp(1.75rem,3.7vw,3.6rem)] leading-[1.06] tracking-[-0.035em] text-[var(--text-primary)]">
+        I'm Athul — a full-stack developer and co-founder of Trawbit Technologies.
+        <span class="text-[var(--text-muted)]">I believe good software should feel</span>
+        <span class="font-serif-editorial text-[1.08em] text-[var(--accent)]">effortlessly simple,</span>
+        <span class="text-[var(--text-muted)]">and that every calm interface is held up by disciplined engineering.</span>
+      </p>
     </div>
 
-    <!-- Editorial 2-Column Layout -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-      <div class="lg:col-span-7 space-y-6 text-base sm:text-lg text-[var(--text-secondary)] leading-relaxed font-body font-normal">
-        <p class="text-xl sm:text-2xl text-[var(--text-primary)] font-semibold leading-snug font-body">
-          “Good software should feel simple. Behind every simple experience is thoughtful engineering.”
-        </p>
+    <!-- Editorial portrait + two-column story -->
+    <div class="sw-grid gap-y-10 items-start mt-16 sm:mt-24 text-[15px] leading-[1.65] text-[var(--text-secondary)]">
+      <!-- Editorial Swiss Portrait Frame -->
+      <figure class="col-span-4 md:col-span-3 scroll-reveal">
+        <div class="group relative border border-[var(--border-strong)] bg-[var(--bg-surface)] overflow-hidden">
+          <!-- Top technical meta bar -->
+          <div class="flex items-center justify-between px-3.5 py-2 border-b border-[var(--border-color)] bg-[var(--bg-primary)]/60">
+            <span class="sw-label !text-[10px]">Fig. 01 — Portrait</span>
+            <span class="flex items-center gap-1.5 font-mono-clean text-[10px] uppercase tracking-[0.06em] text-[var(--text-primary)]">
+              <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent)]"></span>
+              <span>AK / 26</span>
+            </span>
+          </div>
 
-        <p>
-          I’m a Full-Stack Developer focused on building practical, reliable, and well-crafted digital products. I focus on clean interfaces, reliable systems, maintainable code, and products that solve real problems.
-        </p>
+          <!-- Portrait stage with architectural grid & signal accent glow -->
+          <div class="relative aspect-[4/4.4] w-full overflow-hidden architectural-grid flex items-end justify-center pt-4">
+            <div
+              class="absolute inset-x-6 bottom-0 h-3/4 rounded-full blur-2xl opacity-25 group-hover:opacity-40 transition-opacity duration-700 pointer-events-none"
+              style="background: radial-gradient(circle, var(--accent) 0%, transparent 70%);"
+              aria-hidden="true"
+            ></div>
+            <picture class="relative z-10 w-full h-full flex items-end justify-center">
+              <source srcset="/avatar.webp" type="image/webp" />
+              <img
+                src="/avatar.png"
+                alt="Athul Krishna — Full-Stack Engineer & Co-Founder"
+                loading="lazy"
+                width="512"
+                height="512"
+                class="w-[92%] h-[96%] object-contain object-bottom select-none transition-transform duration-700 ease-[cubic-bezier(0.19,1,0.22,1)] group-hover:scale-[1.04]"
+              />
+            </picture>
+          </div>
 
-        <p>
-          I work across frontend, backend, databases, mobile development, and cloud services — choosing the right tools for the problem rather than limiting the product to a single stack.
-        </p>
+          <!-- Caption footer -->
+          <figcaption class="px-3.5 py-2.5 border-t border-[var(--border-color)] bg-[var(--bg-primary)]/60 flex items-center justify-between">
+            <span class="font-heading text-[13px] font-medium text-[var(--text-primary)] tracking-[-0.01em]">Athul Krishna K</span>
+            <span class="sw-label !text-[9.5px]">Kerala, IN</span>
+          </figcaption>
+        </div>
+      </figure>
 
+      <div class="col-span-4 md:col-span-4 md:col-start-5 scroll-reveal reveal-delay-100 space-y-4">
+        <span class="sw-label block">Story</span>
         <p>
-          As a Co-Founder at <strong class="text-[var(--text-primary)] font-semibold">Trawbit Technologies</strong>, I also work on real-world software products and digital solutions from concept to production.
+          I craft practical, dependable and expressive digital products — tactile interfaces, resilient backends,
+          and codebases that stay clean long after launch. I move fluidly between frontend frameworks, server
+          APIs, databases, mobile and cloud, picking the sharpest tool for each problem.
         </p>
       </div>
 
-      <!-- Right Column: Concise Metrics & Background -->
-      <div class="lg:col-span-5 space-y-4">
-        <div class="worth-card p-6 rounded-sm transition-all duration-200 hover:border-[var(--text-primary)] hover:translate-y-[-2px]">
-          <span class="text-[10px] font-mono-clean uppercase tracking-wider text-[var(--text-muted)] block mb-1">CO-FOUNDER · VENTURE</span>
-          <h3 class="text-lg font-heading font-semibold text-[var(--text-primary)] mb-1">Building more than software.</h3>
-          <p class="text-xs text-[var(--text-secondary)] font-body font-normal leading-relaxed mb-3">
-            As a Co-Founder at Trawbit Technologies, I work across engineering, product development, and digital solutions — turning ideas into usable software.
-          </p>
-          <a
-            href="https://trawbit.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-[11px] font-mono-clean text-[var(--text-primary)] hover:underline inline-flex items-center gap-1 font-bold"
-          >
-            <span>VISIT TRAWBIT</span>
-            <span>↗</span>
+      <div class="col-span-4 md:col-span-4 md:col-start-9 scroll-reveal reveal-delay-200 space-y-4">
+        <span class="sw-label block">Venture</span>
+        <p>
+          At <span class="text-[var(--text-primary)]">Trawbit Technologies</span> I partner with founders and businesses to
+          take ambitious ideas from first blueprint into live commercial production.
+          <a href="https://trawbit.com" target="_blank" rel="noopener noreferrer" class="sw-link text-[var(--text-primary)] mt-4">
+            Visit trawbit.com ↗
           </a>
-        </div>
+        </p>
+      </div>
+    </div>
 
-        <div class="worth-card p-6 rounded-sm transition-all duration-200 hover:border-[var(--text-primary)] hover:translate-y-[-2px]">
-          <span class="text-[10px] font-mono-clean uppercase tracking-wider text-[var(--text-muted)] block mb-1">ENGINEERING PHILOSOPHY</span>
-          <h3 class="text-lg font-heading font-semibold text-[var(--text-primary)] mb-1">Clean &amp; Maintainable</h3>
-          <p class="text-xs text-[var(--text-secondary)] font-body font-normal leading-relaxed mb-3">
-            Grounded in core computational theory, data structures, relational database modeling, and software engineering methodologies that scale.
-          </p>
-          <div class="flex flex-wrap gap-1">
-            <span class="worth-tag text-[9px] py-0.5 px-2">Architecture</span>
-            <span class="worth-tag text-[9px] py-0.5 px-2">Clean Code</span>
-            <span class="worth-tag text-[9px] py-0.5 px-2">Scalability</span>
-            <span class="worth-tag text-[9px] py-0.5 px-2">Reliability</span>
-          </div>
+    <!-- Numbers -->
+    <div class="sw-grid gap-y-10 mt-20 sm:mt-28">
+      <div
+        v-for="(stat, i) in stats"
+        :key="stat.label"
+        class="col-span-2 md:col-span-3 border-t border-[var(--text-primary)] pt-4 scroll-reveal"
+        :class="`reveal-delay-${(i + 1) * 100}`"
+      >
+        <div class="flex items-start justify-between sw-label mb-8 sm:mb-14">
+          <span>{{ stat.label }}</span>
+          <span>0{{ i + 1 }}</span>
         </div>
+        <span
+          class="block font-heading font-medium text-[clamp(3rem,7vw,6.5rem)] leading-[0.85] tracking-[-0.06em] text-[var(--text-primary)]"
+          :data-count-to="stat.to"
+          :data-count-prefix="stat.prefix || undefined"
+          :data-count-suffix="stat.suffix"
+        >{{ stat.prefix || '' }}{{ stat.to }}{{ stat.suffix }}</span>
+      </div>
+    </div>
 
-        <!-- 3 Numbers with Animated Counting Triggered on Scroll -->
-        <div class="grid grid-cols-3 gap-3 pt-2 font-mono-clean text-center">
-          <div class="p-3 bg-[var(--bg-subtle)] border border-[var(--border-color)] rounded-sm group hover:border-[var(--text-primary)] transition-colors">
-            <span
-              class="text-xl sm:text-2xl font-bold text-[var(--text-primary)] block font-mono"
-              data-count-to="15"
-              data-count-suffix="+"
-            >0+</span>
-            <span class="text-[9px] text-[var(--text-muted)] uppercase tracking-wider group-hover:text-[var(--text-primary)] transition-colors">Shipped</span>
-          </div>
-          <div class="p-3 bg-[var(--bg-subtle)] border border-[var(--border-color)] rounded-sm group hover:border-[var(--text-primary)] transition-colors">
-            <span
-              class="text-xl sm:text-2xl font-bold text-[var(--text-primary)] block font-mono"
-              data-count-to="99.9"
-              data-count-suffix="%"
-            >0.0%</span>
-            <span class="text-[9px] text-[var(--text-muted)] uppercase tracking-wider group-hover:text-[var(--text-primary)] transition-colors">Uptime</span>
-          </div>
-          <div class="p-3 bg-[var(--bg-subtle)] border border-[var(--border-color)] rounded-sm group hover:border-[var(--text-primary)] transition-colors">
-            <span
-              class="text-xl sm:text-2xl font-bold text-[var(--text-primary)] block font-mono"
-              data-count-to="60"
-              data-count-prefix="<"
-              data-count-suffix="ms"
-            >&lt;0ms</span>
-            <span class="text-[9px] text-[var(--text-muted)] uppercase tracking-wider group-hover:text-[var(--text-primary)] transition-colors">Latency</span>
+    <!-- Process -->
+    <div class="mt-24 sm:mt-36">
+      <div class="sw-grid mb-8 scroll-reveal">
+        <div class="col-span-4 md:col-span-3 sw-label">Process</div>
+        <div class="col-span-4 md:col-span-9 font-heading text-2xl sm:text-3xl tracking-[-0.03em] text-[var(--text-primary)]">
+          How ideas become <span class="font-serif-editorial text-[1.1em]">software.</span>
+        </div>
+      </div>
+
+      <div class="sw-grid">
+        <div class="hidden md:block md:col-span-3"></div>
+        <div class="col-span-4 md:col-span-9">
+          <div
+            v-for="(step, idx) in processSteps"
+            :key="step.title"
+            class="group grid grid-cols-12 gap-x-4 items-baseline py-5 sm:py-6 border-t border-[var(--border-color)] last:border-b scroll-reveal"
+          >
+            <span class="col-span-2 sm:col-span-1 font-mono-clean text-[11px] text-[var(--text-muted)] group-hover:text-[var(--accent)] transition-colors">
+              0{{ idx + 1 }}
+            </span>
+            <h3 class="col-span-10 sm:col-span-4 text-xl sm:text-2xl tracking-[-0.03em] transition-transform duration-500 group-hover:translate-x-2">
+              {{ step.title }}
+            </h3>
+            <p class="col-span-10 col-start-3 sm:col-start-auto sm:col-span-7 text-[14px] leading-relaxed text-[var(--text-secondary)] mt-2 sm:mt-0">
+              {{ step.desc }}
+            </p>
           </div>
         </div>
       </div>
@@ -103,7 +130,58 @@
 </template>
 
 <script setup>
+import { computed, onMounted } from 'vue';
 import { useScrollReveal } from '../composables/useScrollReveal';
+import { useSettings } from '../composables/useSettings';
 
 useScrollReveal();
+
+const { settings, fetchSettings } = useSettings();
+
+const parseStat = (raw, fallbackTo, fallbackSuffix) => {
+  if (!raw || typeof raw !== 'string') return { to: fallbackTo, suffix: fallbackSuffix };
+  const match = raw.trim().match(/^([<>]?)(\d+(?:\.\d+)?)\s*(.*)$/);
+  if (!match) return { to: fallbackTo, suffix: fallbackSuffix };
+  return {
+    prefix: match[1] || undefined,
+    to: match[2],
+    suffix: match[3] || fallbackSuffix,
+  };
+};
+
+const stats = computed(() => {
+  const shipped = parseStat(settings.value?.shipped_works, '15', '+');
+  const uptime = parseStat(settings.value?.uptime_focus, '99.9', '%');
+  const years = parseStat(settings.value?.experience_years, '3', '+');
+
+  return [
+    { label: 'Products shipped', ...shipped },
+    { label: 'Uptime SLA', ...uptime },
+    { label: 'API latency', to: '60', prefix: '<', suffix: 'ms' },
+    { label: 'Years building', ...years },
+  ];
+});
+
+onMounted(() => {
+  fetchSettings();
+});
+
+const processSteps = [
+  {
+    title: 'Discover & scope',
+    desc: 'Clarify business goals, user journeys and technical constraints before a single line is written.',
+  },
+  {
+    title: 'System blueprint',
+    desc: 'Design prototypes, data schemas and modular API architecture built for longevity.',
+  },
+  {
+    title: 'Craft & engineer',
+    desc: 'Build responsive interfaces and resilient full-stack logic in transparent weekly iterations.',
+  },
+  {
+    title: 'Launch & scale',
+    desc: 'Deploy to production with telemetry, performance tuning and continuous refinement.',
+  },
+];
 </script>

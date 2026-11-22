@@ -1,32 +1,41 @@
 <template>
   <div class="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] font-body py-16 sm:py-24 px-4 sm:px-6 relative overflow-x-hidden transition-colors">
-    <!-- Navigation -->
-    <div class="fixed top-0 left-0 w-full h-16 bg-[var(--bg-surface)]/95 backdrop-blur-md border-b border-[var(--border-color)] px-4 sm:px-6 flex items-center justify-between z-50 no-print">
-      <button @click="handleBack" class="flex items-center gap-2 font-mono text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors cursor-pointer">
+    <!-- Top Fixed Navigation Bar -->
+    <div class="fixed top-0 left-0 w-full h-16 studio-glass border-x-0 border-t-0 px-4 sm:px-6 flex items-center justify-between z-50 no-print">
+      <button
+        @click="handleBack"
+        class="flex items-center gap-2 font-mono-clean text-xs text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors cursor-pointer"
+      >
         <i class="fa-solid fa-arrow-left"></i>
-        <span>Back to Projects</span>
+        <span>Back to Portfolio</span>
       </button>
+
       <div class="flex items-center gap-2">
-        <button @click="handlePrint" class="flex items-center gap-2 px-3.5 py-1.5 border border-[var(--border-color)] rounded font-mono text-xs text-[var(--text-secondary)] hover:border-[var(--text-primary)] hover:text-[var(--text-primary)] transition-all print-btn cursor-pointer bg-[var(--bg-card)]">
+        <button
+          @click="handlePrint"
+          class="flex items-center gap-2 px-3.5 py-1.5 border border-[var(--border-color)] rounded-full font-mono-clean text-xs text-[var(--text-secondary)] hover:border-[var(--text-primary)] hover:text-[var(--text-primary)] transition-all cursor-pointer bg-[var(--bg-card)]"
+        >
           <i class="fa-solid fa-file-pdf"></i>
-          <span>Download PDF</span>
+          <span class="hidden sm:inline">Download PDF</span>
         </button>
+
         <a
-          v-if="detailData.repoUrl && detailData.repoUrl !== '#'"
+          v-if="detailData.repoUrl"
           :href="detailData.repoUrl"
           target="_blank"
           rel="noopener noreferrer"
-          class="flex items-center gap-2 px-3.5 py-1.5 border border-[#2A2A2A] rounded font-mono text-xs text-[#A1A1AA] hover:border-[#ffffff]/40 hover:text-white transition-all"
+          class="flex items-center gap-2 px-3.5 py-1.5 border border-[var(--border-color)] rounded-full font-mono-clean text-xs text-[var(--text-secondary)] hover:border-[var(--text-primary)] hover:text-[var(--text-primary)] transition-all bg-[var(--bg-card)]"
         >
           <i class="fa-brands fa-github"></i>
-          <span>Source Code</span>
+          <span class="hidden sm:inline">Source Code</span>
         </a>
+
         <a
-          v-if="detailData.liveUrl && detailData.liveUrl !== '#'"
+          v-if="detailData.liveUrl"
           :href="detailData.liveUrl"
           target="_blank"
           rel="noopener noreferrer"
-          class="flex items-center gap-2 px-3.5 py-1.5 border border-[#2A2A2A] rounded font-mono text-xs text-[#A1A1AA] hover:border-[#00FFFF]/40 hover:text-white transition-all"
+          class="btn-worth !py-1.5 !px-4 !text-[11px]"
         >
           <i class="fa-solid fa-arrow-up-right-from-square"></i>
           <span>Live Demo</span>
@@ -36,126 +45,144 @@
 
     <div class="max-w-6xl mx-auto mt-8">
       <!-- Hero Section -->
-      <div class="pt-8 pb-16 border-b border-[#2A2A2A] text-left">
+      <div class="pt-8 pb-12 sm:pb-16 border-b border-[var(--border-color)] text-left">
         <div class="max-w-3xl">
-          <h1 class="font-heading text-3xl md:text-5xl font-bold tracking-tight text-white mb-4">
-            {{ detailData.heroTitle }} 
-            <span v-if="detailData.heroSubject" class="text-emerald-400">{{ detailData.heroSubject }}</span>
-          </h1>
-          <p class="font-body text-sm text-[#A1A1AA] mb-8 leading-relaxed">{{ detailData.tagline }}</p>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--badge-bg)] border border-[var(--border-color)] text-[10px] font-mono-clean uppercase tracking-widest text-emerald-500 mb-4">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+            <span>PROJECT SPECIFICATION</span>
+          </div>
 
-          <div v-if="detailData.stats && detailData.stats.length > 0" class="flex gap-8 items-center flex-wrap">
+          <h1 class="font-heading text-3xl sm:text-5xl font-bold tracking-tight text-[var(--text-primary)] mb-4">
+            {{ detailData.heroTitle }}
+            <span
+              v-if="detailData.heroSubject"
+              class="font-serif-editorial font-normal text-emerald-500 dark:text-emerald-400"
+            >
+              {{ detailData.heroSubject }}
+            </span>
+          </h1>
+          <p class="font-body text-sm sm:text-base text-[var(--text-secondary)] mb-8 leading-relaxed">
+            {{ detailData.tagline }}
+          </p>
+
+          <div v-if="detailData.stats.length > 0" class="flex gap-6 sm:gap-8 items-center flex-wrap">
             <template v-for="(stat, idx) in detailData.stats" :key="idx">
               <div class="flex flex-col gap-1">
-                <span class="font-heading text-xl font-bold text-white">{{ stat.val }}</span>
-                <span class="font-mono text-[9px] text-[#A1A1AA] uppercase tracking-widest font-semibold">{{ stat.label }}</span>
+                <span class="font-heading text-xl sm:text-2xl font-bold text-[var(--text-primary)]">{{ stat.val }}</span>
+                <span class="font-mono-clean text-[10px] text-[var(--text-muted)] uppercase tracking-widest font-semibold">{{ stat.label }}</span>
               </div>
-              <div v-if="idx < detailData.stats.length - 1" class="w-[1px] h-8 bg-[#2A2A2A] hidden sm:block"></div>
+              <div v-if="idx < detailData.stats.length - 1" class="w-[1px] h-8 bg-[var(--border-color)] hidden sm:block"></div>
             </template>
           </div>
         </div>
       </div>
 
-      <!-- content grid -->
-      <div class="grid grid-cols-1 gap-12 mt-12 text-left" :class="hasSidebarContent ? 'lg:grid-cols-[1fr_320px]' : 'max-w-4xl mx-auto'">
-        <!-- Left Column -->
-        <div class="flex flex-col gap-12">
+      <!-- Content Grid -->
+      <div
+        class="grid grid-cols-1 gap-8 lg:gap-10 mt-10 text-left"
+        :class="hasSidebarContent ? 'lg:grid-cols-[1fr_320px]' : 'max-w-4xl mx-auto'"
+      >
+        <!-- Main Column -->
+        <div class="flex flex-col gap-8">
           <!-- Abstract / Overview -->
-          <section v-if="detailData.abstract" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
-            <h3 class="font-heading text-base font-semibold text-white mb-4 tracking-wide flex items-center gap-2.5">
-              <i class="fa-solid fa-align-left text-emerald-400"></i> Project Overview
+          <section v-if="detailData.abstract" class="worth-card rounded-3xl p-6 sm:p-8">
+            <h3 class="font-heading text-lg font-bold text-[var(--text-primary)] mb-4 flex items-center gap-2.5">
+              <i class="fa-solid fa-align-left text-emerald-500 text-sm"></i>
+              <span>Project Overview</span>
             </h3>
-            <p class="text-sm text-[#A1A1AA] leading-relaxed font-body whitespace-pre-line">{{ detailData.abstract }}</p>
+            <p class="text-sm sm:text-[15px] text-[var(--text-secondary)] leading-relaxed font-body whitespace-pre-line">
+              {{ detailData.abstract }}
+            </p>
           </section>
 
-          <!-- Highlights (if any) -->
-          <section v-if="detailData.highlights && detailData.highlights.length > 0" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
-            <h3 class="font-heading text-base font-semibold text-white mb-6 tracking-wide flex items-center gap-2.5">
-              <i class="fa-solid fa-star text-emerald-400"></i> Featured Highlights
+          <!-- Featured Highlights -->
+          <section v-if="detailData.highlights && detailData.highlights.length > 0" class="worth-card rounded-3xl p-6 sm:p-8">
+            <h3 class="font-heading text-lg font-bold text-[var(--text-primary)] mb-6 flex items-center gap-2.5">
+              <i class="fa-solid fa-star text-emerald-500 text-sm"></i>
+              <span>Featured Highlights</span>
             </h3>
             <div class="flex flex-col gap-6">
-              <div v-for="(item, idx) in detailData.highlights" :key="idx" class="flex flex-col sm:flex-row gap-6 border-b border-[#2A2A2A] last:border-b-0 pb-6 last:pb-0">
-                <div v-if="item.image" class="relative w-full sm:w-[220px] aspect-video rounded-none overflow-hidden border border-[#2A2A2A] flex-shrink-0">
-                  <img :src="getImageUrl(item.image)" :alt="item.title" @error="handleImageError" class="w-full h-full object-cover" />
-                  <span v-if="item.tag" class="absolute top-2 left-2 bg-[#0A0A0A] backdrop-blur-xs border border-[#ffffff]/20 text-[#ffffff] font-mono text-[9px] px-2 py-0.5 rounded-none">{{ item.tag }}</span>
-                </div>
-                <div class="flex flex-col justify-center">
-                  <h4 class="font-heading text-sm font-bold text-white mb-2">{{ item.title }}</h4>
-                  <p class="text-xs text-[#A1A1AA] leading-relaxed font-body">{{ item.desc }}</p>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <!-- Gallery -->
-          <section v-if="galleryImages.length > 0" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
-            <h3 class="font-heading text-base font-semibold text-white mb-6 tracking-wide flex items-center gap-2.5">
-              <i class="fa-solid fa-images text-emerald-400"></i> Project Media & Gallery
-            </h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div
-                v-for="(img, index) in galleryImages"
-                :key="index"
-                class="relative aspect-video rounded-none overflow-hidden border border-[#2A2A2A] group cursor-pointer transition-all duration-300 bg-[#0A0A0A]"
-                @click="selectedImage = index"
+                v-for="(item, idx) in detailData.highlights"
+                :key="idx"
+                class="flex flex-col gap-2 border-b border-[var(--border-color)] last:border-b-0 pb-6 last:pb-0"
               >
-                <img :src="getImageUrl(img)" :alt="`Screen ${index + 1}`" loading="lazy" @error="handleImageError" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                <div class="absolute inset-0 bg-[#0A0A0A]/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <i class="fa-solid fa-maximize text-white text-sm"></i>
+                <div class="flex items-center gap-2.5">
+                  <span
+                    v-if="item.tag"
+                    class="bg-[var(--bg-subtle)] border border-[var(--border-color)] text-[var(--text-primary)] font-mono-clean text-[9px] px-2.5 py-0.5 rounded-full"
+                  >
+                    {{ item.tag }}
+                  </span>
+                  <h4 class="font-heading text-base font-bold text-[var(--text-primary)]">{{ item.title }}</h4>
                 </div>
+                <p class="text-xs sm:text-sm text-[var(--text-secondary)] leading-relaxed font-body">{{ item.desc }}</p>
               </div>
             </div>
           </section>
 
           <!-- Key Features -->
-          <section v-if="detailData.features && detailData.features.length > 0" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
-            <h3 class="font-heading text-base font-semibold text-white mb-6 tracking-wide flex items-center gap-2.5">
-              <i class="fa-solid fa-bolt text-emerald-400"></i> Key Features
+          <section v-if="detailData.features.length > 0" class="worth-card rounded-3xl p-6 sm:p-8">
+            <h3 class="font-heading text-lg font-bold text-[var(--text-primary)] mb-6 flex items-center gap-2.5">
+              <i class="fa-solid fa-bolt text-emerald-500 text-sm"></i>
+              <span>Key Features</span>
             </h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div v-for="(feature, idx) in detailData.features" :key="idx" class="flex gap-4 p-4 border border-[#2A2A2A] rounded-none bg-[#121212] hover:border-[#333] transition-colors">
-                <div class="text-emerald-400 mt-0.5 text-xs flex-shrink-0">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div
+                v-for="(feature, idx) in detailData.features"
+                :key="idx"
+                class="flex gap-3.5 p-4 border border-[var(--border-color)] rounded-2xl bg-[var(--bg-subtle)]/50 hover:border-emerald-500/40 transition-colors"
+              >
+                <div class="text-emerald-500 mt-0.5 text-xs flex-shrink-0">
                   <i class="fa-solid fa-check"></i>
                 </div>
                 <div>
-                  <h4 class="font-heading text-xs font-bold text-white mb-1.5 tracking-wide">{{ feature.title }}</h4>
-                  <p class="text-xs text-[#A1A1AA] leading-relaxed font-body">{{ feature.desc }}</p>
+                  <h4 class="font-heading text-sm font-bold text-[var(--text-primary)] mb-1">{{ feature.title }}</h4>
+                  <p class="text-xs text-[var(--text-secondary)] leading-relaxed font-body">{{ feature.desc }}</p>
                 </div>
               </div>
             </div>
           </section>
         </div>
 
-        <!-- Right Column -->
-        <div v-if="hasSidebarContent" class="flex flex-col gap-12">
+        <!-- Sidebar Column -->
+        <div v-if="hasSidebarContent" class="flex flex-col gap-8">
           <!-- Tech Stack -->
-          <section v-if="computedTechStack.length > 0" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
-            <h3 class="font-heading text-base font-semibold text-white mb-6 tracking-wide flex items-center gap-2.5">
-              <i class="fa-solid fa-layer-group text-emerald-400"></i> Technologies
+          <section v-if="computedTechStack.length > 0" class="worth-card rounded-3xl p-6 sm:p-7">
+            <h3 class="font-heading text-base font-bold text-[var(--text-primary)] mb-5 flex items-center gap-2.5">
+              <i class="fa-solid fa-layer-group text-emerald-500 text-sm"></i>
+              <span>Technologies</span>
             </h3>
             <div class="flex flex-col gap-3">
-              <div v-for="(tech, idx) in computedTechStack" :key="idx" class="flex items-center gap-4 py-2 border-b border-[#2A2A2A] last:border-b-0">
-                <div class="text-lg text-[#A1A1AA] w-6 text-center">
+              <div
+                v-for="(tech, idx) in computedTechStack"
+                :key="idx"
+                class="flex items-center gap-3.5 py-2.5 border-b border-[var(--border-color)] last:border-b-0"
+              >
+                <div class="text-base text-emerald-500 w-6 text-center">
                   <i :class="tech.icon || 'fa-solid fa-code'"></i>
                 </div>
                 <div class="flex flex-col">
-                  <span class="font-mono text-[10px] text-[#A1A1AA] uppercase tracking-wider">{{ tech.name }}</span>
-                  <span class="font-body text-xs text-neutral-200 font-semibold mt-0.5">{{ tech.stack }}</span>
+                  <span class="font-mono-clean text-[10px] text-[var(--text-muted)] uppercase tracking-wider">{{ tech.name }}</span>
+                  <span class="font-body text-xs text-[var(--text-primary)] font-semibold mt-0.5">{{ tech.stack }}</span>
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- Modules -->
-          <section v-if="detailData.modules && detailData.modules.length > 0" class="bg-[#121212] border border-[#2A2A2A] rounded-none p-8">
-            <h3 class="font-mono text-sm font-semibold text-white mb-6 tracking-wider flex items-center gap-2.5">
-              <i class="fa-solid fa-cubes text-[#A1A1AA]"></i> System Modules
+          <!-- System Modules -->
+          <section v-if="detailData.modules.length > 0" class="worth-card rounded-3xl p-6 sm:p-7">
+            <h3 class="font-heading text-base font-bold text-[var(--text-primary)] mb-5 flex items-center gap-2.5">
+              <i class="fa-solid fa-cubes text-emerald-500 text-sm"></i>
+              <span>System Modules</span>
             </h3>
-            <div class="flex flex-col gap-6">
+            <div class="flex flex-col gap-5">
               <div v-for="(mod, idx) in detailData.modules" :key="idx">
-                <h4 class="font-mono text-[10px] text-[#A1A1AA] uppercase tracking-widest border-b border-[#2A2A2A] pb-1 mb-2 font-semibold">{{ mod.title }}</h4>
-                <ul class="list-disc pl-4 text-xs text-[#A1A1AA] flex flex-col gap-1.5">
-                  <li v-for="(it, i) in mod.items" :key="i" class="font-mono text-[11px]">{{ it }}</li>
+                <h4 class="font-mono-clean text-[10px] text-[var(--text-muted)] uppercase tracking-widest border-b border-[var(--border-color)] pb-1.5 mb-2.5 font-semibold">
+                  {{ mod.title }}
+                </h4>
+                <ul class="list-disc pl-4 text-xs text-[var(--text-secondary)] flex flex-col gap-1.5">
+                  <li v-for="(it, i) in mod.items" :key="i" class="font-mono-clean text-[11px]">{{ it }}</li>
                 </ul>
               </div>
             </div>
@@ -164,24 +191,26 @@
       </div>
     </div>
 
-    <!-- Modal for Fullscreen Image View -->
+    <!-- Fullscreen Image Lightbox -->
     <Transition name="fade">
       <div
         v-if="selectedImage !== null"
-        class="fixed inset-0 z-[100] bg-[#0A0A0A]/90 backdrop-blur-md flex items-center justify-center p-4 cursor-pointer"
+        class="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 cursor-pointer"
         @click="selectedImage = null"
       >
-        <div
-          class="relative max-w-4xl w-full aspect-video flex items-center justify-center"
-          @click.stop
-        >
+        <div class="relative max-w-4xl w-full aspect-video flex items-center justify-center" @click.stop>
           <button
-            class="absolute -top-10 right-0 text-white hover:text-emerald-400 text-lg transition-colors cursor-pointer"
+            class="absolute -top-11 right-0 text-white hover:text-emerald-400 text-sm font-mono-clean uppercase tracking-wider px-3 py-1 rounded-full border border-white/20 transition-colors cursor-pointer"
             @click="selectedImage = null"
           >
-            <i class="fa-solid fa-times"></i>
+            Close ×
           </button>
-          <img :src="getImageUrl(galleryImages[selectedImage])" alt="Full view" @error="handleImageError" class="w-full h-full object-contain rounded-none border border-[#2A2A2A]" />
+          <img
+            :src="getImageUrl(galleryImages[selectedImage])"
+            alt="Full view"
+            @error="handleImageError"
+            class="w-full h-full object-contain rounded-2xl border border-white/15"
+          />
         </div>
       </div>
     </Transition>
@@ -189,19 +218,19 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { getImageUrl } from '../composables/useProjects';
 
 const props = defineProps({
   project: {
     type: Object,
     required: true,
-    default: () => ({})
+    default: () => ({}),
   },
   backAction: {
     type: Function,
-    default: null
-  }
+    default: null,
+  },
 });
 
 const ensureHttp = (url) => {
@@ -235,13 +264,12 @@ const detailData = computed(() => {
 });
 
 const computedTechStack = computed(() => {
-  if (detailData.value.technologies && detailData.value.technologies.length > 0) {
+  if (detailData.value.technologies.length > 0) {
     return detailData.value.technologies;
   }
-  // Fallback to tags if tech stack not configured in detail
   const tags = props.project?.tags || [];
   if (Array.isArray(tags) && tags.length > 0) {
-    return tags.map(tag => ({
+    return tags.map((tag) => ({
       name: 'Stack',
       stack: tag,
       icon: 'fa-solid fa-code',
@@ -251,27 +279,23 @@ const computedTechStack = computed(() => {
 });
 
 const hasSidebarContent = computed(() => {
-  return computedTechStack.value.length > 0 || (detailData.value.modules && detailData.value.modules.length > 0);
+  return computedTechStack.value.length > 0 || detailData.value.modules.length > 0;
 });
 
 const galleryImages = computed(() => {
   const images = [];
   if (props.project) {
-    if (props.project.thumbnail) {
-      images.push(props.project.thumbnail);
-    }
+    if (props.project.thumbnail) images.push(props.project.thumbnail);
     if (Array.isArray(props.project.image)) {
       images.push(...props.project.image);
     } else if (typeof props.project.image === 'string' && props.project.image) {
       images.push(props.project.image);
     }
   }
-  const dData = detailData.value;
-  if (dData && Array.isArray(dData.gallery)) {
-    images.push(...dData.gallery);
+  if (Array.isArray(detailData.value.gallery)) {
+    images.push(...detailData.value.gallery);
   }
-  
-  // Deduplicate and filter out empty strings
+
   const valid = [];
   const seen = new Set();
   for (const img of images) {
@@ -284,28 +308,41 @@ const galleryImages = computed(() => {
 });
 
 const handleImageError = (e) => {
-  e.target.src = '/360_F_541698271_tqSibLbJ2iPhcN8hrDy9cFDjbe98JYbQ.webp';
+  e.target.src = '/projects/jeevalink.jpg';
 };
 
 const handleBack = () => {
   if (props.backAction) {
     props.backAction();
-  } else if (typeof window !== "undefined") {
-    window.location.href = "/";
+  } else if (typeof window !== 'undefined') {
+    window.location.href = '/';
   }
 };
 
 const handlePrint = () => {
   window.print();
 };
+
+const handleKeyDown = (e) => {
+  if (e.key === 'Escape' && selectedImage.value !== null) {
+    selectedImage.value = null;
+  }
+};
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyDown);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeyDown);
+});
 </script>
 
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity 0.25s ease;
 }
-
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;

@@ -1,4 +1,4 @@
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 
@@ -12,17 +12,19 @@ const scrollVelocity = ref(0);
 function initLenis() {
   if (typeof window === 'undefined' || lenisInstance) return;
 
-  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const prefersReduced =
+    window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReduced) return;
 
   lenisInstance = new Lenis({
-    duration: 1.05, // Silky, responsive momentum glide
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Smooth exponential deceleration curve
+    duration: 1.05,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,
-    wheelMultiplier: 1.0, // Standard 1.0 multiplier for natural scrolling pace
-    touchMultiplier: 1.4,
+    wheelMultiplier: 1.0,
+    touchMultiplier: 1.35,
     infinite: false,
   });
 
@@ -42,6 +44,22 @@ function initLenis() {
   rafId = requestAnimationFrame(raf);
 }
 
+export function stopSmoothScroll() {
+  if (lenisInstance) {
+    try {
+      lenisInstance.stop();
+    } catch (e) {}
+  }
+}
+
+export function startSmoothScroll() {
+  if (lenisInstance) {
+    try {
+      lenisInstance.start();
+    } catch (e) {}
+  }
+}
+
 export function useSmoothScroll() {
   const registerScrollCallback = (fn) => {
     scrollCallbacks.add(fn);
@@ -49,16 +67,24 @@ export function useSmoothScroll() {
   };
 
   const scrollTo = (target, options = {}) => {
-    const { offset = -75, duration = 1.15, immediate = false } = options;
+    const { offset = -76, duration = 1.1, immediate = false } = options;
 
     if (lenisInstance) {
       lenisInstance.scrollTo(target, {
-        offset,
+        offset: typeof target === 'number' ? 0 : offset,
         duration: immediate ? 0 : duration,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       });
     } else {
-      const el = typeof target === 'string' ? document.querySelector(target) : target;
+      if (typeof target === 'number') {
+        window.scrollTo({
+          top: target,
+          behavior: immediate ? 'auto' : 'smooth',
+        });
+        return;
+      }
+      const el =
+        typeof target === 'string' ? document.querySelector(target) : target;
       if (el) {
         const top = el.getBoundingClientRect().top + window.scrollY + offset;
         window.scrollTo({ top, behavior: immediate ? 'auto' : 'smooth' });
@@ -78,6 +104,8 @@ export function useSmoothScroll() {
     scrollVelocity,
     registerScrollCallback,
     scrollTo,
+    stopScroll: stopSmoothScroll,
+    startScroll: startSmoothScroll,
   };
 }
 

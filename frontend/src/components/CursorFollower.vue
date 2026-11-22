@@ -24,8 +24,14 @@ const animate = () => {
   ringX = lerp(ringX, dotX, 0.12);
   ringY = lerp(ringY, dotY, 0.12);
 
-  if (dotEl)  dotEl.style.cssText  += `left:${dotX}px;top:${dotY}px;`;
-  if (ringEl) ringEl.style.cssText += `left:${ringX}px;top:${ringY}px;`;
+  if (dotEl) {
+    dotEl.style.left = `${dotX}px`;
+    dotEl.style.top = `${dotY}px`;
+  }
+  if (ringEl) {
+    ringEl.style.left = `${ringX}px`;
+    ringEl.style.top = `${ringY}px`;
+  }
 
   rafId = requestAnimationFrame(animate);
 };

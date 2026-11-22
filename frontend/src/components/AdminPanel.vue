@@ -45,12 +45,14 @@
         <span class="font-mono text-sm font-bold text-white">
           <template v-if="currentTab === 'projects'">Projects Management</template>
           <template v-else-if="currentTab === 'cvs'">CV Profiles Management</template>
-          <template v-else-if="currentTab === 'experience_metrics'">Experience & Metrics</template>
+          <template v-else-if="currentTab === 'experience_metrics'">Experience &amp; Metrics</template>
+          <template v-else-if="currentTab === 'enquiries'">Client Enquiries</template>
         </span>
         <span class="font-mono text-[10px] text-[#A1A1AA] border border-[#2A2A2A] rounded px-2 py-0.5">
           <template v-if="currentTab === 'projects'">{{ projects.length }} entries</template>
           <template v-else-if="currentTab === 'cvs'">{{ cvs.length }} files</template>
           <template v-else-if="currentTab === 'experience_metrics'">Dynamic Metrics</template>
+          <template v-else-if="currentTab === 'enquiries'">{{ enquiryStats.total }} total · {{ enquiryStats.unread }} unread</template>
         </span>
       </div>
       <div class="flex items-center gap-3">
@@ -72,7 +74,7 @@
         </button>
         <!-- Save Settings -->
         <button
-          v-else
+          v-else-if="currentTab === 'experience_metrics'"
           @click="saveSiteSettings"
           :disabled="savingSettings"
           class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-mono text-xs px-4 py-2 rounded-lg transition-colors cursor-pointer font-bold shadow-lg"
@@ -81,10 +83,29 @@
           <i v-else class="fa-solid fa-floppy-disk"></i>
           Save Changes
         </button>
+        <!-- Refresh Enquiries -->
+        <button
+          v-else-if="currentTab === 'enquiries'"
+          @click="loadEnquiries"
+          :disabled="loadingEnquiries"
+          class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-mono text-xs px-4 py-2 rounded-lg transition-colors cursor-pointer"
+        >
+          <i class="fa-solid fa-rotate" :class="loadingEnquiries ? 'animate-spin' : ''"></i>
+          Refresh
+        </button>
+
+        <button
+          @click="logout"
+          class="flex items-center gap-2 border border-[#2A2A2A] hover:border-red-500/40 text-[#A1A1AA] hover:text-red-400 font-mono text-xs px-3 py-2 rounded-lg transition-colors cursor-pointer"
+          title="Sign out of Admin"
+        >
+          <i class="fa-solid fa-right-from-bracket"></i>
+          <span class="hidden sm:inline">Logout</span>
+        </button>
 
         <button
           @click="goHome"
-          class="flex items-center gap-2 border border-[#2A2A2A] hover:border-[#2A2A2A] text-[#A1A1AA] hover:text-white font-mono text-xs px-3 py-2 rounded-lg transition-colors cursor-pointer"
+          class="flex items-center gap-2 border border-[#2A2A2A] hover:border-white/30 text-[#A1A1AA] hover:text-white font-mono text-xs px-3 py-2 rounded-lg transition-colors cursor-pointer"
         >
           <i class="fa-solid fa-arrow-left"></i> Portfolio
         </button>
@@ -173,12 +194,9 @@
               >
                 <td class="px-4 py-3 font-mono text-[11px] text-[#A1A1AA]">{{ String(p.id).padStart(2,'0') }}</td>
                 <td class="px-4 py-3">
-                  <div class="flex items-center gap-3">
-                    <img :src="getImageUrl(p.thumbnail, p.image)" :alt="p.title" class="w-10 h-7 object-cover rounded border border-[#2A2A2A] flex-shrink-0" />
-                    <div>
-                      <p class="font-mono text-xs font-semibold text-white">{{ p.title }}</p>
-                      <p class="font-sans text-[11px] text-[#A1A1AA] line-clamp-1 max-w-xs">{{ p.description }}</p>
-                    </div>
+                  <div>
+                    <p class="font-mono text-xs font-semibold text-white">{{ p.title }}</p>
+                    <p class="font-sans text-[11px] text-[#A1A1AA] line-clamp-1 max-w-xs">{{ p.description }}</p>
                   </div>
                 </td>
                 <td class="px-4 py-3 hidden md:table-cell">
@@ -547,7 +565,8 @@
     <Transition name="modal">
       <div
         v-if="showModal"
-        class="fixed inset-0 z-[100] bg-[#0A0A0A] backdrop-blur-sm flex items-start justify-center p-4 overflow-y-auto"
+        data-lenis-prevent
+        class="fixed inset-0 z-[100] bg-black/75 backdrop-blur-sm flex items-start justify-center p-4 overflow-y-auto"
         @click.self="closeModal"
       >
         <div class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-2xl w-full max-w-2xl my-8 shadow-2xl" @click.stop>
@@ -575,7 +594,7 @@
               class="font-mono text-xs px-3 py-2 border-b-2 transition-all cursor-pointer whitespace-nowrap"
               :class="projectFormTab === 'basic' ? 'border-indigo-500 text-white font-bold bg-white/5' : 'border-transparent text-[#A1A1AA] hover:text-white'"
             >
-              <i class="fa-solid fa-id-card mr-1.5"></i> Card & Media
+              <i class="fa-solid fa-id-card mr-1.5"></i> Project Info
             </button>
             <button
               type="button"
@@ -583,7 +602,7 @@
               class="font-mono text-xs px-3 py-2 border-b-2 transition-all cursor-pointer whitespace-nowrap"
               :class="projectFormTab === 'hero' ? 'border-indigo-500 text-white font-bold bg-white/5' : 'border-transparent text-[#A1A1AA] hover:text-white'"
             >
-              <i class="fa-solid fa-heading mr-1.5"></i> Hero & Overview
+              <i class="fa-solid fa-heading mr-1.5"></i> Role &amp; Case Study
             </button>
             <button
               type="button"
@@ -591,7 +610,7 @@
               class="font-mono text-xs px-3 py-2 border-b-2 transition-all cursor-pointer whitespace-nowrap"
               :class="projectFormTab === 'features_stats' ? 'border-indigo-500 text-white font-bold bg-white/5' : 'border-transparent text-[#A1A1AA] hover:text-white'"
             >
-              <i class="fa-solid fa-bolt mr-1.5"></i> Features & Stats
+              <i class="fa-solid fa-bolt mr-1.5"></i> Deliverables &amp; Stats
               <span v-if="(form.detailData.features?.length || form.detailData.stats?.length)" class="ml-1 px-1.5 py-0.2 text-[9px] bg-indigo-950 text-indigo-300 rounded-full border border-indigo-500/30">
                 {{ (form.detailData.features?.length || 0) + (form.detailData.stats?.length || 0) }}
               </span>
@@ -602,7 +621,7 @@
               class="font-mono text-xs px-3 py-2 border-b-2 transition-all cursor-pointer whitespace-nowrap"
               :class="projectFormTab === 'tech_modules' ? 'border-indigo-500 text-white font-bold bg-white/5' : 'border-transparent text-[#A1A1AA] hover:text-white'"
             >
-              <i class="fa-solid fa-layer-group mr-1.5"></i> Tech, Modules & Highlights
+              <i class="fa-solid fa-layer-group mr-1.5"></i> Tech, Modules &amp; Highlights
               <span v-if="(form.detailData.technologies?.length || form.detailData.modules?.length || form.detailData.highlights?.length)" class="ml-1 px-1.5 py-0.2 text-[9px] bg-indigo-950 text-indigo-300 rounded-full border border-indigo-500/30">
                 {{ (form.detailData.technologies?.length || 0) + (form.detailData.modules?.length || 0) + (form.detailData.highlights?.length || 0) }}
               </span>
@@ -610,14 +629,14 @@
           </div>
 
           <!-- Modal body -->
-          <div class="px-6 py-6 flex flex-col gap-5 relative max-h-[70vh] overflow-y-auto">
+          <div data-lenis-prevent class="px-6 py-6 flex flex-col gap-5 relative max-h-[70vh] overflow-y-auto">
             <div v-if="loadingForm" class="flex flex-col items-center justify-center py-20 gap-3">
               <div class="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
               <span class="font-mono text-xs text-[#A1A1AA]">// fetching project details from db</span>
             </div>
             
             <template v-else>
-              <!-- ─── TAB 1: CARD & MEDIA ─── -->
+              <!-- ─── TAB 1: PROJECT INFO ─── -->
               <div v-show="projectFormTab === 'basic'" class="flex flex-col gap-5">
                 <!-- Row: title -->
                 <div class="field">
@@ -628,23 +647,7 @@
                 <!-- Row: description -->
                 <div class="field">
                   <label>Card Description <span class="text-red-400">*</span></label>
-                  <textarea v-model="form.description" rows="3" placeholder="Short summary displayed on the main projects grid..."></textarea>
-                </div>
-
-                <!-- Row: image + thumbnail -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div class="field">
-                    <label>Images <span class="text-[#A1A1AA]">(max 7)</span> <span class="text-red-400">*</span></label>
-                    <input type="file" multiple @change="onImageChange" accept="image/*" class="file-input" />
-                    <div class="flex gap-2 mt-2 flex-wrap">
-                      <img v-for="(img, idx) in form.imagePreviews" :key="'img'+idx" :src="getImageUrl(img)" class="h-16 rounded border border-[#2A2A2A] object-cover" />
-                    </div>
-                  </div>
-                  <div class="field">
-                    <label>Card Thumbnail <span class="text-[#A1A1AA]">(Optional)</span></label>
-                    <input type="file" @change="onThumbnailChange" accept="image/*" class="file-input" />
-                    <img v-if="form.thumbnail" :src="getImageUrl(form.thumbnail)" class="mt-2 h-16 rounded border border-[#2A2A2A] object-cover" />
-                  </div>
+                  <textarea v-model="form.description" rows="3" placeholder="Short summary displayed on the main projects index..."></textarea>
                 </div>
 
                 <!-- Row: sort_order + tags -->
@@ -654,7 +657,7 @@
                     <input v-model.number="form.sort_order" type="number" placeholder="10" />
                   </div>
                   <div class="field sm:col-span-2">
-                    <label>Tags <span class="text-[#A1A1AA]">(comma-separated)</span></label>
+                    <label>Stack / Tags <span class="text-[#A1A1AA]">(comma-separated)</span></label>
                     <input v-model="tagsInput" placeholder="React, Laravel, MySQL, Tailwind" />
                   </div>
                 </div>
@@ -679,27 +682,27 @@
                 </div>
               </div>
 
-              <!-- ─── TAB 2: HERO & OVERVIEW ─── -->
+              <!-- ─── TAB 2: ROLE & CASE STUDY ─── -->
               <div v-show="projectFormTab === 'hero'" class="flex flex-col gap-5">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div class="field">
-                    <label>Hero Title</label>
-                    <input v-model="form.detailData.heroTitle" placeholder="Nexus" />
+                    <label>Role &amp; Architecture (or Hero Title)</label>
+                    <input v-model="form.detailData.heroTitle" placeholder="e.g. Full-stack lead engineer" />
                   </div>
                   <div class="field">
-                    <label>Hero Subject (Highlighted Accent)</label>
-                    <input v-model="form.detailData.heroSubject" placeholder="Enterprise OS" />
+                    <label>Category / Subject</label>
+                    <input v-model="form.detailData.heroSubject" placeholder="e.g. Digital library or Healthcare platform" />
                   </div>
                 </div>
 
                 <div class="field">
-                  <label>Tagline</label>
-                  <input v-model="form.detailData.tagline" placeholder="// High-throughput distributed cloud architecture" />
+                  <label>Architecture &amp; Solution Summary (Tagline)</label>
+                  <input v-model="form.detailData.tagline" placeholder="e.g. Built an intuitive web ecosystem with sub-second catalog search..." />
                 </div>
 
                 <div class="field">
-                  <label>Abstract (Full Project Story & Case Study)</label>
-                  <textarea v-model="form.detailData.abstract" rows="5" placeholder="Deep dive into the architecture, challenges, and engineering decisions..."></textarea>
+                  <label>Challenge &amp; Full Case Study Story (Abstract)</label>
+                  <textarea v-model="form.detailData.abstract" rows="5" placeholder="Deep dive into the client problem, architecture, challenges, and engineering decisions..."></textarea>
                 </div>
               </div>
 
@@ -886,7 +889,7 @@
                   </div>
 
                   <div v-if="!form.detailData.highlights || form.detailData.highlights.length === 0" class="p-4 border border-dashed border-[#2A2A2A] rounded-lg text-center font-mono text-xs text-[#A1A1AA]">
-                    No featured highlights added. Click "+ Add Highlight" to add screenshot highlights.
+                    No featured highlights added. Click "+ Add Highlight" to add project highlights.
                   </div>
 
                   <div v-for="(hl, hIdx) in form.detailData.highlights" :key="'hl-'+hIdx" class="p-3 bg-[#121212] border border-[#2A2A2A] rounded-lg flex flex-col gap-2 relative">
@@ -909,12 +912,8 @@
                       </div>
                     </div>
                     <div class="field">
-                      <label>Highlight Image URL / Path</label>
-                      <input v-model="hl.image" placeholder="Image URL or /storage path" />
-                    </div>
-                    <div class="field">
                       <label>Highlight Description</label>
-                      <textarea v-model="hl.desc" rows="2" placeholder="Brief explanation of this screenshot or highlight..."></textarea>
+                      <textarea v-model="hl.desc" rows="2" placeholder="Brief explanation of this capability or highlight..."></textarea>
                     </div>
                   </div>
                 </div>
@@ -976,7 +975,8 @@
     <Transition name="modal">
       <div
         v-if="deleteTarget"
-        class="fixed inset-0 z-[110] bg-[#0A0A0A] backdrop-blur-sm flex items-center justify-center p-4"
+        data-lenis-prevent
+        class="fixed inset-0 z-[110] bg-black/75 backdrop-blur-sm flex items-center justify-center p-4"
         @click.self="deleteTarget = null"
       >
         <div class="bg-[#0A0A0A] border border-red-500/20 rounded-2xl p-6 w-full max-w-sm shadow-2xl">
@@ -1000,7 +1000,7 @@
                 :disabled="saving"
                 class="flex-1 font-mono text-xs py-2 bg-red-600 hover:bg-red-500 disabled:opacity-50 text-white rounded-lg transition-colors flex items-center justify-center gap-2"
               >
-                <div v-if="saving" class="w-3 h-3 border-2 border-[#2A2A2A] border-t-transparent rounded-full animate-spin"></div>
+                <div v-if="saving" class="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                 <span>{{ saving ? 'Deleting…' : 'Delete' }}</span>
               </button>
             </div>
@@ -1013,7 +1013,8 @@
     <Transition name="modal">
       <div
         v-if="showCvModal"
-        class="fixed inset-0 z-[100] bg-[#0A0A0A] backdrop-blur-sm flex items-start justify-center p-4 overflow-y-auto"
+        data-lenis-prevent
+        class="fixed inset-0 z-[100] bg-black/75 backdrop-blur-sm flex items-start justify-center p-4 overflow-y-auto"
         @click.self="closeCvModal"
       >
         <div class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-2xl w-full max-w-md my-8 shadow-2xl" @click.stop>
@@ -1092,7 +1093,8 @@
     <Transition name="modal">
       <div
         v-if="cvDeleteTarget"
-        class="fixed inset-0 z-[110] bg-[#0A0A0A] backdrop-blur-sm flex items-center justify-center p-4"
+        data-lenis-prevent
+        class="fixed inset-0 z-[110] bg-black/75 backdrop-blur-sm flex items-center justify-center p-4"
         @click.self="cvDeleteTarget = null"
       >
         <div class="bg-[#0A0A0A] border border-red-500/20 rounded-2xl p-6 w-full max-w-sm shadow-2xl">
@@ -1129,7 +1131,8 @@
     <Transition name="modal">
       <div
         v-if="selectedEnquiry"
-        class="fixed inset-0 z-[105] bg-[#0A0A0A] backdrop-blur-sm flex items-start justify-center p-4 overflow-y-auto"
+        data-lenis-prevent
+        class="fixed inset-0 z-[105] bg-black/75 backdrop-blur-sm flex items-start justify-center p-4 overflow-y-auto"
         @click.self="selectedEnquiry = null"
       >
         <div class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-2xl w-full max-w-xl my-8 shadow-2xl overflow-hidden" @click.stop>
@@ -1252,7 +1255,8 @@
     <Transition name="modal">
       <div
         v-if="enquiryDeleteTarget"
-        class="fixed inset-0 z-[110] bg-[#0A0A0A] backdrop-blur-sm flex items-center justify-center p-4"
+        data-lenis-prevent
+        class="fixed inset-0 z-[110] bg-black/75 backdrop-blur-sm flex items-center justify-center p-4"
         @click.self="enquiryDeleteTarget = null"
       >
         <div class="bg-[#0A0A0A] border border-red-500/20 rounded-2xl p-6 w-full max-w-sm shadow-2xl">
@@ -1379,17 +1383,38 @@ const keyInput   = ref('');
 const loginError = ref('');
 const loggingIn  = ref(false);
 
+const handleAuthError = (e) => {
+  if (e?.response?.status === 401) {
+    sessionStorage.removeItem('admin_key');
+    authed.value = false;
+    loginError.value = 'Session expired or invalid admin key — please sign in again.';
+    return true;
+  }
+  return false;
+};
+
+const logout = () => {
+  sessionStorage.removeItem('admin_key');
+  authed.value = false;
+  keyInput.value = '';
+  loginError.value = '';
+};
+
 const login = async () => {
   if (loggingIn.value) return;
+  if (!keyInput.value.trim()) {
+    loginError.value = 'Please enter your admin key.';
+    return;
+  }
   loggingIn.value = true;
   loginError.value = '';
   try {
     // Explicitly pass key in header for the login check
     await apiClient.get('/admin/projects', {
-      headers: { 'X-Admin-Key': keyInput.value },
+      headers: { 'X-Admin-Key': keyInput.value.trim() },
     });
+    sessionStorage.setItem('admin_key', keyInput.value.trim());
     authed.value = true;
-    sessionStorage.setItem('admin_key', keyInput.value);
     loadProjects();
     loadCvs();
     loadSettingsData();
@@ -1412,7 +1437,7 @@ if (savedKey) {
 }
 
 onMounted(() => {
-  if (savedKey) {
+  if (authed.value) {
     loadProjects();
     loadCvs();
     loadSettingsData();
@@ -1449,7 +1474,9 @@ const loadEnquiries = async () => {
       filterEnquiries();
     }
   } catch (e) {
-    apiError.value = `Failed to load enquiries: ${e.response?.data?.message || e.message}`;
+    if (!handleAuthError(e)) {
+      apiError.value = `Failed to load enquiries: ${e.response?.data?.message || e.message}`;
+    }
   } finally {
     loadingEnquiries.value = false;
   }
@@ -1568,7 +1595,9 @@ const loadProjects = async () => {
     const res = await apiClient.get('/admin/projects');
     projects.value = res.data;
   } catch (e) {
-    apiError.value = `Failed to load projects: ${e.response?.data?.message || e.message}`;
+    if (!handleAuthError(e)) {
+      apiError.value = `Failed to load projects: ${e.response?.data?.message || e.message}`;
+    }
   } finally {
     loadingList.value = false;
   }
@@ -1581,19 +1610,13 @@ const loadCvs = async () => {
     const res = await apiClient.get('/admin/cvs');
     cvs.value = res.data;
   } catch (e) {
-    apiError.value = `Failed to load CVs: ${e.response?.data?.message || e.message}`;
+    if (!handleAuthError(e)) {
+      apiError.value = `Failed to load CVs: ${e.response?.data?.message || e.message}`;
+    }
   } finally {
     loadingCvsList.value = false;
   }
 };
-
-onMounted(() => {
-  loadSettingsData();
-  if (authed.value) {
-    loadProjects();
-    loadCvs();
-  }
-});
 
 // ── Modal / Form ──────────────────────────────────────────────────
 const showModal       = ref(false);
@@ -1761,7 +1784,6 @@ const submitForm = async () => {
   formError.value = '';
   if (!form.title.trim())       { formError.value = 'Title is required.';       return; }
   if (!form.description.trim()) { formError.value = 'Description is required.'; return; }
-  if (form.existingImages.length === 0 && form.imageFiles.length === 0) { formError.value = 'At least one image is required.'; return; }
 
   form.tags = tagsInput.value.split(',').map(t => t.trim()).filter(Boolean);
 
