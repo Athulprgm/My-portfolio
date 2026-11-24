@@ -37,83 +37,92 @@
   <div v-else class="min-h-screen bg-[#050505] text-white">
 
     <!-- Top bar -->
-    <header class="sticky top-0 z-50 border-b border-[#2A2A2A] bg-[#0A0A0A] backdrop-blur-md px-6 py-3 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-6 h-6 rounded bg-indigo-600 flex items-center justify-center">
+    <header class="sticky top-0 z-50 border-b border-[#2A2A2A] bg-[#0A0A0A] backdrop-blur-md px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-2 pt-safe">
+      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+        <div class="w-6 h-6 rounded bg-indigo-600 flex items-center justify-center shrink-0">
           <i class="fa-solid fa-layer-group text-white text-[10px]"></i>
         </div>
-        <span class="font-mono text-sm font-bold text-white">
-          <template v-if="currentTab === 'projects'">Projects Management</template>
-          <template v-else-if="currentTab === 'cvs'">CV Profiles Management</template>
-          <template v-else-if="currentTab === 'experience_metrics'">Experience &amp; Metrics</template>
-          <template v-else-if="currentTab === 'enquiries'">Client Enquiries</template>
+        <span class="font-mono text-xs sm:text-sm font-bold text-white truncate max-w-[130px] xs:max-w-[180px] sm:max-w-none">
+          <template v-if="currentTab === 'projects'">Projects</template>
+          <template v-else-if="currentTab === 'cvs'">CV Profiles</template>
+          <template v-else-if="currentTab === 'experience_metrics'">Metrics</template>
+          <template v-else-if="currentTab === 'enquiries'">Enquiries</template>
         </span>
-        <span class="font-mono text-[10px] text-[#A1A1AA] border border-[#2A2A2A] rounded px-2 py-0.5">
+        <span class="hidden md:inline font-mono text-[10px] text-[#A1A1AA] border border-[#2A2A2A] rounded px-2 py-0.5 shrink-0">
           <template v-if="currentTab === 'projects'">{{ projects.length }} entries</template>
           <template v-else-if="currentTab === 'cvs'">{{ cvs.length }} files</template>
           <template v-else-if="currentTab === 'experience_metrics'">Dynamic Metrics</template>
           <template v-else-if="currentTab === 'enquiries'">{{ enquiryStats.total }} total · {{ enquiryStats.unread }} unread</template>
         </span>
       </div>
-      <div class="flex items-center gap-3">
+      <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
         <!-- Add Project -->
         <button
           v-if="currentTab === 'projects'"
           @click="openAdd"
-          class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-mono text-xs px-4 py-2 rounded-lg transition-colors cursor-pointer"
+          class="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white font-mono text-xs px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg transition-colors cursor-pointer min-h-[34px]"
         >
-          <i class="fa-solid fa-plus"></i> Add Project
+          <i class="fa-solid fa-plus text-[11px]"></i>
+          <span class="hidden xs:inline">Add Project</span>
+          <span class="xs:hidden">Add</span>
         </button>
         <!-- Add CV Profile -->
         <button
           v-else-if="currentTab === 'cvs'"
           @click="openAddCv"
-          class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 text-white font-mono text-xs px-4 py-2 rounded-lg transition-colors cursor-pointer"
+          class="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 text-white font-mono text-xs px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg transition-colors cursor-pointer min-h-[34px]"
         >
-          <i class="fa-solid fa-plus"></i> Add CV Profile
+          <i class="fa-solid fa-plus text-[11px]"></i>
+          <span class="hidden xs:inline">Add CV Profile</span>
+          <span class="xs:hidden">Add</span>
         </button>
         <!-- Save Settings -->
         <button
           v-else-if="currentTab === 'experience_metrics'"
           @click="saveSiteSettings"
           :disabled="savingSettings"
-          class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-mono text-xs px-4 py-2 rounded-lg transition-colors cursor-pointer font-bold shadow-lg"
+          class="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-mono text-xs px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg transition-colors cursor-pointer font-bold shadow-lg min-h-[34px]"
         >
           <div v-if="savingSettings" class="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-          <i v-else class="fa-solid fa-floppy-disk"></i>
-          Save Changes
+          <i v-else class="fa-solid fa-floppy-disk text-[11px]"></i>
+          <span class="hidden xs:inline">Save Changes</span>
+          <span class="xs:hidden">Save</span>
         </button>
         <!-- Refresh Enquiries -->
         <button
           v-else-if="currentTab === 'enquiries'"
           @click="loadEnquiries"
           :disabled="loadingEnquiries"
-          class="flex items-center gap-2 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-mono text-xs px-4 py-2 rounded-lg transition-colors cursor-pointer"
+          class="flex items-center gap-1.5 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-mono text-xs px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-lg transition-colors cursor-pointer min-h-[34px]"
         >
-          <i class="fa-solid fa-rotate" :class="loadingEnquiries ? 'animate-spin' : ''"></i>
-          Refresh
+          <i class="fa-solid fa-rotate text-[11px]" :class="loadingEnquiries ? 'animate-spin' : ''"></i>
+          <span class="hidden xs:inline">Refresh</span>
         </button>
 
         <button
           @click="logout"
-          class="flex items-center gap-2 border border-[#2A2A2A] hover:border-red-500/40 text-[#A1A1AA] hover:text-red-400 font-mono text-xs px-3 py-2 rounded-lg transition-colors cursor-pointer"
+          class="flex items-center justify-center border border-[#2A2A2A] hover:border-red-500/40 text-[#A1A1AA] hover:text-red-400 font-mono text-xs px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg transition-colors cursor-pointer min-h-[34px]"
           title="Sign out of Admin"
+          aria-label="Logout"
         >
           <i class="fa-solid fa-right-from-bracket"></i>
-          <span class="hidden sm:inline">Logout</span>
+          <span class="hidden md:inline ml-1.5">Logout</span>
         </button>
 
         <button
           @click="goHome"
-          class="flex items-center gap-2 border border-[#2A2A2A] hover:border-white/30 text-[#A1A1AA] hover:text-white font-mono text-xs px-3 py-2 rounded-lg transition-colors cursor-pointer"
+          class="flex items-center justify-center border border-[#2A2A2A] hover:border-white/30 text-[#A1A1AA] hover:text-white font-mono text-xs px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg transition-colors cursor-pointer min-h-[34px]"
+          title="Back to Portfolio"
+          aria-label="Back to Portfolio"
         >
-          <i class="fa-solid fa-arrow-left"></i> Portfolio
+          <i class="fa-solid fa-arrow-left"></i>
+          <span class="hidden md:inline ml-1.5">Portfolio</span>
         </button>
       </div>
     </header>
 
     <!-- Main content -->
-    <main class="max-w-7xl mx-auto px-6 py-10">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
 
       <!-- API error banner -->
       <div v-if="apiError" class="mb-6 flex items-center gap-3 bg-red-950/30 border border-red-500/20 rounded-xl px-4 py-3">
@@ -123,7 +132,7 @@
       </div>
 
       <!-- Tab Selector -->
-      <div class="flex items-center gap-2 mb-8 border-b border-[#2A2A2A] pb-4 overflow-x-auto">
+      <div class="flex items-center gap-2 mb-6 sm:mb-8 border-b border-[#2A2A2A] pb-3 sm:pb-4 overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
         <button
           @click="currentTab = 'projects'"
           class="font-mono text-xs px-4 py-2 rounded-lg border transition-all cursor-pointer whitespace-nowrap"
@@ -566,13 +575,13 @@
       <div
         v-if="showModal"
         data-lenis-prevent
-        class="fixed inset-0 z-[100] bg-black/75 backdrop-blur-sm flex items-start justify-center p-4 overflow-y-auto"
+        class="fixed inset-0 z-[100] bg-black/75 backdrop-blur-sm flex items-start justify-center p-3 sm:p-4 overflow-y-auto"
         @click.self="closeModal"
       >
-        <div class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-2xl w-full max-w-2xl my-8 shadow-2xl" @click.stop>
+        <div class="bg-[#0A0A0A] border border-[#2A2A2A] rounded-2xl w-full max-w-2xl my-3 sm:my-8 shadow-2xl" @click.stop>
 
           <!-- Modal header -->
-          <div class="flex items-center justify-between px-6 py-4 border-b border-[#2A2A2A]">
+          <div class="flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 border-b border-[#2A2A2A]">
             <div>
               <h2 class="font-mono text-sm font-bold text-white">
                 {{ editMode ? '✏️ Edit Project' : '➕ Add Project' }}
@@ -581,17 +590,17 @@
                 {{ editMode ? `Editing ID #${form.id}` : 'Fill in the fields to create a new project' }}
               </p>
             </div>
-            <button @click="closeModal" class="text-[#A1A1AA] hover:text-white transition-colors">
+            <button @click="closeModal" class="text-[#A1A1AA] hover:text-white transition-colors min-h-[36px] min-w-[36px] flex items-center justify-center -mr-2">
               <i class="fa-solid fa-times"></i>
             </button>
           </div>
 
           <!-- Modal subtabs -->
-          <div class="flex items-center gap-2 px-6 pt-4 border-b border-[#2A2A2A] bg-[#121212]/50 overflow-x-auto">
+          <div class="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-6 pt-3 sm:pt-4 border-b border-[#2A2A2A] bg-[#121212]/50 overflow-x-auto">
             <button
               type="button"
               @click="projectFormTab = 'basic'"
-              class="font-mono text-xs px-3 py-2 border-b-2 transition-all cursor-pointer whitespace-nowrap"
+              class="font-mono text-xs px-2.5 sm:px-3 py-2 border-b-2 transition-all cursor-pointer whitespace-nowrap"
               :class="projectFormTab === 'basic' ? 'border-indigo-500 text-white font-bold bg-white/5' : 'border-transparent text-[#A1A1AA] hover:text-white'"
             >
               <i class="fa-solid fa-id-card mr-1.5"></i> Project Info
@@ -599,7 +608,7 @@
             <button
               type="button"
               @click="projectFormTab = 'hero'"
-              class="font-mono text-xs px-3 py-2 border-b-2 transition-all cursor-pointer whitespace-nowrap"
+              class="font-mono text-xs px-2.5 sm:px-3 py-2 border-b-2 transition-all cursor-pointer whitespace-nowrap"
               :class="projectFormTab === 'hero' ? 'border-indigo-500 text-white font-bold bg-white/5' : 'border-transparent text-[#A1A1AA] hover:text-white'"
             >
               <i class="fa-solid fa-heading mr-1.5"></i> Role &amp; Case Study
@@ -607,7 +616,7 @@
             <button
               type="button"
               @click="projectFormTab = 'features_stats'"
-              class="font-mono text-xs px-3 py-2 border-b-2 transition-all cursor-pointer whitespace-nowrap"
+              class="font-mono text-xs px-2.5 sm:px-3 py-2 border-b-2 transition-all cursor-pointer whitespace-nowrap"
               :class="projectFormTab === 'features_stats' ? 'border-indigo-500 text-white font-bold bg-white/5' : 'border-transparent text-[#A1A1AA] hover:text-white'"
             >
               <i class="fa-solid fa-bolt mr-1.5"></i> Deliverables &amp; Stats
@@ -618,7 +627,7 @@
             <button
               type="button"
               @click="projectFormTab = 'tech_modules'"
-              class="font-mono text-xs px-3 py-2 border-b-2 transition-all cursor-pointer whitespace-nowrap"
+              class="font-mono text-xs px-2.5 sm:px-3 py-2 border-b-2 transition-all cursor-pointer whitespace-nowrap"
               :class="projectFormTab === 'tech_modules' ? 'border-indigo-500 text-white font-bold bg-white/5' : 'border-transparent text-[#A1A1AA] hover:text-white'"
             >
               <i class="fa-solid fa-layer-group mr-1.5"></i> Tech, Modules &amp; Highlights
@@ -629,7 +638,7 @@
           </div>
 
           <!-- Modal body -->
-          <div data-lenis-prevent class="px-6 py-6 flex flex-col gap-5 relative max-h-[70vh] overflow-y-auto">
+          <div data-lenis-prevent class="px-4 sm:px-6 py-5 sm:py-6 flex flex-col gap-5 relative max-h-[75dvh] overflow-y-auto">
             <div v-if="loadingForm" class="flex flex-col items-center justify-center py-20 gap-3">
               <div class="w-8 h-8 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
               <span class="font-mono text-xs text-[#A1A1AA]">// fetching project details from db</span>

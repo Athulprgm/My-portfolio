@@ -12,25 +12,11 @@
           <!-- Wordmark -->
           <a
             href="#intro"
-            class="group col-span-2 md:col-span-3 font-heading font-medium text-[15px] tracking-[-0.02em] text-[var(--text-primary)] flex items-center gap-2.5"
+            class="col-span-2 md:col-span-3 font-heading font-medium text-[15px] tracking-[-0.02em] text-[var(--text-primary)] flex items-center gap-1.5"
             @click.prevent="scrollToChapter('intro')"
             aria-label="Athul Krishna — Home"
           >
-            <span class="relative w-7 h-7 rounded-full bg-[var(--bg-subtle)] border border-[var(--border-strong)] group-hover:border-[var(--accent)] overflow-hidden shrink-0 transition-colors duration-300">
-              <picture>
-                <source srcset="/avatar.webp" type="image/webp" />
-                <img
-                  src="/avatar.png"
-                  alt="Athul Krishna"
-                  width="56"
-                  height="56"
-                  class="w-full h-full object-cover object-top scale-110 translate-y-0.5 transition-transform duration-500 group-hover:scale-125"
-                />
-              </picture>
-            </span>
-            <span>
-              Athul Krishna<sup class="text-[9px] text-[var(--text-muted)] font-mono-clean">©26</sup>
-            </span>
+            Athul Krishna<sup class="text-[9px] text-[var(--text-muted)] font-mono-clean">©26</sup>
           </a>
 
           <!-- Desktop links -->
@@ -50,10 +36,10 @@
           </nav>
 
           <!-- Right controls -->
-          <div class="col-span-2 md:col-span-3 flex items-center justify-end gap-5">
+          <div class="col-span-2 md:col-span-3 flex items-center justify-end gap-3 sm:gap-5">
             <button
               @click="toggleTheme($event)"
-              class="group flex items-center gap-2 text-[12px] font-mono-clean uppercase tracking-[0.06em] text-[var(--text-muted)] hover:text-[var(--text-primary)] cursor-pointer"
+              class="group flex items-center gap-2 text-[12px] font-mono-clean uppercase tracking-[0.06em] text-[var(--text-muted)] hover:text-[var(--text-primary)] cursor-pointer min-h-[44px] min-w-[44px] justify-center"
               :title="theme === 'light' ? 'Switch to dark' : 'Switch to light'"
               aria-label="Toggle color theme"
             >
@@ -77,7 +63,7 @@
             <!-- Mobile trigger -->
             <button
               @click="mobileOpen = !mobileOpen"
-              class="md:hidden text-[12px] font-mono-clean uppercase tracking-[0.06em] text-[var(--text-primary)] cursor-pointer"
+              class="md:hidden flex items-center justify-end min-h-[44px] min-w-[44px] text-[12px] font-mono-clean uppercase tracking-[0.06em] text-[var(--text-primary)] cursor-pointer"
               :aria-expanded="mobileOpen"
               aria-label="Toggle navigation menu"
             >
@@ -92,25 +78,25 @@
     <Transition name="menu">
       <div
         v-if="mobileOpen"
-        class="md:hidden fixed inset-0 top-16 bg-[var(--bg-primary)] z-40 flex flex-col justify-between sw-container pb-8"
+        class="md:hidden fixed inset-x-0 top-16 h-[calc(100dvh-4rem)] max-h-[calc(100dvh-4rem)] bg-[var(--bg-primary)] z-40 flex flex-col justify-between sw-container pb-safe overflow-y-auto"
       >
-        <nav class="flex flex-col pt-6">
+        <nav class="flex flex-col pt-4 sm:pt-6">
           <button
             v-for="(item, idx) in navLinks"
             :key="item.id"
             @click="scrollToChapter(item.id); mobileOpen = false"
-            class="flex items-baseline justify-between py-3 border-b border-[var(--border-color)] text-left cursor-pointer"
+            class="flex items-baseline justify-between py-3.5 sm:py-4 border-b border-[var(--border-color)] text-left cursor-pointer min-h-[52px]"
           >
             <span
-              class="font-heading text-5xl tracking-[-0.045em] leading-none"
+              class="font-heading text-4xl sm:text-5xl tracking-[-0.045em] leading-none"
               :class="activeChapter === item.id ? 'text-[var(--accent)]' : 'text-[var(--text-primary)]'"
             >{{ item.label }}</span>
             <span class="sw-label">0{{ idx + 1 }}</span>
           </button>
         </nav>
-        <div class="flex items-end justify-between sw-label">
-          <span>Kerala, IN<br />{{ istTime }} IST</span>
-          <a href="mailto:athul@trawbit.com" class="text-[var(--text-primary)]">athul@trawbit.com</a>
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sw-label pt-6 pb-6 border-t border-[var(--border-color)] mt-6">
+          <span>Kerala, IN · {{ istTime }} IST</span>
+          <a href="mailto:athul@trawbit.com" class="text-[var(--text-primary)] break-all">athul@trawbit.com</a>
         </div>
       </div>
     </Transition>
@@ -193,9 +179,20 @@ const handleKeyDown = (e) => {
   if (e.key === 'Escape' && mobileOpen.value) mobileOpen.value = false;
 };
 
+const handleResize = () => {
+  if (window.innerWidth >= 768 && mobileOpen.value) {
+    mobileOpen.value = false;
+  }
+};
+
 watch(mobileOpen, (open) => {
-  if (open) stopScroll?.();
-  else startScroll?.();
+  if (open) {
+    stopScroll?.();
+    document.body.style.overflow = 'hidden';
+  } else {
+    startScroll?.();
+    document.body.style.overflow = '';
+  }
 });
 
 onMounted(() => {
@@ -203,6 +200,7 @@ onMounted(() => {
   clockInterval = setInterval(updateClock, 30000);
   unregisterScroll = registerScrollCallback(handleScroll);
   window.addEventListener('scroll', handleScroll, { passive: true });
+  window.addEventListener('resize', handleResize, { passive: true });
   window.addEventListener('keydown', handleKeyDown);
   handleScroll();
 });
@@ -211,7 +209,9 @@ onUnmounted(() => {
   if (clockInterval) clearInterval(clockInterval);
   if (unregisterScroll) unregisterScroll();
   window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('resize', handleResize);
   window.removeEventListener('keydown', handleKeyDown);
+  document.body.style.overflow = '';
   if (scrollRaf) cancelAnimationFrame(scrollRaf);
 });
 </script>

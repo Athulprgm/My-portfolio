@@ -1,16 +1,9 @@
 <template>
-  <div
-    ref="sectionRef"
-    class="sw-container pt-28 sm:pt-40 pb-24 sm:pb-36"
-    @mousemove="onPointerMove"
-  >
+  <div class="sw-container pt-20 sm:pt-40 pb-16 sm:pb-36">
     <!-- ══════════════════ SECTION HEADER ══════════════════ -->
-    <div class="sw-grid gap-y-6 items-end mb-12 sm:mb-16 scroll-reveal">
+    <div class="sw-grid gap-y-6 items-end mb-10 sm:mb-16 scroll-reveal">
       <div class="col-span-4 md:col-span-3 sw-label">
-        <span>(03) — Selected work</span>
-        <span class="block mt-1 text-[var(--text-primary)]">
-          {{ formatNum(projectList.length) }} selected works · 2025–26
-        </span>
+        <span>Selected work</span>
       </div>
 
       <h2 class="col-span-4 md:col-span-6 sw-h2">
@@ -18,17 +11,13 @@
       </h2>
 
       <div class="col-span-4 md:col-span-3 flex md:justify-end items-center">
-        <span class="sw-label">Index · 01 — {{ formatNum(projectList.length) }}</span>
+        <span class="sw-label">01 — {{ formatNum(projectList.length) }}</span>
       </div>
     </div>
 
     <!-- ══════════════════ FULL-WIDTH TYPOGRAPHIC PROJECT INDEX ══════════════════ -->
     <div class="sw-grid items-start">
-      <div
-        class="col-span-4 md:col-span-12"
-        @mouseenter="isOverList = true"
-        @mouseleave="isOverList = false"
-      >
+      <div class="col-span-4 md:col-span-12">
         <ul class="border-b border-[var(--border-strong)]">
           <li
             v-for="(proj, idx) in projectList"
@@ -42,7 +31,7 @@
               role="button"
               tabindex="0"
               @keydown.enter="openCaseStudy(proj)"
-              class="group relative w-full text-left border-t border-[var(--border-strong)] py-6 sm:py-8 cursor-pointer select-none overflow-hidden"
+              class="group relative w-full text-left border-t border-[var(--border-strong)] py-5 sm:py-8 cursor-pointer select-none overflow-hidden"
             >
               <!-- Animated signal-orange top sweep bar on active row -->
               <span
@@ -52,8 +41,8 @@
               ></span>
 
               <!-- Row Top Meta + Title -->
-              <div class="flex items-baseline justify-between gap-4">
-                <div class="flex items-baseline gap-4 sm:gap-6 min-w-0">
+              <div class="flex items-baseline justify-between gap-3 sm:gap-4">
+                <div class="flex items-baseline gap-3 sm:gap-6 min-w-0">
                   <span
                     class="font-mono-clean text-[11px] shrink-0 transition-colors duration-300 flex items-center gap-1.5"
                     :class="activeIdx === idx ? 'text-[var(--accent)] font-medium' : 'text-[var(--text-muted)]'"
@@ -66,25 +55,22 @@
                   </span>
 
                   <h3
-                    class="font-heading font-medium text-[clamp(2.1rem,5.2vw,4.75rem)] leading-[0.92] tracking-[-0.05em] transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] truncate"
+                    class="font-heading font-medium text-[clamp(1.75rem,5.2vw,4.75rem)] leading-[0.92] tracking-[-0.05em] transition-all duration-500 ease-[cubic-bezier(0.19,1,0.22,1)] truncate"
                     :class="activeIdx === idx
-                      ? 'text-[var(--text-primary)] translate-x-2'
+                      ? 'text-[var(--text-primary)] translate-x-1 sm:translate-x-2'
                       : 'text-[var(--text-muted)] opacity-55 group-hover:opacity-90'"
                   >
                     {{ proj.title }}
                   </h3>
                 </div>
 
-                <!-- Right Meta + Category + Arrow -->
-                <div class="flex items-center gap-4 sm:gap-6 shrink-0">
-                  <span class="hidden lg:inline font-mono-clean text-[10.5px] uppercase tracking-[0.06em] text-[var(--text-muted)]">
-                    {{ proj.domain }} · [{{ proj.year }}]
-                  </span>
+                <!-- Right Category + Arrow -->
+                <div class="flex items-center gap-3 sm:gap-6 shrink-0">
                   <span class="hidden sm:inline sw-label !text-[10px]">
                     {{ proj.category }}
                   </span>
                   <span
-                    class="w-7 h-7 rounded-full border flex items-center justify-center text-xs transition-all duration-500"
+                    class="w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center text-xs transition-all duration-500"
                     :class="activeIdx === idx
                       ? 'border-[var(--accent)] bg-[var(--accent)] text-white rotate-45'
                       : 'border-[var(--border-color)] text-[var(--text-muted)]'"
@@ -100,30 +86,18 @@
                 :class="activeIdx === idx ? 'grid-rows-[1fr] opacity-100 mt-4' : 'grid-rows-[0fr] opacity-0 mt-0'"
               >
                 <div class="overflow-hidden">
-                  <div class="pl-8 sm:pl-11 pr-2 pt-1 flex flex-col md:flex-row md:items-end justify-between gap-4">
-                    <div class="flex flex-col gap-3">
-                      <p class="text-[14px] sm:text-[15px] leading-relaxed text-[var(--text-secondary)] max-w-[64ch]">
-                        {{ proj.description }}
-                      </p>
+                  <div class="pl-6 sm:pl-11 pr-2 pt-1 flex flex-col gap-3">
+                    <p class="text-[14px] sm:text-[15px] leading-relaxed text-[var(--text-secondary)] max-w-[64ch]">
+                      {{ proj.description }}
+                    </p>
 
-                      <div class="flex flex-wrap items-center gap-1.5 pt-1">
-                        <span
-                          v-for="tech in proj.stack"
-                          :key="tech"
-                          class="worth-tag !text-[9.5px] !py-0.5 !px-2"
-                        >
-                          {{ tech }}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div class="flex flex-wrap md:flex-col md:items-end justify-between gap-2 shrink-0">
-                      <div class="text-left md:text-right">
-                        <span class="sw-label !text-[9.5px] block">Role &amp; Architecture</span>
-                        <span class="text-[13px] font-medium text-[var(--text-primary)]">{{ proj.role }}</span>
-                      </div>
-                      <span class="font-mono-clean text-[10.5px] uppercase tracking-[0.06em] text-[var(--accent)]">
-                        ● {{ proj.metric }}
+                    <div class="flex flex-wrap items-center gap-1.5 pt-1">
+                      <span
+                        v-for="tech in proj.stack"
+                        :key="tech"
+                        class="worth-tag !text-[9.5px] !py-0.5 !px-2"
+                      >
+                        {{ tech }}
                       </span>
                     </div>
                   </div>
@@ -132,28 +106,6 @@
             </div>
           </li>
         </ul>
-
-        <!-- Bottom Hint -->
-        <div class="flex items-center justify-between pt-4 sw-label">
-          <span>Hover to inspect project · Click for full case study</span>
-          <span class="hidden sm:inline">{{ activeProject.num }} / {{ formatNum(projectList.length) }}</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- Subtle Magnetic Cursor Pill (Only over list, never blocks text!) -->
-    <div
-      ref="cursorPillRef"
-      class="hidden md:block fixed top-0 left-0 z-30 pointer-events-none"
-      style="will-change: transform"
-      aria-hidden="true"
-    >
-      <div
-        class="translate-x-5 -translate-y-7 px-2.5 py-1 bg-[var(--text-primary)] text-[var(--bg-primary)] font-mono-clean text-[9.5px] uppercase tracking-[0.1em] flex items-center gap-1.5 shadow-lg transition-all duration-300 ease-out"
-        :class="isOverList && !selectedCaseStudy ? 'opacity-100 scale-100' : 'opacity-0 scale-75'"
-      >
-        <span class="w-1.5 h-1.5 rounded-full bg-[var(--accent)]"></span>
-        <span>FIG. {{ activeProject.num }} · CASE ↗</span>
       </div>
     </div>
 
@@ -162,7 +114,7 @@
       <Transition name="scrim">
         <div
           v-if="selectedCaseStudy"
-          class="fixed inset-0 z-[100] bg-black/40 backdrop-blur-[2px]"
+          class="fixed inset-0 z-[100] bg-black/50 backdrop-blur-[2px]"
           @click="closeCaseStudy"
         ></div>
       </Transition>
@@ -175,20 +127,20 @@
           aria-modal="true"
           :aria-label="selectedCaseStudy.title"
         >
-          <div class="sticky top-0 z-10 flex items-center justify-between px-6 sm:px-10 h-16 bg-[var(--bg-glass)] backdrop-blur-md border-b border-[var(--border-color)]">
+          <div class="sticky top-0 z-10 flex items-center justify-between px-5 sm:px-10 h-14 sm:h-16 bg-[var(--bg-glass)] backdrop-blur-md border-b border-[var(--border-color)] pt-safe">
             <span class="sw-label">Case study — {{ selectedCaseStudy.num }}/{{ formatNum(projectList.length) }}</span>
-            <button @click="closeCaseStudy" class="group sw-label !text-[var(--text-primary)] flex items-center gap-2 cursor-pointer">
+            <button @click="closeCaseStudy" class="group sw-label !text-[var(--text-primary)] flex items-center gap-2 cursor-pointer min-h-[44px] min-w-[44px] justify-end -mr-2 p-2">
               <span class="sw-link">Close</span>
               <span class="transition-transform duration-500 group-hover:rotate-90">✕</span>
             </button>
           </div>
 
-          <div class="px-6 sm:px-10 pt-10 pb-12">
-            <h3 class="font-heading font-medium text-[clamp(2.75rem,8vw,5.5rem)] leading-[0.88] tracking-[-0.055em] mb-8">
+          <div class="px-5 sm:px-10 pt-8 sm:pt-10 pb-12 pb-safe">
+            <h3 class="font-heading font-medium text-[clamp(2.1rem,7.5vw,5.5rem)] leading-[0.9] tracking-[-0.055em] mb-6 sm:mb-8">
               {{ selectedCaseStudy.title }}<span class="text-[var(--accent)]">.</span>
             </h3>
 
-            <dl class="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-5 border-t border-[var(--text-primary)] pt-4 mb-10">
+            <dl class="grid grid-cols-2 sm:grid-cols-4 gap-x-4 gap-y-5 border-t border-[var(--text-primary)] pt-4 mb-8 sm:mb-10">
               <div>
                 <dt class="sw-label mb-1">Role</dt>
                 <dd class="text-[13px] leading-snug">{{ selectedCaseStudy.role }}</dd>
@@ -207,30 +159,30 @@
               </div>
             </dl>
 
-            <p class="text-xl sm:text-2xl leading-[1.3] tracking-[-0.02em] mb-12">
+            <p class="text-lg sm:text-2xl leading-[1.35] sm:leading-[1.3] tracking-[-0.02em] mb-8 sm:mb-12">
               {{ selectedCaseStudy.description }}
             </p>
 
-            <div class="space-y-10">
+            <div class="space-y-8 sm:space-y-10">
               <div class="grid grid-cols-12 gap-x-4 border-t border-[var(--border-color)] pt-4">
-                <span class="col-span-12 sm:col-span-4 sw-label mb-3">01 — Challenge</span>
-                <p class="col-span-12 sm:col-span-8 text-[15px] leading-relaxed text-[var(--text-secondary)]">
+                <span class="col-span-12 sm:col-span-4 sw-label mb-2 sm:mb-3">01 — Challenge</span>
+                <p class="col-span-12 sm:col-span-8 text-[14px] sm:text-[15px] leading-relaxed text-[var(--text-secondary)]">
                   {{ selectedCaseStudy.caseData.problem }}
                 </p>
               </div>
               <div class="grid grid-cols-12 gap-x-4 border-t border-[var(--border-color)] pt-4">
-                <span class="col-span-12 sm:col-span-4 sw-label mb-3">02 — Architecture</span>
-                <p class="col-span-12 sm:col-span-8 text-[15px] leading-relaxed text-[var(--text-secondary)]">
+                <span class="col-span-12 sm:col-span-4 sw-label mb-2 sm:mb-3">02 — Architecture</span>
+                <p class="col-span-12 sm:col-span-8 text-[14px] sm:text-[15px] leading-relaxed text-[var(--text-secondary)]">
                   {{ selectedCaseStudy.caseData.solution }}
                 </p>
               </div>
               <div class="grid grid-cols-12 gap-x-4 border-t border-[var(--border-color)] pt-4">
-                <span class="col-span-12 sm:col-span-4 sw-label mb-3">03 — Deliverables</span>
+                <span class="col-span-12 sm:col-span-4 sw-label mb-2 sm:mb-3">03 — Deliverables</span>
                 <ul class="col-span-12 sm:col-span-8">
                   <li
                     v-for="(deliv, i) in selectedCaseStudy.caseData.deliverables"
                     :key="deliv"
-                    class="flex items-baseline gap-4 py-2.5 border-b border-[var(--border-color)] text-[15px]"
+                    class="flex items-baseline gap-4 py-2.5 border-b border-[var(--border-color)] text-[14px] sm:text-[15px]"
                   >
                     <span class="font-mono-clean text-[10px] text-[var(--text-muted)]">{{ formatNum(i + 1) }}</span>
                     <span>{{ deliv }}</span>
@@ -238,15 +190,15 @@
                 </ul>
               </div>
               <div class="grid grid-cols-12 gap-x-4 border-t border-[var(--border-color)] pt-4">
-                <span class="col-span-12 sm:col-span-4 sw-label mb-3">04 — Stack</span>
+                <span class="col-span-12 sm:col-span-4 sw-label mb-2 sm:mb-3">04 — Stack</span>
                 <div class="col-span-12 sm:col-span-8 flex flex-wrap gap-1.5">
                   <span v-for="tech in selectedCaseStudy.stack" :key="tech" class="worth-tag">{{ tech }}</span>
                 </div>
               </div>
             </div>
 
-            <div class="mt-14 flex flex-wrap items-center gap-3">
-              <button @click="scrollToContactAndClose" class="btn-worth cursor-pointer">
+            <div class="mt-10 sm:mt-14 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+              <button @click="scrollToContactAndClose" class="btn-worth cursor-pointer text-center justify-center min-h-[44px]">
                 Build something similar →
               </button>
               <a
@@ -254,13 +206,13 @@
                 :href="selectedCaseStudy.liveUrl"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="btn-worth-outline"
+                class="btn-worth-outline text-center justify-center min-h-[44px]"
               >
                 Visit site ↗
               </a>
               <button
                 @click="nextCaseStudy"
-                class="ml-auto group sw-label !text-[var(--text-primary)] flex items-center gap-2 cursor-pointer"
+                class="sm:ml-auto group sw-label !text-[var(--text-primary)] flex items-center justify-center sm:justify-start gap-2 cursor-pointer py-3 sm:py-0 min-h-[44px]"
               >
                 <span class="sw-link">Next project</span>
                 <span class="transition-transform duration-500 group-hover:translate-x-1">→</span>
@@ -285,9 +237,7 @@ const { scrollTo: smoothScrollTo, stopScroll, startScroll } = useSmoothScroll();
 const { projects: apiProjects, fetchProjects } = useProjects();
 
 const activeIdx = ref(0);
-const isOverList = ref(false);
 const selectedCaseStudy = ref(null);
-const cursorPillRef = ref(null);
 
 const formatNum = (n) => String(n).padStart(2, '0');
 
@@ -465,34 +415,8 @@ const projectList = computed(() => {
   });
 });
 
-const activeProject = computed(() => projectList.value[activeIdx.value] || projectList.value[0]);
-
 const setActive = (idx) => {
   activeIdx.value = idx;
-};
-
-/* ── Smooth cursor-following micro-pill + subtle parallax ── */
-const pos = { x: 0, y: 0 };
-const target = { x: 0, y: 0 };
-let rafId = null;
-
-const tick = () => {
-  pos.x += (target.x - pos.x) * 0.18;
-  pos.y += (target.y - pos.y) * 0.18;
-  if (cursorPillRef.value) {
-    cursorPillRef.value.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0)`;
-  }
-  if (Math.abs(target.x - pos.x) > 0.2 || Math.abs(target.y - pos.y) > 0.2) {
-    rafId = requestAnimationFrame(tick);
-  } else {
-    rafId = null;
-  }
-};
-
-const onPointerMove = (e) => {
-  target.x = e.clientX;
-  target.y = e.clientY;
-  if (!rafId) rafId = requestAnimationFrame(tick);
 };
 
 /* ── Case study drawer ── */
@@ -535,7 +459,6 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('keydown', handleKeyDown);
-  if (rafId) cancelAnimationFrame(rafId);
   startScroll();
 });
 </script>

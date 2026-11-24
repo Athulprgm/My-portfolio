@@ -1,6 +1,6 @@
 <template>
   <LoadingScreenWrapper>
-    <div class="App bg-[var(--bg-primary)] min-h-screen text-[var(--text-primary)] relative">
+    <div class="App bg-[var(--bg-primary)] min-h-screen text-[var(--text-primary)] relative overflow-x-clip">
       <!-- Quiet Swiss background: column guides + grain -->
       <BackgroundSystem />
 

@@ -20,9 +20,9 @@
       </div>
     </div>
 
-    <div class="loader-inner relative z-10 flex flex-col h-full sw-container" :class="{ 'inner-exit': isExiting }">
+    <div class="loader-inner relative z-10 flex flex-col h-full sw-container pt-safe pb-safe justify-between" :class="{ 'inner-exit': isExiting }">
       <!-- Top meta row -->
-      <div class="sw-grid gap-y-2 pt-5 sm:pt-6 sw-fade sw-d1">
+      <div class="sw-grid gap-y-2 pt-3 sm:pt-6 sw-fade sw-d1">
         <span class="col-span-2 md:col-span-3 font-heading font-medium text-[15px] tracking-[-0.02em]">
           Athul Krishna<sup class="text-[9px] text-[var(--text-muted)] font-mono-clean">©26</sup>
         </span>
@@ -35,9 +35,9 @@
       </div>
 
       <!-- Center statement -->
-      <div class="flex-1 flex items-center">
+      <div class="my-auto py-4">
         <div class="sw-grid w-full">
-          <p class="col-span-4 md:col-span-6 md:col-start-4 font-heading text-[clamp(1.6rem,3.4vw,3rem)] leading-[1.05] tracking-[-0.035em]">
+          <p class="col-span-4 md:col-span-6 md:col-start-4 font-heading text-[clamp(1.35rem,3.4vw,3rem)] leading-[1.1] sm:leading-[1.05] tracking-[-0.035em]">
             <span class="sw-mask"><span class="sw-d2">Full-stack engineer</span></span>
             <span class="sw-mask"><span class="sw-d3 text-[var(--text-muted)]">&amp; co-founder,</span></span>
             <span class="sw-mask">
@@ -48,14 +48,14 @@
       </div>
 
       <!-- Bottom: giant counter + progress rule -->
-      <div class="pb-5 sm:pb-6">
-        <div class="sw-grid items-end gap-y-4">
+      <div class="pb-3 sm:pb-6">
+        <div class="sw-grid items-end gap-y-2 sm:gap-y-4">
           <div class="col-span-4 md:col-span-8 flex items-start leading-none">
             <span
-              class="sw-display tabular-nums text-[clamp(6rem,24vw,22rem)]"
+              class="sw-display tabular-nums text-[clamp(4.25rem,22vw,22rem)]"
               aria-live="polite"
             >{{ displayNum }}</span>
-            <span class="font-mono-clean text-[clamp(0.9rem,1.6vw,1.4rem)] text-[var(--accent)] mt-[0.6em] ml-2">%</span>
+            <span class="font-mono-clean text-[clamp(0.85rem,1.6vw,1.4rem)] text-[var(--accent)] mt-[0.6em] ml-2">%</span>
           </div>
           <div class="col-span-4 md:col-span-4 flex md:justify-end items-end sw-label pb-2 sm:pb-4">
             <span class="hidden sm:inline">Tap, click or press Enter to skip</span>

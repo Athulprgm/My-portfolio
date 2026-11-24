@@ -1,16 +1,16 @@
 <template>
-  <div class="sw-container pt-28 sm:pt-40 pb-8">
+  <div class="sw-container pt-20 sm:pt-40 pb-8">
     <!-- Label row -->
-    <div class="sw-grid gap-y-4 mb-10 sm:mb-14 scroll-reveal">
-      <div class="col-span-2 md:col-span-3 sw-label">(05) — Contact</div>
-      <div class="col-span-2 md:col-span-9 sw-label flex items-center gap-2 md:justify-end">
+    <div class="sw-grid gap-y-2 sm:gap-y-4 mb-8 sm:mb-14 scroll-reveal">
+      <div class="col-span-4 sm:col-span-2 md:col-span-3 sw-label">(05) — Contact</div>
+      <div class="col-span-4 sm:col-span-2 md:col-span-9 sw-label flex items-center gap-2 sm:justify-end">
         <span class="sw-dot animate-pulse"></span>
         <span class="!text-[var(--text-primary)]">Open for collaboration</span>
       </div>
     </div>
 
     <!-- Giant CTA -->
-    <h2 class="sw-display text-[clamp(3.6rem,13vw,13.5rem)] scroll-reveal">
+    <h2 class="sw-display text-[clamp(2.5rem,11.5vw,13.5rem)] scroll-reveal">
       <span class="block text-[var(--text-muted)]">Have an idea?</span>
       <button
         @click="openInquiryModal"
@@ -24,23 +24,23 @@
     </h2>
 
     <!-- Email + intro -->
-    <div class="sw-grid gap-y-8 mt-14 sm:mt-20 scroll-reveal">
-      <p class="col-span-4 md:col-span-4 text-[17px] leading-[1.4] tracking-[-0.01em] text-[var(--text-secondary)] max-w-[36ch]">
+    <div class="sw-grid gap-y-6 sm:gap-y-8 mt-10 sm:mt-20 scroll-reveal">
+      <p class="col-span-4 md:col-span-4 text-[16px] sm:text-[17px] leading-[1.4] tracking-[-0.01em] text-[var(--text-secondary)] max-w-[36ch]">
         I'm open to building meaningful products, collaborating on ambitious ideas and solving high-impact technical problems.
       </p>
-      <div class="col-span-4 md:col-span-7 md:col-start-6 flex flex-col items-start md:items-end gap-3">
+      <div class="col-span-4 md:col-span-7 md:col-start-6 flex flex-col items-start md:items-end gap-2 sm:gap-3">
         <a
           href="mailto:athul@trawbit.com"
-          class="sw-link font-heading text-[clamp(1.6rem,3.6vw,3.25rem)] tracking-[-0.04em] leading-none text-[var(--text-primary)]"
+          class="sw-link font-heading text-[clamp(1.4rem,3.6vw,3.25rem)] tracking-[-0.04em] leading-none text-[var(--text-primary)] break-all sm:break-normal"
         >athul@trawbit.com</a>
-        <button @click="copyEmail" class="sw-label hover:!text-[var(--text-primary)] cursor-pointer">
+        <button @click="copyEmail" class="sw-label hover:!text-[var(--text-primary)] cursor-pointer py-1 min-h-[36px] flex items-center">
           {{ emailCopied ? 'Copied ✓' : 'Copy address ⧉' }}
         </button>
       </div>
     </div>
 
     <!-- Channels -->
-    <ul class="mt-20 sm:mt-28 border-b border-[var(--border-color)]">
+    <ul class="mt-14 sm:mt-28 border-b border-[var(--border-color)]">
       <li v-for="(ch, i) in channels" :key="ch.label" class="scroll-reveal" :class="`reveal-delay-${(i + 1) * 100}`">
         <a
           :href="ch.href"
@@ -49,20 +49,20 @@
           :download="ch.download || undefined"
           class="group relative block border-t border-[var(--border-color)] overflow-hidden"
         >
-          <!-- hover fill -->
+          <!-- hover fill on supported hover devices -->
           <span
-            class="absolute inset-0 bg-[var(--text-primary)] origin-bottom scale-y-0 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:scale-y-100"
+            class="hidden sm:block absolute inset-0 bg-[var(--text-primary)] origin-bottom scale-y-0 transition-transform duration-500 ease-[cubic-bezier(0.65,0,0.35,1)] group-hover:scale-y-100"
             aria-hidden="true"
           ></span>
-          <span class="relative sw-grid items-baseline py-5 sm:py-6 transition-colors duration-500 group-hover:text-[var(--bg-primary)]">
+          <span class="relative sw-grid items-center sm:items-baseline py-4 sm:py-6 transition-colors duration-500 group-hover:text-[var(--bg-primary)]">
             <span class="col-span-1 font-mono-clean text-[11px] opacity-60">0{{ i + 1 }}</span>
-            <span class="col-span-3 md:col-span-4 font-heading text-2xl sm:text-4xl tracking-[-0.04em] transition-transform duration-500 group-hover:translate-x-3">
+            <span class="col-span-2 md:col-span-4 font-heading text-xl sm:text-4xl tracking-[-0.04em] transition-transform duration-500 group-hover:translate-x-3">
               {{ ch.label }}
             </span>
             <span class="hidden md:block md:col-span-5 font-mono-clean text-[12px] uppercase tracking-[0.05em] opacity-70">
               {{ ch.handle }}
             </span>
-            <span class="hidden md:flex md:col-span-2 justify-end text-xl transition-transform duration-500 group-hover:rotate-45">
+            <span class="col-span-1 md:col-span-2 flex justify-end text-lg sm:text-xl opacity-70 sm:opacity-100 transition-transform duration-500 group-hover:rotate-45">
               {{ ch.download ? '↓' : '↗' }}
             </span>
           </span>
@@ -71,9 +71,9 @@
     </ul>
 
     <!-- Footer -->
-    <footer class="mt-24 sm:mt-36">
+    <footer class="mt-20 sm:mt-36">
       <div
-        class="sw-display text-[clamp(3.5rem,17.5vw,19rem)] text-center sw-outline opacity-60 select-none leading-[0.8]"
+        class="sw-display text-[clamp(2.75rem,16vw,19rem)] text-center sw-outline opacity-60 select-none leading-[0.8]"
         aria-hidden="true"
       >
         Athul K.
@@ -81,11 +81,11 @@
       <div class="sw-rule mt-6"></div>
       <div class="sw-grid gap-y-3 pt-5 sw-label">
         <span class="col-span-2 md:col-span-3">© {{ currentYear }} Athul Krishna</span>
-        <span class="col-span-2 md:col-span-3">Kerala, India</span>
+        <span class="col-span-2 md:col-span-3 text-right sm:text-left">Kerala, India</span>
         <span class="hidden md:block md:col-span-3">Designed &amp; built in-house</span>
         <button
           @click="scrollToTop"
-          class="col-span-4 md:col-span-3 text-left md:text-right hover:!text-[var(--text-primary)] cursor-pointer"
+          class="col-span-4 md:col-span-3 text-left md:text-right hover:!text-[var(--text-primary)] cursor-pointer pt-2 sm:pt-0"
         >
           Back to top ↑
         </button>
@@ -97,7 +97,7 @@
       <Transition name="modal">
         <div
           v-if="modalOpen"
-          class="fixed inset-0 z-[100] bg-black/45 backdrop-blur-[2px] flex items-end sm:items-center justify-center sm:p-6"
+          class="fixed inset-0 z-[100] bg-black/50 backdrop-blur-[2px] flex items-end sm:items-center justify-center sm:p-6"
           @click.self="closeInquiryModal"
           role="dialog"
           aria-modal="true"
@@ -105,27 +105,30 @@
         >
           <div
             data-lenis-prevent
-            class="modal-panel w-full max-w-2xl max-h-[92vh] overflow-y-auto bg-[var(--bg-primary)] text-[var(--text-primary)] border border-[var(--border-color)]"
+            class="modal-panel w-full max-w-2xl max-h-[90dvh] overflow-y-auto bg-[var(--bg-primary)] text-[var(--text-primary)] border border-[var(--border-color)] rounded-t-2xl sm:rounded-2xl pb-safe"
           >
-            <div class="flex items-center justify-between px-6 sm:px-10 h-16 border-b border-[var(--border-color)]">
+            <!-- Mobile grab pill -->
+            <div class="w-10 h-1 bg-[var(--border-strong)] rounded-full mx-auto my-2.5 sm:hidden" aria-hidden="true"></div>
+
+            <div class="flex items-center justify-between px-5 sm:px-10 h-14 sm:h-16 border-b border-[var(--border-color)] pt-safe">
               <span class="sw-label">New inquiry</span>
-              <button @click="closeInquiryModal" class="group sw-label !text-[var(--text-primary)] flex items-center gap-2 cursor-pointer">
+              <button @click="closeInquiryModal" class="group sw-label !text-[var(--text-primary)] flex items-center gap-2 cursor-pointer min-h-[44px] min-w-[44px] justify-end -mr-2 p-2">
                 <span class="sw-link">Close</span>
                 <span class="transition-transform duration-500 group-hover:rotate-90">✕</span>
               </button>
             </div>
 
-            <div class="px-6 sm:px-10 pt-8 pb-10">
-              <h3 class="font-heading font-medium text-4xl sm:text-5xl tracking-[-0.045em] leading-[0.95] mb-3">
+            <div class="px-5 sm:px-10 pt-6 sm:pt-8 pb-8 sm:pb-10">
+              <h3 class="font-heading font-medium text-3xl sm:text-5xl tracking-[-0.045em] leading-[0.95] mb-2 sm:mb-3">
                 Tell me about<br />your <span class="font-serif-editorial text-[var(--accent)]">project.</span>
               </h3>
-              <p class="text-[14px] text-[var(--text-secondary)] mb-10">
+              <p class="text-[13px] sm:text-[14px] text-[var(--text-secondary)] mb-8 sm:mb-10">
                 A short brief is enough. Prefer a DM?
                 <a :href="instagramUrl" target="_blank" rel="noopener noreferrer" class="sw-link text-[var(--text-primary)]">Instagram ↗</a>
               </p>
 
-              <form @submit.prevent="handleSubmit" class="space-y-7">
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-7">
+              <form @submit.prevent="handleSubmit" class="space-y-6 sm:space-y-7">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-7">
                   <label class="block">
                     <span class="sw-label block mb-1">Name *</span>
                     <input v-model.trim="form.name" required type="text" placeholder="Alex Morgan" class="sw-input" />
@@ -137,14 +140,14 @@
                 </div>
 
                 <div>
-                  <span class="sw-label block mb-3">Scope</span>
+                  <span class="sw-label block mb-2 sm:mb-3">Scope</span>
                   <div class="flex flex-wrap gap-2">
                     <button
                       v-for="opt in serviceOptions"
                       :key="opt"
                       type="button"
                       @click="form.service = opt"
-                      class="px-3.5 py-2 rounded-full border text-[13px] cursor-pointer transition-colors"
+                      class="px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full border text-[12px] sm:text-[13px] cursor-pointer transition-colors"
                       :class="form.service === opt
                         ? 'bg-[var(--text-primary)] text-[var(--bg-primary)] border-[var(--text-primary)]'
                         : 'border-[var(--border-strong)] text-[var(--text-secondary)] hover:border-[var(--text-primary)] hover:text-[var(--text-primary)]'"
@@ -155,14 +158,14 @@
                 </div>
 
                 <div>
-                  <span class="sw-label block mb-3">Budget</span>
+                  <span class="sw-label block mb-2 sm:mb-3">Budget</span>
                   <div class="flex flex-wrap gap-2">
                     <button
                       v-for="opt in budgetOptions"
                       :key="opt.value"
                       type="button"
                       @click="form.budget = opt.value"
-                      class="px-3.5 py-2 rounded-full border text-[13px] cursor-pointer transition-colors"
+                      class="px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full border text-[12px] sm:text-[13px] cursor-pointer transition-colors"
                       :class="form.budget === opt.value
                         ? 'bg-[var(--text-primary)] text-[var(--bg-primary)] border-[var(--text-primary)]'
                         : 'border-[var(--border-strong)] text-[var(--text-secondary)] hover:border-[var(--text-primary)] hover:text-[var(--text-primary)]'"
@@ -187,7 +190,7 @@
                 <button
                   type="submit"
                   :disabled="submitting"
-                  class="btn-worth w-full !py-4 cursor-pointer disabled:opacity-60"
+                  class="btn-worth w-full !py-3.5 sm:!py-4 cursor-pointer disabled:opacity-60 min-h-[48px] justify-center"
                 >
                   {{ submitting ? 'Sending…' : 'Send inquiry →' }}
                 </button>
