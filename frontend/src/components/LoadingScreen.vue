@@ -38,10 +38,10 @@
       <div class="my-auto py-4">
         <div class="sw-grid w-full">
           <p class="col-span-4 md:col-span-6 md:col-start-4 font-heading text-[clamp(1.35rem,3.4vw,3rem)] leading-[1.1] sm:leading-[1.05] tracking-[-0.035em]">
-            <span class="sw-mask"><span class="sw-d2">Full-stack engineer</span></span>
-            <span class="sw-mask"><span class="sw-d3 text-[var(--text-muted)]">&amp; co-founder,</span></span>
+            <span class="sw-mask"><span class="sw-d2">{{ roleTitle }}</span></span>
+            <span v-if="!includesCoFounder" class="sw-mask"><span class="sw-d3 text-[var(--text-muted)]">&amp; co-founder,</span></span>
             <span class="sw-mask">
-              <span class="sw-d4 font-serif-editorial text-[1.1em] text-[var(--accent)]">building calm software.</span>
+              <span class="sw-d4 font-serif-editorial text-[1.1em] text-[var(--accent)]">building intelligent software.</span>
             </span>
           </p>
         </div>
@@ -81,8 +81,10 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { stopSmoothScroll, startSmoothScroll } from '../composables/useSmoothScroll';
+import { useSettings } from '../composables/useSettings';
 
-const emit = defineEmits(['loading-complete']);
+const emit = defineEmits(['loading-exiting', 'loading-complete']);
+const { roleTitle, includesCoFounder, fetchSettings } = useSettings();
 
 const progress = ref(0);
 const isExiting = ref(false);
@@ -123,6 +125,7 @@ const unlockScroll = () => {
 const triggerExit = () => {
   if (isExiting.value) return;
   isExiting.value = true;
+  emit('loading-exiting');
   clearAllTimers();
   progress.value = 100;
   unlockScroll();
@@ -144,10 +147,12 @@ onMounted(() => {
     window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   if (prefersReduced) {
+    emit('loading-exiting');
     emit('loading-complete');
     return;
   }
 
+  fetchSettings();
   lockScroll();
   window.addEventListener('keydown', handleKeyDown);
 

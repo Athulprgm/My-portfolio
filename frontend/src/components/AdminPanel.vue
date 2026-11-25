@@ -376,8 +376,11 @@
           </div>
 
           <div class="field mb-8">
-            <label>Bio Specialty Role Header</label>
-            <input v-model="settingsForm.bio_tagline" placeholder="Co-Founder & Full-Stack Architect" />
+            <label>Primary Role Title</label>
+            <input v-model="settingsForm.bio_tagline" placeholder="AI software engineer" />
+            <span class="text-[10px] text-[#A1A1AA] font-mono mt-1 block">
+              Displayed in the Loader, Hero header, and About headline ("Co-founder, Trawbit" is appended automatically unless included).
+            </span>
           </div>
 
           <!-- Rotating Role Phrases -->
@@ -1331,12 +1334,12 @@ const settingsForm = reactive({
   shipped_works: '15+',
   uptime_focus: '99.9%',
   role_phrases: [
-    'modern React & Vue web applications styled with Tailwind CSS',
-    'high-performance PHP & Laravel backends with SQL databases',
-    'scalable cloud architectures & distributed APIs',
-    'end-to-end full stack platforms with 99.9% uptime',
+    'AI-powered software systems, LLM workflows & intelligent agents',
+    'full-stack web applications with Laravel, PHP & Node.js',
+    'clean, fast frontend interfaces with React, Next.js & Vue.js',
+    'robust APIs, vector & relational databases, and cloud infrastructure',
   ],
-  bio_tagline: 'Co-Founder & Full-Stack Architect',
+  bio_tagline: 'AI software engineer',
   quests_cleared: '10+',
   time_played: '3+ Yrs',
 });

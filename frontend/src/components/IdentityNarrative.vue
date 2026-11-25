@@ -5,7 +5,7 @@
       <div class="col-span-4 md:col-span-3 sw-label">About</div>
 
       <p class="col-span-4 md:col-span-9 font-heading text-[clamp(1.5rem,3.7vw,3.6rem)] leading-[1.12] sm:leading-[1.06] tracking-[-0.035em] text-[var(--text-primary)]">
-        I'm Athul — a full-stack developer and co-founder of Trawbit Technologies.
+        I'm Athul — {{ aboutRolePhrase }}
         <span class="text-[var(--text-muted)]">I believe good software should feel</span>
         <span class="font-serif-editorial text-[1.08em] text-[var(--accent)]">effortlessly simple,</span>
         <span class="text-[var(--text-muted)]">and that every calm interface is held up by disciplined engineering.</span>
@@ -15,9 +15,9 @@
     <!-- Two-column story -->
     <div class="sw-grid gap-y-6 mt-10 sm:mt-20 text-[14px] sm:text-[15px] leading-[1.65] text-[var(--text-secondary)]">
       <p class="col-span-4 md:col-span-4 md:col-start-4 scroll-reveal reveal-delay-100">
-        I craft practical, dependable and expressive digital products — tactile interfaces, resilient backends,
-        and codebases that stay clean long after launch. I move fluidly between frontend frameworks, server
-        APIs, databases, mobile and cloud, picking the sharpest tool for each problem.
+        I build practical, dependable AI-driven software and digital products — intelligent workflows, resilient
+        backends, and codebases that stay clean long after launch. I move fluidly between AI systems, frontend
+        frameworks, server APIs, databases and cloud, picking the sharpest tool for each problem.
       </p>
       <p class="col-span-4 md:col-span-4 md:col-start-9 scroll-reveal reveal-delay-200">
         At <span class="text-[var(--text-primary)]">Trawbit Technologies</span> I partner with founders and businesses to
@@ -57,7 +57,7 @@ import { useSettings } from '../composables/useSettings';
 
 useScrollReveal();
 
-const { settings, fetchSettings } = useSettings();
+const { settings, aboutRolePhrase, fetchSettings } = useSettings();
 
 const parseStat = (raw, fallbackTo, fallbackSuffix) => {
   if (!raw || typeof raw !== 'string') return { to: fallbackTo, suffix: fallbackSuffix };
